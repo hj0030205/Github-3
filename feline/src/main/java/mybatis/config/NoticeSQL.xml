@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+	<resultMap id="NoticeBoardRes" type="NoticeModel">
+		<result property="no" column="no" />
+		<result property="subject" column="subject" />
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="file_orgname" column="file_orgname" />
+		<result property="file_savname" column="file_savname" />
+		<result property="readhit" column="readhit" />
+		<result property="regdate" column="regdate" />
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<!-- 공통으로 사용할 select 절 정의 -->
+	<sql id="select-all">
+		SELECT * FROM feline_board_notice
+	</sql>
+
+	<!-- 공통으로 사용할 where 절 정의 -->
+	<sql id="where-no">
+		where no = #{no}
+	</sql>
+
+	<!-- select 쿼리문 정의 -->
+
+	<!-- 모든 공지사항 게시물 검색 -->
+	<select id="selectAll" resultMap="NoticeBoardRes">
+		<include refid="select-all" />
+		where status=1 
+		order by no desc
+	</select>
+
+	<!-- 공지사항 게시물 선택 -->
+	<select id="selectNotice" resultMap="NoticeBoardRes" parameterType="Integer">
+		<include refid="select-all" /> 
+		<include refid="where-no" />
+	</select>
+
+	<!-- 마지막 게시물 번호 반환(업로드파일명 작성시사용) -->
+	<select id="selectLastNo" resultType="Integer">
+		select max(no) as no from feline_board_notice
+	</select>
+
+	<!-- 검색 로직 시작 -->
+	
+	<!-- 게시물 제목으로 검색 -->
+	<select id="selectSearchS" resultMap="NoticeBoardRes" parameterType="string">
+		<include refid="select-all" />
+		where subject like #{subject} and status=1
+		order by no desc
+	</select>
+
+	<select id="selectSearchC" resultMap="NoticeBoardRes" parameterType="string">
+		<include refid="select-all" />
+		where content like #{content}  and status=1
+		order by no desc
+	</select>
+
+	<!-- 검색 로직 끝 -->
+
+	<!-- 게시물 삽입 -->
+	<insert id="insertNotice" parameterType="NoticeModel">
+		insert into feline_board_notice(no, subject, id, content, readhit, regdate, status)
+		values(feline_board_notice_seq.NEXTVAL, #{subject}, #{id}, #{content}, 0,
+		#{regdate}, 1)
+	</insert>
+
+	<!-- update 쿼리문 정의 -->
+	<!-- 게시물 수정 -->
+	<update id="updateNotice" parameterType="NoticeModel">
+		update feline_board_notice set subject=#{subject}, content=#{content} 
+		<include refid="where-no" />
+	</update>
+
+	<!-- 조회수 증가 -->
+	<update id="updateReadHit" parameterType="Integer">
+		update feline_board_notice set readhit = readhit+1 
+		<include refid="where-no" />
+	</update>
+
+	<!-- 첨부파일 추가 및 수정 -->
+	<update id="updateFile" parameterType="NoticeModel">
+		update feline_board_notice set file_orgname=#{file_orgname},
+		file_savname=#{file_savname}
+		<include refid="where-no" />
+	</update>
+
+	<!-- delete 쿼리문 정의 -->
+	<!-- 게시물 삭제(게시물 상태변환) -->
+	<update id="deleteNotice" parameterType="Integer">
+		update feline_board_notice set status=0 
+		<include refid="where-no" />
+	</update>
+	
+</mapper>

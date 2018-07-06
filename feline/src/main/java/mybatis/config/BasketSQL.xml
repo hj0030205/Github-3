@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="basket">
+
+	<resultMap type="basketModel" id="basketRes">
+		<result property="member_id" column="member_id"/>
+		<result property="basket_goods_amount" column="basket_goods_amount"/>
+		<result property="basket_goods_size" column="basket_goods_size"/>
+		<result property="goods_num" column="goods_num"/>
+		<result property="goods_amount" column="goods_amount"/>
+		<result property="goods_content" column="goods_content"/>
+		<result property="goods_category" column="goods_category"/>
+		<result property="goods_size" column="goods_size"/>
+		<result property="goods_image_orgname" column="goods_image_orgname"/>
+		<result property="goods_image_savname" column="goods_image_savname"/>
+		<result property="goods_hit" column="goods_hit"/>
+		<result property="goods_date" column="goods_date"/>
+		<result property="basket_num" column="basket_num"/>
+	</resultMap>
+	
+	<!-- 장바구니 담기 -->
+	<insert id="insertBasket" parameterType="basketModel">
+		INSERT INTO FELINE_BASKET (
+									 BASKET_NUM,
+									 MEMBER_ID,
+									 BASKET_GOODS_AMOUNT,
+									 BASKET_GOODS_SIZE,
+									 GOODS_NUM
+									 )
+						   VALUES (
+									 FELINE_BASKET_NUM_SEQ.NEXTVAL,
+									 #{member_id},
+									 #{basket_goods_amount},
+									 #{basket_goods_size},
+									 #{goods_num}
+									 )
+	</insert>
+	
+	<!-- 장바구니 리스트 -->
+	<select id="basketList" resultMap="basketRes" parameterType="basketModel">
+		SELECT *
+		  FROM FELINE_BASKET B, FELINE_GOODS G
+		 WHERE B.GOODS_NUM = G.GOODS_NUM
+		   AND B.MEMBER_ID = #{member_id}
+		 ORDER BY B.BASKET_NUM DESC
+	</select>
+	
+	<!-- 삭제상품 제외하고 가져오기 -->
+	<select id="basketListCheckStatus" resultMap="basketRes" parameterType="basketModel">
+		SELECT *
+		  FROM FELINE_BASKET B, FELINE_GOODS G
+		 WHERE B.GOODS_NUM = G.GOODS_NUM
+		   AND B.MEMBER_ID = #{member_id}
+		 ORDER BY B.BASKET_NUM DESC
+	</select>
+	
+	<!-- 장바구니 상품 중복 확인 -->
+	<select id="basketGoodsCheck" resultMap="basketRes" parameterType="basketModel">
+		SELECT *
+		  FROM FELINE_BASKET 
+		 WHERE GOODS_NUM = #{goods_num}
+		   AND MEMBER_ID = #{member_id}
+	</select>
+	
+	<!-- 장바구니 삭제 -->
+	<delete id="basketDelete" parameterType="Integer">
+		DELETE 
+		  FROM FELINE_BASKET 
+		 WHERE BASKET_NUM = #{basket_num}
+	</delete>
+	
+	<!-- 장바구니 수량 조절 -->
+	<update id="updateAmount" parameterType="Integer">
+		UPDATE FELINE_BASKET
+		   SET BASKET_GOODS_AMOUNT = #{basket_goods_amount}
+		 WHERE BASKET_NUM = #{basket_num}
+	</update>
+
+</mapper>

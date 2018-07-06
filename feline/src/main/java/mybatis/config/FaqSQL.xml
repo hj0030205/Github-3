@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="faq">
+
+	<resultMap id="FaqBoardRes" type="FaqModel">
+		<result property="no" column="no" />
+		<result property="subject" column="subject" />
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="regdate" column="regdate" />
+	</resultMap>
+	
+	<!-- 공통으로 사용할 select 절 정의 -->
+	<sql id="select-all">
+		SELECT * FROM feline_board_faq
+	</sql>
+
+	<!-- 공통으로 사용할 where 절 정의 -->
+	<sql id="where-no">
+		where no = #{no}
+	</sql>
+
+	<!-- select 쿼리문 정의 -->
+
+	<!-- 모든 FAQ게시물 검색 -->
+	<select id="selectAll" resultMap="FaqBoardRes">
+		<include refid="select-all" />
+		order by no desc
+	</select>
+
+	<!-- FAQ게시물 게시물 선택 -->
+	<select id="selectFaq" resultMap="FaqBoardRes"
+		parameterType="Integer">
+		<include refid="select-all" />
+		<include refid="where-no" />
+	</select>
+
+	<!-- 검색 로직 추가 시작 -->
+	<!-- 게시물 제목으로 검색 -->
+	<select id="selectSearchS" resultMap="FaqBoardRes"
+		parameterType="String">
+		<include refid="select-all" />
+		where subject like #{subject}
+		order by no desc
+	</select>
+
+	<!-- 게시물 내용으로 검색 -->
+	<select id="selectSearchC" resultMap="FaqBoardRes"
+		parameterType="String">
+		<include refid="select-all" />
+		where content like #{content}
+		order by no desc
+	</select>
+
+	<!-- 검색 로직 끝 -->
+
+	<!-- 관리자 부분 시작 -->
+	<!-- FAQ게시물 삽입 -->
+	<insert id="insertFaq" parameterType="FaqModel">
+		insert into feline_board_faq(no, subject, id, content, regdate)
+		values(feline_board_faq_seq.NEXTVAL, #{subject}, #{id}, #{content}, #{regdate})
+	</insert>
+
+	<!-- update 쿼리문 정의 -->
+	<!-- FAQ게시물 수정 -->
+	<update id="updateFaq" parameterType="FaqModel">
+		update feline_board_faq set subject=#{subject}, content=#{content}
+		<include refid="where-no" />
+	</update>
+
+	<!-- delete 쿼리문 정의 -->
+	<!-- FAQ게시물 삭제 -->
+	<delete id="deleteFaq" parameterType="Integer">
+		delete from feline_board_faq
+		<include refid="where-no" />
+	</delete>
+	<!-- 관리자 부분 끝 -->
+</mapper>

@@ -1,0 +1,65 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+</head>
+<body>
+ <div id="all">
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li><a href="/feline/main.cat">메인</a>
+                        </li>
+                        <li>로그인</li>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-2">
+                </div>
+
+                <div class="col-md-8">
+                    <div class="box">
+                        <h1>로그인</h1>
+						<form name="loginForm" id="loginForm" action="/feline/member/login.cat" method="POST">
+                            <div class="form-group">
+                                <label for="member_id">아이디</label>
+                                <input type="text" class="form-control" id="member_id"name="member_id"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="member_pw">비밀번호</label>
+                                <input type="password" class="form-control"id="member_pw" name="member_pw"/>
+                            </div>
+                            <div class="text-center">
+                            	<button type="submit" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>로그인</button>
+                                <button type="button" class="btn btn-default"
+                                onclick="javascript:location.href='/feline/member/joinMemberCheck.cat'"><i class="fa fa-sign-in"></i>회원가입</button>
+                            </div>
+                        </form>
+                        <hr/>
+                        <center>
+                        <button class="btn btn-default"
+                        onclick="javascript:location.href='/feline/member/findId.cat'">아이디 찾기</button>
+                        <button class="btn btn-default"
+                        onclick="javascript:location.href='/feline/member/findPwd.cat'">비밀번호 찾기</button>
+                        </center>
+                    </div>
+                </div>
+                
+                <div class="col-md-2">
+                </div>
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+</div>
+</body>
+</html>

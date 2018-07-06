@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	<!-- Main Page -->
+	<definition name="default" template="/WEB-INF/views/layout/main.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/layout/body.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+	
+	<definition name="main" template="/WEB-INF/views/layout/main.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/layout/body.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+	
+	<!-- 로그인 -->
+	<definition name="login" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/loginForm.jsp" />
+	</definition>
+	
+	<!-- 로그인 필요 -->
+	<definition name="loginError" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/loginCheck.jsp" />
+	</definition>
+
+	<!-- 회원가입전 회원중복확인 -->
+	<definition name="joinMemberCheck" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/joinMemberCheck.jsp" />
+	</definition>
+	
+	<!-- 회원가입 -->
+	<definition name="joinForm" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/joinForm.jsp" />
+	</definition>
+	
+	<!-- 아이디 찾기 폼 -->
+	<definition name="findIdForm" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/findIdForm.jsp" />
+	</definition>
+
+	<!-- 비밀번호 찾기 폼 -->
+	<definition name="findPwdForm" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/findPwdForm.jsp" />
+	</definition>
+	
+	<!-- ********************* 마이페이지 *********************-->
+	
+	<!-- MyPage -->
+	<definition name="mypage" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/mypage.jsp"/>
+	</definition>
+	
+	<!-- 회원정보 수정 -->
+	<definition name="memberModify" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>
+	</definition>
+	
+	<!-- 나의 주문 내역 -->
+	<definition name="myOrderList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderList.jsp" />
+	</definition>
+	
+	<!-- 나의 주문 상세보기 -->
+	<definition name="myOrderView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderView.jsp" />
+	</definition>
+	
+	<!-- 회원정보 삭제 -->
+	<definition name="memberDelete" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/signOut.jsp"/>
+	</definition>
+	
+	<!-- ********************* 상품&장바구니 *********************-->
+	
+	<!-- 상품 -->
+	<definition name="goodsList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/goods/goodsList.jsp" />
+	</definition>
+	
+	<definition name="goodsView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/goods/goodsView.jsp" />
+	</definition>
+	
+	<!-- 장바구니&구매 -->
+	<definition name="basketList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/basket/basketList.jsp" />
+	</definition>
+
+	<definition name="goodsSettle" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/order/goodsSettle.jsp" />
+	</definition>
+
+	<definition name="goodsOrderResult" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/order/orderSuccess.jsp" />
+	</definition>
+	
+	<!-- ***************** 고객센터 ************************ -->
+	
+	<!-- 공지사항 -->
+	<definition name="noticeList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/notice/boardNoticeList.jsp" />
+	</definition>
+	
+	<definition name="noticeView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/notice/boardNoticeView.jsp" />
+	</definition>
+
+	<definition name="noticeWrite" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/notice/boardNoticeWriteForm.jsp" />
+	</definition>
+
+	<!-- Q&A게시판 -->
+	<definition name="qnaList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/qna/boardQnaList.jsp" />
+	</definition>
+
+	<definition name="qnaView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/qna/boardQnaView.jsp" />
+	</definition>
+
+	<definition name="qnaWrite" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/qna/boardQnaWrite.jsp" />
+	</definition>
+
+
+	<!-- FAQ게시판 -->
+	<definition name="faqList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqList.jsp" />
+	</definition>
+	
+	<definition name="faqView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqView.jsp" />
+	</definition>
+
+	<definition name="faqWrite" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqWrite.jsp" />
+	</definition>
+	
+	<!-- ***************** 관리자 ************************ -->
+	<!-- 관리자 회원 관리 -->
+	<definition name="adMemberList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adMemberList.jsp" />
+	</definition>
+
+	<definition name="adMemberView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adMemberView.jsp" />
+	</definition>
+
+	<definition name="adMemberModify" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adMemberModify.jsp" />
+	</definition>
+	
+	<!-- 관리자-상품관리 -->
+	<definition name="adGoodsList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adGoodsList.jsp" />
+	</definition>
+
+	<definition name="adGoodsWrite"  extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adGoodsWrite.jsp" />
+	</definition>
+	
+	<definition name="adGoodsView"  extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adGoodsView.jsp" />
+	</definition>
+
+	<definition name="adGoodsModify" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adGoodsWrite.jsp" />
+	</definition>
+	
+	<!-- 관리자 주문 관리 -->
+	<definition name="adOrderList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderList.jsp" />
+	</definition>
+	
+	<definition name="adOrderView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderView.jsp" />
+	</definition>
+	
+	<definition name="adOrderModify" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderChange.jsp" />
+	</definition>
+	
+	
+</tiles-definitions>

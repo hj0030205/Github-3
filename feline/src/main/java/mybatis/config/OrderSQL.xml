@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+
+	<resultMap type="orderModel" id="orderRes">
+		<result property="order_num" column="order_num" />
+		<result property="order_trade_num" column="order_trade_num" />
+		<result property="order_trans_num" column="order_trans_num" />
+		<result property="goods_num" column="goods_num" />
+		<result property="order_goods_amount" column="order_goods_amount" />
+		<result property="order_goods_size" column="order_goods_size" />
+		<result property="order_member_id" column="order_member_id" />
+		<result property="order_receive_name" column="order_receive_name" />
+		<result property="order_receive_addr1" column="order_receive_addr1" />
+		<result property="order_receive_addr2" column="order_receive_addr2" />
+		<result property="order_receive_phone" column="order_receive_phone" />
+		<result property="order_memo" column="order_memo" />
+		<result property="order_trade_type" column="order_trade_type" />
+		<result property="order_trade_date" column="order_trade_date" />
+		<result property="order_trade_payer" column="order_trade_payer" />
+		<result property="order_date" column="order_date" />
+		<result property="order_status" column="order_status" />
+		<result property="order_receive_zipcode" column="order_receive_zipcode" />
+		<result property="status" column="status"/>
+		
+	</resultMap>
+
+	<!-- 주문하기 -->
+	<insert id="goodsOrder" parameterType="orderModel">
+		INSERT INTO FELINE_ORDER(
+		order_num, order_trade_num, order_trans_num, goods_num, order_goods_amount, order_goods_size, order_member_id,
+		order_receive_name, order_receive_addr1, order_receive_addr2, order_receive_phone, order_memo, order_trade_type,
+		order_trade_date, order_trade_payer, order_date, order_status, order_receive_zipcode)
+		
+		VALUES ( 
+		FELINE_ORDER_NUM_SEQ.NEXTVAL, #{order_trade_num}, #{order_trans_num}, #{goods_num}, #{order_goods_amount},
+		#{order_goods_size}, #{order_member_id}, #{order_receive_name}, #{order_receive_addr1}, #{order_receive_addr2},
+		#{order_receive_phone}, #{order_memo}, #{order_trade_type}, #{order_trade_date}, #{order_trade_payer}, #{order_date}, 
+		#{order_status}, #{order_receive_zipcode})
+
+	</insert>
+	
+	<!-- 회원의 주문리스트 뽑아오기 -->
+	<select id="orderList" resultMap="orderRes"
+		parameterType="String">
+		select * 
+		from feline_order 
+		where order_member_id = #{order_member_id}
+	</select>
+
+	<!-- 주문상세보기 -->
+	<select id="ordergetOne" resultType="orderModel"
+		parameterType="int">
+		select * from feline_order where order_num=#{order_num}
+	</select>
+
+	<!-- 최신 주문 상품 10개까지 출력 -->
+	<select id="selectNewOrderList" resultMap="orderRes" parameterType="String">
+		<![CDATA[ 
+		select * from (select order_num, order_trade_num, order_trans_num, goods_num, 
+		order_goods_amount, order_goods_size,order_member_id,order_receive_name,order_receive_addr1,
+		order_receive_addr2,order_receive_phone,order_memo,order_trade_type,order_trade_date,
+		order_trade_payer,order_date,order_status,order_receive_zipcode, 
+		rownum r from feline_order where order_member_id=#{order_member_id} order by order_date desc, order_num asc) where r>=0 and r<=10 ]]>
+	</select>
+	
+	<!-- 주문 리스트 뽑아오기 -->
+	<select id="orderAllList" resultMap="orderRes" parameterType="orderModel">  
+ 		select * from feline_order ORDER BY order_num DESC
+	</select>
+	
+	<select id="orderSearchNum" resultMap="orderRes" parameterType="String">
+		select * from feline_order where order_num like #{searchorder} ORDER BY order_num DESC
+	</select>
+	
+	<select id="orderSearchId" resultMap="orderRes" parameterType="String">
+		select * from feline_order where order_member_id like #{searchorder} ORDER BY order_num DESC
+	</select>	
+	
+	<select id="orderSearchP" resultMap="orderRes" parameterType="String">
+		select * from feline_order where order_receive_phone like #{searchorder} ORDER BY order_num DESC
+	</select>	
+	
+	<update id="orderModify" parameterType="orderModel">
+			UPDATE feline_order SET order_receive_name = #{order_receive_name}, order_goods_amount = #{order_goods_amount}, order_receive_phone = #{order_receive_phone}, order_receive_zipcode = #{order_receive_zipcode}, order_receive_addr1 = #{order_receive_addr1}, order_receive_addr2 = #{order_receive_addr2}, order_status = #{order_status}, order_memo = #{order_memo} where order_num = #{order_num}
+	</update>
+
+
+
+</mapper>

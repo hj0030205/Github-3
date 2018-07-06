@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	
+	<resultMap type="memberModel" id="memberRes">
+		<result property="member_no" column="member_no" />
+		<result property="member_id" column="member_id" />
+		<result property="member_pw" column="member_pw" />
+		<result property="member_name" column="member_name" />
+		<result property="member_jumin1" column="member_jumin1" />
+		<result property="member_email" column="member_email" />
+		<result property="member_phone" column="member_phone" />
+		<result property="member_zipcode" column="member_zipcode" />
+		<result property="member_addr1" column="member_addr1" />
+		<result property="member_addr2" column="member_addr2" />
+		<result property="member_join_date" column="member_join_date" />
+		<result property="member_status" column="member_status"/>
+	</resultMap>
+
+	<!-- 회원 목록 -->
+	<select id="memberList" resultMap="memberRes">
+		SELECT * 
+		  FROM FELINE_MEMBER
+		 ORDER BY member_no DESC
+	</select>
+	
+	<!-- 회원 선택 -->
+	<select id="memberSelect" resultMap="memberRes" parameterType="String">
+		SELECT *
+		  FROM FELINE_MEMBER
+		 WHERE MEMBER_ID=#{member_id}
+	</select>
+	
+    <!-- 로그인 시도 -->
+	<select id="login" parameterType="String" resultType="String">
+		select member_id from FELINE_member where member_id=#{member_id} and member_pw=#{member_pw}
+	</select>
+
+	 <!-- 아이디 체크 -->
+	<select id="idCheck" resultType="String" parameterType="String"> 
+		SELECT member_id 
+		FROM feline_member 
+		WHERE member_id = #{member_id}
+	</select> 
+	
+	 <!-- 이메일 체크 -->
+	<select id="emailCheck"  resultType="String" parameterType="String"> 
+		SELECT member_email 
+		FROM feline_member 
+		WHERE member_email = #{member_email}
+	</select> 
+
+	<!-- 회원 검색 -->
+	<!-- 이름으로 검색 -->
+	<select id="memberSearchN" resultMap="memberRes" parameterType="String">
+		SELECT * 
+		  FROM FELINE_MEMBER 
+		 WHERE MEMBER_NAME like #{searchKeyword} 
+		 ORDER BY MEMBER_NO DESC
+	</select>
+	
+	<!-- 아이디로 검색 -->
+	<select id="memberSearchI" resultMap="memberRes" parameterType="String">
+		SELECT * 
+		  FROM FELINE_MEMBER 
+		 WHERE MEMBER_ID like #{searchKeyword} 
+		 ORDER BY MEMBER_NO DESC
+	</select>
+	
+	<!-- 주소로 검색 -->
+	<select id="memberSearchA" resultMap="memberRes" parameterType="String">
+		SELECT * 
+		  FROM FELINE_MEMBER 
+		 WHERE MEMBER_ADDR1 like #{searchKeyword} 
+		 ORDER BY MEMBER_NO DESC
+	</select>
+	
+	<!-- 전화번호로 검색 -->
+	<select id="memberSearchP" resultMap="memberRes" parameterType="String">
+		SELECT * 
+		  FROM FELINE_MEMBER 
+		 WHERE MEMBER_PHONE like #{searchKeyword} 
+		 ORDER BY MEMBER_NO DESC
+	</select>
+	
+	<!-- 이메일로 검색 -->
+	<select id="memberSearchE" resultMap="memberRes" parameterType="String">
+		SELECT * 
+		  FROM FELINE_MEMBER 
+		 WHERE MEMBER_EMAIL like #{searchKeyword} 
+		 ORDER BY MEMBER_NO DESC
+	</select>
+	
+	<!-- 이름으로 비밀번호 와 아이디 찾기 --> 
+    <select id="idfind" parameterType="memberModel" resultType="String"> 
+		select member_id
+		from FELINE_member 
+		where member_name = #{member_name} and member_email = #{member_email} 
+	</select>
+	
+	<select id="pwfind" parameterType="memberModel" resultType="String"> 
+		select member_pw
+		from FELINE_member 
+		where member_id = #{member_id} and member_email = #{member_email} and member_name = #{member_name}
+	</select>
+
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="memberModel">
+		insert into FELINE_member
+		(member_no, member_id, member_pw, member_name, member_jumin1, member_email, 
+		member_phone, member_zipcode, member_addr1, member_addr2, member_join_date, member_status)
+		values(
+		FELINE_member_no_seq.nextval,
+		#{member_id}, #{member_pw}, #{member_name}, #{member_jumin1}, #{member_email},
+		#{member_phone}, #{member_zipcode}, #{member_addr1}, #{member_addr2}, sysdate, 1)
+	</insert>
+
+	<!-- 회원정보 수정 -->
+	<update id="updateMember" parameterType="memberModel"> 
+		UPDATE FELINE_MEMBER 
+		   SET MEMBER_NAME = #{member_name},
+		       MEMBER_PW = #{member_pw},
+		       MEMBER_JUMIN1 = #{member_jumin1},
+		       MEMBER_PHONE = #{member_phone},
+		       MEMBER_EMAIL = #{member_email},
+		       MEMBER_ZIPCODE = #{member_zipcode},
+		       MEMBER_ADDR1 = #{member_addr1},
+		       MEMBER_ADDR2 = #{member_addr2} 
+		 WHERE MEMBER_ID = #{member_id}
+ 	</update> 
+
+	<!-- 회원정보 삭제 -->
+	<update id="deleteMember" parameterType="String">
+		UPDATE FELINE_MEMBER 
+		   SET member_status=0 
+		 WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+
+</mapper>	

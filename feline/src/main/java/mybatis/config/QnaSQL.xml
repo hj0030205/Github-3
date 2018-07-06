@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qna">
+	<resultMap id="QnaBoardRes" type="QnaModel">
+		<result property="no" column="no" />
+        <result property="subject" column="subject" />
+		<result property="id" column="id" />
+		<result property="password" column="password"/>
+		<result property="content" column="content" />
+		<result property="goods_num" column="goods_num"/>
+		<result property="image_orgname" column="image_orgname" />
+		<result property="image_savname" column="image_savname" />
+		<result property="regdate" column="regdate" />
+		<result property="ref" column="ref"/>
+		<result property="re_step" column="re_step"/>
+		<result property="answer" column="answer"/>
+		<result property="status" column="status"/>
+		
+	</resultMap>
+	
+		<sql id="select-all">
+			SELECT * FROM feline_board_qna
+		</sql>
+		
+		<!-- 공통으로 사용할 where 절 정의 -->
+		<sql id="where-no">
+			 where no = #{no}
+		</sql>
+		
+		<!-- select 쿼리문 정의 -->
+		
+		<!-- 모든 Q&A 게시물 검색 -->
+		<select id="selectAll" resultMap="QnaBoardRes">
+			<include refid="select-all"/>
+			where status=1 
+			 order by ref desc, re_step asc
+		</select>	
+		
+		<!-- Q&A  게시물 선택 -->
+		<select id="selectQna" resultMap="QnaBoardRes" parameterType="Integer">
+			<include refid="select-all"/>
+			 <include refid="where-no"/>
+		</select>
+		
+		<!-- 마지막 Q&A 게시물 번호 반환(업로드파일명 작성시사용) -->
+		<select id="selectLastNo" resultType="Integer">
+			select max(no) as no from feline_board_qna
+		</select>
+		
+		<!-- 검색 로직 추가 시작 -->
+		<!-- 작성자 아이디로 검색 -->
+		<select id="selectSearchW" resultMap="QnaBoardRes" parameterType="String">
+			<include refid="select-all"/>
+			 where id like #{id} and status=1
+			 order by ref desc, re_step asc
+		</select>
+		
+		<!-- 게시물 제목으로 검색 -->
+		<select id="selectSearchS" resultMap="QnaBoardRes" parameterType="String">
+			<include refid="select-all"/>
+			 where subject like #{subject} and status=1
+			  order by ref desc, re_step asc
+		</select>
+		
+		<!-- 게시물 내용으로 검색 -->
+		<select id="selectSearchC" resultMap="QnaBoardRes" parameterType="String">
+			<include refid="select-all"/>
+			 where content like #{content} and status=1
+			  order by ref desc, re_step asc
+		</select>
+		
+		<!-- 검색 로직 끝 -->
+		
+		<!-- 관리자 부분 시작-->
+		<!-- Q&A 삽입 -->
+		<insert id="insertQna" parameterType="QnaModel">
+		insert into feline_board_qna(no, subject, id,password, content, goods_num, regdate,
+		re_step, ref,answer)
+		values(feline_board_qna_seq.NEXTVAL, #{subject}, #{id},#{password}, #{content}, #{goods_num}, #{regdate}
+		,#{re_step}, feline_board_qna_seq.NEXTVAL,0)
+		</insert>
+		
+		<!-- 답변글 삽입 -->
+		<insert id="insertReplyQna" parameterType="QnaModel">
+		insert into feline_board_qna(no, subject, id,password, content, goods_num, regdate,
+		re_step, ref, answer)
+		values(feline_board_qna_seq.NEXTVAL, #{subject}, #{id},#{password}, #{content}, #{goods_num}, #{regdate}
+		,#{re_step}, #{ref},1)
+		</insert>
+		
+		<!-- update 쿼리문 정의 -->
+		<!-- 게시물 수정 -->
+		<update id="updateQna" parameterType="QnaModel">
+		update feline_board_qna set subject=#{subject}, content=#{content} 
+		<include refid="where-no"/>
+		</update>
+		
+		<!-- 첨부파일 추가 및 수정 -->
+		<update id="updateFile" parameterType="QnaModel">
+			update feline_board_qna set image_orgname=#{image_orgname},
+			image_savname=#{image_savname} where no=#{no}
+		</update>
+		
+		<!-- 답변 글 변환 -->
+		<update id="updateReplyStep" parameterType="QnaModel">
+			update feline_board_qna set re_step=re_step+1, answer=1
+			where ref=#{ref} and re_step>#{re_step}
+		</update>
+		
+		<!-- 답변 여부 변경 -->
+		<update id="updateAnswer" parameterType="Integer">
+			update feline_board_qna set answer=1 where ref=#{ref}
+		</update>
+		
+		<!--  delete 쿼리문 정의 -->
+		<!-- 게시물 삭제 -->
+		<update id="deleteQna" parameterType="Integer">
+			update feline_board_qna set status=0  
+			<include refid="where-no"/>
+		</update>
+		<!-- 관리자 부분 끝-->
+</mapper>

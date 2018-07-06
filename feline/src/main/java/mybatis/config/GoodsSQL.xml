@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="goods">
+
+	<resultMap id="GoodsRes" type="GoodsModel">
+
+		<result property="goods_num" column="goods_num" />
+		<result property="goods_name" column="goods_name" />
+		<result property="goods_price" column="goods_price" />
+		<result property="goods_amount" column="goods_amount" />
+		<result property="goods_content" column="goods_content" />
+		<result property="goods_category" column="goods_category" />
+		<result property="goods_size" column="goods_size" />
+		<result property="goods_image_orgname" column="goods_image_orgname" />
+		<result property="goods_image_savname" column="goods_image_savname" />
+		<!-- <result property="goods_detail_image_orgname" column="goods_detail_image_orgname" 
+			/> <result property="goods_detail_image_savname" column="goods_detail_image_savname" 
+			/> -->
+		<result property="goods_hit" column="goods_hit" />
+		<result property="goods_date" column="goods_date" />
+
+	</resultMap>
+
+	<!-- 공통으로 사용할 select 절 정의 -->
+	<sql id="select-all">
+		SELECT * FROM feline_goods
+	</sql>
+
+	<!-- 공통으로 사용할 where 절 정의 -->
+	<sql id="where-num">
+		where goods_num = #{goods_num}
+	</sql>
+
+	<!-- select 쿼리문 정의 -->
+
+	<!-- 모든 상품 검색 -->
+	<select id="selectAll" resultMap="GoodsRes"
+		parameterType="Integer">
+		<include refid="select-all" />
+		order by goods_num desc
+	</select>
+
+	<!-- 상품 선택 -->
+	<select id="selectGoods" resultMap="GoodsRes" parameterType="Integer">
+		<include refid="select-all" /> 
+		<include refid="where-num" />
+	</select>
+
+	<!-- 마지막 상품번호 번호 반환(업로드파일명 작성시사용) -->
+	<select id="selectLastNo" resultType="Integer">
+		select max(goods_num) as goods_num from feline_goods
+	</select>
+	
+	<!-- 최신 등록 상품 10개까지 출력 -->
+	<select id="selectNewGoodsList" resultMap="GoodsRes">
+		<![CDATA[ select * from (select goods_num, goods_name, goods_price, goods_amount, goods_content, goods_category, goods_size, goods_image_orgname, goods_image_savname,
+		goods_hit, goods_date, rownum r from feline_goods order by goods_date desc, goods_num asc) where r>=0 and r<=10 ]]>
+	</select>
+
+	<!-- 검색 로직 추가 시작 -->
+	<!-- 상품명으로 검색 -->
+	<select id="selectSearchN" resultMap="GoodsRes"
+		parameterType="string">
+		<include refid="select-all" />
+		where goods_name like #{goods_name}
+		order by goods_num desc
+	</select>
+
+
+	<select id="selectSearchC" resultMap="GoodsRes" parameterType="string">
+		<include refid="select-all" />
+		where goods_category like #{goods_category}
+		order by goods_num desc
+	</select>
+
+	<!-- 검색 로직 끝 -->
+
+	<!-- 상품 삽입 -->
+	<insert id="insertGoods" parameterType="GoodsModel">
+		insert into feline_goods(goods_num, goods_name, goods_price,goods_amount,
+		goods_category, goods_content, goods_size, goods_hit, goods_date) 
+		values(feline_goods_num_seq.NEXTVAL, #{goods_name}, #{goods_price},
+		#{goods_amount}, #{goods_category}, #{goods_content}, #{goods_size},
+		0, #{goods_date})
+	</insert>
+
+	<!-- update 쿼리문 정의 -->
+	<!-- 상품 수정 -->
+	<update id="updateGoods" parameterType="GoodsModel">
+		update feline_goods set goods_name = #{goods_name}, goods_price=#{goods_price},
+		goods_amount=#{goods_amount},goods_category=#{goods_category},
+		goods_content=#{goods_content}, goods_size=#{goods_size} 
+		<include refid="where-num" />
+	</update>
+
+	<!-- 첨부파일 추가 및 수정 -->
+	<update id="updateFile" parameterType="GoodsModel">
+		update feline_goods set goods_image_orgname=#{goods_image_orgname},
+		goods_image_savname=#{goods_image_savname} 
+		<include refid="where-num" />
+	</update>
+
+	<!-- delete 쿼리문 정의 -->
+	<!-- 상품 삭제 -->
+	<delete id="deleteGoods" parameterType="Integer">
+		delete from feline_goods 
+		<include refid="where-num" />
+	</delete>
+
+</mapper>

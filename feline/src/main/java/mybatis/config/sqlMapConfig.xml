@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC " - //mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<!-- ModelMapping -->
+	<typeAliases>
+
+		<typeAlias type="com.feline.member.MemberModel"
+			alias="memberModel" />
+
+		<typeAlias type="com.feline.goods.GoodsModel"
+			alias="GoodsModel" />
+
+		<typeAlias type="com.feline.basket.BasketModel"
+			alias="basketModel" />
+
+		<typeAlias type="com.feline.order.OrderModel"
+			alias="orderModel" />
+
+		<typeAlias type="com.feline.notice.NoticeModel"
+			alias="NoticeModel" />
+
+		<typeAlias type="com.feline.qna.QnaModel" alias="QnaModel" />
+
+		<typeAlias type="com.feline.faq.FaqModel" alias="FaqModel" />
+
+
+	</typeAliases>
+
+	<!-- SQL 정의한 xml문서 Mapping -->
+	<mappers>
+		<mapper resource="mybatis/config/MemberSQL.xml" />
+		<mapper resource="mybatis/config/GoodsSQL.xml" />
+		<mapper resource="mybatis/config/BasketSQL.xml" />
+		<mapper resource="mybatis/config/OrderSQL.xml" />
+		<mapper resource="mybatis/config/NoticeSQL.xml" />
+		<mapper resource="mybatis/config/QnaSQL.xml" />
+		<mapper resource="mybatis/config/FaqSQL.xml" />
+
+	</mappers>
+
+</configuration>
