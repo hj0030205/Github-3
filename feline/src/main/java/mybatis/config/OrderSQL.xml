@@ -88,6 +88,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			UPDATE feline_order SET order_receive_name = #{order_receive_name}, order_goods_amount = #{order_goods_amount}, order_receive_phone = #{order_receive_phone}, order_receive_zipcode = #{order_receive_zipcode}, order_receive_addr1 = #{order_receive_addr1}, order_receive_addr2 = #{order_receive_addr2}, order_status = #{order_status}, order_memo = #{order_memo} where order_num = #{order_num}
 	</update>
 
-
+	<!-- 취소테이블에 입력 -->
+	<insert id="insertCancle" parameterType="">
+		
+	</insert>
+	<!-- 취소상태변경 -->
 
 </mapper>
