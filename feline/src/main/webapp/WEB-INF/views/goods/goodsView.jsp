@@ -14,7 +14,7 @@
 		var isbuy = confirm("구매하시겠습니까?");
 
 		if (isbuy == true) {
-			goodsform.action = "/feline/order/goodsSettle.cat";
+			goodsform.action = "/feline/order/goodsSettle.cat?goods_num=${goodsModel.goods_num}";
 			goodsform.submit();
 		} else {
 			return false;

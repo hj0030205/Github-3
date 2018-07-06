@@ -98,15 +98,26 @@ public class OrderController {
 			@ModelAttribute("orderModel") OrderModel orderModel) {
 
 		String member_id = (String) session.getAttribute("id");
-		int goods_num = Integer.parseInt(request.getParameter("goods_num"));
 		Calendar today = Calendar.getInstance();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm");
 		String todayS = sdf.format(today.getTime());
+		
+		if(request.getParameter("goods_num") == null) {
+			
+			basketModel.setMember_id(member_id);
+			basketList = orderService.basketList(basketModel);
+			
+		} else if(request.getParameter("goods_num") != null) {
+			
+			int goods_num = Integer.parseInt(request.getParameter("goods_num"));
+			basketModel.setMember_id(member_id);
+			basketModel.setGoods_num(goods_num);
+			basketList = orderService.orderBasketModel(basketModel);
+			
+		}
 
-		basketModel.setMember_id(member_id);
-		basketModel.setGoods_num(goods_num);
-		basketList = orderService.basketList(basketModel);
+		
 
 		int count = basketList.size();
 
