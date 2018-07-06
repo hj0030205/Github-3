@@ -78,7 +78,7 @@ public class OrderController {
 				
 				orderService.insertBasket(basketModel);
 				// 장바구니 정보, 회원 정보를 가지고 goodsSettle 페이지로 이동
-				basketList = orderService.basketList(basketModel);
+				basketList = orderService.orderBasketModel(basketModel);
 				memberModel = orderService.getMember(member_id);
 
 				mav.addObject("memberModel", memberModel);
