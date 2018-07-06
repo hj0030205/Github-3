@@ -53,7 +53,7 @@ public class OrderService implements OrderDao {
 	
 	//상품상세에서 주문하기로 리스트 가져가기
 	public List<BasketModel> orderBasketModel(BasketModel basketModel) {
-		return sqlSessionTemplate.selectList("basketModel.orderBasketList", basketModel);
+		return sqlSessionTemplate.selectList("basket.orderBasketList", basketModel);
 	}
 
 	// 회원 정보 가져오기.
