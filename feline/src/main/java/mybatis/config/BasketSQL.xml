@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 상품상세에서 주문하기화면에 리스트 가져가기 -->
-	<select id="orderList" resultMap="basketRes" parameterType="basketModel">
+	<select id="orderBasketList" resultMap="basketRes" parameterType="basketModel">
 		SELECT *
 		  FROM FELINE_BASKET B, FELINE_GOODS G
 		 WHERE B.GOODS_NUM = G.GOODS_NUM
