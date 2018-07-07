@@ -31,6 +31,7 @@ public interface OrderDao {
 	// 장바구니 물품 삭제.
 	 Object basketDelete (int basket_num);
 	 
-
+	 //주문취소
+	 void orderCancle(int order_num);
 
 }

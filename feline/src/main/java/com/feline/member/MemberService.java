@@ -84,11 +84,6 @@ public class MemberService implements MemberDao{
 		return sqlSessionTemplate.selectOne("goods.selectGoods",goods_num);
 	}
 
-	@Override
-	public void orderCancle(int order_num) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.insert("order.insertCancle", order_num);
-		sqlSessionTemplate.update("order.orderCancle", order_num);
-	}
+
 
 }

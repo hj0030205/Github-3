@@ -90,8 +90,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 취소테이블에 입력 -->
 	<insert id="insertCancle" parameterType="CancleModel">
-		
+		insert into feline_order_cancle_list (cancle_num, order_num, cancle_reason, member_id) values(FELINE_ORDER_CANCLE_NUM_SEQ.NEXTVAL, #{order_num}, #{cancle_resson}, #{member_id})
 	</insert>
+	
 	<!-- 취소상태변경 -->
-
+	 <update id="orderCancle" parameterType="Integer">
+	    update feline_order set status=0 where order_num=#{order_num} 
+	 </update>
+   		
 </mapper>

@@ -46,6 +46,5 @@ public interface MemberDao
 	 //주문 물품 정보 가져오기
 	 GoodsModel goodsView(int goods_num);	
 
-	 //주문취소
-	 void orderCancle(int order_num);
+
 }

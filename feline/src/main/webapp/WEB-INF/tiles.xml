@@ -75,6 +75,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/signOut.jsp"/>
 	</definition>
 	
+	<!-- 주문삭제 -->
+	<definition name="orderCancle" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderCancle.jsp"/>
+	</definition>
+	
 	<!-- ********************* 상품&장바구니 *********************-->
 	
 	<!-- 상품 -->
