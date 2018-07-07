@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<!-- 취소테이블에 입력 -->
-	<insert id="insertCancle" parameterType="">
+	<insert id="insertCancle" parameterType="CancleModel">
 		
 	</insert>
 	<!-- 취소상태변경 -->
