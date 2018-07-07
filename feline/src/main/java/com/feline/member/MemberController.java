@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feline.ccr.CancleModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
 import com.feline.order.OrderService;
@@ -27,10 +28,6 @@ public class MemberController {
 	@Resource
 	private MemberService memberService;
 
-	@Resource
-	private OrderService orderService;
-	
-	
 	ModelAndView mav = new ModelAndView();
 
 	// ·Î±×ÀÎ Æû
@@ -325,8 +322,8 @@ public class MemberController {
 	
 	//ÁÖ¹®»èÁ¦Æû
 	@RequestMapping(value="orderCancle.cat",method=RequestMethod.GET)
-	public ModelAndView orderCancleForm(@RequestParam("order_num")  OrderModel orderModel) {
-		mav.setViewName("orderCancleForm");
+	public ModelAndView orderCancleForm() {
+		mav.setViewName("orderCancle");
 		return mav;
 	}
 	
@@ -336,7 +333,7 @@ public class MemberController {
 	
 		int order_num=Integer.parseInt(request.getParameter("order_num"));
 		
-		orderService.orderCancle(order_num);
+		memberService.orderCancle(order_num);
 		
 		mav.setViewName("orderCancleResult");
 		return mav;

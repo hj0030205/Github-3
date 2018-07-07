@@ -72,10 +72,4 @@ public class OrderService implements OrderDao {
 		return sqlSessionTemplate.delete("basket.basketDelete", basket_num);
 	}
 	
-	@Override
-	public void orderCancle(int order_num) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.insert("order.insertCancle", order_num);
-		sqlSessionTemplate.update("order.orderCancle", order_num);
-	}
 }
