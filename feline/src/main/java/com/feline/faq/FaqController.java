@@ -176,4 +176,5 @@ public class FaqController {
 			mav.addObject("no", faqModel.getNo());
 			return mav;
 		}
+		
 }

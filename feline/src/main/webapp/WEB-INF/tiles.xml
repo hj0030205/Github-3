@@ -80,6 +80,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancle.jsp"/>
 	</definition>
 	
+	<definition name="orderCancleResult" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderCancleResult.jsp"/>
+	</definition>
+	
 	<!-- ********************* 상품&장바구니 *********************-->
 	
 	<!-- 상품 -->
@@ -145,6 +149,7 @@
 	<definition name="faqWrite" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqWrite.jsp" />
 	</definition>
+	
 	
 	<!-- ***************** 관리자 ************************ -->
 	<!-- 관리자 회원 관리 -->
