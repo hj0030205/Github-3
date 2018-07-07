@@ -75,20 +75,21 @@
 							<h2>취소사유</h2>
 						</legend>
 						<form name="orderCancle" action="orderCancle.cat" method="post">
+						<input type="hidden" name="cancle_num" id="cancle_num" value="${cancleModel.cancle_num }"/>
+						<input type="hidden" name="order_num" id="order_num" value="${cancleModel.order_num }"/>
+						
+			
 							<center>
-							<select name="reason">
-								<optgroup label="취소사유선택">
-								
-								<option value="단순 변심">단순변심</option>
-								<option value="제품 불량">제품불량</option>
-								<option value="다른 이유">다른 이유</option>
-								
-								</optgroup>
-								
-							</select>
+								<select name="cancle_reason">
+									<optgroup label="취소사유선택">
+									<option value="${cancleModel.cancle_reason}">단순변심</option>
+									<option value="${cancleModel.cancle_reason}">제품불량</option>
+									<option value="${cancleModel.cancle_reason}">다른 이유</option>
+									</optgroup>
+								</select>
 							</center>
 							<p></p>
-
+						<input type="hidden" name="member_id" id="member_id" value="${cancleModel.member_id }"/>
 
 							<br />
 							<br />

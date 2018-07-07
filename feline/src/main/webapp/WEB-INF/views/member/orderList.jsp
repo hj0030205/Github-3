@@ -84,6 +84,7 @@
 									<td>${order.order_goods_amount }</td>
 									<td>${goodsList[status.index].goods_price }</td>
 									<td>${order.order_status }</td>
+									
 								</tr>	
 							</c:forEach>
 									<c:if test="${fn:length(orderList) <= 0}">

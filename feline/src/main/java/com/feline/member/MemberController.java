@@ -323,19 +323,20 @@ public class MemberController {
 	//林巩昏力汽
 	@RequestMapping(value="orderCancle.cat",method=RequestMethod.GET)
 	public ModelAndView orderCancleForm() {
+		
 		mav.setViewName("orderCancle");
 		return mav;
 	}
 	
 	//林巩昏力贸府
 	@RequestMapping(value="orderCancle.cat",method=RequestMethod.POST)
-	public ModelAndView orderCancle(HttpServletRequest request,HttpSession session) {
-	
-		int order_num=Integer.parseInt(request.getParameter("order_num"));
+	public ModelAndView orderCancle(HttpServletRequest request,HttpSession session, 
+			CancleModel cancleModel,OrderModel orderModel) {
 		
-		memberService.orderCancle(order_num);
+		memberService.orderCancle(cancleModel, orderModel);
 		
 		mav.setViewName("orderCancleResult");
+		
 		return mav;
 		
 	}

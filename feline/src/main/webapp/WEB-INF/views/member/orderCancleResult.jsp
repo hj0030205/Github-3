@@ -9,11 +9,10 @@
 </head>
 <body>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 alert("주문취소가 정상적으로 완료 되었습니다. 감사합니다!");
 location.href='orderList.cat';
-</script> -->
-주문 취소가 정상적으로 완료되었습니다.
+</script> 
 
 </body>
 </html>

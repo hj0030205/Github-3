@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
+import com.feline.ccr.CancleModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
 
@@ -85,10 +86,10 @@ public class MemberService implements MemberDao{
 	}
 	
 	@Override
-	public void orderCancle(int order_num) {
+	public void orderCancle(CancleModel cancleModel,OrderModel orderModel) {
 		// TODO Auto-generated method stub
-		sqlSessionTemplate.insert("order.insertCancle", order_num);
-		sqlSessionTemplate.update("order.orderCancle", order_num);
+		sqlSessionTemplate.insert("order.insertCancle", cancleModel);
+		sqlSessionTemplate.update("order.orderCancle", orderModel);
 	}
 
 
