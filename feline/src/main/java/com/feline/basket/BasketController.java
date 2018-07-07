@@ -83,12 +83,17 @@ public class BasketController {
 	
 	/*장바구니 수량변경*/ 
 	@RequestMapping(value="updateAmount.cat")
-	public ModelAndView updateAmount(@ModelAttribute("basketModel") BasketModel basketModel) {
+	public ModelAndView updateAmount(@ModelAttribute("basketModel") BasketModel basketModel, HttpServletRequest request) {
 		
-		basketModel.setBasket_num(basketModel.getBasket_num());
-		basketModel.setBasket_goods_amount(basketModel.getBasket_goods_amount());
-		
-		basketService.updateAmount(basketModel);
+		if(request.getParameter("goods_amount") != null && request.getParameter("basket_num") != null) {
+			int basket_num = Integer.parseInt(request.getParameter("basket_num"));
+			int basket_goods_amount = Integer.parseInt(request.getParameter("goods_amount"));
+			
+			basketModel.setBasket_num(basket_num);
+			basketModel.setBasket_goods_amount(basket_goods_amount);
+			
+			basketService.updateAmount(basketModel);
+		}
 		
 		mav.setViewName("redirect:basketList.cat");
 		
