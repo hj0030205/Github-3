@@ -322,8 +322,15 @@ public class MemberController {
 	
 	//ÁÖ¹®»èÁ¦Æû
 	@RequestMapping(value="orderCancle.cat",method=RequestMethod.GET)
-	public ModelAndView orderCancleForm() {
+	public ModelAndView orderCancleForm(@RequestParam("order_num")int order_num,
+			HttpSession session) {
 		
+		String member_id = session.getAttribute("id").toString();
+		System.out.println(member_id);
+		System.out.println(order_num);
+		
+		mav.addObject("member_id",member_id);
+		mav.addObject("order_num",order_num);
 		mav.setViewName("orderCancle");
 		return mav;
 	}
@@ -335,6 +342,7 @@ public class MemberController {
 		
 		memberService.orderCancle(cancleModel, orderModel);
 		
+
 		mav.setViewName("orderCancleResult");
 		
 		return mav;

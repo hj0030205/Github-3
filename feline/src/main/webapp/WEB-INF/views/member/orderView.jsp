@@ -221,7 +221,7 @@
 								</button>
 								
 								<button class="btn btn-danger"
-								onclick="javascript:location.href='orderrefund.cat?order_num=${orderModel.order_num}'">주문환불
+								onclick="javascript:location.href='orderRefund.cat?order_num=${orderModel.order_num}'">주문환불
 								</button>								
 							</c:otherwise>
 						</c:choose>
