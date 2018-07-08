@@ -98,5 +98,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <update id="orderCancle" parameterType="orderModel">
 	    update feline_order set status=0 where order_num=#{order_num} 
 	 </update>
+	 
+	 
+	 <!-- 주문환불 입력 -->
+	 <insert id="insertRefund" parameterType="RefundModel">
+	 	insert into FELINE_TRADE_LIST(trade_num, order_num, trade_reason, trade_state, member_id) 
+	 	values(FELINE_ORDER_trade_NUM_SEQ.NEXTVAL, #{order_num},#{trade_reason},#{trade_state},#{member_id})
+	 </insert>
    		
 </mapper>

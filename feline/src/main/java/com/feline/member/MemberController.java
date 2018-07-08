@@ -323,15 +323,13 @@ public class MemberController {
 	//주문삭제폼
 	@RequestMapping(value="orderCancle.cat",method=RequestMethod.GET)
 	public ModelAndView orderCancleForm(@RequestParam("order_num")int order_num,
-			HttpSession session) {
+			HttpSession session) { //id를 받아오기위한 세션, get방식으로 order_num하나만 가져오기위해 
 		
 		String member_id = session.getAttribute("id").toString();
-		System.out.println(member_id);
-		System.out.println(order_num);
 		
-		mav.addObject("member_id",member_id);
-		mav.addObject("order_num",order_num);
-		mav.setViewName("orderCancle");
+		mav.addObject("member_id",member_id); //mav에 member_id라는 이름으로 세션값을 넣어줌
+		mav.addObject("order_num",order_num); // order_num을 받아온것을 담아서 넘겨줌
+		mav.setViewName("orderCancle"); //orderCancle.jsp
 		return mav;
 	}
 	
@@ -341,7 +339,7 @@ public class MemberController {
 			CancleModel cancleModel,OrderModel orderModel) {
 		
 		memberService.orderCancle(cancleModel, orderModel);
-		
+		 //2개의 쿼리문 실행 orderCancle은 insert와 update 2개를 한다 
 
 		mav.setViewName("orderCancleResult");
 		
