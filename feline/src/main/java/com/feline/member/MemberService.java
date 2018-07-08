@@ -94,7 +94,7 @@ public class MemberService implements MemberDao{
 	}
 
 	@Override
-	public void orderRefund(RefundModel refundModel, OrderModel orderModel) {
+	public void clientOrderRefund(RefundModel refundModel) {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("order.insertRefund",refundModel);
 	}

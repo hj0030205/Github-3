@@ -51,6 +51,6 @@ public interface MemberDao
 	 //주문취소
 	 void orderCancle(CancleModel cancleModel,OrderModel orderModel);
 
-	 //주문환불
-	 void orderRefund(RefundModel refundModel,OrderModel orderModel);
+	 //주문환불(고객시점)
+	 void clientOrderRefund(RefundModel refundModel);
 }

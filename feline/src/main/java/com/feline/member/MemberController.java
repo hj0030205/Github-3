@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.ccr.CancleModel;
+import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
 import com.feline.order.OrderService;
@@ -346,5 +347,28 @@ public class MemberController {
 		return mav;
 		
 	}
-
+	
+	//주문환불 폼
+	@RequestMapping(value="orderRefund.cat", method=RequestMethod.GET)
+	public ModelAndView orderRefundForm(@RequestParam("order_num")int order_num,
+			HttpSession session) {
+		String member_id = session.getAttribute("id").toString();
+		
+		mav.addObject("member_id",member_id);
+		mav.addObject("order_num",order_num);
+		mav.setViewName("orderRefund");
+		
+		return mav;
+	}
+	
+	//고객주문환불신청
+	@RequestMapping(value="orderRefund.cat",method=RequestMethod.POST)
+	public ModelAndView orderRefund(RefundModel refundModel) {
+		
+		memberService.clientOrderRefund(refundModel);
+		
+		mav.setViewName("orderRefundResult");
+		
+		return mav;
+	}
 }

@@ -80,8 +80,19 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancle.jsp"/>
 	</definition>
 	
+	<!-- 주문삭제 결과 -->
 	<definition name="orderCancleResult" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancleResult.jsp"/>
+	</definition>
+	
+	<!--  주문환불 -->
+	<definition name="orderRefund" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderRefund.jsp"/>
+	</definition>
+	
+	<!-- 주문환불 결과 -->
+	<definition name="orderRefundResult" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderRefundResult.jsp"/>
 	</definition>
 	
 	<!-- ********************* 상품&장바구니 *********************-->
