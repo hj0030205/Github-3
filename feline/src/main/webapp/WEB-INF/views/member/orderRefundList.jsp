@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>주문조회</title>
+<title>주문환불</title>
 </head>
 <body>
 	<div class="all">
