@@ -95,9 +95,10 @@ public class MemberService implements MemberDao{
 	}
 
 	@Override
-	public void clientOrderRefund(RefundModel refundModel) {
+	public void clientOrderRefund(RefundModel refundModel,OrderModel orderModel) {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("order.insertRefund",refundModel);
+		sqlSessionTemplate.update("order.orderRefund", orderModel);
 	}
 
 	@Override
@@ -112,5 +113,16 @@ public class MemberService implements MemberDao{
 		return sqlSessionTemplate.selectList("order.orderCancleList", member_id);
 	}
 
+	@Override
+	public List<OrderModel> orderRefundList(String member_id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.orderRefundList",member_id);
+	}
+
+	@Override
+	public List<OrderModel> orderChangeList(String member_id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.orderChangeList",member_id);
+	}
 
 }

@@ -372,6 +372,26 @@ public class MemberController {
 		
 	}
 	
+	// 주문환불목록만 뽑아오는 로직
+	@RequestMapping(value = "orderRefundList.cat")
+	public ModelAndView orderRefundList(HttpServletRequest request, HttpSession session) {
+
+		String member_id = (String) session.getAttribute("id").toString();
+		System.out.println(member_id);
+		List<OrderModel> orderRefundList = memberService.orderRefundList(member_id);
+		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
+		
+		for(int i=0; i<orderRefundList.size(); i++) {
+			goodsList.add(memberService.goodsView(orderRefundList.get(i).getGoods_num())); 
+		}
+		
+		mav.addObject("goodsList",goodsList);
+		mav.addObject("orderRefundList", orderRefundList);
+		mav.setViewName("orderRefundList");
+		return mav;
+	}
+
+	
 	//주문환불 폼
 	@RequestMapping(value="orderRefund.cat", method=RequestMethod.GET)
 	public ModelAndView orderRefundForm(@RequestParam("order_num")int order_num,
@@ -387,9 +407,10 @@ public class MemberController {
 	
 	//고객주문환불신청
 	@RequestMapping(value="orderRefund.cat",method=RequestMethod.POST)
-	public ModelAndView orderRefund(RefundModel refundModel) {
+	public ModelAndView orderRefund(RefundModel refundModel,OrderModel orderModel) {
 		
-		memberService.clientOrderRefund(refundModel);
+		memberService.clientOrderRefund(refundModel,orderModel);
+		//2개의 쿼리문으로 하나는 RefundModel에 insert , OrderModel의 상태를 바꿔주기 위해 update
 		
 		mav.setViewName("orderRefundResult");
 		
