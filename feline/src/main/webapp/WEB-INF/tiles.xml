@@ -206,5 +206,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderChange.jsp" />
 	</definition>
 	
+	<!-- 관리자 이벤트 관리 -->
+	<definition name="adEventList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adEventList.jsp" />
+	</definition>
 	
 </tiles-definitions>

@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feline.event.EventModel;
+import com.feline.event.EventService;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
 import com.feline.order.OrderModel;
@@ -33,6 +35,9 @@ public class AdminController {
 
 	@Resource
 	private AdminService adminService;
+	
+	@Resource
+	private EventService eventService;
 
 	ModelAndView mav = new ModelAndView();
 
@@ -48,6 +53,8 @@ public class AdminController {
 	private Paging page;
 
 	private List<MemberModel> memberList = new ArrayList<MemberModel>();
+	private List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
+	private List<EventModel> eventList = new ArrayList<EventModel>();
 
 	/*********************** 회원 관리 *************************/
 
@@ -496,6 +503,59 @@ public class AdminController {
 
 		mav.setViewName("redirect:adOrderList.cat");
 		mav.addObject("currentPage",request.getParameter("currentPage"));
+		return mav;
+	}
+	
+	/*********************** 이벤트 관리 *************************/
+	
+	//이벤트 리스트
+	@RequestMapping(value="adEventList.cat")
+	public ModelAndView eventList(HttpServletRequest request) {
+		
+		eventList = eventService.eventList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		keyword = request.getParameter("searchKeyword");
+		
+		totalCount = eventList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adMemberList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+			eventList = eventList.subList(page.getStartCount(), lastCount);
+		
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("eventList", eventList);
+		mav.setViewName("adEventList");
+		
+		return mav;
+			
+		}
+		
+	//이벤트 추가 폼의 상품 리스트
+	@RequestMapping(value="eventGoodsList.cat")
+	public ModelAndView eventGoodsList(HttpServletRequest request) {
+		
+		if(request.getParameter("goods_category") != null) {
+			int goods_category = Integer.parseInt(request.getParameter("goods_category"));
+			goodsList = eventService.goodsList(goods_category);
+			
+			mav.addObject("goodsList", goodsList);
+		}
+		
+		mav.setViewName("addEvent");
+		
 		return mav;
 	}
 
