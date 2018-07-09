@@ -102,9 +102,10 @@ public class MemberService implements MemberDao{
 	}
 
 	@Override
-	public void clientOrderChange(ChangeModel changeModel) {
+	public void clientOrderChange(ChangeModel changeModel,OrderModel orderModel) {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("order.insertChange",changeModel);
+		sqlSessionTemplate.update("order.orderChange", orderModel);
 	}
 
 	@Override
