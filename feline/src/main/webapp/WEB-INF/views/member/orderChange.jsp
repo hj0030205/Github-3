@@ -21,7 +21,7 @@
 	}
 	
 </script>
-<title>주문취소폼</title>
+<title>주문교환폼</title>
 </head>
 <body>
 	<div class="all">
@@ -47,12 +47,14 @@
 
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href="mypage.cat">마이 페이지</a></li>
-								<li class="active"><a href="orderList.cat">
+								<li><a href="orderList.cat">
 								<i class="fa fa-list"></i>나의 주문 내역</a></li>
 								<li><a href="orderCancleList.cat">
 								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
 								<li><a href="orderRefundList.cat">
-								<i class="fa fa-reply-all"></i>주문 환불 내역</a></li>								
+								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
+								<li class="active"><a href="orderChangeList.cat">
+								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
 								<li><a href="/feline/basket/basketList.cat"><i
 										class="fa fa-heart"></i>장바구니</a></li>
 								<li><a href="memberModify.cat"><i
@@ -61,6 +63,7 @@
 										class="fa fa-sign-out"></i>회원탈퇴</a></li>
 								
 							</ul>
+							
 						</div>
 
 					</div>
@@ -73,10 +76,10 @@
 				<div class="col-md-9" id="customer-orders">
 					<div class="box">
 						<h3>
-							환불신청 <small>회원전용</small>
+							교환신청 <small>회원전용</small>
 						</h3>
 						<legend>
-							<h2>환불사유</h2>
+							<h2>교환사유</h2>
 						</legend>
 						
 						<p>
@@ -134,7 +137,7 @@
 			
 							<center>
 								<select name="change_reason" >
-									<optgroup label="환불사유선택">
+									<optgroup label="교환사유선택">
 									<option value="단순변심">단순변심</option>
 									<option value="제품불량">제품불량</option>
 									<option value="다른이유">다른 이유</option>
@@ -147,7 +150,7 @@
 							<br />
 							<br />
 								<center>
-								<button class="btn btn-danger" type="button" onclick="changeCheck();">환불신청하기</button>
+								<button class="btn btn-danger" type="button" onclick="changeCheck();">교환신청하기</button>
 								<br />
 								<br />
 								<button class="btn btn-primary" type="button" 

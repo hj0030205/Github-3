@@ -366,7 +366,7 @@ public class MemberController {
 		memberService.orderCancle(cancleModel, orderModel);
 		 //2개의 쿼리문 실행 orderCancle은 insert와 update 2개를 한다 
 
-		mav.setViewName("orderCancleResult");
+		mav.setViewName("member/orderCancleResult");
 		
 		return mav;
 		
@@ -412,7 +412,7 @@ public class MemberController {
 		memberService.clientOrderRefund(refundModel,orderModel);
 		//2개의 쿼리문으로 하나는 RefundModel에 insert , OrderModel의 상태를 바꿔주기 위해 update
 		
-		mav.setViewName("orderRefundResult");
+		mav.setViewName("member/orderRefundResult");
 		
 		return mav;
 	}
@@ -421,6 +421,7 @@ public class MemberController {
 	@RequestMapping(value="orderChange.cat",method=RequestMethod.GET)
 	public ModelAndView orderChangeForm(@RequestParam("order_num")int order_num,
 			HttpSession session) {
+		
 		String member_id = session.getAttribute("id").toString();
 		
 		mav.addObject("member_id",member_id);
@@ -432,12 +433,33 @@ public class MemberController {
 	
 	//고객주문교환신청
 	@RequestMapping(value="orderChange.cat",method=RequestMethod.POST)
-	public ModelAndView orderChange(ChangeModel changeModel) {
+	public ModelAndView orderChange(ChangeModel changeModel,OrderModel orderModel) {
 		
-		memberService.clientOrderChange(changeModel);
-		
-		mav.setViewName("orderChangeResult");
+		memberService.clientOrderChange(changeModel,orderModel);
+		//2개의 쿼리문으로 하나는 ChangeModel에 insert , OrderModel의 상태를 바꿔주기 위해 update
+
+		mav.setViewName("member/orderChangeResult");
 		
 		return mav;
 	}
+	
+	// 주문교환목록만 뽑아오는 로직
+	@RequestMapping(value = "orderChangeList.cat")
+	public ModelAndView orderChangeList(HttpServletRequest request, HttpSession session) {
+
+		String member_id = (String) session.getAttribute("id").toString();
+		System.out.println(member_id);
+		List<OrderModel> orderChangeList = memberService.orderChangeList(member_id);
+		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
+		
+		for(int i=0; i<orderChangeList.size(); i++) {
+			goodsList.add(memberService.goodsView(orderChangeList.get(i).getGoods_num())); 
+		}
+		
+		mav.addObject("goodsList",goodsList);
+		mav.addObject("orderChangeList", orderChangeList);
+		mav.setViewName("orderChangeList");
+		return mav;
+	}
+	
 }

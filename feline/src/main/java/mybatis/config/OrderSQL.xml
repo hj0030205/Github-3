@@ -130,6 +130,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	values(FELINE_ORDER_trade_NUM_SEQ.NEXTVAL, #{order_num}, #{change_reason}, #{change_state}, #{member_id})
 	 </insert>
 
+	 <!-- 교환상태변경 -->
+	 <update id="orderChange" parameterType="orderModel">
+	 	update feline_order set status=5 where order_num=#{order_num}
+	 </update>
 	 
+	 <!-- 교환목록가져오기 -->
+	 <select id="orderChangeList" resultMap="orderRes" parameterType="String">
+	 	select *
+	 	from feline_order
+	 	where order_member_id = #{order_member_id} and status = 5
+	 </select>
    		
 </mapper>

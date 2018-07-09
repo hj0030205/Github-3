@@ -83,6 +83,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/signOut.jsp"/>
 	</definition>
 	
+	
 	<!-- 나의 주문 취소 내역 -->
 	<definition name="orderCancleList" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancleList.jsp" />
@@ -92,13 +93,7 @@
 	<definition name="orderCancle" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancle.jsp"/>
 	</definition>
-
-	<!-- 주문삭제 결과 -->
-	<definition name="orderCancleResult" extends="main">
-		<put-attribute name="body" value="/WEB-INF/views/member/orderCancleResult.jsp"/>
-	</definition>
-	
-	
+		
 	<!-- 나의 주문 환불 내역 -->
 	<definition name="orderRefundList" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/member/orderRefundList.jsp"></put-attribute>
@@ -109,11 +104,17 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/orderRefund.jsp"/>
 	</definition>
 	
-	<!-- 주문환불 결과 -->
-	<definition name="orderRefundResult" extends="main">
-		<put-attribute name="body" value="/WEB-INF/views/member/orderRefundResult.jsp"/>
-	</definition>
 	
+	<!-- 나의 주문 교환 내역 -->
+	<definition name="orderChangeList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderChangeList.jsp"></put-attribute>
+	</definition>	
+	
+	<!--  주문교환 -->
+	<definition name="orderChange" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderChange.jsp"/>
+	</definition>
+		
 	<!-- ********************* 상품&장바구니 *********************-->
 	
 	<!-- 상품 -->
