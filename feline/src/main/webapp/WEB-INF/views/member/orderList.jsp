@@ -84,11 +84,26 @@
 									<td>${goodsList[status.index].goods_name }</td>
 									<td>${order.order_goods_amount }</td>
 									<td>${goodsList[status.index].goods_price }</td>
-									<td>${order.order_status }</td>
+									<td>
+									<c:choose>
+									<c:when test="${order.order_status == 0}">
+									배송준비중
+									</c:when>
+									<c:when test="${order.order_status == 1}">
+									배송중
+									</c:when>
+									<c:otherwise>
+									배송완료
+									</c:otherwise>
+									</c:choose>
+									</td>
 									<td>
 									<c:choose>
 									<c:when test="${order.status == 0}">
+									<strong><font color="red">
 									취소완료
+									</font>
+									</strong>
 									</c:when>
 									<c:otherwise>
 									정상주문

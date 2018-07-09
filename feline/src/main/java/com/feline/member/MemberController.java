@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
 import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
@@ -368,6 +369,30 @@ public class MemberController {
 		memberService.clientOrderRefund(refundModel);
 		
 		mav.setViewName("orderRefundResult");
+		
+		return mav;
+	}
+	
+	//주문교환 폼
+	@RequestMapping(value="orderChange.cat",method=RequestMethod.GET)
+	public ModelAndView orderChangeForm(@RequestParam("order_num")int order_num,
+			HttpSession session) {
+		String member_id = session.getAttribute("id").toString();
+		
+		mav.addObject("member_id",member_id);
+		mav.addObject("order_num",order_num);
+		mav.setViewName("orderChange");
+		
+		return mav;
+	}
+	
+	//고객주문교환신청
+	@RequestMapping(value="orderChange.cat",method=RequestMethod.POST)
+	public ModelAndView orderChange(ChangeModel changeModel) {
+		
+		memberService.clientOrderChange(changeModel);
+		
+		mav.setViewName("orderChangeResult");
 		
 		return mav;
 	}

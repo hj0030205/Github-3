@@ -110,7 +110,19 @@
 											<td>${goodsModel[status.index].goods_name }</td>
 											<td>${order.order_goods_amount }</td>
 											<td>${goodsModel[status.index].goods_price * order.order_goods_amount }</td>
-											<td>${order.order_status }</td>
+											<td>
+											<c:choose>
+											<c:when test="${order.order_status == 0}">
+											배송준비중
+											</c:when>
+											<c:when test="${order.order_status == 1}">
+											배송중
+											</c:when>
+											<c:otherwise>
+											배송완료
+											</c:otherwise>
+											</c:choose>
+											</td>
 										</tr>
 										
 									</c:forEach>
