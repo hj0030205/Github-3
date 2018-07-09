@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -98,7 +99,7 @@
                                 </thead>
                                 <tbody>
 								<c:forEach var="eventList" items="${eventList}" varStatus="stat">
-									<c:url var="viewURL" value="adMemberView.cat">
+									<c:url var="viewURL" value="adEventView.cat">
 										<c:param name="event_num">${eventList.event_num}</c:param>
 										<c:param name="currentPage">${currentPage}</c:param>
 									</c:url>
@@ -106,10 +107,11 @@
 										<c:set var= "count" value="${count+1}"/>
 										<td>${count}</td>
 										<td><a href="${viewURL}">${eventList.event_name}</a></td>
-										<td>${eventList.reg_date}</td>
-										<td>${eventList.start_date}</td>
-										<td>${eventList.end_date}</td>
+										<td><fmt:formatDate value="${eventList.reg_date}" pattern="yyyy/MM/dd"/></td>
+										<td><fmt:formatDate value="${eventList.start_date}" pattern="yyyy/MM/dd"/></td>
+										<td><fmt:formatDate value="${eventList.end_date}" pattern="yyyy/MM/dd"/></td>
 									</tr>
+									
 								</c:forEach>
 								
 								<c:if test="${fn:length(eventList) <= 0}">

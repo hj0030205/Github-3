@@ -509,7 +509,7 @@ public class AdminController {
 	/*********************** 이벤트 관리 *************************/
 	
 	//이벤트 리스트
-	@RequestMapping(value="adEventList.cat")
+	@RequestMapping(value = "adEventList.cat")
 	public ModelAndView eventList(HttpServletRequest request) {
 		
 		eventList = eventService.eventList();
@@ -544,7 +544,7 @@ public class AdminController {
 		}
 		
 	//이벤트 추가 폼의 상품 리스트
-	@RequestMapping(value="eventGoodsList.cat")
+	@RequestMapping(value = "eventGoodsList.cat")
 	public ModelAndView eventGoodsList(HttpServletRequest request) {
 		
 		if(request.getParameter("goods_category") != null) {

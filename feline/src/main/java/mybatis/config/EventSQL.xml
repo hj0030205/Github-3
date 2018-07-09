@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="event">
 
-	<resultMap id="GoodsRes" type="GoodsModel">
+	<resultMap id="goodsModel" type="GoodsModel">
 		<result property="goods_num" column="goods_num" />
 		<result property="goods_name" column="goods_name" />
 		<result property="goods_price" column="goods_price" />
@@ -30,7 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="end_date" column="end_date"/>
 		<result property="dc_rate" column="dc_rate"/>
 		<result property="status" column="status"/>
-		<collection property="GoodsRes" resultMap="GoodsRes" />
+		<result property="event_name" column="event_name"/>
+		<collection property="goodsModel" resultMap="goodsModel" />
 	</resultMap>
 	
 	
