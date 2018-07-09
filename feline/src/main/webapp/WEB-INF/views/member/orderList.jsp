@@ -71,6 +71,7 @@
 									<th>주문수량</th>
 									<th>상품가격</th>
 									<th>주문상태</th>
+									<th>상태</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -84,6 +85,16 @@
 									<td>${order.order_goods_amount }</td>
 									<td>${goodsList[status.index].goods_price }</td>
 									<td>${order.order_status }</td>
+									<td>
+									<c:choose>
+									<c:when test="${order.status == 0}">
+									취소완료
+									</c:when>
+									<c:otherwise>
+									정상주문
+									</c:otherwise>
+									</c:choose>
+									</td>
 								</tr>	
 							</c:forEach>
 									<c:if test="${fn:length(orderList) <= 0}">

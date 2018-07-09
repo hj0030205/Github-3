@@ -12,11 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feline.ccr.CancleModel;
+import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
+import com.feline.order.OrderService;
 
 @Controller
 @RequestMapping("/member")
@@ -314,5 +318,57 @@ public class MemberController {
 		mav.setViewName("/member/deleteResult");
 		return mav;
 	}
+	
+	/********************* 회원 주문 취소 교환 환불 **********************/
+	
+	//주문삭제폼
+	@RequestMapping(value="orderCancle.cat",method=RequestMethod.GET)
+	public ModelAndView orderCancleForm(@RequestParam("order_num")int order_num,
+			HttpSession session) { //id를 받아오기위한 세션, get방식으로 order_num하나만 가져오기위해 
+		
+		String member_id = session.getAttribute("id").toString();
+		
+		mav.addObject("member_id",member_id); //mav에 member_id라는 이름으로 세션값을 넣어줌
+		mav.addObject("order_num",order_num); // order_num을 받아온것을 담아서 넘겨줌
+		mav.setViewName("orderCancle"); //orderCancle.jsp
+		return mav;
+	}
+	
+	//주문삭제처리
+	@RequestMapping(value="orderCancle.cat",method=RequestMethod.POST)
+	public ModelAndView orderCancle(HttpServletRequest request,HttpSession session, 
+			CancleModel cancleModel,OrderModel orderModel) {
+		
+		memberService.orderCancle(cancleModel, orderModel);
+		 //2개의 쿼리문 실행 orderCancle은 insert와 update 2개를 한다 
 
+		mav.setViewName("orderCancleResult");
+		
+		return mav;
+		
+	}
+	
+	//주문환불 폼
+	@RequestMapping(value="orderRefund.cat", method=RequestMethod.GET)
+	public ModelAndView orderRefundForm(@RequestParam("order_num")int order_num,
+			HttpSession session) {
+		String member_id = session.getAttribute("id").toString();
+		
+		mav.addObject("member_id",member_id);
+		mav.addObject("order_num",order_num);
+		mav.setViewName("orderRefund");
+		
+		return mav;
+	}
+	
+	//고객주문환불신청
+	@RequestMapping(value="orderRefund.cat",method=RequestMethod.POST)
+	public ModelAndView orderRefund(RefundModel refundModel) {
+		
+		memberService.clientOrderRefund(refundModel);
+		
+		mav.setViewName("orderRefundResult");
+		
+		return mav;
+	}
 }

@@ -88,6 +88,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			UPDATE feline_order SET order_receive_name = #{order_receive_name}, order_goods_amount = #{order_goods_amount}, order_receive_phone = #{order_receive_phone}, order_receive_zipcode = #{order_receive_zipcode}, order_receive_addr1 = #{order_receive_addr1}, order_receive_addr2 = #{order_receive_addr2}, order_status = #{order_status}, order_memo = #{order_memo} where order_num = #{order_num}
 	</update>
 
-
-
+	<!-- 취소테이블에 입력 -->
+	<insert id="insertCancle" parameterType="CancleModel">
+		insert into feline_order_cancle_list (cancle_num, order_num, cancle_reason, member_id) 
+		values(FELINE_ORDER_CANCLE_NUM_SEQ.NEXTVAL, #{order_num}, #{cancle_reason}, #{member_id})
+	</insert>
+	
+	<!-- 취소상태변경 -->
+	 <update id="orderCancle" parameterType="orderModel">
+	    update feline_order set status=0 where order_num=#{order_num} 
+	 </update>
+	 
+	 
+	 <!-- 주문환불 입력 -->
+	 <insert id="insertRefund" parameterType="RefundModel">
+	 	insert into FELINE_TRADE_LIST(trade_num, order_num, trade_reason, trade_state, member_id) 
+	 	values(FELINE_ORDER_trade_NUM_SEQ.NEXTVAL, #{order_num},#{trade_reason},#{trade_state},#{member_id})
+	 </insert>
+   		
 </mapper>

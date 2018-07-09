@@ -2,6 +2,8 @@ package com.feline.member;
 
 import java.util.List;
 
+import com.feline.ccr.CancleModel;
+import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
 
@@ -47,5 +49,8 @@ public interface MemberDao
 	 GoodsModel goodsView(int goods_num);	
 
 	 //주문취소
-	 void orderCancle(int order_num);
+	 void orderCancle(CancleModel cancleModel,OrderModel orderModel);
+
+	 //주문환불(고객시점)
+	 void clientOrderRefund(RefundModel refundModel);
 }

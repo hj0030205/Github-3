@@ -209,10 +209,24 @@
 							</div>
 						</div>
 				<!-- ========================================================================================== -->
-						<center>
+						<c:choose>
+							<c:when test="${orderModel.order_status == 0 }">
+								<button class="btn btn-danger"
+								onclick="javascript:location.href='orderCancle.cat?order_num=${orderModel.order_num}'">주문취소
+								</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn btn-danger"
+								onclick="javascript:location.href='orderChange.cat?order_num=${orderModel.order_num}'">주문교환
+								</button>
+								
+								<button class="btn btn-danger"
+								onclick="javascript:location.href='orderRefund.cat?order_num=${orderModel.order_num}'">주문환불
+								</button>								
+							</c:otherwise>
+						</c:choose>
 							<button class="btn btn-primary"
-								onclick="javascript:location.href='orderList.cat'">목록</button>
-						</center>				
+								onclick="javascript:location.href='orderList.cat'">목록</button>										
 					</div>
 				</div>
 			</div>
