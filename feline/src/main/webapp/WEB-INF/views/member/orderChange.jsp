@@ -12,9 +12,9 @@
 
 <script type="text/javascript">
 
-	function refundCheck(){
-		if(confirm("정말 환불하시겠습니까?") == true){
-			document.orderRefund.submit();
+	function changeCheck(){
+		if(confirm("정말 교환하시겠습니까?") == true){
+			document.orderChange.submit();
 		}else{
 			return false;
 		}
@@ -125,13 +125,13 @@
 						<br></br><br></br>
 
 					
-						<form name="orderRefund" action="orderRefund.cat" method="post">
+						<form name="orderChange" action="orderChange.cat" method="post">
 						
 						<input type="hidden" name="order_num" value="${order_num }"/>
 						
 			
 							<center>
-								<select name="trade_reason" >
+								<select name="change_reason" >
 									<optgroup label="환불사유선택">
 									<option value="단순변심">단순변심</option>
 									<option value="제품불량">제품불량</option>
@@ -145,7 +145,7 @@
 							<br />
 							<br />
 								<center>
-								<button class="btn btn-danger" type="button" onclick="refundCheck();">환불신청하기</button>
+								<button class="btn btn-danger" type="button" onclick="changeCheck();">환불신청하기</button>
 								<br />
 								<br />
 								<button class="btn btn-primary" type="button" 

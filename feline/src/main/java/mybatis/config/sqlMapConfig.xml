@@ -30,6 +30,8 @@
 
 		<typeAlias type="com.feline.ccr.RefundModel" alias="RefundModel"/>
 		
+		<typeAlias type="com.feline.ccr.ChangeModel" alias="ChangeModel"/>
+		
 	</typeAliases>
 
 	<!-- SQL 정의한 xml문서 Mapping -->

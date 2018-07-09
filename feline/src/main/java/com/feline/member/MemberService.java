@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
 import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
@@ -97,6 +98,18 @@ public class MemberService implements MemberDao{
 	public void clientOrderRefund(RefundModel refundModel) {
 		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("order.insertRefund",refundModel);
+	}
+
+	@Override
+	public void clientOrderChange(ChangeModel changeModel) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.insert("order.insertChange",changeModel);
+	}
+
+	@Override
+	public List<OrderModel> orderCancleList(String member_id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.orderCancleList", member_id);
 	}
 
 
