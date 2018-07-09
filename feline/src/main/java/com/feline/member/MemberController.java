@@ -47,7 +47,7 @@ public class MemberController {
 		if (member_id != null) {
 			session.setAttribute("id", member_id);
 			
-			mav.setViewName("main");
+			mav.setViewName("redirect:/main.cat");
 			return mav;
 		}
 
