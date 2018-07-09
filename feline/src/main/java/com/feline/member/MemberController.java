@@ -179,7 +179,9 @@ public class MemberController {
 		mav.setViewName("/user/findPwdCheck");
 		return mav;
 	}
-
+	
+//////////////////////////////////////////////////////////////////////////////////////////////
+	
 	// 마이페이지 띄우기
 	@RequestMapping("mypage.cat")
 	public ModelAndView myPage(HttpSession session) {
@@ -204,7 +206,7 @@ public class MemberController {
 
 	/********************* 회원 주문 페이지 부분 **********************/
 
-	// 주문목록을 뽑아오는 로직
+	// 주문목록을 뽑아오는 로직(취소는 따로)
 	@RequestMapping(value = "orderList.cat")
 	public ModelAndView orderList(HttpServletRequest request, HttpSession session) {
 
@@ -322,6 +324,27 @@ public class MemberController {
 	
 	/********************* 회원 주문 취소 교환 환불 **********************/
 	
+	
+	// 주문취소목록만 뽑아오는 로직
+	@RequestMapping(value = "orderCancleList.cat")
+	public ModelAndView orderCancleList(HttpServletRequest request, HttpSession session) {
+
+		String member_id = (String) session.getAttribute("id").toString();
+		System.out.println(member_id);
+		List<OrderModel> orderCancleList = memberService.orderCancleList(member_id);
+		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
+		
+		for(int i=0; i<orderCancleList.size(); i++) {
+			goodsList.add(memberService.goodsView(orderCancleList.get(i).getGoods_num())); 
+		}
+		
+		mav.addObject("goodsList",goodsList);
+		mav.addObject("orderCancleList", orderCancleList);
+		mav.setViewName("orderCancleList");
+		return mav;
+	}
+
+
 	//주문삭제폼
 	@RequestMapping(value="orderCancle.cat",method=RequestMethod.GET)
 	public ModelAndView orderCancleForm(@RequestParam("order_num")int order_num,

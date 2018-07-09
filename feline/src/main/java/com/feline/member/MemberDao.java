@@ -52,9 +52,13 @@ public interface MemberDao
 	 //주문취소
 	 void orderCancle(CancleModel cancleModel,OrderModel orderModel);
 
+	 //주문취소목록 가져오기
+	 List<OrderModel> orderCancleList(String member_id);
+	 
 	 //주문환불(고객시점)
 	 void clientOrderRefund(RefundModel refundModel);
 	 
 	 //주문교환(고객시점)
 	 void clientOrderChange(ChangeModel changeModel);
+	
 }

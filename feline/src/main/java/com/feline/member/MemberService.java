@@ -106,5 +106,11 @@ public class MemberService implements MemberDao{
 		sqlSessionTemplate.insert("order.insertChange",changeModel);
 	}
 
+	@Override
+	public List<OrderModel> orderCancleList(String member_id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.orderCancleList", member_id);
+	}
+
 
 }
