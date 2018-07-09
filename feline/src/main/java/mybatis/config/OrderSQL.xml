@@ -112,6 +112,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	values(FELINE_ORDER_trade_NUM_SEQ.NEXTVAL, #{order_num},#{trade_reason},#{trade_state},#{member_id})
 	 </insert>
 	 
+	 <!-- 환불상태변경 -->
+	 <update id="orderRefund" parameterType="orderModel">
+	 	update feline_order set status=2 where order_num=#{order_num}
+	 </update>
+	 
+	 <!-- 환불목록가져오기 -->
+	 <select id="orderRefundList" resultMap="orderRes" parameterType="String">
+	 	select *
+	 	from feline_order
+	 	where order_member_id = #{order_member_id} and status = 2
+	 </select>
+	 
 	 <!-- 주문교환 입력-->
 	 <insert id="insertChange" parameterType="ChangeModel">
 	 	insert into FELINE_change_LIST(change_num, order_num, change_reason, change_state, member_id) 

@@ -38,10 +38,10 @@
 								<li><a href="mypage.cat">마이 페이지</a></li>
 								<li><a href="orderList.cat">
 								<i class="fa fa-list"></i>나의 주문 내역</a></li>
-								<li class="active"><a href="orderCancleList.cat">
-								<i class="fa fa-times"></i>주문 취소 내역</a></li>
-								<li><a href="orderRefundList.cat">
-								<i class="fa fa-reply-all"></i>주문 환불 내역</a></li>									
+								<li><a href="orderCancleList.cat">
+								<i class="fa fa-list"></i>주문 취소 내역</a></li>	
+								<li class="active"><a href="orderRefundList.cat">
+								<i class="fa fa-list"></i>주문 환불 내역</a></li>								
 								<li><a href="/feline/basket/basketList.cat"><i
 										class="fa fa-heart"></i>장바구니</a></li>
 								<li><a href="memberModify.cat"><i
@@ -63,10 +63,10 @@
 				<div class="col-md-9" id="customer-orders">
 					<div class="box">
 						<h3>
-							취소내역 <small>회원전용</small>
+							환불내역 <small>회원전용</small>
 						</h3>
 						<legend>
-							<h2>주문 취소 리스트</h2>
+							<h2>주문 환불 리스트</h2>
 						</legend>
 						<table class="table table-hover">
 							<thead>
@@ -82,7 +82,7 @@
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="order" items="${orderCancleList}" varStatus="status">
+							<c:forEach var="order" items="${orderRefundList}" varStatus="status">
 								<tr>
 									<td><fmt:formatDate value="${order.order_date}"
 													pattern="yyyy.MM.dd HH:MM" /></td>
@@ -93,11 +93,8 @@
 									<td>${goodsList[status.index].goods_price }</td>
 									<td>
 									<c:choose>
-									<c:when test="${order.status == 0}">
-									<strong><font color="red">
-									취소완료
-									</font>
-									</strong>
+									<c:when test="${order.status == 2}">
+									환불대기중
 									</c:when>
 									<c:otherwise>
 									0이아닌다른게 들어갈리없..
@@ -106,9 +103,9 @@
 									</td>
 								</tr>	
 							</c:forEach>
-									<c:if test="${fn:length(orderCancleList) <= 0}">
+									<c:if test="${fn:length(orderRefundList) <= 0}">
 										<tr bgcolor="#FFFFFF" align="center">
-											<th colspan="7">취소하신 상품이 없습니다.</th>
+											<th colspan="7">환불하신 상품이 없습니다.</th>
 										</tr>
 										<tr bgcolor="#777777">
 											<th height="1" colspan="7"></th>
