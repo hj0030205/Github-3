@@ -44,9 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- 카테고리 -->
-	<!-- <select id="selectCategory" resultMap="GoodsRes" parameterType="Integer">
+	<select id="selectCategory" resultMap="GoodsRes" parameterType="Integer">
 		select * from feline_goods where goods_category = #{goods_category} order by goods_num desc
-	</select> -->
+	</select>
 
 	<!-- 상품 선택 -->
 	<select id="selectGoods" resultMap="GoodsRes" parameterType="Integer">

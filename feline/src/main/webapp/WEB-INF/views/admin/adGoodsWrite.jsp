@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <head>
 </head>
 <body>
+
+	
+
 	<div id="all">
 		<div id="content">
 			<div class="container">
@@ -55,10 +59,23 @@
 								</div>
 								<div class="col-sm-4">
 									<div class="form-group">
-										<label for="goods_category">카테고리</label> <input type="text"
-											id="goods_category" name="goods_category"
-											class="form-control"
-											value="${goodsModel.goods_category }" />
+										<label for="goods_category">대분류</label> 
+										<select id="category1" name="category1" onchange="al();">
+											<option value="null">choose one</option>
+											<option value="0">사료</option>
+											<option value="1">간식</option>
+											<option value="2">모래/화장실</option>
+											<option value="3">장난감</option>
+											<option value="4">위생용품</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="goods_category">카테고리</label> 
+										<select id="goods_category1" name="goods_category">
+											<option>대분류를 선택해주세요</option>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -133,5 +150,23 @@
 		<!-- /#content -->
 	</div>
 </body>
-
+<script>
+	var big = document.getElementById('category1');
+	var small = document.getElementById('goods_category1');
+	
+	function al(){
+		keyValue = big.value;
+		switch(keyValue){
+		
+		case '0': small.innerHTML = '<option value="0" <c:if test="${goodsModel.goods_category eq 0 }"> selected  </c:if>>유기농/홀리스틱</option><option value="1" <c:if test="${goodsModel.goods_category eq 1 }"> selected </c:if>>피부/피모건강</option><option value="2" <c:if test="${goodsModel.goods_category eq 2 }"> selected </c:if>>헤어볼케어</option><option value="3" <c:if test="${goodsModel.goods_category eq 3 }"> selected </c:if>>다이어트/비뇨건강</option>'; break;
+		case '1': small.innerHTML = '<option value="4" <c:if test="${goodsModel.goods_category eq 4 }"> selected </c:if>>캔/파우치</option><option value="5" <c:if test="${goodsModel.goods_category eq 5 }"> selected </c:if>>저키/소시지</option><option value="6" <c:if test="${goodsModel.goods_category eq 6 }"> selected </c:if>>비스켓/트릿</option><option value="7" <c:if test="${goodsModel.goods_category eq 7 }"> selected </c:if>>캣닢/캣그라스</option>'; break;
+		case '2': small.innerHTML = '<option value="8" <c:if test="${goodsModel.goods_category eq 8 }"> selected </c:if>>응고형 모래</option><option value="9" <c:if test="${goodsModel.goods_category eq 9 }"> selected </c:if>>흡수형 모래</option><option value="10" <c:if test="${goodsModel.goods_category eq 10 }"> selected </c:if>>화장실/패드</option><option value="11" <c:if test="${goodsModel.goods_category eq 11 }"> selected </c:if>>기타</option>'; break;
+		case '3': small.innerHTML = '<option value="12" <c:if test="${goodsModel.goods_category eq 12 }"> selected </c:if>>공/봉제인형</option><option value="13" <c:if test="${goodsModel.goods_category eq 13 }"> selected </c:if>>레이저/낚시</option><option value="14" <c:if test="${goodsModel.goods_category eq 14 }"> selected </c:if>>막대</option><option value="15" <c:if test="${goodsModel.goods_category eq 15 }"> selected </c:if>>캣닢</option>'; break;
+		case '4': small.innerHTML = '<option value="16" <c:if test="${goodsModel.goods_category eq 16 }"> selected </c:if>>샴푸/린스</option> <option value="17" <c:if test="${goodsModel.goods_category eq 17 }"> selected </c:if>>구강관리</option><option value="18" <c:if test="${goodsModel.goods_category eq 18 }"> selected </c:if>>눈/귀/피부&피모건강</option><option value="19" <c:if test="${goodsModel.goods_category eq 19 }"> selected </c:if>>브러쉬/털관리</option>'; break;
+		default : small.innerHTML = '<option value=20>대분류값을 입력하세요</option>'; break;
+		
+		}
+		
+	}
+</script>
 </html>

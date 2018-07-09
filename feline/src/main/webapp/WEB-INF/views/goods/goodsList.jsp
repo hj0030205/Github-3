@@ -48,8 +48,46 @@
 
 				<div class="col-md-9">
 					<div class="box">
-						<h1>고양이 사료</h1>
-						<p>유기농/홀리스틱</p>
+						<h1>
+							<c:if test="${category >= 0 and category <=4}  ">
+							<li class="post2">사료</li>
+							</c:if>
+							<c:if test="${category >= 0 and category <=4}">
+							<li class="post2">간식</li>
+							</c:if>	
+							<c:if test="${category >= 0 and category <=4}">
+							<li class="post2">모래/화장실</li>
+							</c:if>	
+							<c:if test="${category >= 0 and category <=4}">
+							<li class="post2">장난감</li>
+							</c:if>
+							<c:if test="${category >= 0 and category <=4}">
+							<li class="post2">위생용품</li>
+							</c:if>
+						</h1>
+						<p>
+							<c:if test="${category eq 0 }" >유기농/홀리스틱</c:if>
+							<c:if test="${category eq 1 }" >피부/피모건강</c:if>
+							<c:if test="${category eq 2 }" >헤어볼케어</c:if>
+							<c:if test="${category eq 3 }" >다이어트/비뇨건강</c:if>
+							<c:if test="${category eq 4 }" >캔/파우치</c:if>
+							<c:if test="${category eq 5 }" >저키/소시지</c:if>
+							<c:if test="${category eq 6 }" >비스켓/트릿</c:if>
+							<c:if test="${category eq 7 }" >캣닢/캣그라스</c:if>
+							<c:if test="${category eq 8 }" >응고형 모래</c:if>
+							<c:if test="${category eq 9 }" >흡수형 모래</c:if>
+							<c:if test="${category eq 10 }" >화장실/패드</c:if>
+							<c:if test="${category eq 11 }" >기타</c:if>
+							<c:if test="${category eq 12 }" >공/봉제인형</c:if>
+							<c:if test="${category eq 13 }" >레이저/낚시</c:if>
+							<c:if test="${category eq 14 }" >막대</c:if>
+							<c:if test="${category eq 15 }" >캣닢</c:if>
+							<c:if test="${category eq 16 }" >샴푸/린스</c:if>
+							<c:if test="${category eq 17 }" >구강관리</c:if>
+							<c:if test="${category eq 18 }" >눈/귀/피부&피모건강</c:if>
+							<c:if test="${category eq 19 }" >브러쉬/털관리</c:if>
+							
+						</p>
 					</div>
 
 					<c:if test="${fn:length(goodsList) le 0}">

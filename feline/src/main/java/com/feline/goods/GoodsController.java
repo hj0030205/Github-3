@@ -30,6 +30,19 @@ public class GoodsController {
 		return mav;		
 	}
 	
+	@RequestMapping("goodsCategoryList.cat")
+	public ModelAndView goodsCategoryList(HttpServletRequest request) throws Exception{
+		
+		String goods_categoryy = request.getParameter("goods_category");
+		
+		List<GoodsModel> goodsCategoryList = goodsService.goodsCategoryList(goods_categoryy);
+		
+		mav.addObject("category",goods_categoryy);
+		mav.addObject("goodsList", goodsCategoryList);
+		mav.setViewName("goodsList");
+		return mav;
+	}
+	
 	@RequestMapping("goodsView.cat")
 	public ModelAndView goodsView(HttpServletRequest request) throws Exception{
 		
