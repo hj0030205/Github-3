@@ -31,6 +31,9 @@
 		<typeAlias type="com.feline.ccr.RefundModel" alias="RefundModel"/>
 		
 		<typeAlias type="com.feline.event.EventModel" alias="EventModel"/>
+
+		<typeAlias type="com.feline.ccr.ChangeModel" alias="ChangeModel"/>
+
 		
 	</typeAliases>
 

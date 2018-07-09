@@ -72,4 +72,10 @@ public interface AdminDAO {
 	List<OrderModel> orderSearchP(String search);
 
 	Object orderModify(OrderModel OrderModel);
+	
+	
+	
+	/**********************환불/교환관리*****************************/
+	
+
 }

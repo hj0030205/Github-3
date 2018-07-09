@@ -56,6 +56,128 @@ public class AdminController {
 	private List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
 	private List<EventModel> eventList = new ArrayList<EventModel>();
 
+
+	@RequestMapping("main.cat") // 관리자 페이지
+	public ModelAndView adMain() throws Exception {
+		
+	/*	int countTrade = adminService.countTrade();
+		int countTrans = adminService.countTrans();
+		int countTrans2 = adminService.countTrans2();
+		int todayMember = adminService.todayMember();
+		int todayOrder = adminService.todayOrder();
+		int todaySalesM = adminService.todaySalesM();
+		
+		List<BooksModel> todaySalesBook = adminService.todaySalesBook();
+		
+		List<ChartModel> todayMemberGender = adminService.todayMemberGender();
+		GoogleChartDTO pie1 = new GoogleChartDTO();
+
+		pie1.addColumn("성별", "string");
+		pie1.addColumn("number", "number");
+		pie1.createRows(todayMemberGender.size());
+
+		for (int i = 0; i < todayMemberGender.size(); i++) {
+			pie1.addCell(i, Integer.parseInt(todayMemberGender.get(i).getKey()) == 1 ? "남자" : "여자");
+			pie1.addCell(i, todayMemberGender.get(i).getValue());
+		}
+		String memberGenderPie = gson.toJson(pie1.getResult());
+		System.out.println("//////////////////////////////////////////"+memberGenderPie);
+		mv.addObject("memberGenderPie", memberGenderPie);
+		
+		
+		List<ChartModel> todayMemberAge = adminService.todayMemberAge();
+		GoogleChartDTO pie2 = new GoogleChartDTO();
+
+		pie2.addColumn("연령대", "string");
+		pie2.addColumn("number", "number");
+		pie2.createRows(todayMemberAge.size());
+
+		for (int i = 0; i < todayMemberAge.size(); i++) {
+			pie2.addCell(i, todayMemberAge.get(i).getKey() + "0 년대");
+			pie2.addCell(i, todayMemberAge.get(i).getValue());
+		}
+		String memberAgePie = gson.toJson(pie2.getResult());
+		System.out.println("//////////////////////////////////////////"+memberAgePie);
+		mv.addObject("memberAgePie", memberAgePie);
+		
+		
+		List<ChartModel> todayMemberRegion = adminService.todayMemberRegion();
+		GoogleChartDTO pie3 = new GoogleChartDTO();
+
+		pie3.addColumn("지역", "string");
+		pie3.addColumn("number", "number");
+		pie3.createRows(todayMemberRegion.size());
+
+		for (int i = 0; i < todayMemberRegion.size(); i++) {
+			pie3.addCell(i, todayMemberRegion.get(i).getKey());
+			pie3.addCell(i, todayMemberRegion.get(i).getValue());
+		}
+		String memberRegionPie = gson.toJson(pie3.getResult());
+		System.out.println("//////////////////////////////////////////"+memberRegionPie);
+		mv.addObject("memberRegionPie", memberRegionPie);
+		
+		
+		List<ChartModel> todayOrderGender = adminService.todayOrderGender();
+		GoogleChartDTO pie4 = new GoogleChartDTO();
+
+		pie4.addColumn("성별", "string");
+		pie4.addColumn("number", "number");
+		pie4.createRows(todayOrderGender.size());
+
+		for (int i = 0; i < todayOrderGender.size(); i++) {
+			pie4.addCell(i, Integer.parseInt(todayOrderGender.get(i).getKey()) == 1 ? "남자" : "여자");
+			pie4.addCell(i, todayOrderGender.get(i).getValue());
+		}
+		String orderGenderPie = gson.toJson(pie4.getResult());
+		System.out.println("//////////////////////////////////////////"+orderGenderPie);
+		mv.addObject("orderGenderPie", orderGenderPie);
+		
+		
+		List<ChartModel> todayOrderAge = adminService.todayOrderAge();
+		GoogleChartDTO pie5 = new GoogleChartDTO();
+
+		pie5.addColumn("연령대", "string");
+		pie5.addColumn("number", "number");
+		pie5.createRows(todayOrderAge.size());
+
+		for (int i = 0; i < todayOrderAge.size(); i++) {
+			pie5.addCell(i, todayOrderAge.get(i).getKey() + "0 년대");
+			pie5.addCell(i, todayOrderAge.get(i).getValue());
+		}
+		String orderAgePie = gson.toJson(pie5.getResult());
+		System.out.println("//////////////////////////////////////////"+orderAgePie);
+		mv.addObject("orderAgePie", orderAgePie);
+		
+		
+		List<ChartModel> todayOrderRegion = adminService.todayOrderRegion();
+		GoogleChartDTO pie6 = new GoogleChartDTO();
+
+		pie6.addColumn("지역", "string");
+		pie6.addColumn("number", "number");
+		pie6.createRows(todayOrderRegion.size());
+
+		for (int i = 0; i < todayOrderRegion.size(); i++) {
+			pie6.addCell(i, todayOrderRegion.get(i).getKey());
+			pie6.addCell(i, todayOrderRegion.get(i).getValue());
+		}
+		String orderRegionPie = gson.toJson(pie6.getResult());
+		System.out.println("//////////////////////////////////////////"+orderRegionPie);
+		mv.addObject("orderRegionPie", orderRegionPie);
+		
+		
+		mv.addObject("countTrade", countTrade);
+		mv.addObject("countTrans", countTrans);
+		mv.addObject("countTrans2", countTrans2);
+		mv.addObject("todayMember", todayMember);
+		mv.addObject("todayOrder", todayOrder);
+		mv.addObject("todaySalesM", todaySalesM);
+		mv.addObject("todaySalesBook", todaySalesBook);
+		mv.addObject("todayBookC", todaySalesBook.size());
+		*/
+		mav.setViewName("admin");
+		return mav;
+	}
+	
 	/*********************** 회원 관리 *************************/
 
 	/* 회원 목록 */
