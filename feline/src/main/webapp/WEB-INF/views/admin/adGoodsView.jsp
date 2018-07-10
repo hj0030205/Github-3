@@ -46,7 +46,7 @@ function deleteCheck(goods_num) {
 				<div class="card">
 					<div class="card-block">
 						<div class="row">
-							<div class="col-log-4" style="margin: auto; text-align: center;">
+							<div class="col-lg-4" style="margin: auto; text-align: center;">
 								<div class="col-sm-10">
 									<img src="/feline/resources/upload/images/${goodsModel.goods_image_savname}" width="400" height="400" border="0" />
 								</div>

@@ -28,7 +28,7 @@
 						 <i class="mdi mdi-human-greeting"></i> <span class="hide-menu">회원 관리</span></a>
 						<ul class="nav-dropdown-items">
 							<li>
-								<a href="adMemberList.cat" aria-expanded="false">
+								<a href="/feline/admin/adMemberList.cat" aria-expanded="false">
 								 <i class="mdi mdi-account-check"></i> <span class="nav-dropdown-item">회원 리스트</span></a>
 							</li>
 						</ul>
@@ -42,11 +42,11 @@
 								 <i class="mdi mdi-bookmark-check"></i> <span class="nav-dropdown-item">카테고리 관리</span></a>
 							</li> -->
 							<li>
-								<a href="adGoodsWrite.cat" aria-expanded="false">
+								<a href="/feline/admin/adGoodsWrite.cat" aria-expanded="false">
 								 <i class="mdi mdi-book-plus"></i> <span class="nav-dropdown-item">상품 등록</span></a>
 							</li>
 							<li>
-								<a href="adGoodsList.cat" aria-expanded="false">
+								<a href="/feline/admin/adGoodsList.cat" aria-expanded="false">
 								 <i class="mdi mdi-book-multiple"></i> <span class="nav-dropdown-item">상품 통합 리스트</span></a>
 							</li>
 							<!-- 미구현 -->
@@ -77,7 +77,7 @@
 						 <i class="mdi mdi-cart"></i> <span class="hide-menu">주문 관리</span></a>
 						<ul class="nav-dropdown-items">
 							<li>
-								<a href="adOrderList.cat" aria-expanded="false">
+								<a href="/feline/admin/adOrderList.cat" aria-expanded="false">
 								 <i class="mdi mdi-credit-card-multiple"></i> <span class="nav-dropdown-item">주문 리스트</span></a>
 							</li>
 							<!-- <li>

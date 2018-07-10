@@ -32,7 +32,7 @@
 		<div class="row page-titles">
 			<div class="col-md-5 col-8 align-self-center">
 				<c:choose>
-					<c:when test="${goodsModel eq null }">
+					<c:when test="${goodsModel.goods_num eq null }">
 						<h3 class="text-themecolor">상품 등록</h3>
 					</c:when>
 					<c:otherwise>
@@ -43,7 +43,7 @@
 					<li class="breadcrumb-item"><a href="/feline/admin/main.cat">관리자
 							메인</a></li>
 					<c:choose>
-						<c:when test="${goodsModel eq null }">
+						<c:when test="${goodsModel.goods_num eq null }">
 							<li class="breadcrumb-item active">상품 등록</li>
 						</c:when>
 						<c:otherwise>
@@ -59,7 +59,7 @@
 				<div class="card">
 					<div class="card-block">
 						<c:choose>
-							<c:when test="${goodsModel eq null }">
+							<c:when test="${goodsModel.goods_num eq null }">
 								<form class="form-horizontal form-material"
 									action="adGoodsWrite.cat" name="goodsForm" method="POST"
 									enctype="multipart/form-data">
@@ -74,12 +74,12 @@
 							</c:otherwise>
 						</c:choose>
 						<div class="row">
-							<div class="col-log-4" style="margin: auto; text-align: center;">
+							<div class="col-lg-4" style="margin: auto; text-align: center;">
 								<div class="col-sm-10">
-								<c:if test="${goodsModel ne null }">
-									<img class="img-fluid" src="/feline/resources/upload/images/${goodsModel.goods_image_savname}" width="400" height="400" border="0"/>
+								<c:if test="${goodsModel.goods_image_savname ne null }">
+									<img class="img-fluid" src="/feline/resources/upload/images/${goodsModel.goods_image_savname}" width="200" height="400" border="0"/>
 									<br/>
-									다시 업로드하면 기존의 파일은 삭제 됩니다.
+									<label>다시 업로드하면 기존의 파일은 삭제 됩니다.</label>
 								</c:if>
 								<input type="file" name="file"/>
 								</div>

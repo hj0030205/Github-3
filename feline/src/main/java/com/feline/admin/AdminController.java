@@ -395,6 +395,7 @@ public class AdminController {
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsWriteForm() {
 
+		mav.addObject("goodsModel", new GoodsModel());
 		mav.setViewName("adGoodsWrite");
 		return mav;
 	}
