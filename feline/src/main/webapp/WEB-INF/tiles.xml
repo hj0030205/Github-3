@@ -89,6 +89,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancleList.jsp" />
 	</definition>
 	
+	<!-- 주문 상세 내역 -->
+	<definition name="orderCancleView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderCancleView.jsp"></put-attribute>
+	</definition>
 	<!-- 주문삭제 -->
 	<definition name="orderCancle" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancle.jsp"/>
@@ -236,7 +240,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderCancleList.jsp"/>
 	</definition>
 	
-<<<<<<< HEAD
+
 	<!-- 관리자 환불 목록 -->
 	<definition name="adOrderRefundList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderRefundList.jsp"/>
@@ -248,10 +252,8 @@
 	</definition>
 	
 		
-	
-=======
 	<definition name="adEventWrite" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adEventWrite.jsp" />
 	</definition>
->>>>>>> ba61f63479243f077a7cb6a4afba93c3fca97b23
+	
 </tiles-definitions>

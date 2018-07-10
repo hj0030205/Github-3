@@ -343,6 +343,24 @@ public class MemberController {
 		mav.setViewName("orderCancleList");
 		return mav;
 	}
+	
+	//주문삭제 상세보기 로직
+	@RequestMapping(value="orderCancleView.cat" , method=RequestMethod.GET)
+	public ModelAndView orderCancleView(HttpServletRequest request,HttpSession session) {
+		
+		CancleModel cancleModel = new CancleModel(); //cancleModel이라는 객체생성
+		
+		int order_num = Integer.parseInt(request.getParameter("order_num")); //get으로 들어온 order_num받아오기
+
+		cancleModel.setMember_id((String)session.getAttribute("id")); //cancleModel에 session의 id를 담는다
+		cancleModel.setOrder_num(order_num); //cancleModel에 order_num을담는다.
+
+		cancleModel = memberService.orderCancleOne(cancleModel); //cancleModel에 orderCancleOne을 넣음
+		
+		mav.addObject("cancleModel", cancleModel);
+		mav.setViewName("orderCancleView");
+		return mav;
+	}
 
 
 	//주문삭제폼

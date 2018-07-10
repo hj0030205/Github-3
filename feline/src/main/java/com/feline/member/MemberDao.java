@@ -55,6 +55,9 @@ public interface MemberDao
 	 //주문취소목록 가져오기
 	 List<OrderModel> orderCancleList(String member_id);
 	 
+	 //주문취소상세보기
+	 CancleModel orderCancleOne(CancleModel cancleModel);
+	 
 	 //주문환불(고객시점)
 	 void clientOrderRefund(RefundModel refundModel,OrderModel orderModel);
 	 
