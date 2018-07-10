@@ -9,6 +9,59 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+
+function qty_value_set(id,qty,no)
+{
+	if($("#"+id).val() == "" || $("#"+id).val() < 1) 
+		$("#"+id).val(1);
+	
+	var params="basket_num="+no+"&goods_amount="+$("#"+id).val();  
+	    
+        $.ajax({
+            type : "POST",
+            url : "/feline/basket/updateAmount.cat",
+            data:params, 
+            error : function(){
+                //alert('통신실패!!');
+            },
+            success : function(){
+            	history.go(0);
+            }  	             
+        });
+	
+}
+
+function qty_value_change(id,qty,no,evt)
+{
+	var keyCode1 = evt.keyCode ? evt.keyCode : evt.which;
+	
+	$("#"+id).val($("#"+id).val().replace(/[^0-9]/g,""));
+	
+	if(keyCode1 == 13)
+	{
+		if($("#"+id).val() == "" || $("#"+id).val() < 1) 
+			$("#"+id).val(1);	
+	}
+	
+    var params="basket_num="+no+"&goods_amount="+$("#"+id).val();  
+    
+    $.ajax({
+        type : "POST",
+        url : "/feline/basket/updateAmount.cat",
+        data:params, 
+        error : function(){
+            //alert('통신실패!!');
+        },
+        success : function(){
+        }  	             
+    });
+        
+}
+
+
+
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -62,11 +115,9 @@
 											<td>
 												<form action="/feline/basket/updateAmount.cat"
 													method="post">
-													<input type="text" value="${basketList.basket_goods_amount}" name="basket_goods_amount" /> 
-														<input type="hidden" value="${basketList.basket_num}" name="basket_num" />
-													<button type="submit" class="btn btn-default">
-														<i class="fa fa-refresh"></i>
-													</button>
+													<input type="text" id="goods_amount_${basketList.basket_num}" value="${basketList.basket_goods_amount}" name="goods_amount_${basketList.basket_num}"
+													 onchange="javascript:qty_value_set('goods_amount_${basketList.basket_num}',this.value,${basketList.basket_num});" 
+													 onkeyup="javascript:qty_value_change('goods_amount_${basketList.basket_num}',this.value,${basketList.basket_num},event);"/>
 												</form>
 											</td>
 											<td><fmt:formatNumber value="${basketList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>

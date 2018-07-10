@@ -12,11 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
+import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
+import com.feline.order.OrderService;
 
 @Controller
 @RequestMapping("/member")
@@ -43,7 +48,7 @@ public class MemberController {
 		if (member_id != null) {
 			session.setAttribute("id", member_id);
 			
-			mav.setViewName("main");
+			mav.setViewName("redirect:/main.cat");
 			return mav;
 		}
 
@@ -174,7 +179,9 @@ public class MemberController {
 		mav.setViewName("/user/findPwdCheck");
 		return mav;
 	}
-
+	
+//////////////////////////////////////////////////////////////////////////////////////////////
+	
 	// 마이페이지 띄우기
 	@RequestMapping("mypage.cat")
 	public ModelAndView myPage(HttpSession session) {
@@ -199,7 +206,7 @@ public class MemberController {
 
 	/********************* 회원 주문 페이지 부분 **********************/
 
-	// 주문목록을 뽑아오는 로직
+	// 주문목록을 뽑아오는 로직(취소는 따로)
 	@RequestMapping(value = "orderList.cat")
 	public ModelAndView orderList(HttpServletRequest request, HttpSession session) {
 
@@ -314,5 +321,145 @@ public class MemberController {
 		mav.setViewName("/member/deleteResult");
 		return mav;
 	}
+	
+	/********************* 회원 주문 취소 교환 환불 **********************/
+	
+	
+	// 주문취소목록만 뽑아오는 로직
+	@RequestMapping(value = "orderCancleList.cat")
+	public ModelAndView orderCancleList(HttpServletRequest request, HttpSession session) {
 
+		String member_id = (String) session.getAttribute("id").toString();
+		System.out.println(member_id);
+		List<OrderModel> orderCancleList = memberService.orderCancleList(member_id);
+		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
+		
+		for(int i=0; i<orderCancleList.size(); i++) {
+			goodsList.add(memberService.goodsView(orderCancleList.get(i).getGoods_num())); 
+		}
+		
+		mav.addObject("goodsList",goodsList);
+		mav.addObject("orderCancleList", orderCancleList);
+		mav.setViewName("orderCancleList");
+		return mav;
+	}
+
+
+	//주문삭제폼
+	@RequestMapping(value="orderCancle.cat",method=RequestMethod.GET)
+	public ModelAndView orderCancleForm(@RequestParam("order_num")int order_num,
+			HttpSession session) { //id를 받아오기위한 세션, get방식으로 order_num하나만 가져오기위해 
+		
+		String member_id = session.getAttribute("id").toString();
+		
+		mav.addObject("member_id",member_id); //mav에 member_id라는 이름으로 세션값을 넣어줌
+		mav.addObject("order_num",order_num); // order_num을 받아온것을 담아서 넘겨줌
+		mav.setViewName("orderCancle"); //orderCancle.jsp
+		return mav;
+	}
+	
+	//주문삭제처리
+	@RequestMapping(value="orderCancle.cat",method=RequestMethod.POST)
+	public ModelAndView orderCancle(HttpServletRequest request,HttpSession session, 
+			CancleModel cancleModel,OrderModel orderModel) {
+		
+		memberService.orderCancle(cancleModel, orderModel);
+		 //2개의 쿼리문 실행 orderCancle은 insert와 update 2개를 한다 
+
+		mav.setViewName("member/orderCancleResult");
+		
+		return mav;
+		
+	}
+	
+	// 주문환불목록만 뽑아오는 로직
+	@RequestMapping(value = "orderRefundList.cat")
+	public ModelAndView orderRefundList(HttpServletRequest request, HttpSession session) {
+
+		String member_id = (String) session.getAttribute("id").toString();
+		System.out.println(member_id);
+		List<OrderModel> orderRefundList = memberService.orderRefundList(member_id);
+		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
+		
+		for(int i=0; i<orderRefundList.size(); i++) {
+			goodsList.add(memberService.goodsView(orderRefundList.get(i).getGoods_num())); 
+		}
+		
+		mav.addObject("goodsList",goodsList);
+		mav.addObject("orderRefundList", orderRefundList);
+		mav.setViewName("orderRefundList");
+		return mav;
+	}
+
+	
+	//주문환불 폼
+	@RequestMapping(value="orderRefund.cat", method=RequestMethod.GET)
+	public ModelAndView orderRefundForm(@RequestParam("order_num")int order_num,
+			HttpSession session) {
+		String member_id = session.getAttribute("id").toString();
+		
+		mav.addObject("member_id",member_id);
+		mav.addObject("order_num",order_num);
+		mav.setViewName("orderRefund");
+		
+		return mav;
+	}
+	
+	//고객주문환불신청
+	@RequestMapping(value="orderRefund.cat",method=RequestMethod.POST)
+	public ModelAndView orderRefund(RefundModel refundModel,OrderModel orderModel) {
+		
+		memberService.clientOrderRefund(refundModel,orderModel);
+		//2개의 쿼리문으로 하나는 RefundModel에 insert , OrderModel의 상태를 바꿔주기 위해 update
+		
+		mav.setViewName("member/orderRefundResult");
+		
+		return mav;
+	}
+	
+	//주문교환 폼
+	@RequestMapping(value="orderChange.cat",method=RequestMethod.GET)
+	public ModelAndView orderChangeForm(@RequestParam("order_num")int order_num,
+			HttpSession session) {
+		
+		String member_id = session.getAttribute("id").toString();
+		
+		mav.addObject("member_id",member_id);
+		mav.addObject("order_num",order_num);
+		mav.setViewName("orderChange");
+		
+		return mav;
+	}
+	
+	//고객주문교환신청
+	@RequestMapping(value="orderChange.cat",method=RequestMethod.POST)
+	public ModelAndView orderChange(ChangeModel changeModel,OrderModel orderModel) {
+		
+		memberService.clientOrderChange(changeModel,orderModel);
+		//2개의 쿼리문으로 하나는 ChangeModel에 insert , OrderModel의 상태를 바꿔주기 위해 update
+
+		mav.setViewName("member/orderChangeResult");
+		
+		return mav;
+	}
+	
+	// 주문교환목록만 뽑아오는 로직
+	@RequestMapping(value = "orderChangeList.cat")
+	public ModelAndView orderChangeList(HttpServletRequest request, HttpSession session) {
+
+		String member_id = (String) session.getAttribute("id").toString();
+		System.out.println(member_id);
+		List<OrderModel> orderChangeList = memberService.orderChangeList(member_id);
+		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
+		
+		for(int i=0; i<orderChangeList.size(); i++) {
+			goodsList.add(memberService.goodsView(orderChangeList.get(i).getGoods_num())); 
+		}
+		
+		mav.addObject("goodsList",goodsList);
+		mav.addObject("orderChangeList", orderChangeList);
+		mav.setViewName("orderChangeList");
+		return mav;
+	}
+	
 }

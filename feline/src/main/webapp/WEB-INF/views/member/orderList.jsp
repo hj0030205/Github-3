@@ -34,15 +34,23 @@
 
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href="mypage.cat">마이 페이지</a></li>
-								<li class="active"><a href="orderList.cat"><i
-										class="fa fa-list"></i>나의 주문 내역</a></li>
+								<li class="active"><a href="orderList.cat">
+								<i class="fa fa-list"></i>나의 주문 내역</a></li>
+								<li><a href="orderCancleList.cat">
+								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
+								<li><a href="orderRefundList.cat">
+								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
+								<li><a href="orderChangeList.cat">
+								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
 								<li><a href="/feline/basket/basketList.cat"><i
 										class="fa fa-heart"></i>장바구니</a></li>
 								<li><a href="memberModify.cat"><i
 										class="fa fa-address-card"></i>회원정보수정</a></li>
 								<li><a href="memberDelete.cat"><i
 										class="fa fa-sign-out"></i>회원탈퇴</a></li>
+								
 							</ul>
+							
 						</div>
 
 					</div>
@@ -71,6 +79,7 @@
 									<th>주문수량</th>
 									<th>상품가격</th>
 									<th>주문상태</th>
+									<th>상태</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -83,7 +92,32 @@
 									<td>${goodsList[status.index].goods_name }</td>
 									<td>${order.order_goods_amount }</td>
 									<td>${goodsList[status.index].goods_price }</td>
-									<td>${order.order_status }</td>
+									<td>
+									<c:choose>
+									<c:when test="${order.order_status == 0}">
+									배송준비중
+									</c:when>
+									<c:when test="${order.order_status == 1}">
+									배송중
+									</c:when>
+									<c:otherwise>
+									배송완료
+									</c:otherwise>
+									</c:choose>
+									</td>
+									<td>
+									<c:choose>
+									<c:when test="${order.status == 0}">
+									<strong><font color="red">
+									취소완료
+									</font>
+									</strong>
+									</c:when>
+									<c:otherwise>
+									정상주문
+									</c:otherwise>
+									</c:choose>
+									</td>
 								</tr>	
 							</c:forEach>
 									<c:if test="${fn:length(orderList) <= 0}">

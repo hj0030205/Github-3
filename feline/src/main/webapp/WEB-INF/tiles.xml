@@ -7,16 +7,24 @@
 <tiles-definitions>
 	<!-- Main Page -->
 	<definition name="default" template="/WEB-INF/views/layout/main.jsp">
-		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/layout/header/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/layout/body.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 	
 	<definition name="main" template="/WEB-INF/views/layout/main.jsp">
-		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/layout/header/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/layout/body.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
+	
+	<definition name="admin" template="/WEB-INF/views/layout/layout4.jsp">
+		<put-attribute name="title" value="관리자 페이지"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/header/adminheader.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/layout/adminMain.jsp" />
+		<put-attribute name="lefter" value="/WEB-INF/views/layout/lefter/adminLefter.jsp" />
+	</definition>
+	
 	
 	<!-- 로그인 -->
 	<definition name="login" extends="main">
@@ -75,6 +83,38 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/signOut.jsp"/>
 	</definition>
 	
+	
+	<!-- 나의 주문 취소 내역 -->
+	<definition name="orderCancleList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderCancleList.jsp" />
+	</definition>
+	
+	<!-- 주문삭제 -->
+	<definition name="orderCancle" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderCancle.jsp"/>
+	</definition>
+		
+	<!-- 나의 주문 환불 내역 -->
+	<definition name="orderRefundList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderRefundList.jsp"></put-attribute>
+	</definition>
+	
+	<!--  주문환불 -->
+	<definition name="orderRefund" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderRefund.jsp"/>
+	</definition>
+	
+	
+	<!-- 나의 주문 교환 내역 -->
+	<definition name="orderChangeList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderChangeList.jsp"></put-attribute>
+	</definition>	
+	
+	<!--  주문교환 -->
+	<definition name="orderChange" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderChange.jsp"/>
+	</definition>
+		
 	<!-- ********************* 상품&장바구니 *********************-->
 	
 	<!-- 상품 -->
@@ -141,49 +181,54 @@
 		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqWrite.jsp" />
 	</definition>
 	
+	
 	<!-- ***************** 관리자 ************************ -->
 	<!-- 관리자 회원 관리 -->
-	<definition name="adMemberList" extends="main">
+	<definition name="adMemberList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adMemberList.jsp" />
 	</definition>
 
-	<definition name="adMemberView" extends="main">
+	<definition name="adMemberView" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adMemberView.jsp" />
 	</definition>
 
-	<definition name="adMemberModify" extends="main">
+	<definition name="adMemberModify" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adMemberModify.jsp" />
 	</definition>
 	
 	<!-- 관리자-상품관리 -->
-	<definition name="adGoodsList" extends="main">
+	<definition name="adGoodsList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adGoodsList.jsp" />
 	</definition>
 
-	<definition name="adGoodsWrite"  extends="main">
+	<definition name="adGoodsWrite"  extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adGoodsWrite.jsp" />
 	</definition>
 	
-	<definition name="adGoodsView"  extends="main">
+	<definition name="adGoodsView"  extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adGoodsView.jsp" />
 	</definition>
 
-	<definition name="adGoodsModify" extends="main">
+	<definition name="adGoodsModify" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adGoodsWrite.jsp" />
 	</definition>
 	
 	<!-- 관리자 주문 관리 -->
-	<definition name="adOrderList" extends="main">
+	<definition name="adOrderList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderList.jsp" />
 	</definition>
 	
-	<definition name="adOrderView" extends="main">
+	<definition name="adOrderView" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderView.jsp" />
 	</definition>
 	
-	<definition name="adOrderModify" extends="main">
+	<definition name="adOrderModify" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderChange.jsp" />
 	</definition>
 	
+	<!-- 관리자 이벤트 관리 -->
+	<definition name="adEventList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adEventList.jsp" />
+	</definition>
 	
 </tiles-definitions>

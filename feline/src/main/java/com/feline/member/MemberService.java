@@ -7,6 +7,9 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
+import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
+import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
 
@@ -83,11 +86,44 @@ public class MemberService implements MemberDao{
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("goods.selectGoods",goods_num);
 	}
+	
+	@Override
+	public void orderCancle(CancleModel cancleModel,OrderModel orderModel) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.insert("order.insertCancle", cancleModel);
+		sqlSessionTemplate.update("order.orderCancle", orderModel);
+	}
 
 	@Override
-	public void orderCancle(int order_num) {
+	public void clientOrderRefund(RefundModel refundModel,OrderModel orderModel) {
 		// TODO Auto-generated method stub
-		
+		sqlSessionTemplate.insert("order.insertRefund",refundModel);
+		sqlSessionTemplate.update("order.orderRefund", orderModel);
+	}
+
+	@Override
+	public void clientOrderChange(ChangeModel changeModel,OrderModel orderModel) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.insert("order.insertChange",changeModel);
+		sqlSessionTemplate.update("order.orderChange", orderModel);
+	}
+
+	@Override
+	public List<OrderModel> orderCancleList(String member_id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.orderCancleList", member_id);
+	}
+
+	@Override
+	public List<OrderModel> orderRefundList(String member_id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.orderRefundList",member_id);
+	}
+
+	@Override
+	public List<OrderModel> orderChangeList(String member_id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.orderChangeList",member_id);
 	}
 
 }

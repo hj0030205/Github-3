@@ -21,6 +21,9 @@ public interface OrderDao {
 	
 	// 장바구니 목록 가져오기.
 	 List<BasketModel> basketList(BasketModel basketModel);
+	 
+	// 상품 상세에서 주문하기로 목록 가져가기
+	 List<BasketModel> orderBasketModel(BasketModel basketModel);
 	
 	// 장바구니 회원 정보 가져오기.
 	 MemberModel getMember(String id);
