@@ -90,19 +90,19 @@
 					<div class="box">
 						<h1>
 							<c:if test="${category >= 0 and category <=3}">
-							<li class="post2">사료</li>
+							<h1>사료</h1>
 							</c:if>
 							<c:if test="${category >= 4 and category <=7}">
-							<li class="post2">간식</li>
+							<h1>간식</h1>
 							</c:if>	
 							<c:if test="${category >= 8 and category <=11}">
-							<li class="post2">모래/화장실</li>
+							<h1>모래/화장실</h1>
 							</c:if>	
 							<c:if test="${category >= 12 and category <=15}">
-							<li class="post2">장난감</li>
+							<h1>장난감</h1>
 							</c:if>
 							<c:if test="${category >= 16 and category <=19}">
-							<li class="post2">위생용품</li>
+							<h1>위생용품</h1>
 							</c:if>
 						</h1>
 						<p>
