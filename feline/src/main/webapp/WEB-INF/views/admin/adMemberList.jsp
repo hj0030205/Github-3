@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,7 +123,7 @@ function update(member_id){
 												<td><c:if test="${memberList.member_status eq 0}">
 												탈퇴한 회원
 												</c:if></td>
-												<td>${memberList.member_join_date}</td>
+												<td><fmt:formatDate value="${memberList.member_join_date}" pattern="yyyy.MM.dd"/></td>
 												<td><a class="mdi mdi-grease-pencil" title="수정"
 													href="javascript:update('${memberList.member_id}')"></a> <a
 													class="mdi mdi-delete" title="삭제"
