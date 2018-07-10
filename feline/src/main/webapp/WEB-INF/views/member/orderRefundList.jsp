@@ -4,11 +4,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>주문조회</title>
+<title>주문환불</title>
 </head>
 <body>
 	<div class="all">
@@ -34,11 +36,11 @@
 
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href="mypage.cat">마이 페이지</a></li>
-								<li class="active"><a href="orderList.cat">
+								<li><a href="orderList.cat">
 								<i class="fa fa-list"></i>나의 주문 내역</a></li>
 								<li><a href="orderCancleList.cat">
 								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
-								<li><a href="orderRefundList.cat">
+								<li class="active"><a href="orderRefundList.cat">
 								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
 								<li><a href="orderChangeList.cat">
 								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
@@ -64,10 +66,10 @@
 				<div class="col-md-9" id="customer-orders">
 					<div class="box">
 						<h3>
-							주문내역 <small>회원전용</small>
+							환불내역 <small>회원전용</small>
 						</h3>
 						<legend>
-							<h2>주문리스트</h2>
+							<h2>주문 환불 리스트</h2>
 						</legend>
 						<table class="table table-hover">
 							<thead>
@@ -79,50 +81,34 @@
 									<th>주문수량</th>
 									<th>상품가격</th>
 									<th>주문상태</th>
-									<th>상태</th>
+									
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="order" items="${orderList}" varStatus="status">
+							<c:forEach var="order" items="${orderRefundList}" varStatus="status">
 								<tr>
 									<td><fmt:formatDate value="${order.order_date}"
 													pattern="yyyy.MM.dd HH:MM" /></td>
-									<td><a href="orderView.cat?order_num=${order.order_num}">${order.order_num }</a></td>
+									<td><%-- <a href="orderView.cat?order_num=${order.order_num}"> --%>${order.order_num }</td>
 									<td>${goodsList[status.index].goods_category }</td>
 									<td>${goodsList[status.index].goods_name }</td>
 									<td>${order.order_goods_amount }</td>
 									<td>${goodsList[status.index].goods_price }</td>
 									<td>
 									<c:choose>
-									<c:when test="${order.order_status == 0}">
-									배송준비중
-									</c:when>
-									<c:when test="${order.order_status == 1}">
-									배송중
+									<c:when test="${order.status == 2}">
+									환불대기중
 									</c:when>
 									<c:otherwise>
-									배송완료
-									</c:otherwise>
-									</c:choose>
-									</td>
-									<td>
-									<c:choose>
-									<c:when test="${order.status == 0}">
-									<strong><font color="red">
-									취소완료
-									</font>
-									</strong>
-									</c:when>
-									<c:otherwise>
-									정상주문
+									0이아닌다른게 들어갈리없..
 									</c:otherwise>
 									</c:choose>
 									</td>
 								</tr>	
 							</c:forEach>
-									<c:if test="${fn:length(orderList) <= 0}">
+									<c:if test="${fn:length(orderRefundList) <= 0}">
 										<tr bgcolor="#FFFFFF" align="center">
-											<th colspan="7">주문하신 상품이 없습니다.</th>
+											<th colspan="7">환불하신 상품이 없습니다.</th>
 										</tr>
 										<tr bgcolor="#777777">
 											<th height="1" colspan="7"></th>

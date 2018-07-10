@@ -51,6 +51,24 @@
             }
         }).open();
     }
+    
+ 	$(document).ready(function(){
+		$("#sameUser").change(function(){
+			if($("#sameUser").is(":checked")){
+				$("input[name=order_receive_name]").val('${memberModel.member_name}');
+				$("input[name=order_receive_phone]").val('${memberModel.member_phone}');
+				$("input[name=order_receive_zipcode]").val('${memberModel.member_zipcode}');
+				$("input[name=order_receive_addr1]").val('${memberModel.member_addr1}');
+				$("input[name=order_receive_addr2]").val('${memberModel.member_addr2}');
+			} else {
+				$("input[name=order_receive_name]").val('');
+				$("input[name=order_receive_phone]").val('');
+				$("input[name=order_receive_zipcode]").val('');
+				$("input[name=order_receive_addr1]").val('');
+				$("input[name=order_receive_addr2]").val('');
+			}
+		})
+	}) 
 </script>
 </head>
 <body>
@@ -135,7 +153,7 @@
 
 							<div class="content">
 								<div class="row">
-									<div class="col-sm-6">
+									<div class="col-sm-3">
 										<h4>주문자 정보</h4>
 									</div>
 								</div>
@@ -163,8 +181,11 @@
 								</div>
 								<!-- /.row -->
 								<div class="row">
-									<div class="col-sm-6">
+									<div class="col-sm-2">
 										<h4>배송지 정보</h4>
+									</div>
+									<div class="col-sm-6">
+										<h5><input type="checkbox" id="sameUser" name="sameUser"/>주문자 정보와 동일</h5>
 									</div>
 								</div>
 
@@ -174,7 +195,7 @@
 											<label for="order_receive_name">수령인</label> <input
 												type="text" class="form-control" id="order_receive_name"
 												name="order_receive_name"
-												value="${memberModel.member_name}">
+												value="">
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -182,7 +203,7 @@
 											<label for="order_receive_phone">전화번호</label> <input
 												type="text" class="form-control" id="order_receive_phone"
 												name="order_receive_phone"
-												value="${memberModel.member_phone}">
+												value="">
 										</div>
 									</div>
 								</div>
@@ -194,7 +215,7 @@
 											<label for="sample6_postcode">우편번호</label> <input type="text"
 												class="form-control" id="sample6_postcode"
 												name="order_receive_zipcode"
-												value="${memberModel.member_zipcode}">
+												value="">
 										</div>
 									</div>
 									<div class="col-sm-6 col-md-3">
@@ -217,7 +238,7 @@
 											<label for="sample6_address">기본주소</label> <input type="text"
 												class="form-control" id="sample6_address"
 												name="order_receive_addr1"
-												value="${memberModel.member_addr1}">
+												value="">
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -225,7 +246,7 @@
 											<label for="sample6_address2">상세주소</label> <input type="text"
 												class="form-control" id="sample6_address2"
 												name="order_receive_addr2"
-												value="${memberModel.member_addr2}">
+												value="">
 										</div>
 									</div>
 								</div>

@@ -2,15 +2,21 @@ package com.feline.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +27,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
+import com.feline.ccr.RefundModel;
+import com.feline.event.EventModel;
+import com.feline.event.EventService;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
 import com.feline.order.OrderModel;
@@ -33,6 +44,9 @@ public class AdminController {
 
 	@Resource
 	private AdminService adminService;
+	
+	@Resource
+	private EventService eventService;
 
 	ModelAndView mav = new ModelAndView();
 
@@ -48,6 +62,8 @@ public class AdminController {
 	private Paging page;
 
 	private List<MemberModel> memberList = new ArrayList<MemberModel>();
+	private List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
+	private List<EventModel> eventList = new ArrayList<EventModel>();
 
 
 	@RequestMapping("main.cat") // 관리자 페이지
@@ -624,5 +640,224 @@ public class AdminController {
 		mav.addObject("currentPage",request.getParameter("currentPage"));
 		return mav;
 	}
+	
+	/*********************** 이벤트 관리 *************************/
+	
+	//이벤트 리스트
+	@RequestMapping(value = "adEventList.cat")
+	public ModelAndView eventList(HttpServletRequest request) {
+		
+		eventList = eventService.eventList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		keyword = request.getParameter("searchKeyword");
+		
+		totalCount = eventList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adMemberList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+			eventList = eventList.subList(page.getStartCount(), lastCount);
+		
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("eventList", eventList);
+		mav.setViewName("adEventList");
+		
+		return mav;
+			
+		}
+		
+	//이벤트 추가 폼의 상품 리스트
+	@RequestMapping(value = "eventGoodsList.cat")
+	public Object eventGoodsList(HttpServletRequest request) {
+		
+		if(request.getParameter("goods_category") != null) {
+			int goods_category = Integer.parseInt(request.getParameter("goods_category"));
+			goodsList = eventService.goodsList(goods_category);
+		}
+		
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		retVal.put("goodsList", goodsList);
+		retVal.put("code", "OK");
+		
+		return retVal;
 
+	}
+	
+	//이벤트 추가 폼의 카테고리 select box
+	@RequestMapping(value = "goodsCategory.cat")
+	public void selectCategory(HttpServletRequest request, HttpServletResponse response, String param) {
+		
+		try {
+			String category = param;
+			
+			ArrayList<String> list = new ArrayList<String>();
+			
+			if(category.equals("food")) {
+				list.add("0");
+				list.add("1");
+				list.add("2");
+				list.add("3");
+			} else if(category.equals("snack")) {
+				list.add("4");
+				list.add("5");
+				list.add("6");
+				list.add("7");
+			} else if(category.equals("bathroom")) {
+				list.add("8");
+				list.add("9");
+				list.add("10");
+				list.add("11");
+			} else if(category.equals("toy")) {
+				list.add("12");
+				list.add("13");
+				list.add("14");
+				list.add("15");
+			} else if(category.equals("cleaner")) {
+				list.add("16");
+				list.add("17");
+				list.add("18");
+				list.add("19");
+			}
+			
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i < list.size(); i++) {
+				jsonArray.add(list.get(i));
+			}
+			
+			//jsonArray 넘김
+			PrintWriter pw = response.getWriter();
+			pw.print(jsonArray.toString());
+			pw.flush();
+			pw.close();
+		} catch(Exception e) {
+			System.out.println("Controller error");
+		}
+	}
+	
+	// Admin 이벤트 등록 폼
+	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
+	public ModelAndView adEventWriteForm() {
+
+		mav.setViewName("adEventWrite");
+		return mav;
+	}
+
+	
+	////////////////////////////////////주문취소 환불 교환 목록 ////////////////////////////////////////////////
+	
+	
+	//고객주문취소 목록 리스트
+	@RequestMapping(value="adOrderCancleList.cat")
+	public ModelAndView adOrderCancleList(HttpServletRequest request) {
+		
+		
+		List<CancleModel> adOrderCancleList = adminService.adOrderCancleList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderCancleList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderCancleList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+		adOrderCancleList = adOrderCancleList.subList(page.getStartCount(), lastCount);
+			
+			
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderCancleList",adOrderCancleList);
+		mav.setViewName("adOrderCancleList");
+		return mav;
+	}
+	
+	
+	//고객주문환불 목록 리스트
+	@RequestMapping(value="adOrderRefundList.cat", method=RequestMethod.GET)
+	public ModelAndView adOrderRefundList(HttpServletRequest request) {
+		
+		List<RefundModel> adOrderRefundList = adminService.adOrderRefundList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderRefundList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderRefundList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+		adOrderRefundList = adOrderRefundList.subList(page.getStartCount(), lastCount);
+		
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderRefundList",adOrderRefundList);
+		mav.setViewName("adOrderRefundList");
+		
+		return mav;
+	}
+	
+	//주문교환내역 목록 리스트
+	@RequestMapping(value="adOrderChangeList.cat",method=RequestMethod.GET)
+	public ModelAndView adOrderChangeList(HttpServletRequest request) {
+		
+		List<ChangeModel> adOrderChangeList = adminService.adOrderChangeList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderChangeList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderChangeList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+			adOrderChangeList = adOrderChangeList.subList(page.getStartCount(), lastCount);
+		
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderChangeList",adOrderChangeList);
+		mav.setViewName("adOrderChangeList");
+			
+		return mav;
+	}
+	
 }

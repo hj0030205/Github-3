@@ -34,17 +34,26 @@
 						</div>
 
 						<div class="panel-body">
+						
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href="mypage.cat">마이 페이지</a></li>
-								<li><a href="orderList.cat"><i
-										class="fa fa-list"></i>나의 주문 내역</a></li>
-								<li><a href="/feline/basket/basketList.cat"><i class="fa fa-heart"></i>장바구니</a></li>
+								<li><a href="orderList.cat">
+								<i class="fa fa-list"></i>나의 주문 내역</a></li>
+								<li><a href="orderCancleList.cat">
+								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
+								<li><a href="orderRefundList.cat">
+								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
+								<li><a href="orderChangeList.cat">
+								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
+								<li><a href="/feline/basket/basketList.cat"><i
+										class="fa fa-heart"></i>장바구니</a></li>
 								<li><a href="memberModify.cat"><i
 										class="fa fa-address-card"></i>회원정보수정</a></li>
-								<li class="active"><a
-									href="memberDelete.cat"><i
+								<li class="active"><a href="memberDelete.cat"><i
 										class="fa fa-sign-out"></i>회원탈퇴</a></li>
+								
 							</ul>
+							
 						</div>
 
 					</div>
