@@ -34,13 +34,53 @@
 
 						<div class="panel-body">
 							<ul class="nav nav-pills nav-stacked category-menu">
-								<li><a href="#">사료</a>
+								<c:choose>
+								<c:when test="${category >= 0 and category <= 3}">
+								<li><a>사료</a>
 									<ul>
-										<li><a href="/feline/goods/goodsList.cat">유기농/홀리스틱</a></li>
-										<li><a href="#">피부/피모건강</a></li>
-										<li><a href="#">헤어볼케어</a></li>
-										<li><a href="#">다이어트/비뇨건강</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=0">유기농/홀리스틱</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=1">피부/피모건강</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=2">헤어볼케어</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=3">다이어트/비뇨건강</a></li>
 									</ul></li>
+								</c:when>
+								<c:when test="${category >= 4 and category <= 7}">
+								<li><a>간식</a>
+									<ul>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=4">캔/파우치</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=5">저키/소시지</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=6">비스켓/트릿</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=7">캣닢/캣그라스</a></li>
+									</ul></li>
+								</c:when>	
+								<c:when test="${category >= 8 and category <= 11}">
+								<li><a>모래와 화장실</a>
+									<ul>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=8">응고형 모래</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=9">흡수형 모래</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=10">화장실/패드</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=11">기타</a></li>
+									</ul></li>
+								</c:when>	
+								<c:when test="${category >= 12 and category <= 15}">
+								<li><a>장난감</a>
+									<ul>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=12">공/봉제인형</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=13">레이저/낚시</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=14">막대</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=15">캣닢</a></li>
+									</ul></li>
+								</c:when>
+								<c:when test="${category >=16 and category <=19 }">
+								<li><a>위생용품</a>
+									<ul>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=16">샴푸/린스</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=17">구강관리</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=18">눈/귀/피부&피모건강</a></li>
+										<li><a href="/feline/goods/goodsCategoryList.cat?goods_category=19">브러쉬/털관리</a></li>
+									</ul></li>
+								</c:when>
+								</c:choose>	
 							</ul>
 						</div>
 					</div>
@@ -49,19 +89,19 @@
 				<div class="col-md-9">
 					<div class="box">
 						<h1>
-							<c:if test="${category >= 0 and category <=4}  ">
+							<c:if test="${category >= 0 and category <=3}">
 							<li class="post2">사료</li>
 							</c:if>
-							<c:if test="${category >= 0 and category <=4}">
+							<c:if test="${category >= 4 and category <=7}">
 							<li class="post2">간식</li>
 							</c:if>	
-							<c:if test="${category >= 0 and category <=4}">
+							<c:if test="${category >= 8 and category <=11}">
 							<li class="post2">모래/화장실</li>
 							</c:if>	
-							<c:if test="${category >= 0 and category <=4}">
+							<c:if test="${category >= 12 and category <=15}">
 							<li class="post2">장난감</li>
 							</c:if>
-							<c:if test="${category >= 0 and category <=4}">
+							<c:if test="${category >= 16 and category <=19}">
 							<li class="post2">위생용품</li>
 							</c:if>
 						</h1>

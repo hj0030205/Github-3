@@ -129,16 +129,16 @@
                             <li>
                                 <div class="yamm-content">
                                     	<div class="col-sm-3">
-                                            <a href="/feline/goods/goodsList.cat"><h5>유기농/홀리스틱</h5></a>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=0"><h5>유기농/홀리스틱</h5></a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>피부/피모건강</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=1"><h5>피부/피모건강</h5></a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>헤어볼케어</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=2"><h5>헤어볼케어</h5></a>
                                         </div>
                                           <div class="col-sm-3">
-                                            <h5>다이어트/비뇨건강</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=3"><h5>다이어트/비뇨건강</h5></a>
                                         </div>
                                 </div>
                                 <!-- /.yamm-content -->
@@ -151,17 +151,17 @@
                             <li>
                                 <div class="yamm-content">
                                     	<div class="col-sm-3">
-                                            <h5>캔/파우치</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=4"><h5>캔/파우치</h5></a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>저키/소시지</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=5"><h5>저키/소시지</h5></a>
                                            
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>비스켓/트릿</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=6"><h5>비스켓/트릿</h5></a>
                                         </div>
                                           <div class="col-sm-3">
-                                            <h5>캣닢/캣그라스</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=7"><h5>캣닢/캣그라스</h5></a>
                                         </div>
                                 </div>
                                 <!-- /.yamm-content -->
@@ -174,17 +174,17 @@
                             <li>
                                 <div class="yamm-content">
                                     	<div class="col-sm-3">
-                                            <h5>응고형 모래</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=8"><h5>응고형 모래</h5></a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>흡수형 모래</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=9"><h5>흡수형 모래</h5></a>
                                            
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>화장실/패드</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=10"><h5>화장실/패드</h5></a>
                                         </div>
                                           <div class="col-sm-3">
-                                            <h5>기타</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=11"><h5>기타</h5></a>
                                         </div>
                                 </div>
                                 <!-- /.yamm-content -->
@@ -197,17 +197,16 @@
                             <li>
                                 <div class="yamm-content">
                                     	<div class="col-sm-3">
-                                            <h5>공/봉제인형</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=12"><h5>공/봉제인형</h5></a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>레이저/낚시</h5>
-                                           
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=13"><h5>레이저/낚시</h5></a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>막대</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=14"><h5>막대</h5></a>
                                         </div>
                                           <div class="col-sm-3">
-                                            <h5>캣닢</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=15"><h5>캣닢</h5></a>
                                         </div>
                                 </div>
                                 <!-- /.yamm-content -->
@@ -220,17 +219,16 @@
                             <li>
                                 <div class="yamm-content">
                                     	<div class="col-sm-3">
-                                            <h5>샴푸/린스</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=16"><h5>샴푸/린스</h5></a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>구강관리</h5>
-                                           
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=17"><h5>구강관리</h5></a>
                                         </div>
                                         <div class="col-sm-3">
-                                            <h5>눈/귀/피부&피모건강</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=18"><h5>눈/귀/피부&피모건강</h5></a>
                                         </div>
                                           <div class="col-sm-3">
-                                            <h5>브러쉬/털관리</h5>
+                                            <a href="/feline/goods/goodsCategoryList.cat?goods_category=19"><h5>브러쉬/털관리</h5></a>
                                         </div>
                                 </div>
                                 <!-- /.yamm-content -->
