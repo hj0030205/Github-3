@@ -227,7 +227,7 @@ public class NoticeController {
 	// 파일 업로드.
 	private NoticeModel fileUploading(MultipartFile file, String oldfileName, NoticeModel noticeModel) throws IOException {
 
-		String uploadPath = "E:\\workspace-spring-Final2\\feline\\src\\main\\webapp\\resources\\upload\\images";
+		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";
 		String fileRealName = file.getOriginalFilename();
 		String fileName;
 		int lastNo;
