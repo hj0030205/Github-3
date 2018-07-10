@@ -21,7 +21,7 @@
 	<definition name="admin" template="/WEB-INF/views/layout/layout4.jsp">
 		<put-attribute name="title" value="관리자 페이지"/>
 		<put-attribute name="header" value="/WEB-INF/views/layout/header/adminheader.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/layout/adminMain.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/adminMain.jsp" />
 		<put-attribute name="lefter" value="/WEB-INF/views/layout/lefter/adminLefter.jsp" />
 	</definition>
 	
