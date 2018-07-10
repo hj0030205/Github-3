@@ -7,7 +7,6 @@ import com.feline.ccr.ChangeModel;
 import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
-import com.feline.notice.NoticeModel;
 import com.feline.order.OrderModel;
 
 public interface AdminDAO {
