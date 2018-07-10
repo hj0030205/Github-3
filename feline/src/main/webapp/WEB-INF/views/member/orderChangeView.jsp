@@ -94,7 +94,7 @@
 						</div>
 				<!-- ========================================================================================== -->
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-10">
 								<div class="form-group">
 									<label>교환 이유</label><input type="text" class="form-control"
 										id="change_reason" name="change_reason"
