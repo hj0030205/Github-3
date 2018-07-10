@@ -2,15 +2,21 @@ package com.feline.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +27,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
+import com.feline.ccr.RefundModel;
 import com.feline.event.EventModel;
 import com.feline.event.EventService;
 import com.feline.goods.GoodsModel;
@@ -317,7 +326,7 @@ public class AdminController {
 	/*********************** 상품 관리 *************************/
 
 	// Admin 상품 리스트(검색 처리 포함)
-	@RequestMapping(value = "adGoodsList.cat", method = RequestMethod.GET)
+	@RequestMapping(value = "adGoodsList.cat")
 	public ModelAndView adGoodsList(HttpServletRequest request) throws UnsupportedEncodingException {
 
 		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
@@ -329,12 +338,10 @@ public class AdminController {
 
 		keyword = request.getParameter("searchKeyword");
 		
-
 		List<GoodsModel> adGoodsList = new ArrayList<GoodsModel>();
 
 		if (keyword != null) {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
-			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
 
 			if (searchNum == 0)
 				adGoodsList = adminService.goodsSearchName(keyword);
@@ -342,6 +349,7 @@ public class AdminController {
 				adGoodsList = adminService.goodsSearchCategory(keyword);
 
 			totalCount = adGoodsList.size();
+			System.out.println(totalCount);
 			page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adGoodsList");
 			pagingHtml = page.getPagingHtml().toString();
 
@@ -403,6 +411,7 @@ public class AdminController {
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsWriteForm() {
 
+		mav.addObject("goodsModel", new GoodsModel());
 		mav.setViewName("adGoodsWrite");
 		return mav;
 	}
@@ -437,7 +446,9 @@ public class AdminController {
 	public ModelAndView adGoodsDelete(HttpServletRequest request) {
 
 		int no = Integer.parseInt(request.getParameter("goods_num"));
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		adminService.goodsDelete(no);
+		mav.addObject("currentPage", currentPage);
 		mav.setViewName("redirect:adGoodsList.cat");
 
 		return mav;
@@ -445,14 +456,16 @@ public class AdminController {
 
 	// Admin 상품 수정폼
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.GET)
-	public ModelAndView adGoodsModifyForm(@ModelAttribute("goodsModel") GoodsModel GoodsModel, BindingResult result,
+	public ModelAndView adGoodsModifyForm(GoodsModel GoodsModel, BindingResult result,
 			HttpServletRequest request) {
-
-		GoodsModel = adminService.goodsView(GoodsModel.getGoods_num());
+		int goods_num= Integer.parseInt(request.getParameter("goods_num"));
+		currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		GoodsModel = adminService.goodsView(goods_num);
 
 		String content = GoodsModel.getGoods_content().replaceAll("<br />", "\r\n");
 		GoodsModel.setGoods_content(content);
-
+		
+		mav.addObject("currentPage",currentPage);
 		mav.addObject("goodsModel", GoodsModel);
 		mav.setViewName("adGoodsWrite");
 
@@ -484,7 +497,7 @@ public class AdminController {
 	// 파일 업로드.
 	private GoodsModel fileUploading(MultipartFile file, String oldfileName, GoodsModel GoodsModel) throws IOException {
 
-		String uploadPath = "E:\\workspace-spring-Final2\\feline\\src\\main\\webapp\\resources\\upload\\images";
+		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";
 		String fileRealName = file.getOriginalFilename();
 		String fileName;
 		int lastNo;
@@ -667,18 +680,184 @@ public class AdminController {
 		
 	//이벤트 추가 폼의 상품 리스트
 	@RequestMapping(value = "eventGoodsList.cat")
-	public ModelAndView eventGoodsList(HttpServletRequest request) {
+	public Object eventGoodsList(HttpServletRequest request) {
 		
 		if(request.getParameter("goods_category") != null) {
 			int goods_category = Integer.parseInt(request.getParameter("goods_category"));
 			goodsList = eventService.goodsList(goods_category);
-			
-			mav.addObject("goodsList", goodsList);
 		}
 		
-		mav.setViewName("addEvent");
+		Map<String, Object> retVal = new HashMap<String, Object>();
 		
+		retVal.put("goodsList", goodsList);
+		retVal.put("code", "OK");
+		
+		return retVal;
+
+	}
+	
+	//이벤트 추가 폼의 카테고리 select box
+	@RequestMapping(value = "goodsCategory.cat")
+	public void selectCategory(HttpServletRequest request, HttpServletResponse response, String param) {
+		
+		try {
+			String category = param;
+			
+			ArrayList<String> list = new ArrayList<String>();
+			
+			if(category.equals("food")) {
+				list.add("0");
+				list.add("1");
+				list.add("2");
+				list.add("3");
+			} else if(category.equals("snack")) {
+				list.add("4");
+				list.add("5");
+				list.add("6");
+				list.add("7");
+			} else if(category.equals("bathroom")) {
+				list.add("8");
+				list.add("9");
+				list.add("10");
+				list.add("11");
+			} else if(category.equals("toy")) {
+				list.add("12");
+				list.add("13");
+				list.add("14");
+				list.add("15");
+			} else if(category.equals("cleaner")) {
+				list.add("16");
+				list.add("17");
+				list.add("18");
+				list.add("19");
+			}
+			
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i < list.size(); i++) {
+				jsonArray.add(list.get(i));
+			}
+			
+			//jsonArray 넘김
+			PrintWriter pw = response.getWriter();
+			pw.print(jsonArray.toString());
+			pw.flush();
+			pw.close();
+		} catch(Exception e) {
+			System.out.println("Controller error");
+		}
+	}
+	
+	// Admin 이벤트 등록 폼
+	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
+	public ModelAndView adEventWriteForm() {
+
+		mav.setViewName("adEventWrite");
 		return mav;
 	}
 
+	
+	////////////////////////////////////주문취소 환불 교환 목록 ////////////////////////////////////////////////
+	
+	
+	//고객주문취소 목록 리스트
+	@RequestMapping(value="adOrderCancleList.cat")
+	public ModelAndView adOrderCancleList(HttpServletRequest request) {
+		
+		
+		List<CancleModel> adOrderCancleList = adminService.adOrderCancleList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderCancleList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderCancleList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+		adOrderCancleList = adOrderCancleList.subList(page.getStartCount(), lastCount);
+			
+			
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderCancleList",adOrderCancleList);
+		mav.setViewName("adOrderCancleList");
+		return mav;
+	}
+	
+	
+	//고객주문환불 목록 리스트
+	@RequestMapping(value="adOrderRefundList.cat", method=RequestMethod.GET)
+	public ModelAndView adOrderRefundList(HttpServletRequest request) {
+		
+		List<RefundModel> adOrderRefundList = adminService.adOrderRefundList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderRefundList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderRefundList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+		adOrderRefundList = adOrderRefundList.subList(page.getStartCount(), lastCount);
+		
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderRefundList",adOrderRefundList);
+		mav.setViewName("adOrderRefundList");
+		
+		return mav;
+	}
+	
+	//주문교환내역 목록 리스트
+	@RequestMapping(value="adOrderChangeList.cat",method=RequestMethod.GET)
+	public ModelAndView adOrderChangeList(HttpServletRequest request) {
+		
+		List<ChangeModel> adOrderChangeList = adminService.adOrderChangeList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderChangeList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderChangeList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+			adOrderChangeList = adOrderChangeList.subList(page.getStartCount(), lastCount);
+		
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderChangeList",adOrderChangeList);
+		mav.setViewName("adOrderChangeList");
+			
+		return mav;
+	}
+	
 }

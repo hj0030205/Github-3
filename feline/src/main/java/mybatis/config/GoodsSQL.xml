@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 공통으로 사용할 select 절 정의 -->
 	<sql id="select-all">
-		SELECT * FROM feline_goods
+		SELECT * FROM feline_goods 
 	</sql>
 
 	<!-- 공통으로 사용할 where 절 정의 -->
@@ -70,14 +70,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectSearchN" resultMap="GoodsRes"
 		parameterType="string">
 		<include refid="select-all" />
-		where goods_name like #{goods_name}
+		where goods_name like '%'||#{goods_name}||'%' 
 		order by goods_num desc
 	</select>
 
 
 	<select id="selectSearchC" resultMap="GoodsRes" parameterType="string">
-		<include refid="select-all" />
-		where goods_category like #{goods_category}
+		<include refid="select-all" /> 
+		where goods_category like '%'||#{goods_category}||'%' 
 		order by goods_num desc
 	</select>
 

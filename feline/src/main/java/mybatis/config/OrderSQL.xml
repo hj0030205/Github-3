@@ -27,7 +27,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="status" column="status"/>
 		
 	</resultMap>
+	
+	<!-- 취소테이블 -->
+	<resultMap type="CancleModel" id="cancleRes">
+		<result property="cancle_num" column="cancle_num"/>
+		<result property="order_num" column="order_num"/>
+		<result property="cancle_reason" column="cancle_reason"/>
+		<result property="member_id" column="member_id"/>
+	</resultMap>
+	
 
+	<!-- 환불테이블 -->
+	<resultMap type="RefundModel" id="refundRes">
+		<result property="trade_num" column="trade_num"/>
+		<result property="order_num" column="order_num"/>
+		<result property="trade_reason" column="trade_reason"/>
+		<result property="trade_state" column="trade_state"/>
+		<result property="member_id" column="member_id"/>
+	</resultMap>
+	
+	
+	<!-- 교환테이블 -->
+	<resultMap type="ChangeModel" id="changeRes">
+		<result property="change_num" column="change_num"/>
+		<result property="order_num" column="order_num"/>
+		<result property="change_reason" column="change_reason"/>
+		<result property="change_state" column="change_state"/>
+		<result property="member_id" column="member_id"/>
+	</resultMap>	
+	
+	
+	
+	
+	
 	<!-- 주문하기 -->
 	<insert id="goodsOrder" parameterType="orderModel">
 		INSERT INTO FELINE_ORDER(
@@ -142,4 +174,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where order_member_id = #{order_member_id} and status = 5
 	 </select>
    		
+   	<!--  ///////////////관리자용 주문취소,환불,교환 리스트 뽑아내기////////////////////// -->
+   	
+   	<select id="adOrderCancleList" resultMap="cancleRes" parameterType="CancleModel">
+   		select * from feline_order_cancle_list ORDER BY order_num DESC
+   	</select>
+   	
+   	<select id="adOrderRefundList" resultMap="refundRes" parameterType="RefundModel">
+   		select * from feline_trade_list order by order_num DESC
+   	</select>
+   	
+   	<select id="adOrderChangeList" resultMap="changeRes" parameterType="ChangeModel">
+         select * from feline_change_list order by order_num DESC
+   	</select>
 </mapper>
