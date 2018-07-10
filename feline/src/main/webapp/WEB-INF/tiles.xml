@@ -231,4 +231,8 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin/adEventList.jsp" />
 	</definition>
 	
+	<definition name="adEventWrite" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adEventWrite.jsp" />
+	</definition>
+	
 </tiles-definitions>

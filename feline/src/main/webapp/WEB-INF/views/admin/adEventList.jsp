@@ -126,6 +126,14 @@
 							${pagingHtml}
                         	</center>
                         </div>
+                        <div>
+                        	<center>
+								<form>
+									<input type="button" value="상품등록" style="float:right" class="btn btn-default"
+									onclick="javascript:location.href='adEventWrite.cat?currentPage=${currentPage}'">
+								</form>
+                        	</center>
+                        </div>
                     </div>
                 </div>
 
