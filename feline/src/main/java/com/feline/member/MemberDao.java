@@ -64,6 +64,9 @@ public interface MemberDao
 	 //주문환불목록 가져오기
 	 List<OrderModel> orderRefundList(String member_id);
 	 
+	 //주문환불상세보기
+	 RefundModel orderRefundOne(RefundModel refundModel);
+	 
 	 //주문교환(고객시점)
 	 void clientOrderChange(ChangeModel changeModel,OrderModel orderModel);
 	

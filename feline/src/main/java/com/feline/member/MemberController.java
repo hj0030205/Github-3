@@ -409,6 +409,23 @@ public class MemberController {
 		return mav;
 	}
 
+	//주문 환불 상세보기
+	@RequestMapping(value="orderRefundView.cat", method=RequestMethod.GET)
+	public ModelAndView orderRefundView(HttpServletRequest request,HttpSession session) {
+		
+		RefundModel refundModel= new RefundModel();
+		
+		int order_num = Integer.parseInt(request.getParameter("order_num")); 
+		refundModel.setMember_id((String)session.getAttribute("id"));
+		refundModel.setOrder_num(order_num);
+		
+		refundModel = memberService.orderRefundOne(refundModel);
+		
+		mav.addObject("refundModel",refundModel);
+		mav.setViewName("orderRefundView");
+		
+		return mav;
+	}
 	
 	//주문환불 폼
 	@RequestMapping(value="orderRefund.cat", method=RequestMethod.GET)

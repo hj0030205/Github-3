@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>취소조회</title>
+<title>환불조회</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
@@ -17,7 +17,7 @@
 				<div class="col-md-12">
 					<ul class="breadcrumb">
 						<li><a href="/feline/main.cat">메인</a></li>
-						<li>주문취소상세내역</li>
+						<li>주문환불상세내역</li>
 					</ul>
 				</div>
 				<!-- *** CUSTOMER MENU ***
@@ -36,9 +36,9 @@
 								<li><a href="mypage.cat">마이 페이지</a></li>
 								<li><a href="orderList.cat">
 								<i class="fa fa-list"></i>나의 주문 내역</a></li>
-								<li class="active"><a href="orderCancleList.cat">
+								<li><a href="orderCancleList.cat">
 								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
-								<li><a href="orderRefundList.cat">
+								<li class="active"><a href="orderRefundList.cat">
 								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
 								<li><a href="orderChangeList.cat">
 								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
@@ -63,31 +63,31 @@
 				<div class="col-md-9" id="customer-orders">
 					<div class="box">
 						<h3>
-							취소상세내역 <small>회원전용</small>
+							환불상세내역 <small>회원전용</small>
 						</h3>
 						<br>
-							<h2>취소리스트</h2>
+							<h2>환불리스트</h2>
 							<div class="row">
 							<div class="col-sm-3">
 								<div class="form-group">
 									<label>취소 번호</label><input type="text" class="form-control"
-										id="cancle_num" name="cancle_num"
-										value="${cancleModel.cancle_num }" disabled="disabled">
+										id="trade_num" name="trade_num"
+										value="${refundModel.trade_num }" disabled="disabled">
 								</div>
 							</div>
 							<div class="col-sm-3">
 								<div class="form-group">
 									<label>주문 번호</label> <input type="text" class="form-control"
 										id="order_num" name="order_num"
-										value="${cancleModel.order_num }" disabled="disabled">
+										value="${refundModel.order_num }" disabled="disabled">
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>취소자 아이디</label> <input type="text"
+									<label>환불자 아이디</label> <input type="text"
 										class="form-control" id="member_id"
 										name="member_id"
-										value="${cancleModel.member_id }"
+										value="${refundModel.member_id }"
 										disabled="disabled">
 								</div>
 							</div>
@@ -96,15 +96,15 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label>취소 이유</label><input type="text" class="form-control"
-										id="cancle_reason" name="cancle_reason"
-										value="${cancleModel.cancle_reason }" disabled="disabled">
+									<label>환불 이유</label><input type="text" class="form-control"
+										id="trade_reason" name="trade_reason"
+										value="${refundModel.trade_reason }" disabled="disabled">
 								</div>
 							</div>
 						</div>			
 				<!-- ========================================================================================== -->
 						<center><button class="btn btn-primary"
-						onclick="javascript:location.href='orderCancleList.cat'">목록</button><center>																
+						onclick="javascript:location.href='orderRefundList.cat'">목록</button><center>					
 					</div>
 				</div>
 			</div>

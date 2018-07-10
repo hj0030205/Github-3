@@ -93,6 +93,7 @@
 	<definition name="orderCancleView" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancleView.jsp"></put-attribute>
 	</definition>
+	
 	<!-- 주문삭제 -->
 	<definition name="orderCancle" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/member/orderCancle.jsp"/>
@@ -108,6 +109,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/orderRefund.jsp"/>
 	</definition>
 	
+	<!-- 주문 상세 내역 -->
+	<definition name="orderRefundView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderRefundView.jsp"></put-attribute>
+	</definition>
 	
 	<!-- 나의 주문 교환 내역 -->
 	<definition name="orderChangeList" extends="main">

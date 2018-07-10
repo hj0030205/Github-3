@@ -161,6 +161,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where order_member_id = #{order_member_id} and status = 2
 	 </select>
 	 
+	 <!-- 환불상세보기 -->
+	 <select id="orderRefundOne" resultMap="refundRes" parameterType="refundModel">
+	 	select * from feline_trade_list where member_id=#{member_id} and order_num=#{order_num}
+	 </select>
+	 
 	 <!-- 주문교환 입력-->
 	 <insert id="insertChange" parameterType="ChangeModel">
 	 	insert into FELINE_change_LIST(change_num, order_num, change_reason, change_state, member_id) 

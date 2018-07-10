@@ -89,7 +89,7 @@
 								<tr>
 									<td><fmt:formatDate value="${order.order_date}"
 													pattern="yyyy.MM.dd HH:MM" /></td>
-									<td><%-- <a href="orderView.cat?order_num=${order.order_num}"> --%>${order.order_num }</td>
+									<td><a href="orderView.cat?order_num=${order.order_num}">${order.order_num }</td></a>
 									<td>${goodsList[status.index].goods_category }</td>
 									<td>${goodsList[status.index].goods_name }</td>
 									<td>${order.order_goods_amount }</td>
