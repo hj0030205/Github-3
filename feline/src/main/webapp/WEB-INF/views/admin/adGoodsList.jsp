@@ -88,7 +88,7 @@ var page=${currentPage};
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${goodsList eq null}">
+									<c:when test="${fn:length(goodsList) <= 0}">
 										<tr align=center>
 											<td colspan=8>등록된 도서가 없습니다.</td>
 										</tr>
