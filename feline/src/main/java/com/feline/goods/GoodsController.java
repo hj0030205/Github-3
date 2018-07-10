@@ -50,6 +50,9 @@ public class GoodsController {
 		
 		GoodsModel goodsModel = goodsService.goodsView(goods_num);
 		
+		String category = goodsModel.getGoods_category();
+		
+		mav.addObject("category", category);
 		mav.addObject("goodsModel",goodsModel);
 		mav.setViewName("goodsView");
 		
