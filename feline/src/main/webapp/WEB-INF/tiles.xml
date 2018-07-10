@@ -231,4 +231,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin/adEventList.jsp" />
 	</definition>
 	
+	<!-- 관리자 취소 목록 -->
+	<definition name="adOrderCancleList" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderCancleList.jsp"/>
+	</definition>
+	
+	
 </tiles-definitions>
