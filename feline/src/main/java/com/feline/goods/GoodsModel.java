@@ -17,6 +17,7 @@ public class GoodsModel {
 	private String goods_detail_image_savname;*/
 	private int goods_hit;
 	private Date goods_date;
+	/*private int goods_status;*/
 	
 	public int getGoods_num() {
 		return goods_num;
@@ -95,6 +96,12 @@ public class GoodsModel {
 	}
 	public void setGoods_detail_image_savname(String goods_detail_image_savname) {
 		this.goods_detail_image_savname = goods_detail_image_savname;
+	}*/
+	/*public int getGoods_status() {
+		return goods_status;
+	}
+	public void setGoods_status(int goods_status) {
+		this.goods_status = goods_status;
 	}*/
 	
 	

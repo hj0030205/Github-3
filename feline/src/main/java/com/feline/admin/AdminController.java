@@ -310,7 +310,7 @@ public class AdminController {
 	/*********************** 상품 관리 *************************/
 
 	// Admin 상품 리스트(검색 처리 포함)
-	@RequestMapping(value = "adGoodsList.cat", method = RequestMethod.GET)
+	@RequestMapping(value = "adGoodsList.cat")
 	public ModelAndView adGoodsList(HttpServletRequest request) throws UnsupportedEncodingException {
 
 		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
@@ -322,12 +322,10 @@ public class AdminController {
 
 		keyword = request.getParameter("searchKeyword");
 		
-
 		List<GoodsModel> adGoodsList = new ArrayList<GoodsModel>();
 
 		if (keyword != null) {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
-			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
 
 			if (searchNum == 0)
 				adGoodsList = adminService.goodsSearchName(keyword);
@@ -335,6 +333,7 @@ public class AdminController {
 				adGoodsList = adminService.goodsSearchCategory(keyword);
 
 			totalCount = adGoodsList.size();
+			System.out.println(totalCount);
 			page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adGoodsList");
 			pagingHtml = page.getPagingHtml().toString();
 
@@ -430,7 +429,9 @@ public class AdminController {
 	public ModelAndView adGoodsDelete(HttpServletRequest request) {
 
 		int no = Integer.parseInt(request.getParameter("goods_num"));
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		adminService.goodsDelete(no);
+		mav.addObject("currentPage", currentPage);
 		mav.setViewName("redirect:adGoodsList.cat");
 
 		return mav;
@@ -438,14 +439,16 @@ public class AdminController {
 
 	// Admin 상품 수정폼
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.GET)
-	public ModelAndView adGoodsModifyForm(@ModelAttribute("goodsModel") GoodsModel GoodsModel, BindingResult result,
+	public ModelAndView adGoodsModifyForm(GoodsModel GoodsModel, BindingResult result,
 			HttpServletRequest request) {
-
-		GoodsModel = adminService.goodsView(GoodsModel.getGoods_num());
+		int goods_num= Integer.parseInt(request.getParameter("goods_num"));
+		currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		GoodsModel = adminService.goodsView(goods_num);
 
 		String content = GoodsModel.getGoods_content().replaceAll("<br />", "\r\n");
 		GoodsModel.setGoods_content(content);
-
+		
+		mav.addObject("currentPage",currentPage);
 		mav.addObject("goodsModel", GoodsModel);
 		mav.setViewName("adGoodsWrite");
 

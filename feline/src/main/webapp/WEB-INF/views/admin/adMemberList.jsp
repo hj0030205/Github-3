@@ -35,7 +35,7 @@ function update(member_id){
 			<div class="col-md-5 col-8 align-self-center">
 				<h3 class="text-themecolor">회원 목록</h3>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="main.cat">Home</a></li>
+					<li class="breadcrumb-item"><a href="main.cat">관리자 메인</a></li>
 					<li class="breadcrumb-item active">회원 목록</li>
 				</ol>
 			</div>
