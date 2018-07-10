@@ -27,6 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="status" column="status"/>
 		
 	</resultMap>
+	
+	<resultMap type="CancleModel" id="cancleRes">
+		<result property="cancle_num" column="cancle_num"/>
+		<result property="order_num" column="order_num"/>
+		<result property="cancle_reason" column="cancle_reason"/>
+		<result property="member_id" column="member_id"/>
+	</resultMap>
 
 	<!-- 주문하기 -->
 	<insert id="goodsOrder" parameterType="orderModel">
@@ -142,4 +149,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where order_member_id = #{order_member_id} and status = 5
 	 </select>
    		
+   	<!--  ///////////////관리자용 주문취소,환불,교환 리스트 뽑아내기////////////////////// -->
+   	
+   	<select id="adOrderCancleList" resultMap="cancleRes" parameterType="CancleModel">
+   		select * from feline_order_cancle_list ORDER BY order_num DESC
+   	</select>
+   	
 </mapper>

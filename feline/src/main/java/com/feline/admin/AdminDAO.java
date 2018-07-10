@@ -2,6 +2,7 @@ package com.feline.admin;
 
 import java.util.List;
 
+import com.feline.ccr.CancleModel;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
 import com.feline.notice.NoticeModel;
@@ -75,7 +76,10 @@ public interface AdminDAO {
 	
 	
 	
-	/**********************환불/교환관리*****************************/
+	/**********************취소/환불/교환관리*****************************/
+	//취소목록 뽑아오기
+	List<CancleModel> adOrderCancleList();
+	
 	
 
 }

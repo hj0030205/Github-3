@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feline.ccr.CancleModel;
 import com.feline.event.EventModel;
 import com.feline.event.EventService;
 import com.feline.goods.GoodsModel;
@@ -750,4 +751,37 @@ public class AdminController {
 		return mav;
 	}
 
+	//고객주문취소 목록 리스트
+	@RequestMapping(value="adOrderCancleList.cat")
+	public ModelAndView adOrderCancleList(HttpServletRequest request) {
+		
+		
+		List<CancleModel> adOrderCancleList = adminService.adOrderCancleList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderCancleList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderCancleList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+		adOrderCancleList = adOrderCancleList.subList(page.getStartCount(), lastCount);
+			
+			
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderCancleList",adOrderCancleList);
+		mav.setViewName("adOrderCancleList");
+		return mav;
+	}
 }

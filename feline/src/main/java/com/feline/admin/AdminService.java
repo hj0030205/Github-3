@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
+import com.feline.ccr.CancleModel;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
 import com.feline.order.OrderModel;
@@ -165,6 +166,13 @@ public class AdminService implements AdminDAO {
 	public OrderModel OrderView(int order_num) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("order.ordergetOne", order_num);
+	}
+
+	/////////////////////////////취소 교환 환불 목록 보기 ///////////////////////////////////////////
+	@Override
+	public List<CancleModel> adOrderCancleList() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.adOrderCancleList");
 	}
 
 }
