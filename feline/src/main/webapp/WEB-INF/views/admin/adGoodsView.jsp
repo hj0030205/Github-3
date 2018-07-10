@@ -1,140 +1,185 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
 <html>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <head>
-</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
-function deleteConfirm(){
-	if(confirm("정말 삭제하시겠습니까?") == true) { //확인
-		location.href='adGoodsDelete.cat?goods_num=${goodsModel.goods_num}';
-	} else { //취소
-		return;
+var page=${currentPage}
+function update(goods_num){
+	document.location.href="adGoodsModify.cat?goods_num=${goodsModel.goods_num}&currentPage="+page;
+}
+function deleteCheck(goods_num) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		document.location.href="adGoodsDelete.cat?goods_num="+goods_num+"&currentPage="+page;
+	}else{
+		return false;
 	}
 }
 </script>
+<style>
+.form-control[readonly]{
+	background-color:white;
+	color:black;
+	font-size:19px;
+}
+.fg{ font-size:19px; }
+</style>
+</head>
 <body>
-	<div id="all">
-		<div id="content">
-			<div class="container">
-				<!-- 과정 표시 -->
-
-				<div class="col-md-12">
-					<ul class="breadcrumb">
-						<li><a href="/feline/main.cat">메인</a></li>
-						<li>상품 상세</li>
-					</ul>
-				</div>
-
-				<div class="col-md-12" id="checkout">
-					<div class="box">
-						<h1>상품 상세 페이지</h1>
-						<!-- /.content -->
-						<div class="content">
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label for="goods_name">상품명</label> <input type="text"
-											id="goods_name" name="goods_name" class="form-control"
-											value="${goodsModel.goods_name }"
-											readonly="readonly" />
-									</div>
+	<div class="container-fluid">
+		<!-- ///////////////////////////////row page title/////////////////////////////////////// -->
+		<div class="row page-titles">
+			<div class="col-md-5 col-8 align-self-center">
+				<h3 class="text-themecolor">상품 상세 정보</h3>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/feline/admin/main.cat">관리자 메인</a></li>
+					<li class="breadcrumb-item active">상품 상세 정보</li>
+				</ol>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<h3>상품 정보</h3>
+				<div class="card">
+					<div class="card-block">
+						<div class="row">
+							<div class="col-log-4" style="margin: auto; text-align: center;">
+								<div class="col-sm-10">
+									<img src="/feline/resources/upload/images/${goodsModel.goods_image_savname}" width="400" height="400" border="0" />
 								</div>
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label for="goods_category">카테고리</label> <input type="text"
-											id="goods_category" name="goods_category"
-											class="form-control"
-											value="${goodsModel.goods_category }"
-											readonly="readonly" />
+							</div>
+							<div class="col-lg-8">
+							<div class="form-group"></div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-4 fg">
+											<b>상품번호 : </b> ${goodsModel.goods_num}
+										</div>
+										<div class="col-md-4 fg">
+											<b>등록일 : </b> <fmt:formatDate value="${goodsModel.goods_date}" pattern="yyyy.MM.dd HH:MM:SS"/> 
+										</div>
+										<div class="col-md-4 fg">
+											<b>품절 여부 :</b> 
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label for="goods_price">가격</label> <input type="text"
-											id="goods_price" name="goods_price" class="form-control"
-											value="${goodsModel.goods_price }"
-											readonly="readonly" />
-									</div>
+							<div class="form-group">
+								<label class="col-md-12">상품명</label>
+								<div class="col-md-12">
+									<input type="text" class="form-control form-control-line"
+										value="${goodsModel.goods_name}">
 								</div>
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label for="goods_amount">갯수</label> <input type="text"
-											id="goods_amount" name="goods_amount" class="form-control"
-											value="${goodsModel.goods_amount }"
-											readonly="readonly" />
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label class="col-md-6">카테고리</label>
+										<div class="col-md-12">
+											<input type="text" value="${goodsModel.goods_category}"
+												class="form-control form-control-line">
+										</div>
 									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label for="goods_size">사이즈</label> <input type="text"
-											id="goods_size" name="goods_size" class="form-control"
-											value="${goodsModel.goods_size }"
-											readonly="readonly" />
+									<div class="col-md-6">
+										<label class="col-md-6">가격</label>
+										<div class="col-md-12">
+											<input type="text" value="${goodsModel.goods_price}"
+												class="form-control form-control-line">
+										</div>
 									</div>
 								</div>
 							</div>
-							<!-- /.row -->
-
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label for="upload">이미지</label>
-										<c:if test="${goodsModel.goods_image_savname ne null}">
-										<%-- 	<c:url var="download" value="FileDownAction">
-												<c:param name="goods_num" value="${goodsModel.goods_num } " />
-											</c:url>
-											<br/> 
-											<a href="${viewURL}"> ${goodsModel.goods_image_orgname} </a> --%>
-											<img src="/feline/resources/upload/images/${goodsModel.goods_image_savname }" /><br /> 
-										</c:if>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label class="col-md-6">상품 갯수</label>
+										<div class="col-md-12">
+											<input type="text" value="${goodsModel.goods_amount}"
+												class="form-control form-control-line">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<label class="col-md-6">상품 사이즈</label>
+										<div class="col-md-12">
+											<input type="text" value="${goodsModel.goods_size}"
+												class="form-control form-control-line">
+										</div>
 									</div>
 								</div>
-							</div>
-							<!-- /.row -->
-
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-group">
-										<label>설명</label> 
-										<p>
-										<pre>${goodsModel.goods_content }</pre></p>
-									</div>
-								</div>
-							</div>
-							<!-- /.row -->
-						</div>
-						<div class="box-footer">
-							<div class="pull-left">
-								<a href="adGoodsList.cat?currentPage=${currentPage }"
-								 class="btn btn-default">목록으로<i class="fa fa-chevron-left"></i></a>
-							</div>
-							<div class="pull-right">
-								<button class="btn btn-primary" 
-								onclick="javascript:location.href='adGoodsWrite.cat?currentPage=${currentPage}'">
-								상품 등록&nbsp;<i class="fa fa-chevron-right"></i>
-								</button>
-								<button class="btn btn-primary" 
-								onclick="javascript:location.href='adGoodsModify.cat?goods_num=${goodsModel.goods_num }&currentPage=${currentPage}'">
-								상품 수정&nbsp;<i class="fa fa-chevron-right"></i>
-								</button>
-								<button class="btn btn-primary" 
-								onclick="deleteConfirm();"> 상품 삭제&nbsp;<i class="fa fa-chevron-right"></i>
-								</button>
 							</div>
 						</div>
 					</div>
-					<!-- /.box -->
+					<div class="form-group">
+					<label class="col-md-12">상품 설명</label>
+						<div class="col-md-12">
+							<textarea rows="20" class="form-control form-control-line">${goodsModel.goods_content}</textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12" style="text-align: center;">
+							<button class="btn btn-warning" onclick="javascript:update()">상품 수정</button>
+							&nbsp; <a class="btn btn-danger"
+								href="javascript:deleteCheck()">상품 삭제</a>
+						</div>
+					</div>
 				</div>
 			</div>
-			<!-- /.container -->
 		</div>
-		<!-- /#content -->
+	</div>
+	<%-- <c:if test="${goodsModel.goods_num!=0}">
+		<div class="col-lg-12">
+			<h3>goods RegoodsModel</h3>
+			<div class="card">
+				<div class="card-block">
+					<div class="table-responsive">
+						<table class="table list-items regoodsModel">
+							<c:choose>
+								<c:when test="${totalCount==0}">
+									<tr>
+										<td colspan=4>등록된 댓글이 없습니다.</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="list" items="${regoodsModel}" varStatus="stat">
+										<c:url var="goodsModelURL" value="/admin/memberDetail.cat">
+											<c:param name="status" value="all" />
+											<c:param name="member_id" value="${list.member_id}" />
+										</c:url>
+										<tr>
+											<td>${list.regoodsModel_num}</td>
+											<td>
+												<!-- member_name regoodsModel에서 조인하기.. --> (<a
+												href="${goodsModelURL}">${list.member_id}</a>)
+											</td>
+											<td>${list.regoodsModel_pw}</td>
+											<td>${list.regoodsModel_regdate}</td>
+											<td rowspan="2"><a class="mdi mdi-delete" title="Delete"
+												href="javascript:deleteCheck2(${list.goodsModel_num})"></a></td>
+										</tr>
+
+										<tr>
+											<td colspan=3 style="width: 400px;">${list.roodsModel_content}</td>
+											<td>${list.star_point}</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</table>
+
+						<table class="paging">
+							<tr>
+								<td align=center colspan=8>${pagingHtml}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if> --%>
 	</div>
 </body>
-
 </html>
