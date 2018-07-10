@@ -236,7 +236,22 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderCancleList.jsp"/>
 	</definition>
 	
+<<<<<<< HEAD
+	<!-- 관리자 환불 목록 -->
+	<definition name="adOrderRefundList" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderRefundList.jsp"/>
+	</definition>
+
+	<!-- 관리자 교환 목록 -->
+	<definition name="adOrderChangeList" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderChangeList.jsp"/>
+	</definition>
+	
+		
+	
+=======
 	<definition name="adEventWrite" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adEventWrite.jsp" />
 	</definition>
+>>>>>>> ba61f63479243f077a7cb6a4afba93c3fca97b23
 </tiles-definitions>

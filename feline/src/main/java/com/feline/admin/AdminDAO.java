@@ -3,6 +3,8 @@ package com.feline.admin;
 import java.util.List;
 
 import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
+import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
 import com.feline.notice.NoticeModel;
@@ -80,6 +82,11 @@ public interface AdminDAO {
 	//취소목록 뽑아오기
 	List<CancleModel> adOrderCancleList();
 	
+	//환불 목록 뽑아오기
+	List<RefundModel> adOrderRefundList();
+	
+	//교환 목록 뽑아오기
+	List<ChangeModel> adOrderChangeList();
 	
 
 }

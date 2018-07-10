@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
+import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
 import com.feline.order.OrderModel;
@@ -173,6 +175,18 @@ public class AdminService implements AdminDAO {
 	public List<CancleModel> adOrderCancleList() {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList("order.adOrderCancleList");
+	}
+
+	@Override
+	public List<RefundModel> adOrderRefundList() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.adOrderRefundList");
+	}
+
+	@Override
+	public List<ChangeModel> adOrderChangeList() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("order.adOrderChangeList");
 	}
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,6 +28,8 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.ccr.CancleModel;
+import com.feline.ccr.ChangeModel;
+import com.feline.ccr.RefundModel;
 import com.feline.event.EventModel;
 import com.feline.event.EventService;
 import com.feline.goods.GoodsModel;
@@ -751,6 +754,10 @@ public class AdminController {
 		return mav;
 	}
 
+	
+	////////////////////////////////////주문취소 환불 교환 목록 ////////////////////////////////////////////////
+	
+	
 	//고객주문취소 목록 리스트
 	@RequestMapping(value="adOrderCancleList.cat")
 	public ModelAndView adOrderCancleList(HttpServletRequest request) {
@@ -784,4 +791,72 @@ public class AdminController {
 		mav.setViewName("adOrderCancleList");
 		return mav;
 	}
+	
+	
+	//고객주문환불 목록 리스트
+	@RequestMapping(value="adOrderRefundList.cat", method=RequestMethod.GET)
+	public ModelAndView adOrderRefundList(HttpServletRequest request) {
+		
+		List<RefundModel> adOrderRefundList = adminService.adOrderRefundList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderRefundList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderRefundList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+		adOrderRefundList = adOrderRefundList.subList(page.getStartCount(), lastCount);
+		
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderRefundList",adOrderRefundList);
+		mav.setViewName("adOrderRefundList");
+		
+		return mav;
+	}
+	
+	//주문교환내역 목록 리스트
+	@RequestMapping(value="adOrderChangeList.cat",method=RequestMethod.GET)
+	public ModelAndView adOrderChangeList(HttpServletRequest request) {
+		
+		List<ChangeModel> adOrderChangeList = adminService.adOrderChangeList();
+		
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
+			currentPage = 1;
+			} else {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		totalCount = adOrderChangeList.size();
+		
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderChangeList");
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+			if (page.getEndCount() < totalCount) {
+			lastCount = page.getEndCount() + 1;
+		}
+		
+			adOrderChangeList = adOrderChangeList.subList(page.getStartCount(), lastCount);
+		
+		mav.addObject("pagingHtml", pagingHtml);
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("adOrderChangeList",adOrderChangeList);
+		mav.setViewName("adOrderChangeList");
+			
+		return mav;
+	}
+	
 }
