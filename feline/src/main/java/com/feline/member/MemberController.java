@@ -497,4 +497,23 @@ public class MemberController {
 		return mav;
 	}
 	
+	//주문교환상세보기
+	@RequestMapping(value="orderChangeView.cat")
+	public ModelAndView orderChangeView(HttpServletRequest request,HttpSession session) {
+		
+		ChangeModel changeModel= new ChangeModel();
+		
+		int order_num = Integer.parseInt(request.getParameter("order_num")); 
+		
+		changeModel.setMember_id((String)session.getAttribute("id"));
+		changeModel.setOrder_num(order_num);
+		
+		changeModel = memberService.orderChangeOne(changeModel);
+		
+		mav.addObject("changeModel",changeModel);
+		mav.setViewName("orderChangeView");
+		
+		
+		return mav;
+	}
 }

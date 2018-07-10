@@ -183,6 +183,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	from feline_order
 	 	where order_member_id = #{order_member_id} and status = 5
 	 </select>
+	 
+	 <!-- 교환상세보기 -->
+	 <select id="orderChangeOne" resultMap="changeRes" parameterType="changeModel">
+	 	select * from feline_change_list where member_id=#{member_id} and order_num=#{order_num}
+	 </select>
    		
    	<!--  ///////////////관리자용 주문취소,환불,교환 리스트 뽑아내기////////////////////// -->
    	

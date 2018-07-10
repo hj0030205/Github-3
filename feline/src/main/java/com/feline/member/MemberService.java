@@ -138,4 +138,10 @@ public class MemberService implements MemberDao{
 		return sqlSessionTemplate.selectOne("order.orderRefundOne", refundModel);
 	}
 
+	@Override
+	public ChangeModel orderChangeOne(ChangeModel changeModel) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("order.orderChangeOne", changeModel);
+	}
+
 }

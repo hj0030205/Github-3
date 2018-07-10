@@ -123,7 +123,13 @@
 	<definition name="orderChange" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/member/orderChange.jsp"/>
 	</definition>
-		
+	
+	<!-- 주문 상세 내역 -->
+	<definition name="orderChangeView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/member/orderChangeView.jsp"></put-attribute>
+	</definition>		
+	
+	
 	<!-- ********************* 상품&장바구니 *********************-->
 	
 	<!-- 상품 -->

@@ -89,7 +89,7 @@
 								<tr>
 									<td><fmt:formatDate value="${order.order_date}"
 													pattern="yyyy.MM.dd HH:MM" /></td>
-									<td><a href="orderView.cat?order_num=${order.order_num}">${order.order_num }</td></a>
+									<td><a href="orderChangeView.cat?order_num=${order.order_num}">${order.order_num }</td></a>
 									<td>${goodsList[status.index].goods_category }</td>
 									<td>${goodsList[status.index].goods_name }</td>
 									<td>${order.order_goods_amount }</td>
@@ -106,7 +106,7 @@
 									</td>
 								</tr>	
 							</c:forEach>
-									<c:if test="${fn:length(orderCancleList) <= 0}">
+									<c:if test="${fn:length(orderChangeList) <= 0}">
 										<tr bgcolor="#FFFFFF" align="center">
 											<th colspan="7">교환하신 상품이 없습니다.</th>
 										</tr>

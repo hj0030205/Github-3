@@ -72,4 +72,7 @@ public interface MemberDao
 	
 	 //주문교환목록 가져오기
 	 List<OrderModel> orderChangeList(String member_id);
+	 
+	 //주문교환상세보기
+	 ChangeModel orderChangeOne(ChangeModel changeModel);
 }
