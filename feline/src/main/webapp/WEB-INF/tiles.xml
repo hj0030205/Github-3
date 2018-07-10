@@ -236,5 +236,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderCancleList.jsp"/>
 	</definition>
 	
-	
+	<definition name="adEventWrite" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adEventWrite.jsp" />
+	</definition>
 </tiles-definitions>
