@@ -95,13 +95,13 @@ $(function() {
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${fn:length(orderList) <= 0}">
+									<c:when test="${fn:length(orderlist) <= 0}">
 										<tr align=center>
 											<td colspan=8>주문 내역이 없습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="list" items="${orderList}" varStatus="stat">
+										<c:forEach var="list" items="${orderlist}" varStatus="stat">
 											<!-- 주문번호와 연결되는 URL -->
 											<c:url var="viewOrderURL" value="adOrderView.cat">
 												<c:param name="order_num" value="${list.order_num}" />
@@ -115,7 +115,7 @@ $(function() {
 												<td>${list.order_trade_payer}</td>
 												<td>${list.order_trans_num}</td>
 												<td>${list.order_receive_name}</td>
-												<td>${list.order_receive_mobile}</td>
+												<td>${list.order_receive_phone}</td>
 												<td><select name="order_status" disabled>
 													<option value="0" <c:if test="${list.order_status eq 0 }"> selected  </c:if>>결제완료</option>
 													<option value="1" <c:if test="${list.order_status eq 1 }"> selected </c:if>>배송준비</option>
