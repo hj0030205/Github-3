@@ -9,8 +9,8 @@ public interface GoodsDao {
 	
 	 GoodsModel goodsView(int goods_num);
 	
-	/* List<GoodsModel> goodsCategoryList(String goods_category);
-	*/
+	 List<GoodsModel> goodsCategoryList(String goods_category);
+	
 	 List<GoodsModel> goodsSearchList(String search);
 	
 
