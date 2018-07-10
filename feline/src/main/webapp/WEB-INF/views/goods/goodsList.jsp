@@ -9,6 +9,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
+<style>
+li.basic.active {
+    background-color: gainsboro;
+}
+</style>
 </head>
 <body>
 	<div id="all">
