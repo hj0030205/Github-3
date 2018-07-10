@@ -131,6 +131,9 @@
 								 <i class="mdi mdi-human-male-female"></i> <span class="nav-dropdown-item">회원 통계</span></a>
 							</li> -->
 						</ul></li>
+						
+						
+						
 					<!-- /////////////////////////////////////////주문취소교환환불/////////////////////////////////////////////////// -->
 					
 					
@@ -142,12 +145,12 @@
 									class="mdi mdi-credit-card-multiple"></i> <span
 									class="nav-dropdown-item">취소 리스트</span></a></li>
 							<li>
-								<a href="/feline/admin/orderList/trade.cat" aria-expanded="false">
+								<a href="adOrderRefundList.cat" aria-expanded="false">
 								 <i class="mdi mdi-credit-card"></i> <span class="nav-dropdown-item">환불 리스트</span></a>
 							</li>
 							
 							<li>
-								<a href="/feline/admin/orderList/trans.cat" aria-expanded="false">
+								<a href="adOrderChangeList.cat" aria-expanded="false">
 								 <i class="mdi mdi-truck-delivery"></i> <span class="nav-dropdown-item">교환 리스트</span></a>
 							</li>
 							<!-- <li>
