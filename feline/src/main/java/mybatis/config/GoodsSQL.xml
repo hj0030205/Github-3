@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectGoods" resultMap="GoodsRes" parameterType="Integer">
 		<include refid="select-all" /> 
 		<include refid="where-num" />
-	</select>
+	</select>		
 
 	<!-- 마지막 상품번호 번호 반환(업로드파일명 작성시사용) -->
 	<select id="selectLastNo" resultType="Integer">
@@ -70,14 +70,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectSearchN" resultMap="GoodsRes"
 		parameterType="string">
 		<include refid="select-all" />
-		where goods_name like #{goods_name}
+		where goods_name like #{search}
 		order by goods_num desc
 	</select>
 
 
 	<select id="selectSearchC" resultMap="GoodsRes" parameterType="string">
 		<include refid="select-all" />
-		where goods_category like #{goods_category}
+		where goods_category like #{search}
 		order by goods_num desc
 	</select>
 

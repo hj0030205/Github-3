@@ -260,11 +260,11 @@
 
             <div class="collapse clearfix" id="search">
 
-                <form class="navbar-form" role="search">
+                <form action="/feline/goods/goodsSearchList.cat" class="navbar-form" role="search">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="search" placeholder="Search">
                         <span class="input-group-btn" style="margin-left:20px">
-                        	<button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        	<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                         </span>
                     </div>
                 </form>
