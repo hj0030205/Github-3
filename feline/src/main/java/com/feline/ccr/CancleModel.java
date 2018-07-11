@@ -8,6 +8,8 @@ public class CancleModel {
 	private String cancle_reason;
 	private String member_id;
 	
+	
+	
 	public int getCancle_num() {
 		return cancle_num;
 	}
