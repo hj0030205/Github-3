@@ -23,7 +23,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -578,6 +577,7 @@ public class AdminController {
 			mav.setViewName("adOrderList");
 			return mav;
 		}
+
 		totalCount = orderlist.size();
 
 		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, "", "adOrderList");
@@ -599,12 +599,12 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin 주문 상세보기
+	// Admin 상품 상세보기
 	@RequestMapping("adOrderView.cat")
 	public ModelAndView adOrderView(HttpServletRequest request) {
 
 		int order_num = Integer.parseInt(request.getParameter("order_num"));
-		System.out.println("안녕");
+
 		OrderModel orderModel = adminService.OrderView(order_num);
 		GoodsModel goodsModel = adminService.goodsView(orderModel.getGoods_num());
 
@@ -681,17 +681,37 @@ public class AdminController {
 		
 	//이벤트 추가 폼의 상품 리스트
 	@RequestMapping(value = "eventGoodsList.cat", method = RequestMethod.POST)
-	public @ResponseBody List<GoodsModel> eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
+	public void eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
+		try {
 			
-		int goods_category = Integer.parseInt(request.getParameter("param"));
-		goodsList = eventService.goodsCategoryList(goods_category);
+			int goods_category = Integer.parseInt(request.getParameter("param"));
+			System.out.println(request.getParameter("param"));
+			goodsList = eventService.goodsCategoryList(goods_category);
 
-		return goodsList;
+			JSONObject sObject = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i < goodsList.size(); i++) {
+				sObject.put("goods_img_savname", goodsList.get(i).getGoods_image_savname());
+				sObject.put("goods_name", goodsList.get(i).getGoods_name());
+				sObject.put("goods_price", goodsList.get(i).getGoods_price());
+				sObject.put("goods_num", goodsList.get(i).getGoods_num());
+				jsonArray.add(i, sObject);
+				
+			}
+			
+			//jsonArray 넘김
+			PrintWriter pw = response.getWriter();
+			pw.print(jsonArray.toString());
+			pw.flush();
+			pw.close();
+		} catch(Exception e) {
+			System.out.println("Controller error");
+		}
 
 	}
 	
 	//이벤트 추가 폼의 카테고리 select box
-	@RequestMapping(value = "goodsCategory.cat", method = RequestMethod.POST)
+	@RequestMapping(value = "goodsCategory.cat")
 	public void selectCategory(HttpServletRequest request, HttpServletResponse response, String param) {
 		
 		try {
