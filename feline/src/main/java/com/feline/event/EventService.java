@@ -46,8 +46,7 @@ public class EventService implements EventDao{
 	
 	//이벤트 추가 화면에서 goodsList 보여주기
 	@Override
-	public List<GoodsModel> goodsList(int goods_category) {
-		return sqlSessionTemplate.selectList("goods.selectSearchC", goods_category);
+	public List<GoodsModel> goodsCategoryList(int goods_category){
+		return sqlSessionTemplate.selectList("goods.selectCategory",goods_category);
 	}
-
 }

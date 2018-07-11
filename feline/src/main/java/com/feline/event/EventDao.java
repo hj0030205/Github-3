@@ -11,6 +11,6 @@ public interface EventDao {
 	EventModel eventSelectOne(int event_num);
 	int eventModify(EventModel eventModel);
 	int eventDelete(int event_num);
-	List<GoodsModel> goodsList(int goods_category);
+	List<GoodsModel> goodsCategoryList(int goods_category);
 
 }
