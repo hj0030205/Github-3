@@ -189,4 +189,58 @@ public class AdminService implements AdminDAO {
 		return sqlSessionTemplate.selectList("order.adOrderChangeList");
 	}
 
+	@Override
+	public OrderModel adOrderCancleView(int order_num) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("order.adOrderCancleView", order_num);
+	}
+	
+	@Override
+	public CancleModel adOrderCancleView2(int cancle_num) {
+		return sqlSessionTemplate.selectOne("order.adOrderCancleView2", cancle_num);
+	}
+
+	@Override
+	public GoodsModel adOrderCancleView3(int goods_num) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("goods.adOrderCancleView3",goods_num);
+	}
+
+	@Override
+	public OrderModel adOrderRefundView(int order_num) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("order.adOrderRefundView", order_num);
+	}
+
+	@Override
+	public RefundModel adOrderRefundView2(int trade_num) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("order.adOrderRefundView2", trade_num);
+	}
+
+	@Override
+	public GoodsModel adOrderRefundView3(int goods_num) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("goods.adOrderRefundView3",goods_num);
+	}
+
+	@Override
+	public OrderModel adOrderChangeView(int order_num) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("order.adOrderChangeView", order_num);
+	}
+
+	@Override
+	public ChangeModel adOrderChangeView2(int change_num) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("order.adOrderChangeView2", change_num);
+	}
+
+	@Override
+	public GoodsModel adOrderChangeView3(int goods_num) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("goods.adOrderChangeView3",goods_num);
+	}
+
+
 }

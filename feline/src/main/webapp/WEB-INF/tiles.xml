@@ -251,17 +251,34 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderCancleList.jsp"/>
 	</definition>
 	
+	<!-- 관리자 취소 상세보기 -->
+	<definition name="adOrderCancleView" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderCancleView.jsp"></put-attribute>
+	</definition>
+	
 
 	<!-- 관리자 환불 목록 -->
 	<definition name="adOrderRefundList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderRefundList.jsp"/>
 	</definition>
 
+	<!-- 관리자 환불 상세보기 -->
+	<definition name="adOrderRefundView" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderRefundView.jsp"></put-attribute>
+	</definition>	
+	
+
 	<!-- 관리자 교환 목록 -->
 	<definition name="adOrderChangeList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderChangeList.jsp"/>
 	</definition>
-
+	
+	
+	<!-- 관리자 교환 상세보기 -->
+	<definition name="adOrderChangeView" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderChangeView.jsp"></put-attribute>
+	</definition>	
+	
 
 	<definition name="adEventWrite" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adEventWrite.jsp" />

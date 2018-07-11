@@ -38,7 +38,13 @@
                                 <tbody>
                                 <c:forEach var="adOrderCancleList" items="${adOrderCancleList}">
 								<tr>
-									<td>${adOrderCancleList.cancle_num }</td>
+									<c:url var="viewURL" value="adOrderCancleView.cat">
+										<c:param name="order_num" value="${adOrderCancleList.order_num}" />
+										<c:param name="cancle_num" value="${adOrderCancleList.cancle_num}" />
+									</c:url>							
+									<td>
+										<a href="${viewURL}"><Strong>${adOrderCancleList.cancle_num }</Strong></a>
+									</td>
 									<td>${adOrderCancleList.order_num }</td>
 									<td>${adOrderCancleList.cancle_reason}</td>
 									<td>${adOrderCancleList.member_id }</td>
