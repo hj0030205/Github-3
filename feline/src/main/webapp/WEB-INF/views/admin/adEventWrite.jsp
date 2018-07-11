@@ -53,25 +53,23 @@
 
 	function goodsCategorySelect(goods_category) {
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : "eventGoodsList.cat",
 			dataType : "json",
 			data : {"param":goods_category},
 			success : 
+				
 				function(result) {
-					var sth = '<thead><tr><th></th><th></th><th>상품명</th><th>상품가격</th></tr><thead>'
+				var str="";
 				$.each(result, function(i){
-					var str = '<tr>';
-					$.each(result, function(i){
+						str = '<tr>';
 						str += '<td>' + "<input type='checkbox' id='selected' name='selected'>" + "</td>";
 						str += '<td>' + "<img src='/feline/resources/upload/images/"+ result[i].goods_image_savname + "'/></td><td>" + result[i].goods_name + '</td><td>' + result[i].goods_price + '</td>';
 						str += "<input type='hidden' id='goods_num' name='goods_num' value='" + result[i].goods_num + "'/>";
 						str += '</tr>';
 					});
-					$("#goodsList").append(sth + '<tbody>' + str + '</tbody>');
-				});
-				console.log(result);
-				console.log(goods_category);
+					$("#goodsList").append(str);
+			
 			},
 			error : function(){
 				alert("error");
@@ -165,7 +163,7 @@
 											<option value="cleaner">위생용품</option>
 										</select>
 										<label for="goods_category">세부분류</label>
-										<select id="goods_category" name="goods_category" onclick="goodsCategorySelect(this.value);">
+										<select id="goods_category" name="goods_category" onchange="goodsCategorySelect(this.value);">
 											<option value="">전체</option>
 										</select>
 									</div>
@@ -177,7 +175,18 @@
 								<div class="col-sm-12">
 									<div class="table-responsive">
 										<label for="goodsList">상품목록</label>
-										<table class="table" id="goodsList"></table>
+										<table class="table">
+											<thead>
+												<tr>
+													<th>선택</th>
+													<th>상품이미지</th>
+													<th>상품명</th>
+													<th>상품가격</th>
+												</tr>
+											<thead>
+											<tbody id="goodsList">
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>

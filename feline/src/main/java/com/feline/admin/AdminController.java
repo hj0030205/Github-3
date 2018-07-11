@@ -680,13 +680,14 @@ public class AdminController {
 		}
 		
 	//이벤트 추가 폼의 상품 리스트
-	@RequestMapping(value = "eventGoodsList.cat", method = RequestMethod.POST)
+	@RequestMapping(value = "eventGoodsList.cat")
 	public void eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			
 			int goods_category = Integer.parseInt(request.getParameter("param"));
-			System.out.println(request.getParameter("param"));
 			goodsList = eventService.goodsCategoryList(goods_category);
+			
+			logger.info("goodsList:" + goodsList.size());
 
 			JSONObject sObject = new JSONObject();
 			JSONArray jsonArray = new JSONArray();
