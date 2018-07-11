@@ -21,12 +21,16 @@ public class GoodsService implements GoodsDao{
 		return sqlSessionTemplate.selectOne("goods.selectGoods",goods_num);
 	}
 	
-	/*@Override
-	public List<GoodsModel> goodsCategoryList(String goods_category);
-*/
+	@Override
+	public List<GoodsModel> goodsCategoryList(String goods_category){
+		return sqlSessionTemplate.selectList("goods.selectCategory",goods_category);
+	}
+
 	
 	@Override
 	public List<GoodsModel> goodsSearchList(String search){
 		return sqlSessionTemplate.selectList("goods.selectSearchN", "%"+search+"%");
 	}
+	
+	
 }
