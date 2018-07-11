@@ -81,22 +81,19 @@
 								<a href="/feline/admin/adOrderList.cat" aria-expanded="false">
 								 <i class="mdi mdi-credit-card-multiple"></i> <span class="nav-dropdown-item">주문 리스트</span></a>
 							</li>
-							<!-- <li>
-								<a href="/feline/admin/orderList/trade.cat" aria-expanded="false">
-								 <i class="mdi mdi-credit-card"></i> <span class="nav-dropdown-item">결제 상태 관리</span></a>
-							</li> -->
-							<!-- 	<li>
-								<a href="/feline/admin/orderList/trans.cat" aria-expanded="false">
-								 <i class="mdi mdi-truck-delivery"></i> <span class="nav-dropdown-item">배송 상태 관리</span></a>
-							</li> -->
-							<!-- <li>
-								<a href="/feline/admin/orderList/bck.cat" aria-expanded="false">
-								 <i class="mdi mdi-credit-card-off"></i> <span class="nav-dropdown-item">주문 취소 내역</span></a>
-							</li> -->
-							<!-- <li>
-								<a href="#" aria-expanded="false">
-								 <i class="mdi mdi-coin"></i> <span class="nav-dropdown-item">환불 상태 관리</span></a>
-							</li> -->
+							<li>
+								<a href="/feline/admin/adOrderCancleList.cat" aria-expanded="false">
+								 <i class="mdi mdi-credit-card-off"></i> <span class="nav-dropdown-item">주문 취소 관리</span></a>
+							</li>
+							<li>
+								<a href="/feline/admin/adOrderRefundList.cat" aria-expanded="false">
+								 <i class="mdi mdi-credit-card"></i> <span class="nav-dropdown-item">상품 환불 관리</span></a>
+							</li>
+							<li>
+								<a href="/feline/admin/adOrderChangeList.cat" aria-expanded="false">
+								 <i class="mdi mdi-truck-delivery"></i> <span class="nav-dropdown-item">상품 교환 관리</span></a>
+							</li>
+							
 						</ul></li>
 
 					<%-- <li>
