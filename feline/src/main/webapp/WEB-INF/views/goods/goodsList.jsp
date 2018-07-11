@@ -137,7 +137,115 @@ li.basic.active {
 
 					<c:if test="${fn:length(goodsList) le 0}">
 						등록된 상품이 없습니다
-					</c:if> 
+					</c:if>
+					
+					<c:if test="${not empty search}">
+						<h3>${search }  <font color="#4E4E4E">검색결과</font>  <font size="4" color="#4E4E4E">${fn:length(goodsList)}개 상품</font></h3>
+						<br/>
+						
+						<div class="navbar-collapse collapse" id="navigation">
+							<div class="nav navbar-nav navbar-left">
+								 <div class="dropdown yamm-fw">
+								    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">사료 <b class="caret"></b></a>
+								    <div class="dropdown-menu">
+							            <div class="yamm-content">
+							               <div class="col-sm-3">
+							                   <a href="#">유기농/홀리스틱</a>
+						                   </div>
+						                   <div class="col-sm-3">
+						                       <a href="#">피부/피모건강</a>
+						                   </div>
+						                   <div class="col-sm-3">
+						                       <a href="#">헤어볼케어</a>
+						                   </div>
+						                   <div class="col-sm-3">
+						                       <a href="#">다이어트/비뇨건강</a>
+						                   </div>
+							            </div>
+									</div>
+								</div>
+								<div class="dropdown yamm-fw">
+			                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">간식 <b class="caret"></b></a>
+			                        <div class="dropdown-menu">
+		                                <div class="yamm-content">
+	                                    	<div class="col-sm-3">
+	                                            <a href="#">캔/파우치</a>
+	                                        </div>
+	                                      	<div class="col-sm-3">
+	                                            <a href="#">저키/소시지</a>
+	                                        </div>
+	                                     	<div class="col-sm-3">
+	                                            <a href="#">비스켓/트릿</a>
+	                                        </div>
+	                                       	<div class="col-sm-3">
+	                                            <a href="#">캣닢/캣그라스</a>
+	                                       </div>
+		                                </div>  
+			                        </div>
+			                     </div>
+			                     <div class="dropdown yamm-fw">
+			                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">모래와 화장실 <b class="caret"></b></a>
+			                        <div class="dropdown-menu">
+		                                <div class="yamm-content">
+	                                    	<div class="col-sm-3">
+	                                            <a href="#">응고형 모래</a>
+	                                        </div>
+	                                        <div class="col-sm-3">
+	                                            <a href="#">흡수형 모래</a>
+	                                        </div>
+	                                        <div class="col-sm-3">
+	                                            <a href="#">화장실/패드</a>
+	                                        </div>
+	                                          <div class="col-sm-3">
+	                                            <a href="#">기타</a>
+	                                        </div>
+			                        	</div>
+			                        </div>
+			                     </div>
+			                     <div class="dropdown yamm-fw">   
+			                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">장난감 <b class="caret"></b></a>
+			                        <div class="dropdown-menu">
+		                                <div class="yamm-content">
+	                                    	<div class="col-sm-3">
+	                                            <a href="#">공/봉제인형</a>
+	                                        </div>
+	                                        <div class="col-sm-3">
+	                                            <a href="#">레이저/낚시</a>
+	                                        </div>
+	                                        <div class="col-sm-3">
+	                                            <a href="#">막대</a>
+	                                        </div>
+	                                          <div class="col-sm-3">
+	                                            <a href="#">캣닢</a>
+	                                        </div>
+		                                </div>
+			                        </div>
+			                     </div>
+			                     <div class="dropdown yamm-fw">  
+			                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">위생용품 <b class="caret"></b></a>
+			                        <div class="dropdown-menu">
+		                                <div class="yamm-content">
+	                                    	<div class="col-sm-3">
+	                                            <a href="#">샴푸/린스</a>
+	                                        </div>
+	                                        <div class="col-sm-3">
+	                                            <a href="#">구강관리</a>
+	                                        </div>
+	                                        <div class="col-sm-3">
+	                                            <a href="#">눈/귀/피부&피모건강</a>
+	                                        </div>
+	                                          <div class="col-sm-3">
+	                                            <a href="#">브러쉬/털관리</a>
+	                                        </div>
+		                                </div>
+			                        </div>
+			                    </div>
+			               </div>
+			             </div>
+			                
+						<br/>
+					</c:if>
+
 					<div class="row products">
 						<c:forEach var="goodsList" items="${goodsList}" varStatus="stat">
 							<c:url var="viewURL" value="goodsView.cat">

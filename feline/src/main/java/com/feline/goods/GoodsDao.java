@@ -12,6 +12,7 @@ public interface GoodsDao {
 	 List<GoodsModel> goodsCategoryList(String goods_category);
 	
 	 List<GoodsModel> goodsSearchList(String search);
-	
 
+	List<GoodsModel> goodsDetailSearchList(String search);
+	
 }
