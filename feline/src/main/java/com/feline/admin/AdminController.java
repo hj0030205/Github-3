@@ -688,10 +688,10 @@ public class AdminController {
 			goodsList = eventService.goodsCategoryList(goods_category);
 			
 			logger.info("goodsList:" + goodsList.size());
-
-			JSONObject sObject = new JSONObject();
+			
 			JSONArray jsonArray = new JSONArray();
 			for(int i = 0; i < goodsList.size(); i++) {
+				JSONObject sObject = new JSONObject();
 				sObject.put("goods_img_savname", goodsList.get(i).getGoods_image_savname());
 				sObject.put("goods_name", goodsList.get(i).getGoods_name());
 				sObject.put("goods_price", goodsList.get(i).getGoods_price());
