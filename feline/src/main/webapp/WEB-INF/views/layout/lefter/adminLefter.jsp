@@ -28,28 +28,25 @@
 						aria-expanded="false"> <i class="mdi mdi-human-greeting"></i>
 							<span class="hide-menu">회원 관리</span></a>
 						<ul class="nav-dropdown-items">
-							<li>
-								<a href="/feline/admin/adMemberList.cat" aria-expanded="false">
-								 <i class="mdi mdi-account-check"></i> <span class="nav-dropdown-item">회원 리스트</span></a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a class="waves-effect waves-dark" href="#" aria-expanded="false">
-              <i class="mdi mdi-book-open-page-variant"></i> <span class="hide-menu">상품 관리</span></a>
+							<li><a href="/feline/admin/adMemberList.cat"
+								aria-expanded="false"> <i class="mdi mdi-account-check"></i>
+									<span class="nav-dropdown-item">회원 리스트</span></a></li>
+						</ul></li>
+					<li><a class="waves-effect waves-dark" href="#"
+						aria-expanded="false"> <i
+							class="mdi mdi-book-open-page-variant"></i> <span
+							class="hide-menu">상품 관리</span></a>
 						<ul class="nav-dropdown-items">
 							<!-- <li>
 								<a href="#" aria-expanded="false">
 								 <i class="mdi mdi-bookmark-check"></i> <span class="nav-dropdown-item">카테고리 관리</span></a>
 							</li> -->
-							<li>
-								<a href="/feline/admin/adGoodsWrite.cat" aria-expanded="false">
-								 <i class="mdi mdi-book-plus"></i> <span class="nav-dropdown-item">상품 등록</span></a>
-							</li>
-							<li>
-								<a href="/feline/admin/adGoodsList.cat" aria-expanded="false">
-								 <i class="mdi mdi-book-multiple"></i> <span class="nav-dropdown-item">상품 통합 리스트</span></a>
-              </li>
+							<li><a href="/feline/admin/adGoodsWrite.cat"
+								aria-expanded="false"> <i class="mdi mdi-book-plus"></i> <span
+									class="nav-dropdown-item">상품 등록</span></a></li>
+							<li><a href="/feline/admin/adGoodsList.cat"
+								aria-expanded="false"> <i class="mdi mdi-book-multiple"></i>
+									<span class="nav-dropdown-item">상품 통합 리스트</span></a></li>
 							<!-- 미구현 -->
 							<!-- <li>
 								<a href="/feline/admin/bookList/bck.cat" aria-expanded="false">
@@ -77,25 +74,23 @@
 							class="hide-menu">주문 관리</span></a>
 						<ul class="nav-dropdown-items">
 
-							<li>
-								<a href="/feline/admin/adOrderList.cat" aria-expanded="false">
-								 <i class="mdi mdi-credit-card-multiple"></i> <span class="nav-dropdown-item">주문 리스트</span></a>
-							</li>
-							<li>
-								<a href="/feline/admin/adOrderCancleList.cat" aria-expanded="false">
-								 <i class="mdi mdi-credit-card-off"></i> <span class="nav-dropdown-item">주문 취소 관리</span></a>
-							</li>
-							<li>
-								<a href="/feline/admin/adOrderRefundList.cat" aria-expanded="false">
-								 <i class="mdi mdi-credit-card"></i> <span class="nav-dropdown-item">상품 환불 관리</span></a>
-							</li>
-							<li>
-								<a href="/feline/admin/adOrderChangeList.cat" aria-expanded="false">
-								 <i class="mdi mdi-truck-delivery"></i> <span class="nav-dropdown-item">상품 교환 관리</span></a>
-							</li>
-							
+							<li><a href="/feline/admin/adOrderList.cat"
+								aria-expanded="false"> <i
+									class="mdi mdi-credit-card-multiple"></i> <span
+									class="nav-dropdown-item">주문 통합 리스트</span></a></li>
+							<li><a href="adOrderCancleList.cat" aria-expanded="false">
+									<i class="mdi mdi-credit-card-multiple"></i> <span
+									class="nav-dropdown-item">주문 취소 리스트</span>
+							</a></li>
+							<li><a href="adOrderRefundList.cat" aria-expanded="false">
+									<i class="mdi mdi-credit-card"></i> <span
+									class="nav-dropdown-item">환불 요청 리스트</span>
+							</a></li>
+							<li><a href="adOrderChangeList.cat" aria-expanded="false">
+									<i class="mdi mdi-truck-delivery"></i> <span
+									class="nav-dropdown-item">교환 요청 리스트</span>
+							</a></li>
 						</ul></li>
-
 					<%-- <li>
 						<a class="waves-effect waves-dark" href="#" aria-expanded="false">
 						 <i class="mdi mdi-emoticon"></i> <span class="hide-menu">고객센터</span></a>
@@ -133,38 +128,7 @@
 								 <i class="mdi mdi-human-male-female"></i> <span class="nav-dropdown-item">회원 통계</span></a>
 							</li> -->
 						</ul></li>
-						
-						
-						
-					<!-- /////////////////////////////////////////주문취소교환환불/////////////////////////////////////////////////// -->
-					
-					
-					<li><a class="waves-effect waves-dark" href="#"
-						aria-expanded="false"> <i class="mdi mdi-cart"></i> <span
-							class="hide-menu">취소/교환/환불 관리</span></a>
-						<ul class="nav-dropdown-items">
-							<li><a href="adOrderCancleList.cat" aria-expanded="false"> <i
-									class="mdi mdi-credit-card-multiple"></i> <span
-									class="nav-dropdown-item">취소 리스트</span></a></li>
-							<li>
-								<a href="adOrderRefundList.cat" aria-expanded="false">
-								 <i class="mdi mdi-credit-card"></i> <span class="nav-dropdown-item">환불 리스트</span></a>
-							</li>
-							
-							<li>
-								<a href="adOrderChangeList.cat" aria-expanded="false">
-								 <i class="mdi mdi-truck-delivery"></i> <span class="nav-dropdown-item">교환 리스트</span></a>
-							</li>
-							<!-- <li>
-								<a href="/feline/admin/orderList/bck.cat" aria-expanded="false">
-								 <i class="mdi mdi-credit-card-off"></i> <span class="nav-dropdown-item">주문 취소 내역</span></a>
-							</li> -->
-							<!-- <li>
-								<a href="#" aria-expanded="false">
-								 <i class="mdi mdi-coin"></i> <span class="nav-dropdown-item">환불 상태 관리</span></a>
-							</li> -->
-						</ul>
-						
+				</ul>
 			</nav>
 			<!-- End Sidebar navigation -->
 		</div>

@@ -117,7 +117,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>	
 	
 	<update id="orderModify" parameterType="orderModel">
-			UPDATE feline_order SET order_receive_name = #{order_receive_name}, order_goods_amount = #{order_goods_amount}, order_receive_phone = #{order_receive_phone}, order_receive_zipcode = #{order_receive_zipcode}, order_receive_addr1 = #{order_receive_addr1}, order_receive_addr2 = #{order_receive_addr2}, order_status = #{order_status}, order_memo = #{order_memo} where order_num = #{order_num}
+			UPDATE feline_order SET order_receive_name = #{order_receive_name}, 
+			order_goods_amount = #{order_goods_amount}, order_receive_phone = #{order_receive_phone}, 
+			order_receive_zipcode = #{order_receive_zipcode}, order_receive_addr1 = #{order_receive_addr1}, 
+			order_receive_addr2 = #{order_receive_addr2}, order_status = #{order_status}, 
+			order_memo = #{order_memo} where order_num = #{order_num}
 	</update>
 
 	<!-- 취소테이블에 입력 -->
