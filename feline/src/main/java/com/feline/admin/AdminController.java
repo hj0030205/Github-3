@@ -578,7 +578,6 @@ public class AdminController {
 			mav.setViewName("adOrderList");
 			return mav;
 		}
-
 		totalCount = orderlist.size();
 
 		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, "", "adOrderList");
@@ -600,12 +599,12 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin 상품 상세보기
+	// Admin 주문 상세보기
 	@RequestMapping("adOrderView.cat")
 	public ModelAndView adOrderView(HttpServletRequest request) {
 
 		int order_num = Integer.parseInt(request.getParameter("order_num"));
-
+		System.out.println("안녕");
 		OrderModel orderModel = adminService.OrderView(order_num);
 		GoodsModel goodsModel = adminService.goodsView(orderModel.getGoods_num());
 

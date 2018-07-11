@@ -23,6 +23,7 @@ public class GoodsController {
 		
 		List<GoodsModel> goodsList=goodsService.goodsList();
 		
+		mav.addObject("search", null);
 		mav.addObject("goodsList", goodsList);
 		mav.setViewName("goodsList");
 		
@@ -58,7 +59,7 @@ public class GoodsController {
 		return mav;
 	}
 	
-	/*@RequestMapping("goodsSearchList.cat")
+	@RequestMapping("goodsSearchList.cat")
 	public ModelAndView goodsSearchList(HttpServletRequest request){
 		
 		ModelAndView mav = new ModelAndView();
@@ -67,10 +68,11 @@ public class GoodsController {
 		
 		List<GoodsModel> goodslist = goodsService.goodsSearchList(search);
 		
+		mav.addObject("search", search);
 		mav.addObject("goodsList", goodslist);
 		mav.setViewName("goodsList");
 		
 		return mav;
-	}*/
+	}
 
 }
