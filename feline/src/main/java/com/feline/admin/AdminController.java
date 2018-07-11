@@ -15,12 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,6 +66,7 @@ public class AdminController {
 	private List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
 	private List<EventModel> eventList = new ArrayList<EventModel>();
 
+	private Logger logger = Logger.getLogger(getClass());
 
 	@RequestMapping("main.cat") // 관리자 페이지
 	public ModelAndView adMain() throws Exception {
@@ -677,29 +681,26 @@ public class AdminController {
 		}
 		
 	//이벤트 추가 폼의 상품 리스트
-	@RequestMapping(value = "eventGoodsList.cat")
-	public Object eventGoodsList(HttpServletRequest request) {
-		
-		if(request.getParameter("goods_category") != null) {
-			int goods_category = Integer.parseInt(request.getParameter("goods_category"));
-			goodsList = eventService.goodsList(goods_category);
-		}
-		
-		Map<String, Object> retVal = new HashMap<String, Object>();
-		
-		retVal.put("goodsList", goodsList);
-		retVal.put("code", "OK");
-		
-		return retVal;
+	@RequestMapping(value = "eventGoodsList.cat", method = RequestMethod.POST)
+	public @ResponseBody List<GoodsModel> eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
+			
+		int goods_category = Integer.parseInt(request.getParameter("param"));
+		goodsList = eventService.goodsCategoryList(goods_category);
+
+		return goodsList;
 
 	}
 	
 	//이벤트 추가 폼의 카테고리 select box
-	@RequestMapping(value = "goodsCategory.cat")
+	@RequestMapping(value = "goodsCategory.cat", method = RequestMethod.POST)
 	public void selectCategory(HttpServletRequest request, HttpServletResponse response, String param) {
 		
 		try {
+			
+			System.out.println(request.getParameter("param"));
 			String category = param;
+			logger.info("category :" + param);
+			System.out.println(category);
 			
 			ArrayList<String> list = new ArrayList<String>();
 			
@@ -748,6 +749,14 @@ public class AdminController {
 	// Admin 이벤트 등록 폼
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
+
+		mav.setViewName("adEventWrite");
+		return mav;
+	}
+	
+	// Admin 이벤트 등록
+	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
+	public ModelAndView adEventWrite() {
 
 		mav.setViewName("adEventWrite");
 		return mav;
