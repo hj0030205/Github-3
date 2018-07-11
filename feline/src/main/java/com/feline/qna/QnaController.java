@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.qna.QnaModel;
@@ -270,7 +269,7 @@ public class QnaController {
 	// 파일 업로드.
 	private QnaModel fileUploading(MultipartFile file, String oldfileName, QnaModel qnaModel) throws IOException {
 
-		String uploadPath = "E:\\workspace-spring-Final2\\feline\\src\\main\\webapp\\resources\\upload\\images";
+		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";
 		String fileRealName = file.getOriginalFilename();
 		String fileName;
 		int lastNo;

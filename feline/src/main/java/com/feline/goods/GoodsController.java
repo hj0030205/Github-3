@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +30,19 @@ public class GoodsController {
 		return mav;		
 	}
 	
+	@RequestMapping("goodsCategoryList.cat")
+	public ModelAndView goodsCategoryList(HttpServletRequest request) throws Exception{
+		
+		String goods_categoryy = request.getParameter("goods_category");
+		
+		List<GoodsModel> goodsCategoryList = goodsService.goodsCategoryList(goods_categoryy);
+		
+		mav.addObject("category",goods_categoryy);
+		mav.addObject("goodsList", goodsCategoryList);
+		mav.setViewName("goodsList");
+		return mav;
+	}
+	
 	@RequestMapping("goodsView.cat")
 	public ModelAndView goodsView(HttpServletRequest request) throws Exception{
 		
@@ -38,6 +50,9 @@ public class GoodsController {
 		
 		GoodsModel goodsModel = goodsService.goodsView(goods_num);
 		
+		String category = goodsModel.getGoods_category();
+		
+		mav.addObject("category", category);
 		mav.addObject("goodsModel",goodsModel);
 		mav.setViewName("goodsView");
 		

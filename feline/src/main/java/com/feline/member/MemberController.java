@@ -8,12 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.ccr.CancleModel;
@@ -21,7 +19,7 @@ import com.feline.ccr.ChangeModel;
 import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
-import com.feline.order.OrderService;
+
 
 @Controller
 @RequestMapping("/member")
@@ -343,6 +341,24 @@ public class MemberController {
 		mav.setViewName("orderCancleList");
 		return mav;
 	}
+	
+	//주문삭제 상세보기 로직
+	@RequestMapping(value="orderCancleView.cat" , method=RequestMethod.GET)
+	public ModelAndView orderCancleView(HttpServletRequest request,HttpSession session) {
+		
+		CancleModel cancleModel = new CancleModel(); //cancleModel이라는 객체생성
+		
+		int order_num = Integer.parseInt(request.getParameter("order_num")); //get으로 들어온 order_num받아오기
+
+		cancleModel.setMember_id((String)session.getAttribute("id")); //cancleModel에 session의 id를 담는다
+		cancleModel.setOrder_num(order_num); //cancleModel에 order_num을담는다.
+
+		cancleModel = memberService.orderCancleOne(cancleModel); //cancleModel에 orderCancleOne을 넣음
+		
+		mav.addObject("cancleModel", cancleModel);
+		mav.setViewName("orderCancleView");
+		return mav;
+	}
 
 
 	//주문삭제폼
@@ -391,6 +407,23 @@ public class MemberController {
 		return mav;
 	}
 
+	//주문 환불 상세보기
+	@RequestMapping(value="orderRefundView.cat", method=RequestMethod.GET)
+	public ModelAndView orderRefundView(HttpServletRequest request,HttpSession session) {
+		
+		RefundModel refundModel= new RefundModel();
+		
+		int order_num = Integer.parseInt(request.getParameter("order_num")); 
+		refundModel.setMember_id((String)session.getAttribute("id"));
+		refundModel.setOrder_num(order_num);
+		
+		refundModel = memberService.orderRefundOne(refundModel);
+		
+		mav.addObject("refundModel",refundModel);
+		mav.setViewName("orderRefundView");
+		
+		return mav;
+	}
 	
 	//주문환불 폼
 	@RequestMapping(value="orderRefund.cat", method=RequestMethod.GET)
@@ -462,4 +495,23 @@ public class MemberController {
 		return mav;
 	}
 	
+	//주문교환상세보기
+	@RequestMapping(value="orderChangeView.cat")
+	public ModelAndView orderChangeView(HttpServletRequest request,HttpSession session) {
+		
+		ChangeModel changeModel= new ChangeModel();
+		
+		int order_num = Integer.parseInt(request.getParameter("order_num")); 
+		
+		changeModel.setMember_id((String)session.getAttribute("id"));
+		changeModel.setOrder_num(order_num);
+		
+		changeModel = memberService.orderChangeOne(changeModel);
+		
+		mav.addObject("changeModel",changeModel);
+		mav.setViewName("orderChangeView");
+		
+		
+		return mav;
+	}
 }

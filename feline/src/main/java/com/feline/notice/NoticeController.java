@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.util.FileUpload;
@@ -227,7 +226,7 @@ public class NoticeController {
 	// 파일 업로드.
 	private NoticeModel fileUploading(MultipartFile file, String oldfileName, NoticeModel noticeModel) throws IOException {
 
-		String uploadPath = "E:\\workspace-spring-Final2\\feline\\src\\main\\webapp\\resources\\upload\\images";
+		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";
 		String fileRealName = file.getOriginalFilename();
 		String fileName;
 		int lastNo;
