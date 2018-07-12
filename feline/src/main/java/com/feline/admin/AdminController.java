@@ -778,9 +778,23 @@ public class AdminController {
 	
 	// Admin 이벤트 등록
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
-	public ModelAndView adEventWrite() {
+	public ModelAndView adEventWrite(HttpServletRequest request, @ModelAttribute("eventModel") EventModel eventModel) {
+		
+		String[] value = request.getParameterValues("selected");
+		
+		String goods_num = "";
+		
+		for(int i = 0; i < value.length; i++) {
+			goods_num += (value[i] + ",");
+		}
+		
+		goods_num = goods_num.substring(0, goods_num.length()-1);
+		
+		eventModel.setGoods_num(goods_num);
+		
+		eventService.insertEvent(eventModel);
 
-		mav.setViewName("adEventWrite");
+		mav.setViewName("redirect:adEventList.cat");
 		return mav;
 	}
 

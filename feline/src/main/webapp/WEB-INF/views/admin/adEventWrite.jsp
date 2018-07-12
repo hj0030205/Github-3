@@ -64,9 +64,8 @@
 				$("#goodsList").empty();
 				$.each(result, function(i){
 						str += '<tr>';
-						str += '<td>' + "<input type='checkbox' id='selected' name='selected'>" + "</td>";
+						str += '<td>' + "<input type='checkbox' id='selected' name='selected' value='" + result[i].goods_num + "'>" + "</td>";
 						str += '<td>' + "<img src='/feline/resources/upload/images/"+ result[i].goods_image_savname + "'/></td><td>" + result[i].goods_name + '</td><td>' + result[i].goods_price + '</td>';
-						str += "<input type='hidden' id='goods_num' name='goods_num' value='" + result[i].goods_num + "'/>";
 						str += '</tr>';
 					});
 					$("#goodsList").append(str);
