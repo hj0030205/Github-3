@@ -134,15 +134,17 @@
 						
 						<input type="hidden" name="order_num" value="${order_num }"/>
 						
-			
 							<center>
-								<select name="change_reason" >
+<!-- 								<select name="change_reason" >
 									<optgroup label="교환사유선택">
 									<option value="단순변심">단순변심</option>
 									<option value="제품불량">제품불량</option>
 									<option value="다른이유">다른 이유</option>
 									</optgroup>
-								</select>
+								</select> -->
+								<h2>교환 신청</h2>
+								<textarea rows="10" cols="40" name="change_reason"
+								placeholder="ex)교환이유 :      교환할상품명 :       사이즈 :      "></textarea>
 							</center>
 							<p></p>
 						<input type="hidden" name="member_id" value="${member_id }"/>

@@ -15,12 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +35,7 @@ import com.feline.event.EventModel;
 import com.feline.event.EventService;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
+import com.feline.member.MemberService;
 import com.feline.order.OrderModel;
 import com.feline.util.FileUpload;
 import com.feline.util.Paging;
@@ -45,7 +49,7 @@ public class AdminController {
 	
 	@Resource
 	private EventService eventService;
-
+	
 	ModelAndView mav = new ModelAndView();
 
 	private int searchNum;
@@ -63,6 +67,7 @@ public class AdminController {
 	private List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
 	private List<EventModel> eventList = new ArrayList<EventModel>();
 
+	private Logger logger = Logger.getLogger(getClass());
 
 	@RequestMapping("main.cat") // 관리자 페이지
 	public ModelAndView adMain() throws Exception {
@@ -678,19 +683,33 @@ public class AdminController {
 		
 	//이벤트 추가 폼의 상품 리스트
 	@RequestMapping(value = "eventGoodsList.cat")
-	public Object eventGoodsList(HttpServletRequest request) {
-		
-		if(request.getParameter("goods_category") != null) {
-			int goods_category = Integer.parseInt(request.getParameter("goods_category"));
-			goodsList = eventService.goodsList(goods_category);
+	public void eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			
+			int goods_category = Integer.parseInt(request.getParameter("param"));
+			goodsList = eventService.goodsCategoryList(goods_category);
+			
+			logger.info("goodsList:" + goodsList.size());
+			
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i < goodsList.size(); i++) {
+				JSONObject sObject = new JSONObject();
+				sObject.put("goods_img_savname", goodsList.get(i).getGoods_image_savname());
+				sObject.put("goods_name", goodsList.get(i).getGoods_name());
+				sObject.put("goods_price", goodsList.get(i).getGoods_price());
+				sObject.put("goods_num", goodsList.get(i).getGoods_num());
+				jsonArray.add(i, sObject);
+				
+			}
+			
+			//jsonArray 넘김
+			PrintWriter pw = response.getWriter();
+			pw.print(jsonArray.toString());
+			pw.flush();
+			pw.close();
+		} catch(Exception e) {
+			System.out.println("Controller error");
 		}
-		
-		Map<String, Object> retVal = new HashMap<String, Object>();
-		
-		retVal.put("goodsList", goodsList);
-		retVal.put("code", "OK");
-		
-		return retVal;
 
 	}
 	
@@ -699,7 +718,11 @@ public class AdminController {
 	public void selectCategory(HttpServletRequest request, HttpServletResponse response, String param) {
 		
 		try {
+			
+			System.out.println(request.getParameter("param"));
 			String category = param;
+			logger.info("category :" + param);
+			System.out.println(category);
 			
 			ArrayList<String> list = new ArrayList<String>();
 			
@@ -752,6 +775,14 @@ public class AdminController {
 		mav.setViewName("adEventWrite");
 		return mav;
 	}
+	
+	// Admin 이벤트 등록
+	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
+	public ModelAndView adEventWrite() {
+
+		mav.setViewName("adEventWrite");
+		return mav;
+	}
 
 	
 	////////////////////////////////////주문취소 환불 교환 목록 ////////////////////////////////////////////////
@@ -764,6 +795,7 @@ public class AdminController {
 		
 		List<CancleModel> adOrderCancleList = adminService.adOrderCancleList();
 		
+				
 		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
 				|| request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
@@ -790,6 +822,31 @@ public class AdminController {
 		mav.setViewName("adOrderCancleList");
 		return mav;
 	}
+	
+	//고객주문 취소 상세보기
+	@RequestMapping(value="adOrderCancleView.cat")
+	public ModelAndView adOrderCancleView(@RequestParam("order_num")int order_num,
+			@RequestParam("cancle_num")int cancle_num,
+			HttpServletRequest request) {
+		
+		OrderModel orderModel= new OrderModel();
+		CancleModel cancleModel = new CancleModel();
+		GoodsModel goodsModel = new GoodsModel();
+		
+		orderModel=adminService.adOrderCancleView(order_num);
+		
+		cancleModel=adminService.adOrderCancleView2(cancle_num);
+		
+		goodsModel = adminService.adOrderCancleView3(orderModel.getGoods_num());
+
+		mav.addObject("orderModel",orderModel);
+		mav.addObject("cancleModel",cancleModel);
+		mav.addObject("goodsModel",goodsModel);
+		mav.setViewName("adOrderCancleView");
+
+		return mav;
+	}
+	
 	
 	
 	//고객주문환불 목록 리스트
@@ -825,7 +882,33 @@ public class AdminController {
 		return mav;
 	}
 	
-	//주문교환내역 목록 리스트
+	//고객주문 환불 상세보기
+	@RequestMapping(value="adOrderRefundView.cat")
+	public ModelAndView adOrderRefundView(@RequestParam("order_num")int order_num,
+			@RequestParam("trade_num")int trade_num,
+			HttpServletRequest request) {
+		
+		OrderModel orderModel= new OrderModel();
+		RefundModel refundModel= new RefundModel();
+		GoodsModel goodsModel = new GoodsModel();
+		
+		orderModel=adminService.adOrderRefundView(order_num);
+		
+		refundModel=adminService.adOrderRefundView2(trade_num);
+		
+		goodsModel = adminService.adOrderRefundView3(orderModel.getGoods_num());
+
+		mav.addObject("orderModel",orderModel);
+		mav.addObject("refundModel",refundModel);
+		mav.addObject("goodsModel",goodsModel);
+		mav.setViewName("adOrderRefundView");
+
+		return mav;
+	}
+	
+	
+	
+	//고객주문교환내역 목록 리스트
 	@RequestMapping(value="adOrderChangeList.cat",method=RequestMethod.GET)
 	public ModelAndView adOrderChangeList(HttpServletRequest request) {
 		
@@ -848,13 +931,38 @@ public class AdminController {
 			lastCount = page.getEndCount() + 1;
 		}
 		
-			adOrderChangeList = adOrderChangeList.subList(page.getStartCount(), lastCount);
+		
+		adOrderChangeList = adOrderChangeList.subList(page.getStartCount(), lastCount);
 		
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("adOrderChangeList",adOrderChangeList);
 		mav.setViewName("adOrderChangeList");
 			
+		return mav;
+	}
+	
+	//고객주문 교환 상세보기
+	@RequestMapping(value="adOrderChangeView.cat")
+	public ModelAndView adOrderChangeView(@RequestParam("order_num")int order_num,
+			@RequestParam("change_num")int change_num,
+			HttpServletRequest request) {
+		
+		OrderModel orderModel= new OrderModel();
+		ChangeModel changeModel = new ChangeModel();
+		GoodsModel goodsModel = new GoodsModel();
+		
+		orderModel=adminService.adOrderChangeView(order_num);
+		
+		changeModel=adminService.adOrderChangeView2(change_num);
+		
+		goodsModel = adminService.adOrderChangeView3(orderModel.getGoods_num());
+
+		mav.addObject("orderModel",orderModel);
+		mav.addObject("changeModel",changeModel);
+		mav.addObject("goodsModel",goodsModel);
+		mav.setViewName("adOrderChangeView");
+
 		return mav;
 	}
 	

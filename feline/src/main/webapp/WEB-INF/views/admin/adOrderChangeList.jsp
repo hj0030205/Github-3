@@ -39,7 +39,13 @@
                                 <tbody>
                                 <c:forEach var="adOrderChangeList" items="${adOrderChangeList}">
 								<tr>
-									<td>${adOrderChangeList.change_num }</td>
+									<c:url var="viewURL" value="adOrderChangeView.cat">
+										<c:param name="order_num" value="${adOrderChangeList.order_num}" />
+										<c:param name="change_num" value="${adOrderChangeList.change_num}" />
+									</c:url>							
+									<td>
+										<a href="${viewURL}"><Strong>${adOrderChangeList.change_num}</Strong></a>
+									</td>
 									<td>${adOrderChangeList.order_num }</td>
 									<td>${adOrderChangeList.change_reason}</td>
 									<td>${adOrderChangeList.member_id }</td>

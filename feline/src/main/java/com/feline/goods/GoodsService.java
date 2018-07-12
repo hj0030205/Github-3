@@ -32,5 +32,9 @@ public class GoodsService implements GoodsDao{
 		return sqlSessionTemplate.selectList("goods.selectSearchN", "%"+search+"%");
 	}
 	
-	
+	@Override
+	public List<GoodsModel> goodsDetailSearchList(String search){
+		return sqlSessionTemplate.selectList("goods.selectSearchC", "%"+search+"%");
+	}
+
 }
