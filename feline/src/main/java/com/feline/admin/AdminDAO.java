@@ -81,11 +81,36 @@ public interface AdminDAO {
 	//취소목록 뽑아오기
 	List<CancleModel> adOrderCancleList();
 	
+	//취소된 주문 상세 내용 불러오기.
+	OrderModel adOrderCancleView(int order_num);
+	
+	//주문 취소 내용 가져오기.
+	CancleModel adOrderCancleView2(int cancle_num);
+
+	//주문 취소 내용 가져오기2.
+	GoodsModel adOrderCancleView3(int goods_num);
+	
 	//환불 목록 뽑아오기
 	List<RefundModel> adOrderRefundList();
+	
+	//환불된 주문 상세 내용 불러오기.
+	OrderModel adOrderRefundView(int order_num);
+	
+	//주문 환불 내용 가져오기.
+	RefundModel adOrderRefundView2(int trade_num);
+
+	//주문 환불 내용 가져오기2.
+	GoodsModel adOrderRefundView3(int goods_num);
 	
 	//교환 목록 뽑아오기
 	List<ChangeModel> adOrderChangeList();
 	
+	//교환된 주문 상세 내용 불러오기.
+	OrderModel adOrderChangeView(int order_num);
+	
+	//주문 교환 내용 가져오기.
+	ChangeModel adOrderChangeView2(int change_num);
 
+	//주문 교환 내용 가져오기2.
+	GoodsModel adOrderChangeView3(int goods_num);
 }

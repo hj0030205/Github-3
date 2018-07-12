@@ -115,4 +115,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="where-num" />
 	</delete>
 
+<!--  ////////////////관리자 주문취소,교환,환불 목록 상세보기 ////////////////////////////////////////// -->
+
+	 <select id="adOrderCancleView3" resultMap="GoodsRes" parameterType="Integer">
+	 	SELECT * FROM feline_goods where goods_num = #{goods_num}
+	 </select>
+	 
+	 <select id="adOrderRefundView3" resultMap="GoodsRes" parameterType="Integer">
+	 	SELECT * FROM feline_goods where goods_num = #{goods_num}
+	 </select>	 
+	 
+	 <select id="adOrderChangeView3" resultMap="GoodsRes" parameterType="Integer">
+	 	SELECT * FROM feline_goods where goods_num = #{goods_num}
+	 </select>
 </mapper>

@@ -39,7 +39,13 @@
                                 <tbody>
                                 <c:forEach var="adOrderRefundList" items="${adOrderRefundList}">
 								<tr>
-									<td>${adOrderRefundList.trade_num }</td>
+									<c:url var="viewURL" value="adOrderRefundView.cat">
+										<c:param name="order_num" value="${adOrderRefundList.order_num}" />
+										<c:param name="trade_num" value="${adOrderRefundList.trade_num}" />
+									</c:url>							
+									<td>
+										<a href="${viewURL}"><Strong>${adOrderRefundList.trade_num}</Strong></a>
+									</td>
 									<td>${adOrderRefundList.order_num }</td>
 									<td>${adOrderRefundList.trade_reason}</td>
 									<td>${adOrderRefundList.member_id }</td>
