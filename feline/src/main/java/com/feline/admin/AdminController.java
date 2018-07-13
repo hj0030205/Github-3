@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -663,7 +666,7 @@ public class AdminController {
 		
 		totalCount = eventList.size();
 		
-		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adMemberList");
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adEventList");
 		pagingHtml = page.getPagingHtml().toString();
 		
 		int lastCount = totalCount;
@@ -713,61 +716,6 @@ public class AdminController {
 
 	}
 	
-	//이벤트 추가 폼의 카테고리 select box
-	@RequestMapping(value = "goodsCategory.cat")
-	public void selectCategory(HttpServletRequest request, HttpServletResponse response, String param) {
-		
-		try {
-			
-			System.out.println(request.getParameter("param"));
-			String category = param;
-			logger.info("category :" + param);
-			System.out.println(category);
-			
-			ArrayList<String> list = new ArrayList<String>();
-			
-			if(category.equals("food")) {
-				list.add("0");
-				list.add("1");
-				list.add("2");
-				list.add("3");
-			} else if(category.equals("snack")) {
-				list.add("4");
-				list.add("5");
-				list.add("6");
-				list.add("7");
-			} else if(category.equals("bathroom")) {
-				list.add("8");
-				list.add("9");
-				list.add("10");
-				list.add("11");
-			} else if(category.equals("toy")) {
-				list.add("12");
-				list.add("13");
-				list.add("14");
-				list.add("15");
-			} else if(category.equals("cleaner")) {
-				list.add("16");
-				list.add("17");
-				list.add("18");
-				list.add("19");
-			}
-			
-			JSONArray jsonArray = new JSONArray();
-			for(int i = 0; i < list.size(); i++) {
-				jsonArray.add(list.get(i));
-			}
-			
-			//jsonArray 넘김
-			PrintWriter pw = response.getWriter();
-			pw.print(jsonArray.toString());
-			pw.flush();
-			pw.close();
-		} catch(Exception e) {
-			System.out.println("Controller error");
-		}
-	}
-	
 	// Admin 이벤트 등록 폼
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
@@ -778,19 +726,34 @@ public class AdminController {
 	
 	// Admin 이벤트 등록
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
-	public ModelAndView adEventWrite(HttpServletRequest request, @ModelAttribute("eventModel") EventModel eventModel) {
+	public ModelAndView adEventWrite(HttpServletRequest request) throws ParseException {
 		
-		String[] value = request.getParameterValues("selected");
+		EventModel eventModel = new EventModel();
 		
-		String goods_num = "";
+		Calendar today = Calendar.getInstance();
 		
-		for(int i = 0; i < value.length; i++) {
-			goods_num += (value[i] + ",");
-		}
+		String goods_num = request.getParameter("goods_num");
 		
-		goods_num = goods_num.substring(0, goods_num.length()-1);
+		goods_num = goods_num.substring(1, goods_num.length());
+		
+		String start_date_s = request.getParameter("start_date");
+		Date start_date = new SimpleDateFormat("yyyy-MM-dd").parse(start_date_s);
+		
+		String end_date_s = request.getParameter("end_date");
+		Date end_date = new SimpleDateFormat("yyyy-MM-dd").parse(end_date_s);
+		
+		eventModel.setEvent_name(request.getParameter("event_name"));
 		
 		eventModel.setGoods_num(goods_num);
+		eventModel.setDc_rate(Integer.parseInt(request.getParameter("dc_rate")));
+		
+		eventModel.setStart_date(start_date);
+		eventModel.setEnd_date(end_date);
+		eventModel.setReg_date(today.getTime());
+		
+
+		logger.info("start_date : " + request.getParameter("start_date"));
+		logger.info("end_date : " + request.getParameter("end_date"));
 		
 		eventService.insertEvent(eventModel);
 

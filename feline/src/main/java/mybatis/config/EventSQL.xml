@@ -34,6 +34,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<collection property="goodsModel" resultMap="goodsModel" />
 	</resultMap>
 	
+	<resultMap type="EventModel" id="eventRes2">
+		<result property="event_num" column="event_num"/>
+		<result property="goods_num" column="goods_num"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="start_date" column="start_date"/>
+		<result property="end_date" column="end_date"/>
+		<result property="dc_rate" column="dc_rate"/>
+		<result property="status" column="status"/>
+		<result property="event_name" column="event_name"/>
+	</resultMap>
+	
 	
 	
 	<!-- <관리자>이벤트 세팅 -->
@@ -49,10 +60,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					, STATUS
 					, EVENT_NAME
 					)
-		  VALUE		(
+		  VALUES	(
 		  			  FELINE_GOODS_EVENT_NUM_SEQ.NEXTVAL
 		  			, #{goods_num}
-		  			, sysdate
+		  			, #{reg_date}
 		  			, #{start_date}
 		  			, #{end_date}
 		  			, #{dc_rate}
@@ -61,11 +72,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<!-- <관리자>이벤트 리스트 -->
-	<select id="eventList" resultMap="eventRes">
-		SELECT *
-		  FROM FELINE_GOODS_EVENT e
-		  LEFT OUTER JOIN FELINE_GOODS g
-		    ON e.GOODS_NUM = g.GOODS_NUM
+	<select id="eventList" resultMap="eventRes2">
+		SELECT * 
+		  FROM FELINE_GOODS_EVENT
+		 ORDER BY EVENT_NUM DESC
 	</select>
 	
 	<!-- <관리자>이벤트 하나 선택 -->
@@ -73,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *
 		  FROM FELINE_GOODS_EVENT e
 		  LEFT OUTER JOIN FELINE_GOODS g
-		    ON e.GOODS_NUM = g.GOODS_NUM
+		    ON e.GOODS_NUM = g.#{goods_num}
 		 WHERE e.EVENT_NUM = #{event_num}
 	</select>
 	
