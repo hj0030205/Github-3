@@ -920,7 +920,44 @@ public class AdminController {
 		return mav;
 	}
 	
+	//환불 수락
+	@RequestMapping(value="adOrderRefundAgree.cat",method=RequestMethod.POST)
+	public ModelAndView RefundAgree(OrderModel orderModel,RefundModel refundModel,
+			@RequestParam("redirect_type")String redirect_type) {
+		
+		String url=null;
+		
+		adminService.adOrderRefundAgree(orderModel, refundModel);
+		
+		if(redirect_type.equals("list")) {
+			
+			url="redirect:/admin/adOrderRefundList.cat";
+		} else if(redirect_type.equals("detail")) {
+			
+			url="redirect:/admin/adOrderRefundView.cat?order_num="+refundModel.getOrder_num()+"&trade_num="+refundModel.getTrade_num();
+		}
+
+		return new ModelAndView(url);
+	}
 	
+	//환불거절
+	@RequestMapping(value="adOrderRefundRefuse.cat",method=RequestMethod.POST)
+	public ModelAndView RefundRefuse(OrderModel orderModel,RefundModel refundModel,
+			@RequestParam("redirect_type")String redirect_type) {
+		
+		String url=null;
+		
+		adminService.adOrderRefundRefuse(orderModel, refundModel);
+		if(redirect_type.equals("list")) {
+			
+			url="redirect:/admin/adOrderRefundList.cat";
+		} else if(redirect_type.equals("detail")) {
+			
+			url="redirect:/admin/adOrderRefundView.cat?order_num="+refundModel.getOrder_num()+"&trade_num="+refundModel.getTrade_num();
+		}
+		
+		return new ModelAndView(url);
+	}
 	
 	//고객주문교환내역 목록 리스트
 	@RequestMapping(value="adOrderChangeList.cat",method=RequestMethod.GET)
@@ -980,4 +1017,43 @@ public class AdminController {
 		return mav;
 	}
 	
+	//교환 수락
+	@RequestMapping(value="adOrderChangeAgree.cat",method=RequestMethod.POST)
+	public ModelAndView ChangeAgree(OrderModel orderModel,ChangeModel changeModel,
+			@RequestParam("redirect_type")String redirect_type) {
+		
+		String url=null;
+		
+		adminService.adOrderChangeAgree(orderModel, changeModel);
+		
+		if(redirect_type.equals("list")) {
+			
+			url="redirect:/admin/adOrderChangeList.cat";
+		} else if(redirect_type.equals("detail")) {
+			
+			url="redirect:/admin/adOrderChangeView.cat?order_num="+changeModel.getOrder_num()+"&change_num="+changeModel.getChange_num();
+		}
+
+		return new ModelAndView(url);
+	}
+	
+	//교환거절
+	@RequestMapping(value="adOrderChangeRefuse.cat",method=RequestMethod.POST)
+	public ModelAndView ChangeRefuse(OrderModel orderModel,ChangeModel changeModel,
+			@RequestParam("redirect_type")String redirect_type) {
+		
+		String url=null;
+		
+		adminService.adOrderChangeRefuse(orderModel, changeModel);
+		if(redirect_type.equals("list")) {
+			
+			url="redirect:/admin/adOrderChangeList.cat";
+		} else if(redirect_type.equals("detail")) {
+			
+			url="redirect:/admin/adOrderChangeView.cat?order_num="+changeModel.getOrder_num()+"&change_num="+changeModel.getChange_num();
+		}
+		
+		return new ModelAndView(url);
+	}
+
 }

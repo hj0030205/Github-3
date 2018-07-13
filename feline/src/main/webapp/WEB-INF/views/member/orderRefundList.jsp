@@ -99,8 +99,14 @@
 									<c:when test="${order.status == 2}">
 									환불대기중
 									</c:when>
+									<c:when test="${order.status == 3 }">
+									<strong><font color="blue">환불 수락</font></strong>
+									</c:when>
+									<c:when test="${order.status == 4 }">
+									<strong><font color="red">환불 거절</font></strong>
+									</c:when>
 									<c:otherwise>
-									0이아닌다른게 들어갈리없..
+									다른게들어갈리가없...
 									</c:otherwise>
 									</c:choose>
 									</td>

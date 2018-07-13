@@ -99,8 +99,14 @@
 									<c:when test="${order.status == 5}">
 									교환신청중
 									</c:when>
+									<c:when test="${order.status == 6 }">
+									<strong><font color="blue">교환 수락</font></strong>
+									</c:when>
+									<c:when test="${order.status == 7 }">
+									<strong><font color="red">교환 수락</font></strong>
+									</c:when>
 									<c:otherwise>
-									0이아닌다른게 들어갈리없..
+									들어갈리없..
 									</c:otherwise>
 									</c:choose>
 									</td>
