@@ -242,5 +242,33 @@ public class AdminService implements AdminDAO {
 		return sqlSessionTemplate.selectOne("goods.adOrderChangeView3",goods_num);
 	}
 
+	@Override
+	public void adOrderRefundAgree(OrderModel orderModel, RefundModel refundModel) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.update("order.orderRefundAgree",orderModel);
+		sqlSessionTemplate.update("order.adOrderRefundAgree",refundModel);
+	}
+
+	@Override
+	public void adOrderRefundRefuse(OrderModel orderModel, RefundModel refundModel) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.update("order.orderRefundRefuse",orderModel);
+		sqlSessionTemplate.update("order.adOrderRefundRefuse",refundModel);
+	}
+
+	@Override
+	public void adOrderChangeAgree(OrderModel orderModel, ChangeModel changeModel) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.update("order.orderChangeAgree",orderModel);
+		sqlSessionTemplate.update("order.adOrderChangeAgree",changeModel);
+	}
+
+	@Override
+	public void adOrderChangeRefuse(OrderModel orderModel, ChangeModel changeModel) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.update("order.orderChangeRefuse",orderModel);
+		sqlSessionTemplate.update("order.adOrderChangeRefuse",changeModel);
+	}
+
 
 }

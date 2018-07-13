@@ -21,7 +21,9 @@
 				</ol>
 			</div>
 		</div>
+		
 		<!-- ////////////////////////////////////////body 내용/////////////////////////////////// -->
+		
 		<div class="row">
 			<!-- Column -->
 			<div class="col-lg-12">
@@ -87,6 +89,23 @@
 											class="form-control form-control-line">
 									</div>
 								</div>
+							</div>
+						</div>
+							<div class="col-sm-12">	
+								<center>
+									<form action="adOrderChangeAgree.cat" method="post">
+										<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
+										<input type="hidden" name="change_num" value="${adOrderRefundList.change_num}" />
+										<input type="hidden" name="redirect_type" value="detail"/>
+										<input type="submit" value="승인" class="btn btn-success" >
+									</form>
+									<form action="adOrderChangeRefuse.cat" method="post">
+										<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
+										<input type="hidden" name="change_num" value="${adOrderRefundList.change_num}" />
+										<input type="hidden" name="redirect_type" value="detail"/>
+										<input type="submit" value="거절" class="btn btn-danger">
+									</form>
+								</center>
 							</div>
 						</div>
 					</div>

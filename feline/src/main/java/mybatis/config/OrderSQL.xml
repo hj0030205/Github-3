@@ -147,7 +147,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from feline_order_cancle_list where member_id=#{member_id} and order_num=#{order_num}
 	 </select> 
 	 
-	
 	 
 	 <!-- 주문환불 입력 -->
 	 <insert id="insertRefund" parameterType="RefundModel">
@@ -160,11 +159,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	update feline_order set status=2 where order_num=#{order_num}
 	 </update>
 	 
+	 
 	 <!-- 환불목록가져오기 -->
 	 <select id="orderRefundList" resultMap="orderRes" parameterType="String">
 	 	select *
 	 	from feline_order
-	 	where order_member_id = #{order_member_id} and status = 2
+	 	where order_member_id = #{order_member_id} and status = 2 or status = 3 or status = 4 
 	 </select>
 	 
 	 <!-- 환불상세보기 -->
@@ -187,7 +187,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="orderChangeList" resultMap="orderRes" parameterType="String">
 	 	select *
 	 	from feline_order
-	 	where order_member_id = #{order_member_id} and status = 5
+	 	where order_member_id = #{order_member_id} and status = 5 or status = 6 or status = 7
 	 </select>
 	 
 	 <!-- 교환상세보기 -->
@@ -227,6 +227,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from feline_trade_list where trade_num=#{trade_num}
 	 </select>
 	 
+	 <!-- 관리자,고객 주문환불 수락 -->
+	 <update id="orderRefundAgree" parameterType="orderModel">
+	 	update feline_order set status=3 where order_num=#{order_num}
+	 </update>
+
+	<update id="adOrderRefundAgree" parameterType="refundModel">
+		update feline_trade_list set trade_state=1 where trade_num=#{trade_num}
+	</update>
+	
+	<!-- 관리자,고객 주문환불 거절 -->
+	<update id="orderRefundRefuse" parameterType="orderModel">
+		update feline_order set status=4 where order_num=#{order_num}
+	</update>
+	
+	<update id="adOrderRefundRefuse" parameterType="refundModel">
+		update feline_trade_list set trade_state=2 where trade_num=#{trade_num}
+	</update>
+	 
 	 <!-- 관리자 주문교환 상세보기 -->
 	 <select id="adOrderChangeView" resultMap="orderRes" parameterType="Integer">
 	 	select * from feline_order where order_num=#{order_num}
@@ -234,5 +252,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <select id="adOrderChangeView2" resultMap="changeRes" parameterType="Integer">
 	 	select * from feline_change_list where change_num=#{change_num}
-	 </select>	 	 
+	 </select>	 	
+	 
+	 <!--  관리자 , 고객 주문교환 수락 -->
+	 <update id="orderChangeAgree" parameterType="orderModel">
+	 	update feline_order set status = 6 where order_num=#{order_num}
+	 </update>
+	 
+	 <update id="adOrderChangeAgree" parameterType="changeModel">
+	 	update feline_change_list set change_state = 1 where change_num=#{change_num}
+	 </update>
+	 
+	 <!--  관리자, 고객 주문교환 거절 --> 
+	 <update id="orderChangeRefuse" parameterType="orderModel">
+	 	update feline_order set status = 7 where order_num=#{order_num}
+	 </update>
+	 
+	 <update id="adOrderChangeRefuse" parameterType="changeModel">
+	 	update feline_change_list set change_state = 2 where change_num=#{change_num}
+	 </update>
+	 
 </mapper>

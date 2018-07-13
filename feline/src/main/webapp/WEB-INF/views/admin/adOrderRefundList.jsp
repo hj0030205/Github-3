@@ -34,6 +34,7 @@
                                         <th>환불이유</th>
                                         <th>환불한 사람의 아이디</th>
                                         <th>대기/수락/거절 상태</th>
+                                        <th/>환불 승인/거절</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,6 +63,23 @@
 									</c:otherwise>
 									</c:choose>
 									</td>
+									<td>
+								<center>
+									<form action="adOrderRefundAgree.cat" method="post">
+										<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
+										<input type="hidden" name="trade_num" value="${adOrderRefundList.trade_num}" />
+										<input type="hidden" name="redirect_type" value="list"/>
+										<input type="submit" value="승인" class="btn btn-success" >
+									</form>
+									<form action="adOrderRefundRefuse.cat" method="post">
+										<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
+										<input type="hidden" name="trade_num" value="${adOrderRefundList.trade_num}" />
+										<input type="hidden" name="redirect_type" value="list"/>
+										<input type="submit" value="거절" class="btn btn-danger">
+									</form>
+								</center>
+									</td>
+									
 								</tr>
 								</c:forEach>
 								<c:if test="${fn:length(adOrderRefundList) le 0}">
