@@ -126,7 +126,7 @@ public class NoticeController {
 
 		return mav;
 	}
-
+	
 	// 공지사항 글쓰기 폼
 	@RequestMapping(value = "noticeWrite.cat", method = RequestMethod.GET)
 	public ModelAndView noticeWriteForm(HttpServletRequest request) {
