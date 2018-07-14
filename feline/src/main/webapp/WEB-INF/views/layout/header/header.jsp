@@ -83,6 +83,7 @@
             </c:if>
             <li><a href="/feline/notice/noticeList.cat">고객센터</a>
             </li>
+            <li><a href="/feline/map/mapView.cat">찾아오는 길</a></li>
            </ul>
            </div>
         </div>
