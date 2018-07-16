@@ -32,6 +32,16 @@
 			return false;
 		}
 	}
+	function isWishList(goodsform){
+		var isbuy = confirm("위시리스트에 저장하시겠습니까?");
+		
+		if(isbuy == true){
+			goodsform.action="/feline/wishlist/wishAdd.cat";
+			goodsform.submit();
+		}else{
+			return false;
+		}
+	}
 </script>
 <style>
 li.basic.active {
@@ -204,6 +214,8 @@ li.basic.active {
 											class="fa fa-shopping-cart"></i>구매하기</a> 
 										<a href="javascript:isBasket(goodsform)" class="btn btn-default"><i
 											class="fa fa-heart"></i>장바구니</a>
+										<a href="javascript:isWishList(goodsform)" class="btn btn-default"><i
+											class="fas fa-bomb"></i>WISHLIST</a>	
 									</p>
 								</form>
 							</div>
