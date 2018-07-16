@@ -82,6 +82,7 @@ select{
 					<c:otherwise>
 						<form action="adEventModify.cat" method="post">
 						<h3 class="text-themecolor">이벤트 수정</h3>
+						<input type="hidden" name="event_num" value="${eventModel.event_num}">
 					</c:otherwise>
 				</c:choose>
 				<ol class="breadcrumb">
@@ -135,14 +136,14 @@ select{
 												<div class="col-md-12">
 													<input type="date" name="start_date"
 														class="form-control form-control-line"
-														value="${eventModel.start_date}" >
+														value="<fmt:formatDate value='${eventModel.start_date}' type='date' pattern='yyyy-MM-dd'/>" >
 												</div>
 											</div>
 											<div class="col-md-6">
 												<label class="col-md-6">이벤트 종료일</label>
 												<div class="col-md-12">
 													<input type="date" name="end_date"
-														value="${eventModel.end_date}"
+														value="<fmt:formatDate value='${eventModel.end_date}' type='date' pattern='yyyy-MM-dd'/>"
 														class="form-control form-control-line">
 												</div>
 											</div>
@@ -167,7 +168,7 @@ select{
 										<div class="col-md-6">
 											<label class="col-md-6">카테고리</label>
 											<div class="col-md-12">
-												<input type="hidden" id="goods_num" name="goods_num" value=""/>
+												<input type="hidden" id="goods_num" name="goods_num" value="${eventModel.goods_num}"/>
 												<select id="goods_category1" id="goods_category1" onchange="goodsCategorySelect(this.value);">
 													<option>대분류를 선택해주세요</option>
 												</select>
@@ -190,6 +191,16 @@ select{
 										</tr>
 									<thead>
 									<tbody id="goodsList">
+										<c:forEach var="goodsList" items="${goodsList}" varStatus="stat">
+											<tr>
+												<td></td>
+												<td>
+													<img src="/feline/resources/upload/images/${goodsList.goods_image_savname}" />
+												</td>
+												<td>${goodsList.goods_name}</td>
+												<td><fmt:formatNumber value="${goodsList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>						
 							</div>

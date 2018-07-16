@@ -7,7 +7,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script>
 
+function updateForm(){
+	document.location.href="adEventModify.cat?event_num=${eventModel.event_num}";
+}
+
+function deleteCheck() {
+	if(confirm("정말 삭제하시겠습니까?")==true){
+		document.location.href="adEventDelete.cat?event_num=${eventModel.event_num}";
+	}else{
+		return false;
+	}
+}
+
+</script>
 <style>
 .form-control {
 	color: black;
@@ -30,8 +44,7 @@ select{
 		<!-- ///////////////////////////////row page title/////////////////////////////////////// -->
 		<div class="row page-titles">
 			<div class="col-md-5 col-8 align-self-center">
-				<form action="adEventWrite.cat" method="post">
-						<h3 class="text-themecolor">이벤트 상세</h3>
+				<h3 class="text-themecolor">이벤트 상세</h3>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/feline/admin/main.cat">관리자
 							메인</a></li>
@@ -152,6 +165,7 @@ select{
 												<td>${goodsList.goods_name}</td>
 												<td><fmt:formatNumber value="${goodsList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
 												<td><fmt:formatNumber value="${goodsList.goods_price*(100-eventModel.dc_rate)/100}" type="number" pattern="#,###"/>&nbsp;원</td>
+											</tr>
 										</c:forEach>
 									</tbody>
 								</table>						
@@ -159,11 +173,13 @@ select{
 						</div>
 						<div class="form-group">
 							<div class="col-sm-12" style="text-align: center;">
-								<input type="submit" class="btn btn-success" value="수정하기">
-								&nbsp; <a class="btn btn-warning" href="/feline/admin/adEventList.cat">목록으로</a>
+								<a class="btn btn-primary" onclick="updateForm()">이벤트 수정</a>
+								&nbsp; 
+								<a class="btn btn-danger" onclick="deleteCheck()">이벤트 삭제</a>
+								&nbsp;
+								<a class="btn btn-warning" href="/feline/admin/adEventList.cat">목록으로</a>
 							</div>
 						</div>
-						</form>
 					</div>
 				</div>
 			</div>
