@@ -74,13 +74,13 @@ select{
 		<!-- ///////////////////////////////row page title/////////////////////////////////////// -->
 		<div class="row page-titles">
 			<div class="col-md-5 col-8 align-self-center">
-				<form action="adEventWrite.cat" method="post">
-					<h3 class="text-themecolor">이벤트 등록</h3>
-
+				<form action="adEventModify.cat" method="post">
+					<h3 class="text-themecolor">이벤트 수정</h3>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/feline/admin/main.cat">관리자
 							메인</a></li>
-					<li class="breadcrumb-item active">이벤트 등록</li>
+							<li class="breadcrumb-item active">이벤트 수정</li>
+
 				</ol>
 			</div>
 		</div>
@@ -101,14 +101,14 @@ select{
 												<div class="col-md-12">
 													<input type="text" name="event_name"
 														class="form-control form-control-line"
-														value="">
+														value="${eventModel.event_name}">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<label class="col-md-6">할인율(단위:%)</label>
 												<div class="col-md-12">
 													<input type="text" name="dc_rate"
-														value=""
+														value="${eventModel.dc_rate}"
 														class="form-control form-control-line">
 												</div>
 											</div>
@@ -121,14 +121,14 @@ select{
 												<div class="col-md-12">
 													<input type="date" name="start_date"
 														class="form-control form-control-line"
-														value="" >
+														value="<fmt:formatDate value='${eventModel.start_date}' type='date' pattern='yyyy-MM-dd'/>" >
 												</div>
 											</div>
 											<div class="col-md-6">
 												<label class="col-md-6">이벤트 종료일</label>
 												<div class="col-md-12">
 													<input type="date" name="end_date"
-														value=""
+														value="<fmt:formatDate value='${eventModel.end_date}' type='date' pattern='yyyy-MM-dd'/>"
 														class="form-control form-control-line">
 												</div>
 											</div>
@@ -176,6 +176,16 @@ select{
 										</tr>
 									<thead>
 									<tbody id="goodsList">
+										<c:forEach var="goodsList" items="${goodsList}" varStatus="stat">
+											<tr>
+												<td></td>
+												<td>
+													<img src="/feline/resources/upload/images/${goodsList.goods_image_savname}" />
+												</td>
+												<td>${goodsList.goods_name}</td>
+												<td><fmt:formatNumber value="${goodsList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>						
 							</div>

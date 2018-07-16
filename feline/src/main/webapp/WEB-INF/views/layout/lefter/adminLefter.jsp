@@ -138,8 +138,15 @@
 							<li><a href="/feline/admin/adEventList.cat"
 								aria-expanded="false"> <i
 									class="mdi mdi-format-list-bulleted"></i> <span
-									class="nav-dropdown-item">이벤트 리스트</span></a></li>
-						</ul></li>
+									class="nav-dropdown-item">이벤트 리스트</span></a>
+							</li>
+							<li><a href="/feline/admin/adEventWrite.cat"
+								aria-expanded="false"> <i
+									class="mdi mdi-plus-circle"></i> <span
+									class="nav-dropdown-item">이벤트 등록</span></a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</nav>
 			<!-- End Sidebar navigation -->

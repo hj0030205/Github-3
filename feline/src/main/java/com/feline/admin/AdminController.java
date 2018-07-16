@@ -718,6 +718,7 @@ public class AdminController {
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
 
+		mav.addObject("eventModel", new EventModel());
 		mav.setViewName("adEventWrite");
 		return mav;
 	}
@@ -834,7 +835,7 @@ public class AdminController {
 		mav.addObject("eventModel", eventModel);
 		mav.addObject("goodsList", goodsList);
 		
-		mav.setViewName("adEventWrite");
+		mav.setViewName("adEventModify");
 		return mav;
 	}
 	
@@ -885,6 +886,43 @@ public class AdminController {
 
 		return mav;
 	}
+	
+	//이벤트 중지하기
+	@RequestMapping(value = "adEventStop.cat")
+	public ModelAndView adEventStop(HttpServletRequest request) {
+		
+		EventModel eventModel = new EventModel();
+		
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+		
+		eventModel.setStatus(0);
+		eventModel.setEvent_num(event_num);
+		
+		eventService.eventOnOff(eventModel);
+		
+		eventModel = eventService.eventSelectOne(event_num);
+		
+		String goods_num_s = eventModel.getGoods_num();
+		
+		String[] goods_num_array = goods_num_s.split(",");
+		
+		int[] goods_num_i = new int[goods_num_array.length];
+		
+		for(int i = 0; i < goods_num_array.length; i++) {
+			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
+		}
+		
+		//이벤트 가격 원복
+		for(int j = 0; j < goods_num_i.length; j++) {
+			eventService.eventPriceOff(goods_num_i[j]);
+		}
+		
+		mav.setViewName("redirect:adEventList.cat");
+		
+		return mav;
+	}
+	
+	
 
 	
 	////////////////////////////////////주문취소 환불 교환 목록 ////////////////////////////////////////////////

@@ -55,4 +55,35 @@ public class EventService implements EventDao{
 	public List<GoodsModel> goodsCategoryList(int goods_category){
 		return sqlSessionTemplate.selectList("goods.selectCategory",goods_category);
 	}
+	
+	//시작할 이벤트 데이터 가져오기
+	@Override
+	public List<EventModel> selectStartEvent() {
+		return sqlSessionTemplate.selectList("event.selectStartEvent");
+	}
+	
+	//종료할 이벤트 데이터 가져오기
+	@Override
+	public List<EventModel> selectEndEvent() {
+		return sqlSessionTemplate.selectList("event.selectEndEvent");
+	}
+	
+	//이벤트 활성화/비활성화
+	@Override
+	public int eventOnOff(EventModel eventModel) {
+		return sqlSessionTemplate.update("event.eventOnOff", eventModel);
+	}
+	
+	//이벤트 가격 적용
+	@Override
+	public int eventPriceOn(int goods_num) {
+		return sqlSessionTemplate.update("goods.eventPriceOn", goods_num);
+	}
+	
+	//이벤트 후 가격 원복
+	@Override
+	public int eventPriceOff(int goods_num) {
+		return sqlSessionTemplate.update("goods.eventPriceOff", goods_num);
+	}
+	
 }

@@ -21,6 +21,14 @@ function deleteCheck() {
 	}
 }
 
+function stopEvent() {
+	if(confirm("정말 중지하시겠습니까?")==true){
+		document.location.href="adEventStop.cat?event_num=${eventModel.event_num}";
+	}else{
+		return false;
+	}
+}
+
 </script>
 <style>
 .form-control {
@@ -72,12 +80,31 @@ select{
 														value="${eventModel.event_name}" readonly="readonly">
 												</div>
 											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
 											<div class="col-md-6">
 												<label class="col-md-6">할인율(단위:%)</label>
 												<div class="col-md-12">
 													<input type="text" name="dc_rate"
 														value="${eventModel.dc_rate}"
 														class="form-control form-control-line" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<label class="col-md-6">활성화여부</label>
+												<div class="col-md-12">
+													<c:if test="${eventModel.status eq 0}">
+													<input type="text" name="status"
+														value="비활성화"
+														class="form-control form-control-line" readonly="readonly">
+													</c:if>
+													<c:if test="${eventModel.status eq 1}">
+													<input type="text" name="status"
+														value="활성화"
+														class="form-control form-control-line" readonly="readonly">
+													</c:if>
 												</div>
 											</div>
 										</div>
@@ -174,9 +201,21 @@ select{
 						<div class="form-group">
 							<div class="col-sm-12" style="text-align: center;">
 								<a class="btn btn-primary" onclick="updateForm()">이벤트 수정</a>
-								&nbsp; 
+								&nbsp;
+								<c:if test="${eventModel.status eq 0}">
 								<a class="btn btn-danger" onclick="deleteCheck()">이벤트 삭제</a>
 								&nbsp;
+								</c:if>
+								<c:if test="${eventModel.status eq 1}">
+									<jsp:useBean id="now" class="java.util.Date" />
+									<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+									<fmt:formatDate value="${eventModel.start_date}" pattern="yyyy-MM-dd" var="start_date" />
+									<c:if test="${today ne start_date}">
+										<a class="btn btn-danger" onclick="stopEvent()">이벤트 중지</a>
+										&nbsp;
+									</c:if>
+								
+								</c:if>
 								<a class="btn btn-warning" href="/feline/admin/adEventList.cat">목록으로</a>
 							</div>
 						</div>

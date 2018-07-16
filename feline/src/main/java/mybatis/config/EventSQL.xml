@@ -71,5 +71,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM FELINE_GOODS_EVENT
 		 WHERE EVENT_NUM = #{event_num}
 	</delete>
+	
+	<!-- 시작할 이벤트 데이터 가져오기 -->
+	<select id="selectStartEvent" resultMap="eventRes">
+		<![CDATA[ 
+			SELECT *
+			  FROM FELINE_GOODS_EVENT
+			 WHERE to_char(start_date,'yyyyMMdd') = to_char(SYSDATE, 'yyyyMMdd')
+			   AND STATUS = 0
+		]]>
+	</select>
+	
+	<!-- 종료할 이벤트 데이터 가져오기 -->
+	<select id="selectEndEvent" resultMap="eventRes">
+		<![CDATA[ 
+			SELECT *
+			  FROM FELINE_GOODS_EVENT
+			 WHERE to_char(end_date,'yyyyMMdd') = to_char(SYSDATE, 'yyyyMMdd')
+			   AND STATUS = 1
+		]]>
+	</select>
+	
+	<!-- 이벤트 활성화/비활성화 -->
+	<update id="eventOnOff" parameterType="EventModel">
+		UPDATE FELINE_GOODS_EVENT
+		   SET STATUS = #{status}
+		 WHERE EVENT_NUM = #{event_num}
+	</update>
 
 </mapper>
