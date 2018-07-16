@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.basket.BasketModel;
+import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
+import com.feline.member.MemberService;
 
 @Controller
 @RequestMapping("/order")
@@ -23,6 +25,8 @@ public class OrderController {
 	
 	@Resource
 	private OrderService orderService;
+	
+
 
 	ModelAndView mav = new ModelAndView();
 
@@ -89,7 +93,8 @@ public class OrderController {
 
 		return mav;
 	}
-
+	
+	
 	/* 주문처리 */
 	@RequestMapping(value = "goodsOrder.cat")
 	public ModelAndView goodsOrder(HttpSession session, HttpServletRequest request, @ModelAttribute("basketModel") BasketModel basketModel,
@@ -145,5 +150,6 @@ public class OrderController {
 		return mav;
 
 	}
+	
 
 }

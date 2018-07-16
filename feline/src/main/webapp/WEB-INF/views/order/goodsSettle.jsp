@@ -95,7 +95,7 @@
 									<table class="table">
 										<thead>
 											<tr>
-												<th></th>
+												<th>상품</th>
 												<th>상품명</th>
 												<th>사이즈</th>
 												<th>수 량</th>

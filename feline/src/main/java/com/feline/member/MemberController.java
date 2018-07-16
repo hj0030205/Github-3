@@ -24,11 +24,14 @@ import com.feline.order.OrderModel;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+	
 
 	@Resource
 	private MemberService memberService;
 
 	ModelAndView mav = new ModelAndView();
+	
+
 
 	// ·Î±×ÀÎ Æû
 	@RequestMapping(value = "login.cat", method = RequestMethod.GET)
@@ -49,11 +52,13 @@ public class MemberController {
 			mav.setViewName("redirect:/main.cat");
 			return mav;
 		}
-
+				
 		mav.setViewName("loginError");
 		return mav;
 
 	}
+	
+	
 
 	@RequestMapping("logout.cat")
 	public ModelAndView memberLogout(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel member) {
