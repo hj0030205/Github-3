@@ -903,19 +903,19 @@ public class AdminController {
 		eventModel = eventService.eventSelectOne(event_num);
 		
 		String goods_num_s = eventModel.getGoods_num();
+		int event_num1 = eventModel.getEvent_num();
 		
 		String[] goods_num_array = goods_num_s.split(",");
 		
-		int[] goods_num_i = new int[goods_num_array.length];
-		
 		for(int i = 0; i < goods_num_array.length; i++) {
-			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
+			EventModel eventModel1 = new EventModel();
+			
+			eventModel1.setGoods_num(goods_num_array[i]);
+			eventModel1.setEvent_num(event_num1);
+			
+			eventService.eventPriceOff(eventModel1);
 		}
 		
-		//이벤트 가격 원복
-		for(int j = 0; j < goods_num_i.length; j++) {
-			eventService.eventPriceOff(goods_num_i[j]);
-		}
 		
 		mav.setViewName("redirect:adEventList.cat");
 		

@@ -52,29 +52,28 @@ public class MainController {
 			
 			for(int i = 0; i < startEventList.size(); i++) {
 				//goods_num_s 리스트 생성
-				goods_num_s = startEventList.get(i).getGoods_num() + ",";
+				goods_num_s = startEventList.get(i).getGoods_num();
+				String[] goods_num_array = goods_num_s.split(",");
+				
+				int event_num = startEventList.get(i).getEvent_num();
+				
+				for(int j = 0; j < goods_num_array.length; j++) {
+					
+					EventModel eventModel = new EventModel();
+					
+					eventModel.setGoods_num(goods_num_array[j]);
+					eventModel.setEvent_num(event_num);
+					
+					eventService.eventPriceOn(eventModel);
+				}
 				
 				//status 1로 이벤트 활성화
 				EventModel eventModel1 = new EventModel();
+				
 				eventModel1.setStatus(1);
 				eventModel1.setEvent_num(startEventList.get(i).getEvent_num());
 				
 				eventService.eventOnOff(eventModel1);
-			}
-			
-			goods_num_s = goods_num_s.substring(0, goods_num_s.length() - 1);
-			
-			String[] goods_num_array = goods_num_s.split(",");
-			
-			int[] goods_num_i = new int[goods_num_array.length];
-			
-			for(int i = 0; i < goods_num_array.length; i++) {
-				goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
-			}
-			
-			//이벤트 가격 적용
-			for(int j = 0; j < goods_num_i.length; j++) {
-				eventService.eventPriceOn(goods_num_i[j]);
 			}
 		}
 		
@@ -87,7 +86,20 @@ public class MainController {
 			for(int i = 0; i < endEventList.size(); i++) {
 				
 				//goods_num_s 리스트 생성
-				goods_num_s = endEventList.get(i).getGoods_num() + ",";
+				goods_num_s = startEventList.get(i).getGoods_num();
+				String[] goods_num_array = goods_num_s.split(",");
+				
+				int event_num = endEventList.get(i).getEvent_num();
+				
+				for(int j = 0; j < goods_num_array.length; j++) {
+					
+					EventModel eventModel = new EventModel();
+					
+					eventModel.setGoods_num(goods_num_array[j]);
+					eventModel.setEvent_num(event_num);
+					
+					eventService.eventPriceOff(eventModel);
+				}
 				
 				//status=0으로 이벤트 비활성화
 				EventModel eventModel1 = new EventModel();
@@ -95,21 +107,6 @@ public class MainController {
 				eventModel1.setEvent_num(startEventList.get(i).getEvent_num());
 				
 				eventService.eventOnOff(eventModel1);
-			}
-			
-			goods_num_s = goods_num_s.substring(0, goods_num_s.length() - 1);
-			
-			String[] goods_num_array = goods_num_s.split(",");
-			
-			int[] goods_num_i = new int[goods_num_array.length];
-			
-			for(int i = 0; i < goods_num_array.length; i++) {
-				goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
-			}
-			
-			//이벤트 가격 원복
-			for(int j = 0; j < goods_num_i.length; j++) {
-				eventService.eventPriceOff(goods_num_i[j]);
 			}
 		}
 		

@@ -76,14 +76,14 @@ public class EventService implements EventDao{
 	
 	//이벤트 가격 적용
 	@Override
-	public int eventPriceOn(int goods_num) {
-		return sqlSessionTemplate.update("goods.eventPriceOn", goods_num);
+	public int eventPriceOn(EventModel eventModel) {
+		return sqlSessionTemplate.update("goods.eventPriceOn", eventModel);
 	}
 	
 	//이벤트 후 가격 원복
 	@Override
-	public int eventPriceOff(int goods_num) {
-		return sqlSessionTemplate.update("goods.eventPriceOff", goods_num);
+	public int eventPriceOff(EventModel eventModel) {
+		return sqlSessionTemplate.update("goods.eventPriceOff", eventModel);
 	}
 	
 }

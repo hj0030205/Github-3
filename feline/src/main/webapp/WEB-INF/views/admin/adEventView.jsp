@@ -180,7 +180,6 @@ select{
 											<th>상품이미지</th>
 											<th>상품명</th>
 											<th>상품가격</th>
-											<th>할인가격</th>
 										</tr>
 									<thead>
 									<tbody id="goodsList">
@@ -191,7 +190,6 @@ select{
 												</td>
 												<td>${goodsList.goods_name}</td>
 												<td><fmt:formatNumber value="${goodsList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
-												<td><fmt:formatNumber value="${goodsList.goods_price*(100-eventModel.dc_rate)/100}" type="number" pattern="#,###"/>&nbsp;원</td>
 											</tr>
 										</c:forEach>
 									</tbody>

@@ -136,7 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   SET GOODS_PRICE = (SELECT (g.GOODS_PRICE - (g.GOODS_PRICE * e.DC_RATE/100))
 		   						FROM FELINE_GOODS g, FELINE_GOODS_EVENT e
 		   					   WHERE g.GOODS_NUM = #{goods_num}
-		   					     AND e.GOODS_NUM LIKE %#{goods_num}%)
+		   					     AND e.EVENT_NUM = #{event_num})
 		 WHERE GOODS_NUM = #{goods_num}
 	</update>
 
@@ -145,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   SET GOODS_PRICE = (SELECT (g.GOODS_PRICE * 100 /  (100 - e.DC_RATE))
 		   						FROM FELINE_GOODS g, FELINE_GOODS_EVENT e
 		   					   WHERE g.GOODS_NUM = #{goods_num}
-		   					     AND e.GOODS_NUM LIKE %#{goods_num}%)
+		   					     AND e.EVENT_NUM = #{event_num})
 		 WHERE GOODS_NUM = #{goods_num}
 	</update>
 	

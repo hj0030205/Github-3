@@ -76,6 +76,7 @@ select{
 			<div class="col-md-5 col-8 align-self-center">
 				<form action="adEventModify.cat" method="post">
 					<h3 class="text-themecolor">이벤트 수정</h3>
+					<input type="hidden" name="event_num" value="${eventModel.event_num}"/>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/feline/admin/main.cat">관리자
 							메인</a></li>
