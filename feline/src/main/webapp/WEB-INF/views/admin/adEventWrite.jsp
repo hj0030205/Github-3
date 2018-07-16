@@ -119,7 +119,7 @@ select{
 												</div>
 											</div>
 											<div class="col-md-6">
-												<label class="col-md-6">할인율</label>
+												<label class="col-md-6">할인율(단위:%)</label>
 												<div class="col-md-12">
 													<input type="text" name="dc_rate"
 														value="${eventModel.dc_rate}"

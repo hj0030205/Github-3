@@ -14,7 +14,6 @@ public class EventModel {
 	private int dc_rate;
 	private int status;
 	private String event_name;
-	private GoodsModel goodsModel;
 	
 	public int getEvent_num() {
 		return event_num;
@@ -64,11 +63,5 @@ public class EventModel {
 	public void setEvent_name(String event_name) {
 		this.event_name = event_name;
 	}
-	public GoodsModel getGoodsModel() {
-		return goodsModel;
-	}
-	public void setGoodsModel(GoodsModel goodsModel) {
-		this.goodsModel = goodsModel;
-	}
-	
+
 }
