@@ -5,23 +5,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="event">
 
-	<resultMap id="goodsModel" type="GoodsModel">
-		<result property="goods_num" column="goods_num" />
-		<result property="goods_name" column="goods_name" />
-		<result property="goods_price" column="goods_price" />
-		<result property="goods_amount" column="goods_amount" />
-		<result property="goods_content" column="goods_content" />
-		<result property="goods_category" column="goods_category" />
-		<result property="goods_size" column="goods_size" />
-		<result property="goods_image_orgname" column="goods_image_orgname" />
-		<result property="goods_image_savname" column="goods_image_savname" />
-		<!-- <result property="goods_detail_image_orgname" column="goods_detail_image_orgname" 
-			/> <result property="goods_detail_image_savname" column="goods_detail_image_savname" 
-			/> -->
-		<result property="goods_hit" column="goods_hit" />
-		<result property="goods_date" column="goods_date" />
-	</resultMap>
-
 	<resultMap type="EventModel" id="eventRes">
 		<result property="event_num" column="event_num"/>
 		<result property="goods_num" column="goods_num"/>
@@ -31,21 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="dc_rate" column="dc_rate"/>
 		<result property="status" column="status"/>
 		<result property="event_name" column="event_name"/>
-		<collection property="goodsModel" resultMap="goodsModel" />
 	</resultMap>
-	
-	<resultMap type="EventModel" id="eventRes2">
-		<result property="event_num" column="event_num"/>
-		<result property="goods_num" column="goods_num"/>
-		<result property="reg_date" column="reg_date"/>
-		<result property="start_date" column="start_date"/>
-		<result property="end_date" column="end_date"/>
-		<result property="dc_rate" column="dc_rate"/>
-		<result property="status" column="status"/>
-		<result property="event_name" column="event_name"/>
-	</resultMap>
-	
-	
 	
 	<!-- <관리자>이벤트 세팅 -->
 	<insert id="insertEvent" parameterType="EventModel">
@@ -72,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<!-- <관리자>이벤트 리스트 -->
-	<select id="eventList" resultMap="eventRes2">
+	<select id="eventList" resultMap="eventRes">
 		SELECT * 
 		  FROM FELINE_GOODS_EVENT
 		 ORDER BY EVENT_NUM DESC
@@ -81,10 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- <관리자>이벤트 하나 선택 -->
 	<select id="eventSelectOne" parameterType="Integer" resultMap="eventRes">
 		SELECT *
-		  FROM FELINE_GOODS_EVENT e
-		  LEFT OUTER JOIN FELINE_GOODS g
-		    ON e.GOODS_NUM = g.#{goods_num}
-		 WHERE e.EVENT_NUM = #{event_num}
+		  FROM FELINE_GOODS_EVENT
+		 WHERE EVENT_NUM = #{event_num}
 	</select>
 	
 	<!-- <관리자>이벤트 수정 -->
