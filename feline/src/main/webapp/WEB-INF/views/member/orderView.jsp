@@ -202,7 +202,7 @@
 								<div class="form-group">
 									<label>주문상태</label> <input type="text" class="form-control"
 										id="order_status" name="order_status"
-										value="${orderModel.order_status }" disabled="disabled">
+										value="${orderModel.order_status}" disabled="disabled">
 								</div>
 							</div>
 						</div>				

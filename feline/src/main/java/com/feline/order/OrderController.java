@@ -26,6 +26,8 @@ public class OrderController {
 	@Resource
 	private OrderService orderService;
 	
+	@Resource
+	private MemberService memberService;
 
 
 	ModelAndView mav = new ModelAndView();
@@ -93,7 +95,7 @@ public class OrderController {
 
 		return mav;
 	}
-	
+
 	
 	/* 주문처리 */
 	@RequestMapping(value = "goodsOrder.cat")
@@ -138,7 +140,7 @@ public class OrderController {
 			orderModel.setOrder_memo(orderModel.getOrder_memo());
 			orderModel.setOrder_date(today.getTime());
 			orderModel.setOrder_receive_zipcode(orderModel.getOrder_receive_zipcode());
-			orderModel.setOrder_trade_type("무통장입금");
+			orderModel.setOrder_trade_type(orderModel.getOrder_trade_type());
 			orderModel.setOrder_trade_date(today.getTime());
 			orderModel.setOrder_trade_payer(orderModel.getOrder_trade_payer());
 
