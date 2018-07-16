@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="wishlist">
+
+	<resultMap id="WishRes" type="WishListModel">
+	
+		<result property="wish_num" column="wish_num"/>
+		<result property="member_id" column="member_id"/>
+		<result property="goods_num" column="goods_num"/>	
+	
+	</resultMap>
+	
+	<select id="wishList" resultMap="WishRes" parameterType="WishListModel">
+		select * from feline_wishlist w, feline_goods g where w.goods_num = g.goods_num and member_id = #{member_id}
+	</select>
+	
+	<select id="wishCheck" resultMap="WishRes" parameterType="WishListModel">
+		select * from feline_wishlist where goods_num=#{goods_num} and member_id=#{member_id}
+	</select>
+	
+	<insert id="insertWishList" parameterType="WishListModel">
+		insert into feline_wishlist (wish_num, member_id, goods_num) values (feline_wishlist_num_seq.nextval, #{member_id}, #{goods_num})	
+	</insert>
+	
+	<delete id="deleteWishList" parameterType="Integer">
+		delete from feline_wishlist where wish_num=#{wish_num}
+	</delete>
+	
+
+</mapper>
