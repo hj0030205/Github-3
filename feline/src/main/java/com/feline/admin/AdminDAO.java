@@ -102,6 +102,13 @@ public interface AdminDAO {
 	//주문 환불 내용 가져오기2.
 	GoodsModel adOrderRefundView3(int goods_num);
 	
+	//환불 승인
+	void adOrderRefundAgree(OrderModel orderModel, RefundModel refundModel);
+	
+	//환불 거절
+	void adOrderRefundRefuse(OrderModel orderModel,RefundModel refundModel);
+	
+	
 	//교환 목록 뽑아오기
 	List<ChangeModel> adOrderChangeList();
 	
@@ -113,4 +120,10 @@ public interface AdminDAO {
 
 	//주문 교환 내용 가져오기2.
 	GoodsModel adOrderChangeView3(int goods_num);
+	
+	//교환 승인
+	void adOrderChangeAgree(OrderModel orderModel,ChangeModel changeModel);
+	
+	//교환 거절
+	void adOrderChangeRefuse(OrderModel orderModel,ChangeModel changeModel);
 }

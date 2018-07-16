@@ -196,6 +196,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqWrite.jsp" />
 	</definition>
 	
+	<definition name="mapView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/map/mapView.jsp"/>
+	</definition>
 	
 	<!-- ***************** 관리자 ************************ -->
 	<!-- 관리자 회원 관리 -->
@@ -242,8 +245,16 @@
 	</definition>
 	
 	<!-- 관리자 이벤트 관리 -->
-	<definition name="adEventList" extends="main">
+	<definition name="adEventList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adEventList.jsp" />
+	</definition>
+	
+	<definition name="adEventWrite" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adEventWrite.jsp" />
+	</definition>
+	
+	<definition name="adEventView" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adEventView.jsp" />
 	</definition>
 	
 	<!-- 관리자 취소 목록 -->
@@ -280,6 +291,7 @@
 	</definition>	
 	
 
+  <!-- 관리자 이벤트 관리 -->
 	<definition name="adEventWrite" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adEventWrite.jsp" />
 	</definition>

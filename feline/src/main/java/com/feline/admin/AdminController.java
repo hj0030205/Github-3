@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -663,7 +666,7 @@ public class AdminController {
 		
 		totalCount = eventList.size();
 		
-		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adMemberList");
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adEventList");
 		pagingHtml = page.getPagingHtml().toString();
 		
 		int lastCount = totalCount;
@@ -689,8 +692,6 @@ public class AdminController {
 			int goods_category = Integer.parseInt(request.getParameter("param"));
 			goodsList = eventService.goodsCategoryList(goods_category);
 			
-			logger.info("goodsList:" + goodsList.size());
-			
 			JSONArray jsonArray = new JSONArray();
 			for(int i = 0; i < goodsList.size(); i++) {
 				JSONObject sObject = new JSONObject();
@@ -713,61 +714,6 @@ public class AdminController {
 
 	}
 	
-	//이벤트 추가 폼의 카테고리 select box
-	@RequestMapping(value = "goodsCategory.cat")
-	public void selectCategory(HttpServletRequest request, HttpServletResponse response, String param) {
-		
-		try {
-			
-			System.out.println(request.getParameter("param"));
-			String category = param;
-			logger.info("category :" + param);
-			System.out.println(category);
-			
-			ArrayList<String> list = new ArrayList<String>();
-			
-			if(category.equals("food")) {
-				list.add("0");
-				list.add("1");
-				list.add("2");
-				list.add("3");
-			} else if(category.equals("snack")) {
-				list.add("4");
-				list.add("5");
-				list.add("6");
-				list.add("7");
-			} else if(category.equals("bathroom")) {
-				list.add("8");
-				list.add("9");
-				list.add("10");
-				list.add("11");
-			} else if(category.equals("toy")) {
-				list.add("12");
-				list.add("13");
-				list.add("14");
-				list.add("15");
-			} else if(category.equals("cleaner")) {
-				list.add("16");
-				list.add("17");
-				list.add("18");
-				list.add("19");
-			}
-			
-			JSONArray jsonArray = new JSONArray();
-			for(int i = 0; i < list.size(); i++) {
-				jsonArray.add(list.get(i));
-			}
-			
-			//jsonArray 넘김
-			PrintWriter pw = response.getWriter();
-			pw.print(jsonArray.toString());
-			pw.flush();
-			pw.close();
-		} catch(Exception e) {
-			System.out.println("Controller error");
-		}
-	}
-	
 	// Admin 이벤트 등록 폼
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
@@ -778,9 +724,165 @@ public class AdminController {
 	
 	// Admin 이벤트 등록
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
-	public ModelAndView adEventWrite() {
+	public ModelAndView adEventWrite(HttpServletRequest request) throws ParseException {
+		
+		EventModel eventModel = new EventModel();
+		
+		Calendar today = Calendar.getInstance();
+		
+		String goods_num = request.getParameter("goods_num");
+		
+		goods_num = goods_num.substring(1, goods_num.length());
+		
+		String start_date_s = request.getParameter("start_date");
+		Date start_date = new SimpleDateFormat("yyyy-MM-dd").parse(start_date_s);
+		
+		String end_date_s = request.getParameter("end_date");
+		Date end_date = new SimpleDateFormat("yyyy-MM-dd").parse(end_date_s);
+		
+		eventModel.setEvent_name(request.getParameter("event_name"));
+		
+		eventModel.setGoods_num(goods_num);
+		eventModel.setDc_rate(Integer.parseInt(request.getParameter("dc_rate")));
+		
+		eventModel.setStart_date(start_date);
+		eventModel.setEnd_date(end_date);
+		eventModel.setReg_date(today.getTime());
 
+		eventService.insertEvent(eventModel);
+
+		mav.setViewName("redirect:adEventList.cat");
+		return mav;
+	}
+	
+	//등록된 이벤트 보기
+	@RequestMapping(value = "adEventView.cat")
+	public ModelAndView adEventView(HttpServletRequest request) {
+		
+		EventModel eventModel = new EventModel();
+		
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+		
+		eventModel = eventService.eventSelectOne(event_num);
+		
+		//String으로 된 goods_num 받아서 파싱 후 Integer 타입으로 변환
+		String goods_num_s = eventModel.getGoods_num();
+		
+		String[] goods_num_array = goods_num_s.split(",");
+		
+		int[] goods_num_i = new int[goods_num_array.length];
+		
+		for(int i = 0; i < goods_num_array.length; i++) {
+			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
+		}
+		
+		//쌓임방지
+		goodsList.clear();
+		
+		GoodsModel goodsModel1 = new GoodsModel();
+		
+		//goodsList에 goodsModel 삽입
+		for(int j = 0; j < goods_num_i.length; j++) {
+			GoodsModel goodsModel = new GoodsModel();
+			goodsModel = eventService.selectGoods(goods_num_i[j]);
+			goodsList.add(j, goodsModel);
+			
+			goodsModel1.setGoods_category(goodsList.get(0).getGoods_category());
+		}
+		
+		mav.addObject("eventModel", eventModel);
+		mav.addObject("goodsList", goodsList);
+		mav.addObject("goodsModel1", goodsModel1);
+		
+		mav.setViewName("adEventView");
+		
+		return mav;
+	}
+	
+	//등록된 이벤트 수정하기 폼
+	@RequestMapping(value = "adEventModify.cat", method = RequestMethod.GET)
+	public ModelAndView adEventModifyForm(HttpServletRequest request) {
+		
+		EventModel eventModel = new EventModel();
+		
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+		
+		eventModel = eventService.eventSelectOne(event_num);
+		
+		//String으로 된 goods_num 받아서 파싱 후 Integer 타입으로 변환
+		String goods_num_s = eventModel.getGoods_num();
+		
+		String[] goods_num_array = goods_num_s.split(",");
+		
+		int[] goods_num_i = new int[goods_num_array.length];
+		
+		for(int i = 0; i < goods_num_array.length; i++) {
+			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
+		}
+		
+		//쌓임방지
+		goodsList.clear();
+	
+		//goodsList에 goodsModel 삽입
+		for(int j = 0; j < goods_num_i.length; j++) {
+			GoodsModel goodsModel = new GoodsModel();
+			goodsModel = eventService.selectGoods(goods_num_i[j]);
+			goodsList.add(j, goodsModel);
+			
+		}
+		
+		mav.addObject("eventModel", eventModel);
+		mav.addObject("goodsList", goodsList);
+		
 		mav.setViewName("adEventWrite");
+		return mav;
+	}
+	
+	@RequestMapping(value = "adEventModify.cat", method = RequestMethod.POST)
+	public ModelAndView adEventModify(HttpServletRequest request) throws ParseException {
+		
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+		
+		EventModel eventModel = new EventModel();
+		
+		String goods_num = request.getParameter("goods_num");
+		
+		if(goods_num.substring(1, 1) == ",") {
+			goods_num = goods_num.substring(1, goods_num.length());
+		}
+		
+		String start_date_s = request.getParameter("start_date");
+		Date start_date = new SimpleDateFormat("yyyy-MM-dd").parse(start_date_s);
+		
+		String end_date_s = request.getParameter("end_date");
+		Date end_date = new SimpleDateFormat("yyyy-MM-dd").parse(end_date_s);
+		
+		eventModel.setEvent_name(request.getParameter("event_name"));
+		
+		eventModel.setGoods_num(goods_num);
+		eventModel.setDc_rate(Integer.parseInt(request.getParameter("dc_rate")));
+		
+		eventModel.setStart_date(start_date);
+		eventModel.setEnd_date(end_date);
+		eventModel.setEvent_num(event_num);
+
+		eventService.eventModify(eventModel);
+
+		mav.setViewName("redirect:adEventList.cat");
+		return mav;
+
+	}
+	
+	//이벤트 삭제하기
+	@RequestMapping(value = "adEventDelete.cat")
+	public ModelAndView adEventDelete(HttpServletRequest request) {
+
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+
+		eventService.eventDelete(event_num);
+
+		mav.setViewName("redirect:adEventList.cat");
+
 		return mav;
 	}
 
@@ -906,7 +1008,44 @@ public class AdminController {
 		return mav;
 	}
 	
+	//환불 수락
+	@RequestMapping(value="adOrderRefundAgree.cat",method=RequestMethod.POST)
+	public ModelAndView RefundAgree(OrderModel orderModel,RefundModel refundModel,
+			@RequestParam("redirect_type")String redirect_type) {
+		
+		String url=null;
+		
+		adminService.adOrderRefundAgree(orderModel, refundModel);
+		
+		if(redirect_type.equals("list")) {
+			
+			url="redirect:/admin/adOrderRefundList.cat";
+		} else if(redirect_type.equals("detail")) {
+			
+			url="redirect:/admin/adOrderRefundView.cat?order_num="+refundModel.getOrder_num()+"&trade_num="+refundModel.getTrade_num();
+		}
+
+		return new ModelAndView(url);
+	}
 	
+	//환불거절
+	@RequestMapping(value="adOrderRefundRefuse.cat",method=RequestMethod.POST)
+	public ModelAndView RefundRefuse(OrderModel orderModel,RefundModel refundModel,
+			@RequestParam("redirect_type")String redirect_type) {
+		
+		String url=null;
+		
+		adminService.adOrderRefundRefuse(orderModel, refundModel);
+		if(redirect_type.equals("list")) {
+			
+			url="redirect:/admin/adOrderRefundList.cat";
+		} else if(redirect_type.equals("detail")) {
+			
+			url="redirect:/admin/adOrderRefundView.cat?order_num="+refundModel.getOrder_num()+"&trade_num="+refundModel.getTrade_num();
+		}
+		
+		return new ModelAndView(url);
+	}
 	
 	//고객주문교환내역 목록 리스트
 	@RequestMapping(value="adOrderChangeList.cat",method=RequestMethod.GET)
@@ -966,4 +1105,43 @@ public class AdminController {
 		return mav;
 	}
 	
+	//교환 수락
+	@RequestMapping(value="adOrderChangeAgree.cat",method=RequestMethod.POST)
+	public ModelAndView ChangeAgree(OrderModel orderModel,ChangeModel changeModel,
+			@RequestParam("redirect_type")String redirect_type) {
+		
+		String url=null;
+		
+		adminService.adOrderChangeAgree(orderModel, changeModel);
+		
+		if(redirect_type.equals("list")) {
+			
+			url="redirect:/admin/adOrderChangeList.cat";
+		} else if(redirect_type.equals("detail")) {
+			
+			url="redirect:/admin/adOrderChangeView.cat?order_num="+changeModel.getOrder_num()+"&change_num="+changeModel.getChange_num();
+		}
+
+		return new ModelAndView(url);
+	}
+	
+	//교환거절
+	@RequestMapping(value="adOrderChangeRefuse.cat",method=RequestMethod.POST)
+	public ModelAndView ChangeRefuse(OrderModel orderModel,ChangeModel changeModel,
+			@RequestParam("redirect_type")String redirect_type) {
+		
+		String url=null;
+		
+		adminService.adOrderChangeRefuse(orderModel, changeModel);
+		if(redirect_type.equals("list")) {
+			
+			url="redirect:/admin/adOrderChangeList.cat";
+		} else if(redirect_type.equals("detail")) {
+			
+			url="redirect:/admin/adOrderChangeView.cat?order_num="+changeModel.getOrder_num()+"&change_num="+changeModel.getChange_num();
+		}
+		
+		return new ModelAndView(url);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.feline.goods;
 
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -67,6 +69,81 @@ public class GoodsController {
 		String search = request.getParameter("search");
 		
 		List<GoodsModel> goodslist = goodsService.goodsSearchList(search);
+		
+		String minprice = request.getParameter("minprice");
+		String maxprice = request.getParameter("maxprice");
+		String category = request.getParameter("category");
+		String year = request.getParameter("year");
+		String month =request.getParameter("month");
+		
+		if(!category.equals(""))
+		{
+			for(int i = 0; i < goodslist.size(); i++) 
+			{
+				for(int j = 0; !goodslist.get(i).getGoods_category().equals(category); j++)
+				{
+					goodslist.remove(i);
+					
+					if(goodslist.size() == 0)
+					{
+						break;
+					}
+				}
+			}
+		}
+		
+		if(!minprice.equals(""))
+		{
+			for(int i = 0; i < goodslist.size(); i++) 
+			{
+				for(int j = 0;goodslist.get(i).getGoods_price() < Integer.parseInt(minprice); j++)
+				{
+					goodslist.remove(i);
+					
+					if(goodslist.size() == 0)
+					{
+						break;
+					}
+				}
+			}
+		}
+		
+		if(!maxprice.equals(""))
+		{
+			for(int i = 0; i < goodslist.size(); i++) 
+			{
+				for(int j = 0; Integer.parseInt(maxprice) < goodslist.get(i).getGoods_price(); j++)
+				{
+					goodslist.remove(i);
+					
+					if(goodslist.size() == 0)
+					{
+						break;
+					}
+				}
+			}
+		}
+		
+		if(!year.equals("") && !month.equals(""))
+		{
+			for(int i = 0; i < goodslist.size(); i++) 
+			{
+				System.out.println(goodslist.get(i).getGoods_date().getYear());
+				System.out.println(goodslist.get(i).getGoods_date().getMonth());
+				System.out.println(year);
+				System.out.println(month);
+				
+				for(int j = 0; goodslist.get(i).getGoods_date().getYear() != Integer.parseInt(year) || goodslist.get(i).getGoods_date().getMonth() != Integer.parseInt(month); j++)
+				{
+					goodslist.remove(i);
+					
+					if(goodslist.size() == 0)
+					{
+						break;
+					}
+				}
+			}
+		}
 		
 		mav.addObject("search", search);
 		mav.addObject("goodsList", goodslist);

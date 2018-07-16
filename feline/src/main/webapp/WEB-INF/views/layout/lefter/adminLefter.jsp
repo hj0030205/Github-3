@@ -128,6 +128,18 @@
 								 <i class="mdi mdi-human-male-female"></i> <span class="nav-dropdown-item">회원 통계</span></a>
 							</li> -->
 						</ul></li>
+						
+						
+						<li><a class="waves-effect waves-dark" href="#"
+						aria-expanded="false"> <i class="mdi mdi-sale"></i> <span
+							class="hide-menu">이벤트 관리</span></a>
+							<ul class="nav-dropdown-items">
+
+							<li><a href="/feline/admin/adEventList.cat"
+								aria-expanded="false"> <i
+									class="mdi mdi-format-list-bulleted"></i> <span
+									class="nav-dropdown-item">이벤트 리스트</span></a></li>
+						</ul></li>
 				</ul>
 			</nav>
 			<!-- End Sidebar navigation -->

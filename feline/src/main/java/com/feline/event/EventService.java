@@ -33,6 +33,12 @@ public class EventService implements EventDao{
 		return sqlSessionTemplate.selectOne("event.eventSelectOne", event_num);
 	}
 	
+	//이벤트 뷰 화면에서 대상 상품 목록 보여주기
+	@Override
+	public GoodsModel selectGoods(int goods_num) {
+		return sqlSessionTemplate.selectOne("goods.selectGoods", goods_num);
+	}
+	
 	//이벤트 수정
 	@Override
 	public int eventModify(EventModel eventModel) {

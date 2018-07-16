@@ -89,6 +89,23 @@
 								</div>
 							</div>
 						</div>
+							<div class="col-sm-12">	
+								<center>
+									<form action="adOrderRefundAgree.cat" method="post">
+										<input type="hidden" name="order_num" value="${refundModel.order_num}" />
+										<input type="hidden" name="trade_num" value="${refundModel.trade_num}" />
+										<input type="hidden" name="redirect_type" value="detail"/>
+										<input type="submit" value="승인" class="btn btn-success" >
+									</form>
+									<form action="adOrderRefundRefuse.cat" method="post">
+										<input type="hidden" name="order_num" value="${refundModel.order_num}" />
+										<input type="hidden" name="trade_num" value="${refundModel.trade_num}" />
+										<input type="hidden" name="redirect_type" value="detail"/>
+										<input type="submit" value="거절" class="btn btn-danger">
+									</form>
+								</center>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -205,7 +222,7 @@
 							</div>
 						</div>						
 				<!-- ========================================================================================== -->
-					<%-- 	<div class="col-sm-12">
+					<%--	<div class="col-sm-12">
 							<center>
 							<button class="btn btn-warning" onclick="updateForm()"></button>
 							&nbsp; <a class="btn btn-danger" onclick="deleteCheck()"></a>

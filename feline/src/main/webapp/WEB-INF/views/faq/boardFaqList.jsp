@@ -97,7 +97,7 @@
 									href="/feline/notice/noticeList.cat">공지사항</a></li>
 								<li><a href="/feline/qna/qnaList.cat">Q&A</a></li>
 								<li class="active"><a href="faqList.cat">FAQ</a></li>
-								
+								<li><a href="/feline/map/mapView.cat">찾아오는 길</a></li>
 							</ul>
 						</div>
 
