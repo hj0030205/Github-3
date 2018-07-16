@@ -57,13 +57,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- <관리자>이벤트 수정 -->
 	<update id="eventModify" parameterType="EventModel">
 		UPDATE FELINE_GOODS_EVENT
-		   SET (
-		   		  GOODS_NUM = #{goods_num}
+		   SET	  GOODS_NUM = #{goods_num}
 		   		, START_DATE = #{start_date}
 		   		, END_DATE = #{end_date}
 		   		, DC_RATE = #{dc_rate}
 		   		, EVENT_NAME = #{event_name}
-		   		)
 		 WHERE EVENT_NUM = #{event_num}
 	</update>
 	
