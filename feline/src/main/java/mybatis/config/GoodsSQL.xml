@@ -67,11 +67,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 검색 로직 추가 시작 -->
 	<!-- 상품명으로 검색 -->
-	<select id="selectSearchN" resultMap="GoodsRes"
-		parameterType="string">
+	<select id="selectSearchN" resultMap="GoodsRes" parameterType="string">
 		<include refid="select-all" />
-		where goods_name like '%'||#{goods_name}||'%' 
-		order by goods_num desc
+		where goods_name like '%'||#{search}||'%' 
+		order by goods_num desc 
 	</select>
 
 

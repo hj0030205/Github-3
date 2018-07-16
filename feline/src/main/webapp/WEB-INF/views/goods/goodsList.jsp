@@ -9,7 +9,97 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
+<script type="text/javascript" src="/feline/resources/common/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/feline/resources/common/js/jquery.doubleSelect.min.js"></script>
+<script type="text/javascript">
+	function calendar()
+	{
+		if(document.date.year.value && !document.date.month.value)
+		{
+			alert("월을 선택해주세요.");
+			return false;
+		}
+		
+		else if(!document.date.year.value && document.date.month.value)
+		{
+			alert("연도를 선택해주세요.");
+			return false;
+		} 
+/* 		alert("hu" +document.date.year.value);
+
+ */
+	}
+</script>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+	    var selectcategory =
+	    {
+	    	"": {
+	    		"key" : 0,
+	    		"defaultvalue" : "",
+	    		"values" : {"": ""
+	    		}
+	    	},
+    		"사료": {
+    	    	 "key" : 10,
+                 "defaultvalue" : 0,
+    	         "values" : {
+                     "유기농/홀리스틱": 0,
+                     "피부/피모건강": 1,
+                     "헤어볼케어": 2,
+                     "다이어트/비뇨건강": 3
+                     }
+              },
+            "간식": {
+            	 "key" : 20,
+                 "defaultvalue" : 4,
+                 "values" : {
+                     "캔/파우치": 4,
+                     "저키/소시지": 5,
+                     "비스켓/트릿": 6,
+                     "캣닢/캣그라스": 7
+                     }
+              },
+             "모래/화장실": {
+           	     "key" : 30,
+                 "defaultvalue" : 8,
+                 "values" : {
+                     "응고형 모래": 8,
+                     "흡수형 모래": 9,
+                     "화장실/패드": 10,
+                     "기타": 11
+                     }
+              },
+             "장난감": {
+           	     "key" : 40,
+                 "defaultvalue" : 12,
+                 "values" : {
+                     "공/봉제인형": 12,
+                     "레이저/낚시": 13,
+                     "막대": 14,
+                     "캣닢": 15
+                     }
+              },
+             "위생용품": {
+           	     "key" : 50,
+                 "defaultvalue" : 16,
+                 "values" : {
+                     "샴푸/린스": 16,
+                     "구강관리": 17,
+                     "눈/귀/피부&피모건강": 18,
+                     "브러쉬/털관리": 19
+                     }
+              }
+	    };
+
+	    $('#bigcat').doubleSelect('category', selectcategory);
+ });
+</script>
 <style>
+.ui-datepicker-calendar {
+    display: none;
+}
 li.basic.active {
     background-color: gainsboro;
 }
@@ -76,7 +166,7 @@ li.basic.active {
 										<li class="basic <c:if test='${category == 15}'>active</c:if>"><a href="/feline/goods/goodsCategoryList.cat?goods_category=15">캣닢</a></li>
 									</ul></li>
 								</c:when>
-								<c:when test="${category >=16 and category <=19 }">
+								<c:when test="${category >=16 and category <= 19 }">
 								<li><a>위생용품</a>
 									<ul>
 										<li class="basic <c:if test='${category == 16}'>active</c:if>"><a href="/feline/goods/goodsCategoryList.cat?goods_category=16">샴푸/린스</a></li>
@@ -140,110 +230,97 @@ li.basic.active {
 					</c:if>
 					
 					<c:if test="${not empty search}">
-						<h3>${search }  <font color="#4E4E4E">검색결과</font>  <font size="4" color="#4E4E4E">${fn:length(goodsList)}개 상품</font></h3>
-						<br/>
-						
-						<div class="navbar-collapse collapse" id="navigation">
-							<div class="nav navbar-nav navbar-left">
-								 <div class="dropdown yamm-fw">
-								    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">사료 <b class="caret"></b></a>
-								    <div class="dropdown-menu">
-							            <div class="yamm-content">
-							               <div class="col-sm-3">
-							                   <a href="#">유기농/홀리스틱</a>
-						                   </div>
-						                   <div class="col-sm-3">
-						                       <a href="#">피부/피모건강</a>
-						                   </div>
-						                   <div class="col-sm-3">
-						                       <a href="#">헤어볼케어</a>
-						                   </div>
-						                   <div class="col-sm-3">
-						                       <a href="#">다이어트/비뇨건강</a>
-						                   </div>
-							            </div>
-									</div>
-								</div>
-								<div class="dropdown yamm-fw">
-			                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">간식 <b class="caret"></b></a>
-			                        <div class="dropdown-menu">
-		                                <div class="yamm-content">
-	                                    	<div class="col-sm-3">
-	                                            <a href="#">캔/파우치</a>
-	                                        </div>
-	                                      	<div class="col-sm-3">
-	                                            <a href="#">저키/소시지</a>
-	                                        </div>
-	                                     	<div class="col-sm-3">
-	                                            <a href="#">비스켓/트릿</a>
-	                                        </div>
-	                                       	<div class="col-sm-3">
-	                                            <a href="#">캣닢/캣그라스</a>
-	                                       </div>
-		                                </div>  
-			                        </div>
-			                     </div>
-			                     <div class="dropdown yamm-fw">
-			                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">모래와 화장실 <b class="caret"></b></a>
-			                        <div class="dropdown-menu">
-		                                <div class="yamm-content">
-	                                    	<div class="col-sm-3">
-	                                            <a href="#">응고형 모래</a>
-	                                        </div>
-	                                        <div class="col-sm-3">
-	                                            <a href="#">흡수형 모래</a>
-	                                        </div>
-	                                        <div class="col-sm-3">
-	                                            <a href="#">화장실/패드</a>
-	                                        </div>
-	                                          <div class="col-sm-3">
-	                                            <a href="#">기타</a>
-	                                        </div>
-			                        	</div>
-			                        </div>
-			                     </div>
-			                     <div class="dropdown yamm-fw">   
-			                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">장난감 <b class="caret"></b></a>
-			                        <div class="dropdown-menu">
-		                                <div class="yamm-content">
-	                                    	<div class="col-sm-3">
-	                                            <a href="#">공/봉제인형</a>
-	                                        </div>
-	                                        <div class="col-sm-3">
-	                                            <a href="#">레이저/낚시</a>
-	                                        </div>
-	                                        <div class="col-sm-3">
-	                                            <a href="#">막대</a>
-	                                        </div>
-	                                          <div class="col-sm-3">
-	                                            <a href="#">캣닢</a>
-	                                        </div>
-		                                </div>
-			                        </div>
-			                     </div>
-			                     <div class="dropdown yamm-fw">  
-			                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">위생용품 <b class="caret"></b></a>
-			                        <div class="dropdown-menu">
-		                                <div class="yamm-content">
-	                                    	<div class="col-sm-3">
-	                                            <a href="#">샴푸/린스</a>
-	                                        </div>
-	                                        <div class="col-sm-3">
-	                                            <a href="#">구강관리</a>
-	                                        </div>
-	                                        <div class="col-sm-3">
-	                                            <a href="#">눈/귀/피부&피모건강</a>
-	                                        </div>
-	                                          <div class="col-sm-3">
-	                                            <a href="#">브러쉬/털관리</a>
-	                                        </div>
-		                                </div>
-			                        </div>
-			                    </div>
-			               </div>
-			             </div>
-			                
-						<br/>
+						<h2>${search }</h2>
+						<h4 align="right"><font color="#4E4E4E">검색결과</font>&nbsp;<font size="3" color="#4E4E4E">${fn:length(goodsList)}개</font></h4>
+					
+						<div class="box">
+							<form action="/feline/goods/goodsSearchList.cat" onsubmit="return calendar()" class="navbar-form" role="search" name="date">
+								<div>
+									<span class="panel-heading">
+						            	<font size="4">카테고리</font>
+									</span>
+									<span>
+										&nbsp;
+										<select id="bigcat" size="1">
+											<option value="">--</option>
+										</select>
+					
+										&nbsp;&nbsp;세부: &nbsp;
+										<select id="category" name="category" size="1">
+											<option value="">--</option>
+										</select>
+									</span>
+								</div><br/>
+								<div>
+									<span class="panel-heading">
+						            	<font size="4">가격대   </font>
+									</span>
+									<span>
+										최소값: &nbsp;<select name="minprice">
+											<option value=""></option>
+											<option value="0">0원</option>
+											<option value="5000">5,000원</option>
+											<option value="10000">10,000원</option>
+											<option value="15000">15,000원</option>
+											<option value="20000">20,000원</option>
+											<option value="30000">30,000원</option>
+											<option value="40000">40,000원</option>
+											<option value="50000">50,000원</option>
+											<option value="100000">100,000원</option>
+											<option value="200000">200,000원</option>
+											<option value="300000">30,0000원</option>
+										</select>
+										&nbsp;~&nbsp;최대값: &nbsp;<select name="maxprice">
+											<option value=""></option>
+											<option value="5000">5,000원</option>
+											<option value="10000">10,000원</option>
+											<option value="15000">15,000원</option>
+											<option value="20000">20,000원</option>
+											<option value="30000">30,000원</option>
+											<option value="40000">40,000원</option>
+											<option value="50000">50,000원</option>
+											<option value="100000">100,000원</option>
+											<option value="200000">200,000원</option>
+											<option value="300000">300,000원</option>
+											<option value="500000">500,000원</option>
+										</select>
+									</span>
+								</div><br/>
+								<div>
+									<span class="panel-heading">
+						            	<font size="4">등록기간</font>
+									</span>
+									<span>
+										<select name="year">
+											<option value=""></option>
+											<option value="116">2016</option>
+											<option value="117">2017</option>
+											<option value="118">2018</option>
+											<option value="119">2019</option>
+										</select>&nbsp;년
+										&nbsp;&nbsp;<select name="month">
+											<option value=""></option>
+											<option value="0">01</option>
+											<option value="1">02</option>
+											<option value="2">03</option>
+											<option value="3">04</option>
+											<option value="4">05</option>
+											<option value="5">06</option>
+											<option value="6">07</option>
+											<option value="7">08</option>
+											<option value="8">09</option>
+											<option value="9">10</option>
+											<option value="10">11</option>
+											<option value="11">12</option>
+										</select>&nbsp;월
+									</span>
+								</div><br/>
+								<div align="right">
+			                        <input type="text" class="form-control" name="search" value="${search }">
+			                        <span><button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button></span>
+		                        </div>
+			                </form>
+			            </div>
 					</c:if>
 
 					<div class="row products">
