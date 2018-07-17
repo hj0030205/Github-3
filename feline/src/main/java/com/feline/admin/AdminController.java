@@ -138,12 +138,6 @@ public class AdminController {
 		pie3.createRows(todayOrderAge.size());
 
 		for (int i = 0; i < todayOrderAge.size(); i++) {
-			/*int mYear = Integer.parseInt(todayOrderAge.get(i).getKey().toString());
-			if(mYear>=iYear) {
-				mYear = ((100+iYear)-mYear)/10;
-			}else {
-				mYear = (iYear-mYear)/10;
-			}*/
 			pie3.addCell(i, todayOrderAge.get(i).getKey()+ "0 ³â´ë");
 			pie3.addCell(i, todayOrderAge.get(i).getValue());
 		}
