@@ -6,7 +6,7 @@ public class GoodsModel {
 
 	private int goods_num;
 	private String goods_name;
-	private long goods_price;
+	private int goods_price;
 	private int goods_amount;
 	private String goods_content;
 	private String goods_category;
@@ -25,7 +25,7 @@ public class GoodsModel {
 	public String getGoods_name() {
 		return goods_name;
 	}
-	public long getGoods_price() {
+	public int getGoods_price() {
 		return goods_price;
 	}
 	public int getGoods_amount() {
@@ -40,7 +40,7 @@ public class GoodsModel {
 	public void setGoods_name(String goods_name) {
 		this.goods_name = goods_name;
 	}
-	public void setGoods_price(long goods_price) {
+	public void setGoods_price(int goods_price) {
 		this.goods_price = goods_price;
 	}
 	public void setGoods_amount(int goods_amount) {

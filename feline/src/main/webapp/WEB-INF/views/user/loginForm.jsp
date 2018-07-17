@@ -20,13 +20,12 @@
                     </ul>
 
                 </div>
-
-                <div class="col-md-2">
-                </div>
-
-                <div class="col-md-8">
+                
+				<div class="row">
+				<div class="form-group">
+                <div class="col-md-6">
                     <div class="box">
-                        <h1>로그인</h1>
+                        <h1>회원 로그인</h1>
 						<form name="loginForm" id="loginForm" action="/feline/member/login.cat" method="POST">
                             <div class="form-group">
                                 <label for="member_id">아이디</label>
@@ -51,8 +50,30 @@
                         </center>
                     </div>
                 </div>
-                
-                <div class="col-md-2">
+                <div class="col-md-6">
+                    <div class="box">
+                        <h1>비회원 로그인</h1>
+						<form name="loginForm" id="loginForm" action="/feline/member/nMemberLogin.cat" method="POST">
+                            <div class="form-group">
+                                <label for="member_name">이름</label>
+                                <input type="text" class="form-control" id="member_name"name="member_name"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="member_phone">전화번호</label>
+                                <input type="text" class="form-control"id="member_phone" name="member_phone"/>
+                            </div>
+                            <div class="text-center">
+                            	<button type="submit" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>비회원 로그인</button>
+                            </div>
+                        </form>
+                        <hr/>
+                        <center>
+                         <button type="button" class="btn btn-default"
+                                onclick="javascript:location.href='/feline/member/joinMemberCheck.cat'"><i class="fa fa-sign-in"></i>회원가입</button>
+                        </center>
+                    </div>
+                </div>
+                </div>
                 </div>
 
             </div>

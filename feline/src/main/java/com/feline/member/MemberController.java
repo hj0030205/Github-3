@@ -54,6 +54,27 @@ public class MemberController {
 		return mav;
 
 	}
+	
+	// 비회원 로그인동작 및 세션 생성
+	@RequestMapping(value = "nMemberLogin.cat", method = RequestMethod.POST)
+	public ModelAndView bMemberLogin(HttpServletRequest request, HttpSession session) {
+		
+		if (request.getParameter("member_name") != null) {
+			
+			String member_name = request.getParameter("member_name");
+			String member_phone = request.getParameter("member_phone");
+			
+			session.setAttribute("n_id", member_name);
+			session.setAttribute("n_phone", member_phone);
+				
+			mav.setViewName("redirect:/main.cat");
+			return mav;
+		}
+
+		mav.setViewName("loginError");
+		return mav;
+
+	}
 
 	@RequestMapping("logout.cat")
 	public ModelAndView memberLogout(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel member) {
