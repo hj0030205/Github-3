@@ -112,7 +112,6 @@
 								<select name="cancle_reason" >
 									<optgroup label="취소사유선택">
 									<option value="단순변심">단순변심</option>
-									<option value="제품불량">제품불량</option>
 									<option value="다른이유">다른 이유</option>
 									</optgroup>
 								</select>
