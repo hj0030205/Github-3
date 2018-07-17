@@ -166,10 +166,6 @@ public class OrderController {
 			
 			String member_id = (String) session.getAttribute("id");
 			
-			//if(request.getParameter("goods_num") == null) {
-			
-			//basketModel.setMember_id(member_id);
-			//basketList = orderService.basketList(basketModel);
 			int count = basketList.size();
 
 			for (int i = 0; i < count; i++) {
@@ -194,7 +190,7 @@ public class OrderController {
 				orderService.goodsOrder(orderModel);
 				orderService.basketDelete(basketList.get(i).getBasket_num());
 			}
-		//}
+		
 		mav.setViewName("noBank");
 		return mav;
 	}
