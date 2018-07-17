@@ -40,6 +40,7 @@
 									<th>등록일</th>
 									<th>시작일</th>
 									<th>종료일</th>
+									<th>활성화여부</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -62,22 +63,24 @@
 										<td><fmt:formatDate value="${eventList.reg_date}" pattern="yyyy/MM/dd"/></td>
 										<td><fmt:formatDate value="${eventList.start_date}" pattern="yyyy/MM/dd"/></td>
 										<td><fmt:formatDate value="${eventList.end_date}" pattern="yyyy/MM/dd"/></td>
+										<td>
+											<c:if test="${eventList.status eq 0}">비활성화</c:if>
+											<c:if test="${eventList.status eq 1}">활성화</c:if>
+										</td>
 									</tr>
 									</c:forEach>
 									</c:otherwise>
 								</c:choose>
 							</tbody>
 						</table>
+						<center>
 						<table class="paging">
 							<tr align=center>
 								<td colspan=5>${pagingHtml}</td>
 							</tr>
 						</table>
+						</center>
 						<div>
-							<form>
-								<input type="button" value="상품등록" style="float:right" class="btn btn-default"
-								onclick="javascript:location.href='adEventWrite.cat'">
-							</form>
 						</div>
 					</div>
 				</div>

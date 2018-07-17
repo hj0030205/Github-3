@@ -67,11 +67,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 검색 로직 추가 시작 -->
 	<!-- 상품명으로 검색 -->
-	<select id="selectSearchN" resultMap="GoodsRes"
-		parameterType="string">
+	<select id="selectSearchN" resultMap="GoodsRes" parameterType="string">
 		<include refid="select-all" />
-		where goods_name like '%'||#{goods_name}||'%' 
-		order by goods_num desc
+		where goods_name like '%'||#{search}||'%' 
+		order by goods_num desc 
 	</select>
 
 
@@ -128,4 +127,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="adOrderChangeView3" resultMap="GoodsRes" parameterType="Integer">
 	 	SELECT * FROM feline_goods where goods_num = #{goods_num}
 	 </select>
+
+<!--  ////////////////관리자 주문취소,교환,환불 목록 상세보기 //////////////// -->
+	 
+	 <!-- 이벤트 가격 적용 -->
+	<update id="eventPriceOn" parameterType="Integer">
+		UPDATE FELINE_GOODS
+		   SET GOODS_PRICE = (SELECT (g.GOODS_PRICE - (g.GOODS_PRICE * e.DC_RATE/100))
+		   						FROM FELINE_GOODS g, FELINE_GOODS_EVENT e
+		   					   WHERE g.GOODS_NUM = #{goods_num}
+		   					     AND e.EVENT_NUM = #{event_num})
+		 WHERE GOODS_NUM = #{goods_num}
+	</update>
+
+	<update id="eventPriceOff" parameterType="Integer">
+		UPDATE FELINE_GOODS
+		   SET GOODS_PRICE = (SELECT (g.GOODS_PRICE * 100 /  (100 - e.DC_RATE))
+		   						FROM FELINE_GOODS g, FELINE_GOODS_EVENT e
+		   					   WHERE g.GOODS_NUM = #{goods_num}
+		   					     AND e.EVENT_NUM = #{event_num})
+		 WHERE GOODS_NUM = #{goods_num}
+	</update>
+	
 </mapper>

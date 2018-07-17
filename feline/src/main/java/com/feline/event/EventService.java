@@ -33,6 +33,12 @@ public class EventService implements EventDao{
 		return sqlSessionTemplate.selectOne("event.eventSelectOne", event_num);
 	}
 	
+	//이벤트 뷰 화면에서 대상 상품 목록 보여주기
+	@Override
+	public GoodsModel selectGoods(int goods_num) {
+		return sqlSessionTemplate.selectOne("goods.selectGoods", goods_num);
+	}
+	
 	//이벤트 수정
 	@Override
 	public int eventModify(EventModel eventModel) {
@@ -49,4 +55,35 @@ public class EventService implements EventDao{
 	public List<GoodsModel> goodsCategoryList(int goods_category){
 		return sqlSessionTemplate.selectList("goods.selectCategory",goods_category);
 	}
+	
+	//시작할 이벤트 데이터 가져오기
+	@Override
+	public List<EventModel> selectStartEvent() {
+		return sqlSessionTemplate.selectList("event.selectStartEvent");
+	}
+	
+	//종료할 이벤트 데이터 가져오기
+	@Override
+	public List<EventModel> selectEndEvent() {
+		return sqlSessionTemplate.selectList("event.selectEndEvent");
+	}
+	
+	//이벤트 활성화/비활성화
+	@Override
+	public int eventOnOff(EventModel eventModel) {
+		return sqlSessionTemplate.update("event.eventOnOff", eventModel);
+	}
+	
+	//이벤트 가격 적용
+	@Override
+	public int eventPriceOn(EventModel eventModel) {
+		return sqlSessionTemplate.update("goods.eventPriceOn", eventModel);
+	}
+	
+	//이벤트 후 가격 원복
+	@Override
+	public int eventPriceOff(EventModel eventModel) {
+		return sqlSessionTemplate.update("goods.eventPriceOff", eventModel);
+	}
+	
 }

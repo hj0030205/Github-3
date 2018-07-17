@@ -125,7 +125,7 @@
                     <li class="active"><a href="/feline/main.cat">Home</a>
                     </li>
                     <li class="dropdown yamm-fw">
-                        <a href="/feline/goods/goodsList.cat" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">사료 <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">사료 <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="yamm-content">
@@ -262,6 +262,11 @@
                 <form action="/feline/goods/goodsSearchList.cat" class="navbar-form" role="search">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder="Search">
+                        <input type="hidden" name="category" value="">
+                        <input type="hidden" name="minprice" value="">
+                        <input type="hidden" name="maxprice" value="">
+                        <input type="hidden" name="year" value="">
+                        <input type="hidden" name="month" value="">
                         <span class="input-group-btn" style="margin-left:20px">
                         	<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                         </span>

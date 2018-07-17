@@ -674,8 +674,6 @@ public class AdminController {
 			int goods_category = Integer.parseInt(request.getParameter("param"));
 			goodsList = eventService.goodsCategoryList(goods_category);
 			
-			logger.info("goodsList:" + goodsList.size());
-			
 			JSONArray jsonArray = new JSONArray();
 			for(int i = 0; i < goodsList.size(); i++) {
 				JSONObject sObject = new JSONObject();
@@ -702,6 +700,7 @@ public class AdminController {
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
 
+		mav.addObject("eventModel", new EventModel());
 		mav.setViewName("adEventWrite");
 		return mav;
 	}
@@ -732,16 +731,180 @@ public class AdminController {
 		eventModel.setStart_date(start_date);
 		eventModel.setEnd_date(end_date);
 		eventModel.setReg_date(today.getTime());
-		
 
-		logger.info("start_date : " + request.getParameter("start_date"));
-		logger.info("end_date : " + request.getParameter("end_date"));
-		
 		eventService.insertEvent(eventModel);
 
 		mav.setViewName("redirect:adEventList.cat");
 		return mav;
 	}
+	
+	//등록된 이벤트 보기
+	@RequestMapping(value = "adEventView.cat")
+	public ModelAndView adEventView(HttpServletRequest request) {
+		
+		EventModel eventModel = new EventModel();
+		
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+		
+		eventModel = eventService.eventSelectOne(event_num);
+		
+		//String으로 된 goods_num 받아서 파싱 후 Integer 타입으로 변환
+		String goods_num_s = eventModel.getGoods_num();
+		
+		String[] goods_num_array = goods_num_s.split(",");
+		
+		int[] goods_num_i = new int[goods_num_array.length];
+		
+		for(int i = 0; i < goods_num_array.length; i++) {
+			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
+		}
+		
+		//쌓임방지
+		goodsList.clear();
+		
+		GoodsModel goodsModel1 = new GoodsModel();
+		
+		//goodsList에 goodsModel 삽입
+		for(int j = 0; j < goods_num_i.length; j++) {
+			GoodsModel goodsModel = new GoodsModel();
+			goodsModel = eventService.selectGoods(goods_num_i[j]);
+			goodsList.add(j, goodsModel);
+			
+			goodsModel1.setGoods_category(goodsList.get(0).getGoods_category());
+		}
+		
+		mav.addObject("eventModel", eventModel);
+		mav.addObject("goodsList", goodsList);
+		mav.addObject("goodsModel1", goodsModel1);
+		
+		mav.setViewName("adEventView");
+		
+		return mav;
+	}
+	
+	//등록된 이벤트 수정하기 폼
+	@RequestMapping(value = "adEventModify.cat", method = RequestMethod.GET)
+	public ModelAndView adEventModifyForm(HttpServletRequest request) {
+		
+		EventModel eventModel = new EventModel();
+		
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+		
+		eventModel = eventService.eventSelectOne(event_num);
+		
+		//String으로 된 goods_num 받아서 파싱 후 Integer 타입으로 변환
+		String goods_num_s = eventModel.getGoods_num();
+		
+		String[] goods_num_array = goods_num_s.split(",");
+		
+		int[] goods_num_i = new int[goods_num_array.length];
+		
+		for(int i = 0; i < goods_num_array.length; i++) {
+			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
+		}
+		
+		//쌓임방지
+		goodsList.clear();
+	
+		//goodsList에 goodsModel 삽입
+		for(int j = 0; j < goods_num_i.length; j++) {
+			GoodsModel goodsModel = new GoodsModel();
+			goodsModel = eventService.selectGoods(goods_num_i[j]);
+			goodsList.add(j, goodsModel);
+			
+		}
+		
+		mav.addObject("eventModel", eventModel);
+		mav.addObject("goodsList", goodsList);
+		
+		mav.setViewName("adEventModify");
+		return mav;
+	}
+	
+	@RequestMapping(value = "adEventModify.cat", method = RequestMethod.POST)
+	public ModelAndView adEventModify(HttpServletRequest request) throws ParseException {
+		
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+		
+		EventModel eventModel = new EventModel();
+		
+		String goods_num = request.getParameter("goods_num");
+		
+		if(goods_num.substring(1, 1) == ",") {
+			goods_num = goods_num.substring(1, goods_num.length());
+		}
+		
+		String start_date_s = request.getParameter("start_date");
+		Date start_date = new SimpleDateFormat("yyyy-MM-dd").parse(start_date_s);
+		
+		String end_date_s = request.getParameter("end_date");
+		Date end_date = new SimpleDateFormat("yyyy-MM-dd").parse(end_date_s);
+		
+		eventModel.setEvent_name(request.getParameter("event_name"));
+		
+		eventModel.setGoods_num(goods_num);
+		eventModel.setDc_rate(Integer.parseInt(request.getParameter("dc_rate")));
+		
+		eventModel.setStart_date(start_date);
+		eventModel.setEnd_date(end_date);
+		eventModel.setEvent_num(event_num);
+
+		eventService.eventModify(eventModel);
+
+		mav.setViewName("redirect:adEventList.cat");
+		return mav;
+
+	}
+	
+	//이벤트 삭제하기
+	@RequestMapping(value = "adEventDelete.cat")
+	public ModelAndView adEventDelete(HttpServletRequest request) {
+
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+
+		eventService.eventDelete(event_num);
+
+		mav.setViewName("redirect:adEventList.cat");
+
+		return mav;
+	}
+	
+	//이벤트 중지하기
+	@RequestMapping(value = "adEventStop.cat")
+	public ModelAndView adEventStop(HttpServletRequest request) {
+		
+		EventModel eventModel = new EventModel();
+		
+		int event_num = Integer.parseInt(request.getParameter("event_num"));
+		
+		eventModel.setStatus(0);
+		eventModel.setEvent_num(event_num);
+		
+		eventService.eventOnOff(eventModel);
+		
+		eventModel = eventService.eventSelectOne(event_num);
+		
+		String goods_num_s = eventModel.getGoods_num();
+		int event_num1 = eventModel.getEvent_num();
+		
+		String[] goods_num_array = goods_num_s.split(",");
+		
+		for(int i = 0; i < goods_num_array.length; i++) {
+			EventModel eventModel1 = new EventModel();
+			
+			eventModel1.setGoods_num(goods_num_array[i]);
+			eventModel1.setEvent_num(event_num1);
+			
+			eventService.eventPriceOff(eventModel1);
+		}
+		
+		
+		mav.setViewName("redirect:adEventList.cat");
+		
+		return mav;
+	}
+	
+	
 
 	
 	////////////////////////////////////주문취소 환불 교환 목록 ////////////////////////////////////////////////
