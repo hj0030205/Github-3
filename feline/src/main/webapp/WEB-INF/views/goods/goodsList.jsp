@@ -388,7 +388,7 @@ li.basic.active {
 									<div class="text">
 										<h3>
 											<a href="${viewURL}">
-													${goods_name}
+													${goodsList.goods_name}
 											</a>
 										</h3>
 										<p class="price">

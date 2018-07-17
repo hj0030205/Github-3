@@ -210,12 +210,11 @@ li.basic.active {
 										</tr>
 									</table>
 									<p class="text-center buttons">
-										<a href="javascript:isBuy(goodsform)" class="btn btn-primary"><i
-											class="fa fa-shopping-cart"></i>구매하기</a> 
+										<a href="javascript:isBuy(goodsform)" class="btn btn-primary">구매하기</a> 
 										<a href="javascript:isBasket(goodsform)" class="btn btn-default"><i
-											class="fa fa-heart"></i>장바구니</a>
-										<a href="javascript:isWishList(goodsform)" class="btn btn-default"><i
-											class="fas fa-bomb"></i>WISHLIST</a>	
+											class="fa fa-shopping-cart"></i></i>장바구니</a>
+										<a href="javascript:isWishList(goodsform)" class="btn btn-default">
+										<i class="fa fa-heart"></i></a>	
 									</p>
 								</form>
 							</div>
