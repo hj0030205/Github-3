@@ -46,38 +46,8 @@
 							</div>
 							<br/>
 							<div class="text-center">
-								<!-- <a id="kakao-login-btn"></a>
-								<a href="http://developers.kakao.com/logout"></a>
-								<script type='text/javascript'>
-								  //<![CDATA[
-								    // 사용할 앱의 JavaScript 키를 설정해 주세요.
-								    Kakao.init('3390658995eb6aa79de3ab23bd19e9b0');
-								    // 카카오 로그인 버튼을 생성합니다.
-								    Kakao.Auth.createLoginButton({
-								    	 size:'small',
-								    	 container: '#kakao-login-btn',
-								         success: function(authObj) {
-								        	 Kakao.API.request({
-
-								        	       url: '/v1/user/me',
-
-								        	       success: function(res) {
-								        	             alert(JSON.stringify(res)); //kakao.api.request 에서 불러온 결과값 json형태로 출력
-								        	             alert(JSON.stringify(authObj)); //Kakao.Auth.createLoginButton에서 불러온 결과값 json형태로 출력
-								        	             console.log(res.id); //콘솔로 아이디찍기
-								        	             console.log(res.properties['nickname']); //닉네임찍기
-								        	             console.log(authObj.access_token);
-								        	           }
-								        	         })
-								        	       },
-								         fail: function(err) {
-								           alert(JSON.stringify(err));
-								         }
-								       });
-								    
-								  //]]>
-								</script> -->
-
+								<img alt="" src="/feline/resources/common/img/kakao_login.png" width="200px" height="50px" 
+								onclick="javascript:location.href='/feline/member/kakao.cat'">
 							</div>
                         </form>
                         <hr/>

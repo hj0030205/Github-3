@@ -2,6 +2,7 @@ package com.feline.member;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,54 @@ public class MemberController {
 	ModelAndView mav = new ModelAndView();
 	
 
+	//카카오로그인
+	@RequestMapping(value="kakao.cat",method=RequestMethod.GET)
+	public String kakao() {
+		Kakao kakao = new Kakao();
+		System.out.println("kakao.getCode() :"+kakao.getCode() );
+		return "redirect:"+kakao.getCode();
+	}
+	
+	@RequestMapping(value="kakaoCallback.cat",method=RequestMethod.GET)
+	public ModelAndView kakaoLogin(@RequestParam("code") String code,HttpServletRequest request) {
+		
+		Kakao kakao = new Kakao();
+		System.out.println("code :" + code);
+		
+		String data = (String)kakao.getHtml((kakao.getAccesToken(code)));
+		
+		System.out.println("data :"+ data);
+		
+		Map<String, String> map = kakao.JsonStringMap(data);
+		System.out.println("map :" +map);
+		System.out.println("access_token :" +map.get("access_token"));
+		System.out.println("refresh_token :" +map.get("refresh_token"));
+		System.out.println("scope :" +map.get("scope"));
+		System.out.println("token_type :" +map.get("token_type"));
+		System.out.println("expires_in :" +map.get("expires_in"));
+		
+		//사용자 전체 정보 받아오기를 시작하겠습니다.
+		String list = kakao.getAllList(map.get("access_token"));
+		System.out.println("list : "+list);
+		
+		Map<String, String> getAllListMap  = kakao.JsonStringMap(list);
+		System.out.println("getAllListMap :"+getAllListMap);
+		System.out.println("nickName : "+getAllListMap.get("nickName"));
 
+		MemberModel memberModel = new MemberModel();
+
+		memberModel.setMember_id(getAllListMap.get("nickName"));
+		memberModel.setMember_name(getAllListMap.get("nickName"));
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("member_id", memberModel.getMember_id());
+		System.out.println(memberModel.getMember_id());
+		mav.setViewName("redirect:/main.cat");
+		
+		return mav;
+	}
+	
+	
 	// 로그인 폼
 	@RequestMapping(value = "login.cat", method = RequestMethod.GET)
 	public ModelAndView loginForm() {
