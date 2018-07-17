@@ -34,8 +34,9 @@
 
 		<typeAlias type="com.feline.ccr.ChangeModel" alias="ChangeModel"/>
 		
+		<typeAlias type="com.feline.admin.ChartModel" alias="ChartModel"/>
+    
 		<typeAlias type="com.feline.wishlist.WishListModel" alias="WishListModel"/>
-
 		
 	</typeAliases>
 
@@ -49,6 +50,7 @@
 		<mapper resource="mybatis/config/QnaSQL.xml" />
 		<mapper resource="mybatis/config/FaqSQL.xml" />
 		<mapper resource="mybatis/config/EventSQL.xml"/>
+		<mapper resource="mybatis/config/AdminSQL.xml"/>
 		<mapper resource="mybatis/config/WishListSQL.xml"/>
 
 	</mappers>

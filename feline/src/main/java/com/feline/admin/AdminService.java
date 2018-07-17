@@ -20,6 +20,45 @@ public class AdminService implements AdminDAO {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
 
+	/**************** 대쉬보드 body 상단 차트 *********************/
+	
+	public int countTrade() {
+		return sqlSessionTemplate.selectOne("admin.countTrade");
+	}
+	public int countTrans() {
+		return sqlSessionTemplate.selectOne("admin.countTrans");
+	}
+	public int countTrans2() {
+		return sqlSessionTemplate.selectOne("admin.countTrans2");
+	}
+	public int todayMember() {
+		return sqlSessionTemplate.selectOne("admin.todayMember");
+	}
+	public int todayOrder() {
+		return sqlSessionTemplate.selectOne("admin.todayOrder");
+	}
+	public int todaySalesM() {
+		return sqlSessionTemplate.selectOne("admin.todaySalesM");
+	}
+	
+	/*************** 대쉬보드 body 하단 차트 *********************/
+	
+	public List<GoodsModel> todaySalesGoods() {
+		return sqlSessionTemplate.selectList("admin.todaySalesGoods");
+	}
+	public List<ChartModel> todayMemberAge() {
+		return sqlSessionTemplate.selectList("admin.todayMemberAge");
+	}
+	public List<ChartModel> todayMemberRegion() {
+		return sqlSessionTemplate.selectList("admin.todayMemberRegion");
+	}
+	public List<ChartModel> todayOrderAge() {
+		return sqlSessionTemplate.selectList("admin.todayOrderAge");
+	}
+	public List<ChartModel> todayOrderRegion() {
+		return sqlSessionTemplate.selectList("admin.todayOrderRegion");
+	}
+	
 	/*********************** 회원 관리 *************************/
 	
 	// 관리자 회원관리

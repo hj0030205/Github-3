@@ -10,6 +10,24 @@ import com.feline.member.MemberModel;
 import com.feline.order.OrderModel;
 
 public interface AdminDAO {
+	
+	/*********************** 대쉬보드 상단 차트 *********************/
+	
+	public int countTrade();
+	public int countTrans();
+	public int countTrans2();
+	public int todayMember();
+	public int todayOrder();
+	public int todaySalesM();
+	
+	/*********************** 대쉬보드 하단 차트 *********************/
+	
+	public List<GoodsModel> todaySalesGoods();
+	public List<ChartModel> todayMemberAge();
+	public List<ChartModel> todayMemberRegion();
+	public List<ChartModel> todayOrderAge();
+	public List<ChartModel> todayOrderRegion();
+	
 
 	/*********************** 회원 관리 *************************/
 
