@@ -33,6 +33,8 @@
 		<typeAlias type="com.feline.event.EventModel" alias="EventModel"/>
 
 		<typeAlias type="com.feline.ccr.ChangeModel" alias="ChangeModel"/>
+		
+		<typeAlias type="com.feline.admin.ChartModel" alias="ChartModel"/>
 
 		
 	</typeAliases>
@@ -47,6 +49,7 @@
 		<mapper resource="mybatis/config/QnaSQL.xml" />
 		<mapper resource="mybatis/config/FaqSQL.xml" />
 		<mapper resource="mybatis/config/EventSQL.xml"/>
+		<mapper resource="mybatis/config/AdminSQL.xml"/>
 
 	</mappers>
 

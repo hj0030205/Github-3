@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 	var request = ${request}
 	
@@ -14,15 +14,13 @@
 	google.charts.setOnLoadCallback(drawPieChart2);
 	google.charts.setOnLoadCallback(drawPieChart3);
 	google.charts.setOnLoadCallback(drawPieChart4);
-	google.charts.setOnLoadCallback(drawPieChart5);
-	google.charts.setOnLoadCallback(drawPieChart6);
 
 	function drawPieChart1() {
-		var json = ${memberGenderPie};
+		var json = ${memberAgePie};
 		var data = new google.visualization.DataTable(json)
 
 		var options = {
-			title : '성별',
+			title : '연령별',
 			titleTextStyle : {
 				fontSize : '15'
 			}
@@ -35,11 +33,11 @@
 	}
 
 	function drawPieChart2() {
-		var json = ${memberAgePie};
+		var json = ${memberRegionPie};
 		var data = new google.visualization.DataTable(json)
 
 		var options = {
-			title : '연령별',
+			title : '지역별',
 			titleTextStyle : {
 				fontSize : '15'
 			}
@@ -52,11 +50,11 @@
 	}
 
 	function drawPieChart3() {
-		var json = ${memberRegionPie};
+		var json = ${orderAgePie};
 		var data = new google.visualization.DataTable(json)
 
 		var options = {
-			title : '지역별',
+			title : '연령별',
 			titleTextStyle : {
 				fontSize : '15'
 			}
@@ -69,40 +67,6 @@
 	}
 
 	function drawPieChart4() {
-		var json = ${orderGenderPie};
-		var data = new google.visualization.DataTable(json)
-
-		var options = {
-			title : '성별',
-			titleTextStyle : {
-				fontSize : '15'
-			}
-		};
-
-		var chart = new google.visualization.PieChart(document.getElementById('pie_chart4'));
-
-		chart.draw(data, options);
-		window.addEventListener('resize', function() {chart.draw(data, options);}, false);
-	}
-
-	function drawPieChart5() {
-		var json = ${orderAgePie};
-		var data = new google.visualization.DataTable(json)
-
-		var options = {
-			title : '연령별',
-			titleTextStyle : {
-				fontSize : '15'
-			}
-		};
-
-		var chart = new google.visualization.PieChart(document.getElementById('pie_chart5'));
-
-		chart.draw(data, options);
-		window.addEventListener('resize', function() {chart.draw(data, options);}, false);
-	}
-
-	function drawPieChart6() {
 		var json = ${orderRegionPie};
 		var data = new google.visualization.DataTable(json)
 
@@ -113,26 +77,26 @@
 			}
 		};
 
-		var chart = new google.visualization.PieChart(document.getElementById('pie_chart6'));
+		var chart = new google.visualization.PieChart(document.getElementById('pie_chart4'));
 
 		chart.draw(data, options);
 		window.addEventListener('resize', function() {chart.draw(data, options);}, false);
 	}
-</script> -->
+</script>
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row page-titles">
 			<div class="col-md-5 col-8 align-self-center">
-				<h3 class="text-themecolor">Admin Dashboard</h3>
+				<h3 class="text-themecolor">관리자 대쉬보드</h3>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="javascript:void(0)">Main</a></li>
-					<li class="breadcrumb-item active">Admin Dashboard</li>
+					<li class="breadcrumb-item"><a href="javascript:void(0)">관리자 메인</a></li>
+					<li class="breadcrumb-item active">관리자 대쉬보드</li>
 				</ol>
 			</div>
 		</div>
 
-		<%-- div class="row">
+		 <div class="row">
 			<div class="col-sm-6 col-md-2">
 				<div class="card">
 					<div class="card-block">
@@ -171,7 +135,7 @@
 						<div class="h1 text-muted text-right mb-4">
 							<i class="mdi mdi-coin"></i>
 						</div>
-						<div class="h4 mb-0">${todaySalesM}</div>
+						<div class="h4 mb-0">${todayOrderMoney}</div>
 						<small class="text-muted text-uppercase font-weight-bold">금일 주문 금액</small>
 						<div class="progress progress-xs mt-3 mb-0">
 							<div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25"
@@ -229,8 +193,8 @@
 				</div>
 			</div>
 			<!--/.col-->
-		</div> --%>
-<%-- 
+		</div>
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
@@ -243,14 +207,11 @@
 									</div>
 								</div>
 								<div class="row col-sm-6 col-lg-12">
-									<div class="col-lg-4">
+									<div class="col-lg-6">
 										<div id="pie_chart1"></div>
 									</div>
-									<div class="col-lg-4">
+									<div class="col-lg-6">
 										<div id="pie_chart2"></div>
-									</div>
-									<div class="col-lg-4">
-										<div id="pie_chart3"></div>
 									</div>
 								</div>
 								<div class="p-5">
@@ -259,14 +220,11 @@
 									</div>
 								</div>
 								<div class="row col-sm-6 col-lg-12">
-									<div class="col-lg-4">
+									<div class="col-lg-6">
+										<div id="pie_chart3"></div>
+									</div>
+									<div class="col-lg-6">
 										<div id="pie_chart4"></div>
-									</div>
-									<div class="col-lg-4">
-										<div id="pie_chart5"></div>
-									</div>
-									<div class="col-lg-4">
-										<div id="pie_chart6"></div>
 									</div>
 								</div>
 							</div>
@@ -276,20 +234,19 @@
 								</div>
 								<hr class="mt-0">
 								<c:choose>
-									<c:when test="${todayBookC==0}">
+									<c:when test="${todayGoodsC==0}">
 										<div style="text-align: center;">No Data</div>
 									</c:when>
 									<c:otherwise>
-                      		 			<c:forEach var="list" items="${todaySalesBook}" varStatus="stat">
+                      		 			<c:forEach var="list" items="${todaySalesGoods}" varStatus="stat">
 											<div class="row">
 												<div class="col-lg-3">
-													<a href="/feline/admin/bookDetail.do?book_num=${list.book_num}"> <img
-														src="/feline/upload/${list.book_image}" height="50px">
+													<a href="adGoodsView.cat?book_num=${list.goods_num}"> <img
+														src="/feline/resources/upload/images/${list.goods_image_savname}" height="50px">
 													</a>
 												</div>
 												<div class="col-lg-8">
-													<p style="font-weight: bold; color: #2692c5;">${list.book_name}</p>
-													<small>판매량 : ${list.book_sell_count}</small>
+													<p style="font-weight: bold; color: #2692c5;">${list.goods_name}</p>
 												</div>
 											</div>
 											<hr class="mt-0">
@@ -298,7 +255,7 @@
 								</c:choose>
 								<div class="divider text-center">
 									<button type="button" class="text-center btn btn-sm btn-link text-muted"
-										onclick="window.location.href='feline/admin/chart/book.do'" data-toggle="tooltip"
+										onclick="window.location.href=''" data-toggle="tooltip"
 										data-placement="top" title="show more">
 										<i class="icon-options"></i>
 									</button>
@@ -308,7 +265,7 @@
 					</div>
 				</div>
 			</div>
-		</div> --%>
+		</div>
 		<!-- ////////////////////////////////////////body 내용/////////////////////////////////// -->
 	</div>
 </body>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+
+
+	<!-- Admin 메인페이지 - 상단 차트 -->
+	
+	<!-- 결제 대기중 -->
+	<select id="countTrade" resultType="Integer">
+		SELECT count(*) FROM feline_order WHERE order_status=0
+	</select>
+	<!-- 배송 준비중 -->
+	<select id="countTrans" resultType="Integer">
+		SELECT count(*) FROM feline_order WHERE order_status=2
+	</select>
+	<!-- 배송 중 -->
+	<select id="countTrans2" resultType="Integer">
+		SELECT count(*) FROM feline_order WHERE order_status=3
+	</select>
+	
+	<!-- 금일 신규 가입 회원 -->
+	<select id="todayMember" resultType="Integer">
+		select count(*) from feline_member where trunc(member_join_date) = trunc(sysdate) and member_status=1
+	</select>
+	<!-- 금일 주문 건수 -->
+	<select id="todayOrder" resultType="Integer">
+		select count(*) from feline_order where trunc(order_date) = trunc(sysdate)
+	</select>
+	<!-- 금일 주문 금액 -->
+	<select id="todaySalesM" resultType="Integer">
+		select DISTINCT nvl((select sum(a.order_goods_amount*b.goods_price)
+		from feline_order a, feline_goods b where a.goods_num = b.goods_num and a.status=1
+        and trunc(a.order_date) = trunc(sysdate)),0) as total 
+ 		from feline_order
+	</select>
+	
+	<!-- Admin 메인페이지 - 하단 차트 -->
+	
+	<!-- 오늘 팔린 상품 순위 -->
+	<select id="todaySalesGoods" resultType="GoodsModel">
+		<![CDATA[ select c.* from (
+					select g.goods_num, g.goods_image_savname, g.goods_name, g.goods_price  
+                    from feline_order o left outer join feline_goods g on o.goods_num = g.goods_num 
+                    where o.status = 1 and trunc(order_date)=trunc(sysdate)	
+                    group by g.goods_num, g.goods_image_savname, g.goods_name, g.goods_price order by sum(order_goods_amount) desc) c 
+                    where rownum>=1 and rownum<=8]]>
+	</select>
+	
+	
+	<select id="todayMemberAge" resultType="ChartModel">
+		<![CDATA[select to_number(substr(to_char(member_jumin1),1,2)) key, count(*) value from feline_member 
+			where trunc(member_join_date)=trunc(sysdate) group by to_number(substr(to_char(member_jumin1),1,2))]]>
+	</select>
+	
+	<select id="todayMemberRegion" resultType="ChartModel">
+		<![CDATA[select substr(member_addr1,1,2) key, count(*) value from feline_member 
+		where trunc(member_join_date)=trunc(sysdate) group by substr(member_addr1,1,2)]]>
+	</select>
+	
+	
+	<select id="todayOrderAge" resultType="ChartModel">
+		<![CDATA[
+			select substr(to_char(member_jumin1),1,2) key, count(*) value from (
+				select a.order_num, a.order_date, b.member_jumin1  
+				from feline_order a inner join feline_member b on a.order_member_id=b.member_id where trunc(order_date)=trunc(sysdate))
+			group by substr(to_char(member_jumin1),1,2)
+		]]>
+	</select>
+	
+	<select id="todayOrderRegion" resultType="ChartModel">
+		<![CDATA[
+			select substr(member_addr1,1,2) key, count(*) value from (
+				select a.order_num, a.order_date, b.member_addr1 
+				from feline_order a inner join feline_member b on a.order_member_id=b.member_id where trunc(order_date)=trunc(sysdate))
+			group by substr(member_addr1,1,2)]]>
+	</select>
+	
+</mapper>
