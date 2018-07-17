@@ -11,6 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -269,10 +270,10 @@
 									<div class="col-sm-12">
 										<div class="form-group">
 											<label for="order_trade_type">결제방식</label> 
-												<select name="order_trade_type" onchange="al();">
+												<select name="order_trade_type" id="order_trade_type">
 													<optgroup label="결제방식">
-													<option value="0">무통장입금</option>
-													<option value="1">카카오페이</option>
+													<option value="카카오페이">카카오페이</option>
+													<option value="무통장입금">무통장입금</option>
 													</optgroup>
 												</select>
 										</div>
@@ -288,7 +289,7 @@
 										class="btn btn-default"><i class="fa fa-chevron-left"></i>장바구니로
 										이동</a>
 								</div>
-								<div class="pull-right">
+								<div class="pull-right" id="btnwapper">
 									<button type="button" class="btn btn-primary" onclick="checkIt()">
 										결제하기<i class="fa fa-chevron-right"></i>
 									</button>
@@ -308,16 +309,22 @@
 	<!-- /#all -->
 <script type="text/javascript">
 
-var big = document.getElementById('category1');
 
-function al(){
-	keyValue = big.value;
-	if(keyValue == 0){
-		
-	}
-}
-
-
+ 	$('#order_trade_type').on('change',function(){
+		if($(this).val() == '무통장입금'){
+			$('#btnwapper').html("<button type='button' class='btn btn-primary' onclick='noBank()'> 결제하기<i class='fa fa-chevron-right'></i> </button>");
+		}else if($(this).val() == '카카오페이'){
+			$('#btnwapper').html("<button type='button' class='btn btn-primary' onclick='checkIt()'> 결제하기<i class='fa fa-chevron-right'></i> </button>")
+		}
+	});
+	
+ 	function noBank(){
+ 		var orderform = document.getElementById("orderform");
+ 		orderform.action="/feline/order/noBank.cat";
+ 		orderform.submit();
+ 		
+ 	}
+	
 
 	function checkIt() {	  	
 		  proc();
@@ -352,8 +359,9 @@ function al(){
         } else { // 실패시
           var msg = '결제에 실패하였습니다.';
           msg += '에러내용 : ' + rsp.error_msg;
-          orderform.action = "/feline/order/goodsOrder.cat";
-			orderform.submit();
+          alert(msg);
+         /*  orderform.action = "/feline/order/goodsOrder.cat";
+			orderform.submit(); */
 				}
 			});
 		}

@@ -154,6 +154,10 @@
 	<definition name="goodsOrderResult" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/order/orderSuccess.jsp" />
 	</definition>
+	
+	<definition name="noBank" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/order/noBank.jsp"></put-attribute>
+	</definition>
 
 	
 	<!-- ***************** 고객센터 ************************ -->
