@@ -265,8 +265,10 @@
                         <input type="hidden" name="category" value="">
                         <input type="hidden" name="minprice" value="">
                         <input type="hidden" name="maxprice" value="">
-                        <input type="hidden" name="year" value="">
-                        <input type="hidden" name="month" value="">
+                        <input type="hidden" name="fromyear" value="">
+                        <input type="hidden" name="frommonth" value="">
+                        <input type="hidden" name="toyear" value="">
+                        <input type="hidden" name="tomonth" value="">
                         <span class="input-group-btn" style="margin-left:20px">
                         	<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                         </span>
