@@ -9,9 +9,55 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>무통장 입금</title>
 </head>
 <body>
-ok
+ <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-sm-12">
+
+                    <ul class="breadcrumb">
+
+                        <li><a href="/feline/main.cat">메인</a>
+                        </li>
+                        <li>주문하기
+                        </li>
+                    </ul>
+                </div>
+                
+                
+                <div class="col-sm-12" id="blog-post">
+
+
+                    <div class="box">
+						<center>
+                        <h3>주문이 접수완료 되었습니다.</h3>
+                        <div class="box">
+                        	<center>
+                        	<h4><strong><font color="red">입금계좌번호 : 110-354-417689 (신한은행)</font></strong></h4>
+                        	<br/>
+                        	<h4>예금주 : 홍성필</h4>
+                        	<br/>
+                        	<h5>주문접수후 3일 내로 입금을 해주셔야 합니다.</h5> 
+                        	</center>
+                        </div>
+						<hr/>
+                        <button type="button" onclick="javascript:location.href='/feline/main.cat'" class="btn btn-primary"><i class="fa fa-home">&nbsp;메인으로</i></button>
+						</center>
+
+					</div>
+				</div>
+			</div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+
+    </div>
+    <!-- /#all -->
+    
 </body>
 </html>
