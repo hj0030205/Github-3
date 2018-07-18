@@ -70,6 +70,11 @@
 	                    	<li><a href="/feline/admin/main.cat">관리자페이지</a>
 	                    	</li>
             		</c:when>
+            		<c:when test="${sessionScope.n_id ne null}">
+            			<ul class="menu">
+	                    	<li><a class="cell">${sessionScope.n_id} 님 환영합니다.</a>
+	                    	</li>
+            		</c:when>
             		<c:otherwise>
             			<ul class="menu">
             				<li><a class="cell">${sessionScope.id} 회원님 환영합니다.</a>
@@ -118,11 +123,9 @@
                         <span class="sr-only">Toggle search</span>
                         <i class="fa fa-search"></i>
                     </button>
-                    <c:if test="${sessionScope.id ne null || sessionScope.n_id ne null}">
-                    	<a class="btn btn-default navbar-toggle" href="/feline/basket/basketList.cat">
-                    		<i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">basket</span>
-                   		</a>
-                    </c:if>
+                    <a class="btn btn-default navbar-toggle" href="/feline/basket/basketList.cat">
+                    	<i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">basket</span>
+                   	</a>
                 </div>
             </div>
             <!--/.navbar-header -->
