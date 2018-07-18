@@ -1,6 +1,7 @@
 package com.feline.member;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class MemberController {
 		
 		Kakao kakao = new Kakao();
 		System.out.println("code :" + code);
-		
+		Calendar today = Calendar.getInstance();
 		String data = (String)kakao.getHtml((kakao.getAccesToken(code)));
 		
 		System.out.println("data :"+ data);
@@ -72,8 +73,9 @@ public class MemberController {
 		memberModel.setMember_id(getAllListMap.get("nickName"));
 		memberModel.setMember_name(getAllListMap.get("nickName"));
 		
+		
 		HttpSession session = request.getSession();
-		session.setAttribute("member_id", memberModel.getMember_id());
+		session.setAttribute("n_id", memberModel.getMember_id());
 		System.out.println(memberModel.getMember_id());
 		mav.setViewName("redirect:/main.cat");
 		

@@ -45,15 +45,14 @@ public class OrderController {
 
 		// 세션이 없을 경우 새로 생성하지 않음
 		String member_id = (String) session.getAttribute("id");
-
 		// 상품번호가 파라미터로 없는 경우(장바구니에서 이동)
 		if (request.getParameter("goods_num") == null) {
 
 			basketModel.setMember_id(member_id);
-
+			
 			basketList = orderService.basketList(basketModel);
 			memberModel = orderService.getMember(member_id);
-
+			
 			mav.addObject("memberModel", memberModel);
 			mav.addObject("basketList", basketList);
 

@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.qna.QnaModel;
@@ -230,23 +232,28 @@ public class QnaController {
 
 		ModelAndView mav = new ModelAndView();
 		qnaModel = qnaService.qnaView(qnaModel.getNo());
+		int qna_num = qnaModel.getNo();
 
 		String content = qnaModel.getContent().replaceAll("<br />", "\r\n");
 		qnaModel.setContent(content);
-
+		
+		mav.addObject("no", qna_num);
 		mav.addObject("currentPage",request.getParameter("currentPage"));
 		mav.addObject("qnaModel", qnaModel);
 		mav.setViewName("qnaWrite");
-
+		mav.addObject("modify","true");
 		return mav;
 	}
+	
+	
 
 	// Q&A 수정
-	@RequestMapping(value = "qnaModify.cat", method = RequestMethod.POST)
+	@RequestMapping(value = "qnaModifyAction.cat", method = RequestMethod.POST)
 	public ModelAndView qnaModify(@ModelAttribute("qnaModel") QnaModel qnaModel, HttpServletRequest request,
 			MultipartHttpServletRequest multipartRequest) throws IOException {
 		ModelAndView mav = new ModelAndView();
 		
+
 		MultipartFile file = multipartRequest.getFile("file");
 		String oldfileName = request.getParameter("oldFile");
 		int qna_num = qnaModel.getNo();
@@ -257,12 +264,12 @@ public class QnaController {
 		
 		if (file != null) {
 			qnaModel = fileUploading(file, oldfileName, qnaModel);
-		}
+		} 
 		
 		mav.setViewName("redirect:qnaView.cat");
 		mav.addObject("currentPage",request.getParameter("currentPage"));
 		mav.addObject("no", qna_num);
-
+		mav.addObject("qnaModel", qnaModel);
 		return mav;
 	}
 
@@ -292,10 +299,32 @@ public class QnaController {
 		qnaModel.setImage_orgname(fileRealName);
 		qnaModel.setImage_savname(fileName);
 		qnaService.updateFile(qnaModel);
-
+		
 		return qnaModel;
 
 	}
 
+	@RequestMapping(value = "/fileUpload.cat", method = RequestMethod.POST)
+	public String fileUpload(Model model, MultipartRequest multipartRequest, HttpServletRequest request) throws IOException{
+		System.out.println("/fileUpload 메서드");
+		
+		MultipartFile imgfile = multipartRequest.getFile("Filedata");
+		Calendar cal = Calendar.getInstance();
+		String fileName = imgfile.getOriginalFilename();
+		String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+		String replaceName = cal.getTimeInMillis() + fileType;  
+		
+		//서버에 올리기
+		String path = request.getSession().getServletContext().getRealPath("/")+File.separator+"resources/common/tempUpload";
+		System.out.println("파일경로::"+path);
+		
+		FileUpload.fileUpload(imgfile, path, replaceName);
+		
+		model.addAttribute("path", path);
+		model.addAttribute("filename", replaceName);
+		return "qna/file_upload";
+	}
+	
+	
 	
 }
