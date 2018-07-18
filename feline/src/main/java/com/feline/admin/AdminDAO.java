@@ -51,6 +51,7 @@ public interface AdminDAO {
 	public List<ChartModel> monthOrderRegion();
 	public List<ChartModel> weekOrderRegion();
 	
+	
 
 	/*********************** 회원 관리 *************************/
 

@@ -208,6 +208,18 @@
 	
 	<!-- ***************** 관리자 ************************ -->
 	
+	<!-- 관리자 로그인 -->
+	<!-- 로그인 -->
+	<definition name="adLoginForm" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adLoginForm.jsp" />
+	</definition>
+	
+	<!-- 로그인 오류 -->
+	<definition name="adLoginError" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adLoginCheck.jsp" />
+	</definition>
+	
+	
 	<!-- 관리자 회원 관리 -->
 	<definition name="adMemberList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adMemberList.jsp" />
