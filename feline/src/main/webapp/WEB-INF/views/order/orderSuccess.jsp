@@ -28,8 +28,13 @@
                     <div class="box">
 						<center>
                         <h1>주문이 완료되었습니다.</h1>
+                        
+                        <p>주문번호: ${orderModel.order_trade_num}</p>
+                        
 						<hr/>
+						
                         <button type="button" onclick="javascript:location.href='/feline/main.cat'" class="btn btn-primary"><i class="fa fa-home">&nbsp;메인으로</i></button>
+						<button type="button" onclick="javascript:location.href='/feline/orderView.cat'" class="btn btn-default"><i class="fa fa-truck">&nbsp;주문확인</i></button>
 						</center>
 
 					</div>
