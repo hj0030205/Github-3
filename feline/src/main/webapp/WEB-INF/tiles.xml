@@ -142,6 +142,7 @@
 	</definition>
 	
 	<!-- 장바구니&구매 -->
+	
 	<definition name="basketList" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/basket/basketList.jsp" />
 	</definition>
@@ -153,6 +154,11 @@
 	<definition name="goodsOrderResult" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/order/orderSuccess.jsp" />
 	</definition>
+	
+	<definition name="noBank" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/order/noBank.jsp"></put-attribute>
+	</definition>
+
 	
 	<!-- ***************** 고객센터 ************************ -->
 	
@@ -201,6 +207,7 @@
 	</definition>
 	
 	<!-- ***************** 관리자 ************************ -->
+	
 	<!-- 관리자 회원 관리 -->
 	<definition name="adMemberList" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adMemberList.jsp" />

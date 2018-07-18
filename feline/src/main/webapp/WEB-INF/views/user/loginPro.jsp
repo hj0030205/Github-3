@@ -6,6 +6,8 @@
 
 <html>
 <head>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <script>
 function windowclose(){
@@ -13,6 +15,9 @@ function windowclose(){
 	self.close();
 }
 </script>
+
+
+
 <body bgcolor="#f5f5f5">
 <!-- 만약 checkNumber가 0이면 중복된것이기 때문에 액션을 다시실행한다. -->
 <c:choose>

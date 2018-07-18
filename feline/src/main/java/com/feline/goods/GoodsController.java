@@ -73,8 +73,10 @@ public class GoodsController {
 		String minprice = request.getParameter("minprice");
 		String maxprice = request.getParameter("maxprice");
 		String category = request.getParameter("category");
-		String year = request.getParameter("year");
-		String month =request.getParameter("month");
+		String fromyear = request.getParameter("fromyear");
+		String frommonth =request.getParameter("frommonth");
+		String toyear = request.getParameter("toyear");
+		String tomonth =request.getParameter("tomonth");
 		
 		if(!category.equals(""))
 		{
@@ -124,16 +126,35 @@ public class GoodsController {
 			}
 		}
 		
-		if(!year.equals("") && !month.equals(""))
-		{
+		if(!fromyear.equals("") && !frommonth.equals(""))
+		{		
+			Date fromdate = new Date();
+			fromdate.setYear(Integer.parseInt(fromyear));
+			fromdate.setMonth(Integer.parseInt(frommonth));
+			
 			for(int i = 0; i < goodslist.size(); i++) 
 			{
-				System.out.println(goodslist.get(i).getGoods_date().getYear());
-				System.out.println(goodslist.get(i).getGoods_date().getMonth());
-				System.out.println(year);
-				System.out.println(month);
-				
-				for(int j = 0; goodslist.get(i).getGoods_date().getYear() != Integer.parseInt(year) || goodslist.get(i).getGoods_date().getMonth() != Integer.parseInt(month); j++)
+				for(int j = 0; goodslist.get(i).getGoods_date().before(fromdate) ; j++)
+				{
+					goodslist.remove(i);
+					
+					if(goodslist.size() == 0)
+					{
+						break;
+					}
+				}
+			}
+		}
+		
+		if(!toyear.equals("") && !tomonth.equals(""))
+		{		
+			Date todate = new Date();
+			todate.setYear(Integer.parseInt(toyear));
+			todate.setMonth(Integer.parseInt(tomonth));
+			
+			for(int i = 0; i < goodslist.size(); i++) 
+			{
+				for(int j = 0; goodslist.get(i).getGoods_date().after(todate) ; j++)
 				{
 					goodslist.remove(i);
 					
