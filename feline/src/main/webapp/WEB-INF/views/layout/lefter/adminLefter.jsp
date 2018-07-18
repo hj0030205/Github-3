@@ -78,15 +78,15 @@
 								aria-expanded="false"> <i
 									class="mdi mdi-credit-card-multiple"></i> <span
 									class="nav-dropdown-item">주문 통합 리스트</span></a></li>
-							<li><a href="adOrderCancleList.cat" aria-expanded="false">
+							<li><a href="/feline/admin/adOrderCancleList.cat" aria-expanded="false">
 									<i class="mdi mdi-credit-card-multiple"></i> <span
 									class="nav-dropdown-item">주문 취소 리스트</span>
 							</a></li>
-							<li><a href="adOrderRefundList.cat" aria-expanded="false">
+							<li><a href="/feline/admin/adOrderRefundList.cat" aria-expanded="false">
 									<i class="mdi mdi-credit-card"></i> <span
 									class="nav-dropdown-item">환불 요청 리스트</span>
 							</a></li>
-							<li><a href="adOrderChangeList.cat" aria-expanded="false">
+							<li><a href="/feline/admin/adOrderChangeList.cat" aria-expanded="false">
 									<i class="mdi mdi-truck-delivery"></i> <span
 									class="nav-dropdown-item">교환 요청 리스트</span>
 							</a></li>
@@ -110,23 +110,18 @@
 						aria-expanded="false"> <i class="mdi mdi-chart-bar"></i> <span
 							class="hide-menu">통계</span></a>
 						<ul class="nav-dropdown-items">
-							<!-- <li>
-								<a href="#" aria-expanded="false">
-								 <i class="mdi mdi-access-point-network"></i> <span class="nav-dropdown-item">방문자 통계</span></a>
-							</li> -->
-							<!-- 	<li>
-								<a href="/feline/admin/chart/book.cat" aria-expanded="false">
+							 <li>
+								<a href="/feline/admin/adGoodsChart.cat" aria-expanded="false">
 								 <i class="mdi mdi-library-books"></i> <span class="nav-dropdown-item">상품 통계</span></a>
 							</li>
 							<li>
-								<a href="/feline/admin/chart/order.cat" aria-expanded="false">
+								<a href="/feline/admin/adChartOrder.cat" aria-expanded="false">
 								 <i class="mdi mdi-credit-card-plus"></i> <span class="nav-dropdown-item">주문 통계</span></a>
 							</li>
-							
 							<li>
-								<a href="/feline/admin/chart/member.cat" aria-expanded="false">
+								<a href="/feline/admin/adChartMember.cat" aria-expanded="false">
 								 <i class="mdi mdi-human-male-female"></i> <span class="nav-dropdown-item">회원 통계</span></a>
-							</li> -->
+							</li>
 						</ul></li>
 						
 						

@@ -304,5 +304,20 @@
 	<definition name="wishList" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/wishlist/wishList.jsp" />
 	</definition>
+	
+	<!-- ========================관리자 통계관련 페이지======================= -->
+	
+	<definition name="adminChart" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adChart_order.jsp"/>
+	</definition>
+	
+	<definition name="adminChartOrder" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adChart_member.jsp"/>
+	</definition>
+	
+	<definition name="adminChartGoods" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/adChart_goods.jsp"/>
+	</definition>
+	
 
 </tiles-definitions>
