@@ -99,7 +99,8 @@
 								<li><a href="orderChangeList.cat">
 								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
 								<li><a href="/feline/basket/basketList.cat"><i
-										class="fa fa-heart"></i>장바구니</a></li>
+										class="fa fa-shopping-cart"></i>장바구니</a></li>
+								<li><a href="/feline/wishlist/wishList.cat"><i class="fa fa-heart"></i>WISHLIST</a></li>		
 								<li class="active"><a href="memberModify.cat"><i
 										class="fa fa-address-card"></i>회원정보수정</a></li>
 								<li><a href="memberDelete.cat"><i

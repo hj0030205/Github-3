@@ -16,11 +16,13 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.basket.BasketModel;
 import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
+import com.feline.member.MemberService;
 
 @Controller
 @RequestMapping("/order")
@@ -28,6 +30,10 @@ public class OrderController {
 	
 	@Resource
 	private OrderService orderService;
+	
+	@Resource
+	private MemberService memberService;
+
 
 	ModelAndView mav = new ModelAndView();
 
@@ -268,6 +274,7 @@ public class OrderController {
 		return mav;
 	}
 
+	
 	/* 주문처리 */
 	@RequestMapping(value = "goodsOrder.cat")
 	public ModelAndView goodsOrder(HttpSession session, HttpServletRequest request, @ModelAttribute("basketModel") BasketModel basketModel,
@@ -393,7 +400,7 @@ public class OrderController {
 			orderModel.setOrder_memo(orderModel.getOrder_memo());
 			orderModel.setOrder_date(today.getTime());
 			orderModel.setOrder_receive_zipcode(orderModel.getOrder_receive_zipcode());
-			orderModel.setOrder_trade_type("무통장입금");
+			orderModel.setOrder_trade_type(orderModel.getOrder_trade_type());
 			orderModel.setOrder_trade_date(today.getTime());
 			orderModel.setOrder_trade_payer(orderModel.getOrder_trade_payer());
 
@@ -433,6 +440,47 @@ public class OrderController {
 		
 		return mav;
 
+	}
+	
+	
+	//무통장일때 처리해주는 페이지
+	@RequestMapping(value="/noBank.cat",method=RequestMethod.POST)
+	public ModelAndView noBack(OrderModel orderModel,BasketModel basketModel,HttpSession session,
+			HttpServletRequest request) {
+		
+			Calendar today = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm");
+			String todayS = sdf.format(today.getTime());
+			
+			String member_id = (String) session.getAttribute("id");
+			
+			int count = basketList.size();
+
+			for (int i = 0; i < count; i++) {
+				
+				basketModel.setBasket_num(basketList.get(i).getBasket_num());
+				orderModel.setOrder_trade_num(todayS + member_id);
+				orderModel.setOrder_trans_num("");
+				orderModel.setGoods_num(basketList.get(i).getGoods_num());
+				orderModel.setOrder_goods_amount(basketList.get(i).getBasket_goods_amount());
+				orderModel.setOrder_goods_size(basketList.get(i).getBasket_goods_size());
+				orderModel.setOrder_member_id(member_id);
+				orderModel.setOrder_receive_name(orderModel.getOrder_receive_name());
+				orderModel.setOrder_receive_addr1(orderModel.getOrder_receive_addr1());
+				orderModel.setOrder_receive_addr2(orderModel.getOrder_receive_addr2());
+				orderModel.setOrder_memo(orderModel.getOrder_memo());
+				orderModel.setOrder_date(today.getTime());
+				orderModel.setOrder_receive_zipcode(orderModel.getOrder_receive_zipcode());
+				orderModel.setOrder_trade_type(orderModel.getOrder_trade_type());
+				orderModel.setOrder_trade_date(today.getTime());
+				orderModel.setOrder_trade_payer(orderModel.getOrder_trade_payer());
+
+				orderService.goodsOrder(orderModel);
+				orderService.basketDelete(basketList.get(i).getBasket_num());
+			}
+		
+		mav.setViewName("noBank");
+		return mav;
 	}
 
 }
