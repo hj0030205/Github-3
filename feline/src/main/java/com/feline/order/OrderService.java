@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.feline.basket.BasketModel;
+import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
 import com.feline.order.OrderDao;
 import com.feline.order.OrderModel;
@@ -77,4 +78,15 @@ public class OrderService implements OrderDao {
 		return sqlSessionTemplate.delete("basket.basketDelete", basket_num);
 	}
 	
+	//비회원 주문하기(장바구니 > 주문)
+	@Override
+	public GoodsModel selectGoods(int goods_num) {
+		return sqlSessionTemplate.selectOne("goods.selectGoods", goods_num);
+	}
+	
+	
+	//주문 완료 화면에서 주문번호 보여주기
+	public OrderModel selectNewestOrder(String member_id) {
+		return sqlSessionTemplate.selectOne("order.selectNewestOrder", member_id);
+	}
 }

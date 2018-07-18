@@ -88,12 +88,12 @@
 								<a href="/feline/main.cat" class="btn btn-default"><i
 									class="fa fa-chevron-left"></i>쇼핑 계속하기</a>
 							</div>
-							<div class="pull-right">
+							<!-- <div class="pull-right">
 								<button type="button" class="btn btn-primary"
 									onclick="javascript:location.href='/feline/order/goodsSettle.cat'">
 									주문하기<i class="fa fa-chevron-right"></i>
 								</button>
-							</div>
+							</div> -->
 						</div>
 
 					</div>

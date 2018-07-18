@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.feline.basket.BasketDao;
 import com.feline.basket.BasketModel;
+import com.feline.goods.GoodsModel;
 
 @Service
 public class BasketService implements BasketDao {
@@ -18,6 +19,12 @@ public class BasketService implements BasketDao {
 	@Override
 	public Object insertBasket(BasketModel basketModel) {
 		return sqlSessionTemplate.insert("basket.insertBasket", basketModel);
+	}
+	
+	//비회원 장바구니에 넣기 - 물품 정보 조회
+	@Override
+	public GoodsModel selectGoods(int goods_num) {
+		return sqlSessionTemplate.selectOne("goods.selectGoods", goods_num);
 	}
 	
 	//장바구니 리스트

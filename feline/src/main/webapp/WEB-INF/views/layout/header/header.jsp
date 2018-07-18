@@ -50,7 +50,7 @@
                 
             </div> 
             <div class="col-md-6">
-            <c:if test="${sessionScope.id eq null}">
+            <c:if test="${sessionScope.id eq null && sessionScope.n_id eq null}">
                 <ul class="menu">
                     <li><a href="/feline/member/login.cat">로그인</a>
                     </li>
@@ -70,6 +70,17 @@
 	                    	<li><a href="/feline/admin/main.cat">관리자페이지</a>
 	                    	</li>
             		</c:when>
+<<<<<<< HEAD
+            		<c:when test="${sessionScope.n_id ne null}">
+            			<ul class="menu">
+	                    	<li><a class="cell">${sessionScope.n_id} 님 환영합니다.</a>
+	                    	</li>
+=======
+            		<c:when test="${res.id ne null}">
+            			<ul class="menu">
+            				<li><a class="cell">${res.id} 회원님 환영합니다.</a>
+>>>>>>> 0edcc876c847209b84278f769a30919696edeb17
+            		</c:when>
             		<c:otherwise>
             			<ul class="menu">
             				<li><a class="cell">${sessionScope.id} 회원님 환영합니다.</a>
@@ -81,6 +92,14 @@
 	            <li><a href="/feline/member/logout.cat">로그아웃</a>
 	            </li>
             </c:if>
+            <c:if test="${sessionScope.n_id ne null}">
+          	  <ul class="menu">
+            	<li><font color="white">비회원으로 로그인하셨습니다.</font></li>
+	            <li><a href="/feline/member/logout.cat">로그아웃</a>
+	            </li>
+            </c:if>
+            <li><a href="#">주문조회</a>
+            </li>
             <li><a href="/feline/notice/noticeList.cat">고객센터</a>
             </li>
             <li><a href="/feline/map/mapView.cat">찾아오는 길</a></li>
@@ -110,11 +129,9 @@
                         <span class="sr-only">Toggle search</span>
                         <i class="fa fa-search"></i>
                     </button>
-                    <c:if test="${sessionScope.id!=null}">
-                    	<a class="btn btn-default navbar-toggle" href="/feline/basket/basketList.cat">
-                    		<i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">basket</span>
-                   		</a>
-                    </c:if>
+                    <a class="btn btn-default navbar-toggle" href="/feline/basket/basketList.cat">
+                    	<i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">basket</span>
+                   	</a>
                 </div>
             </div>
             <!--/.navbar-header -->
@@ -265,8 +282,10 @@
                         <input type="hidden" name="category" value="">
                         <input type="hidden" name="minprice" value="">
                         <input type="hidden" name="maxprice" value="">
-                        <input type="hidden" name="year" value="">
-                        <input type="hidden" name="month" value="">
+                        <input type="hidden" name="fromyear" value="">
+                        <input type="hidden" name="frommonth" value="">
+                        <input type="hidden" name="toyear" value="">
+                        <input type="hidden" name="tomonth" value="">
                         <span class="input-group-btn" style="margin-left:20px">
                         	<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                         </span>

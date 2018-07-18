@@ -14,20 +14,29 @@
 <script type="text/javascript">
 	function calendar()
 	{
-		if(document.date.year.value && !document.date.month.value)
+		if(document.date.fromyear.value && !document.date.frommonth.value)
 		{
 			alert("월을 선택해주세요.");
 			return false;
 		}
 		
-		else if(!document.date.year.value && document.date.month.value)
+		if(!document.date.fromyear.value && document.date.frommonth.value)
 		{
 			alert("연도를 선택해주세요.");
 			return false;
 		} 
-/* 		alert("hu" +document.date.year.value);
-
- */
+		
+		if(document.date.toyear.value && !document.date.tomonth.value)
+		{
+			alert("월을 선택해주세요.");
+			return false;
+		}
+		
+		if(!document.date.toyear.value && document.date.tomonth.value)
+		{
+			alert("연도를 선택해주세요.");
+			return false;
+		} 
 	}
 </script>
 <script type="text/javascript">
@@ -278,14 +287,43 @@ li.basic.active {
 								</div>
 								<br />
 								<div>
-									<span class="panel-heading"> <font size="4">등록기간</font>
-									</span> <span> <select name="year">
+									<span class="panel-heading">
+						            	<font size="4">등록기간</font>
+									</span>
+									<span>
+										<select name="fromyear">
 											<option value=""></option>
 											<option value="116">2016</option>
 											<option value="117">2017</option>
 											<option value="118">2018</option>
 											<option value="119">2019</option>
-									</select>&nbsp;년 &nbsp;&nbsp;<select name="month">
+										</select>&nbsp;년
+										&nbsp;&nbsp;<select name="frommonth">
+											<option value=""></option>
+											<option value="0">01</option>
+											<option value="1">02</option>
+											<option value="2">03</option>
+											<option value="3">04</option>
+											<option value="4">05</option>
+											<option value="5">06</option>
+											<option value="6">07</option>
+											<option value="7">08</option>
+											<option value="8">09</option>
+											<option value="9">10</option>
+											<option value="10">11</option>
+											<option value="11">12</option>
+										</select>&nbsp;월
+									</span>
+									&nbsp;~&nbsp;
+									<span>
+										<select name="toyear">
+											<option value=""></option>
+											<option value="116">2016</option>
+											<option value="117">2017</option>
+											<option value="118">2018</option>
+											<option value="119">2019</option>
+										</select>&nbsp;년
+										&nbsp;&nbsp;<select name="tomonth">
 											<option value=""></option>
 											<option value="0">01</option>
 											<option value="1">02</option>
