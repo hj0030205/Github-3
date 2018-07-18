@@ -27,28 +27,20 @@
 					<div class="panel panel-default sidebar-menu">
 
 						<div class="panel-heading">
-							<h3 class="panel-title">zz</h3>
+							<h3 class="panel-title">주문 내역 확인</h3>
 						</div>
 
 						<div class="panel-body">
 
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="mypage.cat">마이 페이지</a></li>
-								<li class="active"><a href="orderList.cat">
+								<li class="active"><a href="b_orderList.cat">
 								<i class="fa fa-list"></i>나의 주문 내역</a></li>
 								<li><a href="orderCancleList.cat">
 								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
 								<li><a href="orderRefundList.cat">
 								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
 								<li><a href="orderChangeList.cat">
-								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
-								<li><a href="/feline/basket/basketList.cat"><i
-										class="fa fa-shopping-cart"></i>장바구니</a></li>
-								<li><a href="/feline/wishlist/wishList.cat"><i class="fa fa-heart"></i>WISHLIST</a></li>
-								<li><a href="memberModify.cat"><i
-										class="fa fa-address-card"></i>회원정보수정</a></li>
-								<li><a href="memberDelete.cat"><i
-										class="fa fa-sign-out"></i>회원탈퇴</a></li>
+								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>
 								
 							</ul>
 							
@@ -64,23 +56,23 @@
 				<div class="col-md-9" id="customer-orders">
 					<div class="box">
 						<h3>
-							주문상세내역 <small>회원전용</small>
+							주문상세내역 <small>비회원전용</small>
 						</h3>
 						<br>
 							<h2>주문리스트</h2>
 							<div class="row">
 							<div class="col-sm-3">
 								<div class="form-group">
-									<label>주문자 성함</label><input type="text" class="form-control"
-										id="order_receive_name" name="order_receive_name"
-										value="${orderModel.order_receive_name }" disabled="disabled">
+									<label>주문자 성함</label> <input type="text" class="form-control"
+										id="order_member_id" name="order_member_id"
+										value="${orderModel.order_member_id }" disabled="disabled">
 								</div>
 							</div>
 							<div class="col-sm-3">
 								<div class="form-group">
-									<label>주문자 아이디</label> <input type="text" class="form-control"
-										id="order_member_id" name="order_member_id"
-										value="${orderModel.order_member_id }" disabled="disabled">
+									<label>받는분 성함</label><input type="text" class="form-control"
+										id="order_receive_name" name="order_receive_name"
+										value="${orderModel.order_receive_name }" disabled="disabled">
 								</div>
 							</div>
 							<div class="col-sm-4">
@@ -235,7 +227,7 @@
 							</c:otherwise>
 						</c:choose>
 							<button class="btn btn-primary"
-								onclick="javascript:location.href='orderList.cat'">목록</button>										
+								onclick="javascript:location.href='b_orderList.cat?order_trade_num=${orderModel.order_trade_num}'">목록</button>										
 					</div>
 				</div>
 			</div>

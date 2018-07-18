@@ -10,69 +10,91 @@ import com.feline.order.OrderModel;
 
 public interface MemberDao 
 {
-	//╥н╠вюн
+	//О©╫н╠О©╫О©╫О©╫
 	 String memberLogin(MemberModel memberModel);
 
-	 //х╦©Ь а╓╨╦ ╟║а╝©ю╠Б
+	 //х╦О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	 MemberModel getMember(String id);
 
-	// ╬фюл╣П ц╪е╘
+	// О©╫О©╫О©╫л╣О©╫ ц╪е╘
 	 String idCheck(String member_id);
 	
-	//юл╦чюо ц╪е╘
+	//О©╫л╦О©╫О©╫О©╫ ц╪е╘
 	 String emailCheck(String email);
 	
-	//х╦©Ь ╟║ют
+	//х╦О©╫О©╫ О©╫О©╫О©╫О©╫
 	 Object insertMember(MemberModel memberModel);
 
-	// ╬фюл╣П цё╠Б
+	// О©╫О©╫О©╫л╣О©╫ цёО©╫О©╫
 	 String idFindByName(MemberModel memberModel);
 	
-	//╨Я╧п╧Ьхё цё╠Б
+	//О©╫О©╫п╧О©╫хё цёО©╫О©╫
 	 String pwFindById(MemberModel memberModel);
 
-	// х╦©Ь а╓╨╦ ╪Жа╓
+	// х╦О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
 	 Object memberModify(MemberModel memberModel);
 
-	// х╦©Ь е╩еП
+	// х╦О©╫О©╫ е╩О©╫О©╫
 	 Object memberDelete(String id);
 	
-	//цж╠ыаж╧╝╦Я╥о10╟Ё╩л╬ф©ю╠Б 
+	//О©╫ж╠О©╫О©╫ж╧О©╫О©╫О©╫О©╫10О©╫О©╫О©╫л╬ф©О©╫О©╫О©╫ 
 	 List<OrderModel> selectNewOrderList(String member_id);
 	
-	//аж╧╝ ╦Я╥о ╟║а╝©ю╠Б
+	//О©╫ж╧О©╫ О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	 List<OrderModel> OrderList(String member_id);
 
-	//аж╧╝ ╩С╪╪╨╦╠Б ╟║а╝©ю╠Б
+	//О©╫ж╧О©╫ О©╫С╪╪╨О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	 OrderModel OrdergetOne(int order_num);
 	 
-	 //аж╧╝ ╧╟г╟ а╓╨╦ ╟║а╝©ю╠Б
+	 //О©╫ж╧О©╫ О©╫О©╫г╟ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	 GoodsModel goodsView(int goods_num);	
 
-	 //аж╧╝цК╪р
+	 //О©╫ж╧О©╫О©╫О©╫О©╫
 	 void orderCancle(CancleModel cancleModel,OrderModel orderModel);
 
-	 //аж╧╝цК╪р╦Я╥о ╟║а╝©ю╠Б
+	 //О©╫ж╧О©╫О©╫О©╫р╦О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	 List<OrderModel> orderCancleList(String member_id);
 	 
-	 //аж╧╝цК╪р╩С╪╪╨╦╠Б
+	 //О©╫ж╧О©╫О©╫О©╫р╩С╪╪╨О©╫О©╫О©╫
 	 CancleModel orderCancleOne(CancleModel cancleModel);
 	 
-	 //аж╧╝х╞╨р(╟М╟╢╫ца║)
+	 //О©╫ж╧О©╫х╞О©╫О©╫(О©╫О©╫О©╫О©╫О©╫О©╫)
 	 void clientOrderRefund(RefundModel refundModel,OrderModel orderModel);
 	 
-	 //аж╧╝х╞╨р╦Я╥о ╟║а╝©ю╠Б
+	 //О©╫ж╧О©╫х╞О©╫р╦О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	 List<OrderModel> orderRefundList(String member_id);
 	 
-	 //аж╧╝х╞╨р╩С╪╪╨╦╠Б
+	 //О©╫ж╧О©╫х╞О©╫р╩С╪╪╨О©╫О©╫О©╫
 	 RefundModel orderRefundOne(RefundModel refundModel);
 	 
-	 //аж╧╝╠Ёх╞(╟М╟╢╫ца║)
+	 //О©╫ж╧О©╫О©╫О©╫х╞(О©╫О©╫О©╫О©╫О©╫О©╫)
 	 void clientOrderChange(ChangeModel changeModel,OrderModel orderModel);
 	
-	 //аж╧╝╠Ёх╞╦Я╥о ╟║а╝©ю╠Б
+	 //О©╫ж╧О©╫О©╫О©╫х╞О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	 List<OrderModel> orderChangeList(String member_id);
 	 
-	 //аж╧╝╠Ёх╞╩С╪╪╨╦╠Б
+	 //О©╫ж╧О©╫О©╫О©╫х╞О©╫С╪╪╨О©╫О©╫О©╫
 	 ChangeModel orderChangeOne(ChangeModel changeModel);
+	 
+	 //К╧└М ▄Л⌡░ Лё╪К╛╦Л║╟М ▄
+	 List<OrderModel> b_selectOrder(String order_trade_num);
+	 
+	 //К╧└М ▄Л⌡░ Л╥╗Л├▄К╙╘К║² Й╟─Л═╦Л≤╓Й╦╟
+	 List<OrderModel> b_orderCancleList(String order_trade_num);
+	 
+	 //К╧└М ▄Л⌡░ Лё╪К╛╦Л╥╗Л├▄ Л┐│Л└╦КЁ╢Й╦╟
+	 CancleModel b_orderCancleOne(int order_num);
+	 
+	 //К╧└М ▄Л⌡░ М≥≤К╤┬К╙╘К║² Й╟─Л═╦Л≤╓Й╦╟
+	 List<OrderModel> b_orderRefundList(String order_trade_num);
+	 
+	 //К╧└М ▄Л⌡░ М≥≤К╤┬К╙╘К║² Л┐│Л└╦КЁ╢Й╦╟
+	 RefundModel b_orderRefundOne(int order_num);
+	 
+	 //К╧└М ▄Л⌡░ Й╣░М≥≤К╙╘К║² Й╟─Л═╦Л≤╓Й╦╟
+	 List<OrderModel> b_orderChangeList(String order_trade_num);
+	 
+	 //К╧└М ▄Л⌡░ Й╣░М≥≤К╙╘К║² Л┐│Л└╦КЁ╢Й╦╟
+	 ChangeModel b_orderChangeOne(int order_num);
+
 }

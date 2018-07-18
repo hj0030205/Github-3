@@ -311,5 +311,19 @@
 	<definition name="wishList" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/wishlist/wishList.jsp" />
 	</definition>
+	
+	<!-- 비회원 주문조회 -->
+	<definition name="orderSelect" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/orderSelect.jsp" />
+	</definition>
+	
+	<definition name="b_orderList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/b_orderList.jsp" />
+	</definition>
+	
+	<definition name="b_orderView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/b_orderView.jsp" />
+	</definition>
+	
 
 </tiles-definitions>

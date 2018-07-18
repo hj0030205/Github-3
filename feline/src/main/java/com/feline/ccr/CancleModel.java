@@ -7,6 +7,7 @@ public class CancleModel {
 	private int order_num;
 	private String cancle_reason;
 	private String member_id;
+	private String order_trade_num;
 	
 	
 	
@@ -33,6 +34,12 @@ public class CancleModel {
 	}
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
+	}
+	public String getOrder_trade_num() {
+		return order_trade_num;
+	}
+	public void setOrder_trade_num(String order_trade_num) {
+		this.order_trade_num = order_trade_num;
 	}
 	
 }

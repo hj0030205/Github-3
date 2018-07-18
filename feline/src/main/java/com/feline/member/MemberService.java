@@ -143,5 +143,40 @@ public class MemberService implements MemberDao{
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("order.orderChangeOne", changeModel);
 	}
+	
+	@Override
+	public List<OrderModel> b_selectOrder(String order_trade_num) {
+		return sqlSessionTemplate.selectList("order.b_selectOrder", order_trade_num);
+	}
+	
+	//비회원 취소목록 가져오기
+	public List<OrderModel> b_orderCancleList(String order_trade_num) {
+		
+	}
+	 
+	 //비회원 주문취소 상세보기
+	public CancleModel b_orderCancleOne(int order_num) {
+		
+	}
+	 
+	 //비회원 환불목록 가져오기
+	public List<OrderModel> b_orderRefundList(String order_trade_num) {
+		
+	}
+	 
+	 //비회원 환불목록 상세보기
+	public RefundModel b_orderRefundOne(int order_num) {
+		
+	}
+	 
+	 //비회원 교환목록 가져오기
+	public List<OrderModel> b_orderChangeList(String order_trade_num) {
+		
+	}
+	 
+	 //비회원 교환목록 상세보기
+	public ChangeModel b_orderChangeOne(int order_num) {
+		
+	}
 
 }

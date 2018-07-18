@@ -7,8 +7,15 @@ public class RefundModel {
 	private String trade_reason;
 	private int trade_state;
 	private String member_id;
+	private String order_trade_num;
 	
 	
+	public String getOrder_trade_num() {
+		return order_trade_num;
+	}
+	public void setOrder_trade_num(String order_trade_num) {
+		this.order_trade_num = order_trade_num;
+	}
 	public int getTrade_num() {
 		return trade_num;
 	}
