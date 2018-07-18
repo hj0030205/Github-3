@@ -70,16 +70,10 @@
 	                    	<li><a href="/feline/admin/main.cat">관리자페이지</a>
 	                    	</li>
             		</c:when>
-<<<<<<< HEAD
             		<c:when test="${sessionScope.n_id ne null}">
             			<ul class="menu">
 	                    	<li><a class="cell">${sessionScope.n_id} 님 환영합니다.</a>
 	                    	</li>
-=======
-            		<c:when test="${res.id ne null}">
-            			<ul class="menu">
-            				<li><a class="cell">${res.id} 회원님 환영합니다.</a>
->>>>>>> 0edcc876c847209b84278f769a30919696edeb17
             		</c:when>
             		<c:otherwise>
             			<ul class="menu">
@@ -98,11 +92,10 @@
 	            <li><a href="/feline/member/logout.cat">로그아웃</a>
 	            </li>
             </c:if>
+            <li><a href="/feline/basket/basketList.cat">장바구니</a></li>
             <li><a href="#">주문조회</a>
             </li>
-            <li><a href="/feline/notice/noticeList.cat">고객센터</a>
-            </li>
-            <li><a href="/feline/map/mapView.cat">찾아오는 길</a></li>
+            <li><a href="/feline/notice/noticeList.cat">고객센터</a></li>
            </ul>
            </div>
         </div>
@@ -129,9 +122,6 @@
                         <span class="sr-only">Toggle search</span>
                         <i class="fa fa-search"></i>
                     </button>
-                    <a class="btn btn-default navbar-toggle" href="/feline/basket/basketList.cat">
-                    	<i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">basket</span>
-                   	</a>
                 </div>
             </div>
             <!--/.navbar-header -->
