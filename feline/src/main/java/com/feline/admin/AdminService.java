@@ -59,6 +59,115 @@ public class AdminService implements AdminDAO {
 		return sqlSessionTemplate.selectList("admin.todayOrderRegion");
 	}
 	
+	/************************ 통계 차트 *********************/
+	
+	@Override
+	public List<ChartModel> chartAllM() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.chartAllM");
+	}
+
+	@Override
+	public List<ChartModel> chartNewM() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.chartNewM");
+	}
+
+	@Override
+	public List<ChartModel> memberAge() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.memberAge");
+	}
+
+	@Override
+	public List<ChartModel> newMemberAge() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.newMemberAge");
+	}
+
+	@Override
+	public List<ChartModel> memberRegion() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.memberRegion");
+	}
+
+	@Override
+	public List<ChartModel> newMemberRegion() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.newMemberRegion");
+	}
+	
+	/* ----------------------------------------------------------------------------------- */
+
+	@Override
+	public List<GoodsModel> GoodsSelling() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.GoodsSelling");
+	}
+
+	@Override
+	public List<GoodsModel> monthGoodsSelling() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.monthGoodsSelling");
+	}
+
+	@Override
+	public List<GoodsModel> weekGoodsSelling() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.weekGoodsSelling");
+	}
+
+	/* ----------------------------------------------------------------------------------- */
+	
+	@Override
+	public List<ChartModel> monthOrderNum() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.monthOrderNum");
+	}
+
+	@Override
+	public List<ChartModel> monthSales() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.monthSales");
+	}
+
+	@Override
+	public List<ChartModel> weekOrderNum() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.weekOrderNum");
+	}
+
+	@Override
+	public List<ChartModel> weekSales() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.weekSales");
+	}
+
+	@Override
+	public List<ChartModel> monthOrderAge() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.monthOrderAge");
+	}
+
+	@Override
+	public List<ChartModel> weekOrderAge() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.weekOrderAge");
+	}
+
+	@Override
+	public List<ChartModel> monthOrderRegion() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.monthOrderRegion");
+	}
+
+	@Override
+	public List<ChartModel> weekOrderRegion() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("admin.weekOrderRegion");
+	}
+	
+	
 	/*********************** 회원 관리 *************************/
 	
 	// 관리자 회원관리

@@ -28,6 +28,29 @@ public interface AdminDAO {
 	public List<ChartModel> todayOrderAge();
 	public List<ChartModel> todayOrderRegion();
 	
+	
+	/***********************  통계 차트 *********************/
+	
+	public List<ChartModel> chartAllM();
+	public List<ChartModel> chartNewM();
+	public List<ChartModel> memberAge();
+	public List<ChartModel> newMemberAge();
+	public List<ChartModel> memberRegion();
+	public List<ChartModel> newMemberRegion();
+	
+	public List<GoodsModel> GoodsSelling();
+	public List<GoodsModel> monthGoodsSelling();
+	public List<GoodsModel> weekGoodsSelling();
+	
+	public List<ChartModel> monthOrderNum();
+	public List<ChartModel> monthSales();
+	public List<ChartModel> weekOrderNum();
+	public List<ChartModel> weekSales();
+	public List<ChartModel> monthOrderAge();
+	public List<ChartModel> weekOrderAge();
+	public List<ChartModel> monthOrderRegion();
+	public List<ChartModel> weekOrderRegion();
+	
 
 	/*********************** 회원 관리 *************************/
 
@@ -92,8 +115,6 @@ public interface AdminDAO {
 	List<OrderModel> orderSearchP(String search);
 
 	Object orderModify(OrderModel OrderModel);
-	
-	
 	
 	/**********************취소/환불/교환관리*****************************/
 	//취소목록 뽑아오기
