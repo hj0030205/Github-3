@@ -70,16 +70,14 @@
 	                    	<li><a href="/feline/admin/main.cat">관리자페이지</a>
 	                    	</li>
             		</c:when>
-<<<<<<< HEAD
             		<c:when test="${sessionScope.n_id ne null}">
             			<ul class="menu">
 	                    	<li><a class="cell">${sessionScope.n_id} 님 환영합니다.</a>
 	                    	</li>
-=======
+	                </c:when>
             		<c:when test="${res.id ne null}">
             			<ul class="menu">
             				<li><a class="cell">${res.id} 회원님 환영합니다.</a>
->>>>>>> 0edcc876c847209b84278f769a30919696edeb17
             		</c:when>
             		<c:otherwise>
             			<ul class="menu">

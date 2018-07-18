@@ -58,6 +58,28 @@ public class MemberController {
 
 	}
 	
+	/*********************** 관리자 로그인 *************************/
+	
+	@RequestMapping(value="adminLogin.cat", method=RequestMethod.GET)
+	public ModelAndView adminLoginForm(HttpServletRequest request){
+		mav.setViewName("adLoginForm");
+		return mav;
+	}
+	
+	@RequestMapping(value="adminLogin.cat", method=RequestMethod.POST)
+	public ModelAndView adminLogin(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel adminModel, HttpSession session){
+
+		String admin_id = memberService.adminLogin(adminModel);
+		if (admin_id != null) {
+			session.setAttribute("adminId", admin_id);
+			
+			mav.setViewName("redirect:/admin/main.cat");
+			return mav;
+		}
+		mav.setViewName("adLoginError");
+		return mav;
+	}
+	
 	// 비회원 로그인동작 및 세션 생성
 	@RequestMapping(value = "nMemberLogin.cat", method = RequestMethod.POST)
 	public ModelAndView bMemberLogin(HttpServletRequest request, HttpSession session) {

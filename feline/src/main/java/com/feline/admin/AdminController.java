@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1467,11 +1468,13 @@ public class AdminController {
 				if(kYear<10)
 					kYear=1;
 			}
+			count+=yearValue;
 			if(map.size()!=0 && map.containsKey(kYear)) {
 				count=map.get(kYear);
-				count+=yearValue;
 				map.put(kYear, count);
-			}else{
+			}else if(map.size()==0 && !map.containsKey(kYear) && yearValue>0){
+				map.put(kYear, count);
+			}else {
 				map.put(kYear, ++count);
 			}
 		}

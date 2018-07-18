@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-
-
+	
 	<!-- Admin 메인페이지 - 상단 차트 -->
 	
 	<!-- 결제 대기중 -->
