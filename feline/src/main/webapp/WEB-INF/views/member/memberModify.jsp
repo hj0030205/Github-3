@@ -147,13 +147,13 @@
 						<div class="row">
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>생년월일</label>
+									<label>생년월일<strong>(주민번호 앞번호 6자리)</strong></label>
 									<input type="text" class="form-control" name="member_jumin1" value="${memberModel.member_jumin1 }"/>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>전화번호</label>
+									<label>전화번호<strong>( - 포함)</strong></label>
 									<input type="text" class="form-control" name="member_phone" value="${memberModel.member_phone }"/>
 								</div>
 							</div>

@@ -339,6 +339,4 @@ public class QnaController {
 		return "qna/file_upload";
 	}
 	
-	
-	
 }
