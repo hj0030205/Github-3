@@ -91,20 +91,24 @@
 									class="nav-dropdown-item">교환 요청 리스트</span>
 							</a></li>
 						</ul></li>
-					<%-- <li>
+					<li>
 						<a class="waves-effect waves-dark" href="#" aria-expanded="false">
 						 <i class="mdi mdi-emoticon"></i> <span class="hide-menu">고객센터</span></a>
 						<ul class="nav-dropdown-items">
 							<li>
-								<a href="/feline/admin/notice.cat" aria-expanded="false">
+								<a href="/feline/notice/notice.cat" aria-expanded="false">
 								 <i class="mdi mdi-information-outline"></i> <span class="nav-dropdown-item">공지사항 관리</span></a>
 							</li>
 							<li>
-								<a href="/feline/admin/support.cat" aria-expanded="false">
-								 <i class="mdi mdi-help-circle-outline"></i> <span class="nav-dropdown-item">문의 답변 관리</span></a>
+								<a href="/feline/qna/support.cat" aria-expanded="false">
+								 <i class="mdi mdi-help-circle-outline"></i> <span class="nav-dropdown-item">Q&A 관리</span></a>
+							</li>
+							<li>
+								<a href="/feline/faq/support.cat" aria-expanded="false">
+								 <i class="mdi mdi-help-circle-outline"></i> <span class="nav-dropdown-item">FAQ 관리</span></a>
 							</li>
 						</ul>
-					</li> --%>
+					</li>
 
 					<li><a class="waves-effect waves-dark" href="#"
 						aria-expanded="false"> <i class="mdi mdi-chart-bar"></i> <span
