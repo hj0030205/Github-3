@@ -88,8 +88,8 @@
 	            </li>
             	</c:otherwise>
             </c:choose>
-        
-            
+            <li><a href="#">주문조회</a>
+            </li>
             <li><a href="/feline/notice/noticeList.cat">고객센터</a>
             </li>
             <li><a href="/feline/map/mapView.cat">찾아오는 길</a></li>
@@ -119,11 +119,9 @@
                         <span class="sr-only">Toggle search</span>
                         <i class="fa fa-search"></i>
                     </button>
-                    <c:if test="${sessionScope.id!=null}">
-                    	<a class="btn btn-default navbar-toggle" href="/feline/basket/basketList.cat">
-                    		<i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">basket</span>
-                   		</a>
-                    </c:if>
+                    <a class="btn btn-default navbar-toggle" href="/feline/basket/basketList.cat">
+                    	<i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">basket</span>
+                   	</a>
                 </div>
             </div>
             <!--/.navbar-header -->

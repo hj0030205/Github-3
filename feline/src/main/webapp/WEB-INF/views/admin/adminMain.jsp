@@ -247,6 +247,7 @@
 												</div>
 												<div class="col-lg-8">
 													<p style="font-weight: bold; color: #2692c5;">${list.goods_name}</p>
+													<small>판매량 : ${list.goods_hit}</small>
 												</div>
 											</div>
 											<hr class="mt-0">

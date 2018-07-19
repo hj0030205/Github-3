@@ -34,7 +34,7 @@ public class MemberController {
 	ModelAndView mav = new ModelAndView();
 	
 
-	//Ä«Ä«¿À·Î±×ÀÎ
+	//Ä«Ä«ï¿½ï¿½Î±ï¿½ï¿½ï¿½
 	@RequestMapping(value="kakao.cat",method=RequestMethod.GET)
 	public String kakao() {
 		Kakao kakao = new Kakao();
@@ -60,7 +60,7 @@ public class MemberController {
 		System.out.println("token_type :" +map.get("token_type"));
 		System.out.println("expires_in :" +map.get("expires_in"));
 		
-		//»ç¿ëÀÚ ÀüÃ¼ Á¤º¸ ¹Ş¾Æ¿À±â¸¦ ½ÃÀÛÇÏ°Ú½À´Ï´Ù.
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ ï¿½Ş¾Æ¿ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Ú½ï¿½Ï´ï¿½.
 		String list = kakao.getAllList(map.get("access_token"));
 		System.out.println("list : "+list);
 		
@@ -69,6 +69,7 @@ public class MemberController {
 		System.out.println("nickName : "+getAllListMap.get("nickName"));
 
 		MemberModel memberModel = new MemberModel();
+
 
 		memberModel.setMember_id(getAllListMap.get("nickName"));
 		memberModel.setMember_name(getAllListMap.get("nickName"));
@@ -83,14 +84,13 @@ public class MemberController {
 	}
 	
 	
-	// ·Î±×ÀÎ Æû
 	@RequestMapping(value = "login.cat", method = RequestMethod.GET)
 	public ModelAndView loginForm() {
 		mav.setViewName("login");
 		return mav;
 	}
 
-	// ·Î±×ÀÎµ¿ÀÛ ¹× ¼¼¼Ç »ı¼º
+	// ë¡œê·¸ì¸ë™ì‘ ë° ì„¸ì…˜ ìƒì„±
 	@RequestMapping(value = "login.cat", method = RequestMethod.POST)
 	public ModelAndView memberLogin(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel member,
 			HttpSession session) {
@@ -108,7 +108,48 @@ public class MemberController {
 
 	}
 	
+	/*********************** ê´€ë¦¬ì ë¡œê·¸ì¸ *************************/
 	
+	@RequestMapping(value="adminLogin.cat", method=RequestMethod.GET)
+	public ModelAndView adminLoginForm(HttpServletRequest request){
+		mav.setViewName("adLoginForm");
+		return mav;
+	}
+	
+	@RequestMapping(value="adminLogin.cat", method=RequestMethod.POST)
+	public ModelAndView adminLogin(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel adminModel, HttpSession session){
+
+		String admin_id = memberService.adminLogin(adminModel);
+		if (admin_id != null) {
+			session.setAttribute("adminId", admin_id);
+			
+			mav.setViewName("redirect:/admin/main.cat");
+			return mav;
+		}
+		mav.setViewName("adLoginError");
+		return mav;
+	}
+	
+	// ë¹„íšŒì› ë¡œê·¸ì¸ë™ì‘ ë° ì„¸ì…˜ ìƒì„±
+	@RequestMapping(value = "nMemberLogin.cat", method = RequestMethod.POST)
+	public ModelAndView bMemberLogin(HttpServletRequest request, HttpSession session) {
+		
+		if (request.getParameter("member_name") != null) {
+			
+			String member_name = request.getParameter("member_name");
+			String member_phone = request.getParameter("member_phone");
+			
+			session.setAttribute("n_id", member_name);
+			session.setAttribute("n_phone", member_phone);
+				
+			mav.setViewName("redirect:/main.cat");
+			return mav;
+		}
+
+		mav.setViewName("loginError");
+		return mav;
+
+	}
 
 	@RequestMapping("logout.cat")
 	public ModelAndView memberLogout(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel member) {
@@ -208,7 +249,7 @@ public class MemberController {
 		return mav;
 	}
 
-	// ºñ¹Ğ¹øÈ£Ã£±â
+	// ë¹„ë°€ë²ˆí˜¸ì°¾ê¸°
 	@RequestMapping(value="findPwd.cat", method=RequestMethod.GET)
 	public ModelAndView memberPwFindForm() {
 		mav.setViewName("findPwdForm");
@@ -235,14 +276,14 @@ public class MemberController {
 	
 //////////////////////////////////////////////////////////////////////////////////////////////
 	
-	// ¸¶ÀÌÆäÀÌÁö ¶ç¿ì±â
+	// ë§ˆì´í˜ì´ì§€ ë„ìš°ê¸°
 	@RequestMapping("mypage.cat")
 	public ModelAndView myPage(HttpSession session) {
 
 		String member_id = (String) session.getAttribute("id");
 
 		MemberModel memberModel = memberService.getMember(member_id);
-		List<OrderModel> orderList = memberService.selectNewOrderList(member_id); // ÃÖ±ÙÁÖ¹®Á¤º¸10°³»Ì¾Æ¿À±â
+		List<OrderModel> orderList = memberService.selectNewOrderList(member_id); // ìµœê·¼ì£¼ë¬¸ì •ë³´10ê°œë½‘ì•„ì˜¤ê¸°
 		List<GoodsModel> goodsModel = new ArrayList<GoodsModel>();
 		int totalPrice=0;
 		for(int i=0; i<orderList.size(); i++) {
@@ -257,9 +298,9 @@ public class MemberController {
 		return mav;
 	}
 
-	/********************* È¸¿ø ÁÖ¹® ÆäÀÌÁö ºÎºĞ **********************/
+	/********************* íšŒì› ì£¼ë¬¸ í˜ì´ì§€ ë¶€ë¶„ **********************/
 
-	// ÁÖ¹®¸ñ·ÏÀ» »Ì¾Æ¿À´Â ·ÎÁ÷(Ãë¼Ò´Â µû·Î)
+	// ì£¼ë¬¸ëª©ë¡ì„ ë½‘ì•„ì˜¤ëŠ” ë¡œì§(ì·¨ì†ŒëŠ” ë”°ë¡œ)
 	@RequestMapping(value = "orderList.cat")
 	public ModelAndView orderList(HttpServletRequest request, HttpSession session) {
 
@@ -277,7 +318,7 @@ public class MemberController {
 		return mav;
 	}
 
-	// ÁÖ¹®»ó¼¼º¸±â¸¦À§ÇÑ ·ÎÁ÷
+	// ì£¼ë¬¸ìƒì„¸ë³´ê¸°ë¥¼ìœ„í•œ ë¡œì§
 	@RequestMapping(value = "orderView.cat")
 	public ModelAndView orderView(HttpServletRequest request, HttpSession session) {
 
@@ -294,7 +335,7 @@ public class MemberController {
 		return mav;
 	}
 
-	// È¸¿øÁ¤º¸ ¼öÁ¤ÆûÀ¸·Î
+	// íšŒì›ì •ë³´ ìˆ˜ì •í¼ìœ¼ë¡œ
 	@RequestMapping(value = "memberModify.cat", method = RequestMethod.GET)
 	public ModelAndView memberModifyForm(@ModelAttribute("memberModel") MemberModel memberModel, HttpSession session) {
 
@@ -312,7 +353,7 @@ public class MemberController {
 		}
 	}
 
-	// È¸¿øÁ¤º¸ ¼öÁ¤.
+	// íšŒì›ì •ë³´ ìˆ˜ì •.
 	@RequestMapping(value = "memberModify.cat", method = RequestMethod.POST)
 	public ModelAndView memberModify(@ModelAttribute("memberModel") MemberModel memberModel, HttpSession session) {
 
@@ -323,7 +364,7 @@ public class MemberController {
 		return mav;
 	}
 
-	// ÀÌ¸ŞÀÏ Ã¼Å©
+	// ì´ë©”ì¼ ì²´í¬
 	@RequestMapping("member_emailCheck.cat")
 	public ModelAndView memberemailCheck(HttpServletRequest request, HttpSession session) {
 
@@ -332,7 +373,7 @@ public class MemberController {
 		
 		
 		if (member_email.equals(CheckEmail)) {
-			mav.addObject("checkNumber", 1); // ¸¸¾à checkNumber°¡ 1ÀÌ¸é Áßº¹
+			mav.addObject("checkNumber", 1); // ë§Œì•½ checkNumberê°€ 1ì´ë©´ ì¤‘ë³µ
 		}else {
 			mav.addObject("checkNumber", 0);
 		}
@@ -341,19 +382,19 @@ public class MemberController {
 		return mav;
 	}
 
-	// È¸¿øÁ¤º¸»èÁ¦Æû
+	// íšŒì›ì •ë³´ì‚­ì œí¼
 	@RequestMapping(value = "memberDelete.cat", method = RequestMethod.GET)
 	public ModelAndView memberWith() {
 		mav.setViewName("memberDelete");
 		return mav;
 	}
 
-	// È¸¿øÁ¤º¸ »èÁ¦
+	// íšŒì›ì •ë³´ ì‚­ì œ
 	@RequestMapping(value = "memberDelete.cat", method = RequestMethod.POST)
 	public ModelAndView memberDelete(@ModelAttribute("member") MemberModel member, HttpSession session,
 			HttpServletRequest request) {
 
-		MemberModel memberModel; // Äõ¸®°ª ÀúÀåÇÒ °´Ã¼
+		MemberModel memberModel; // ì¿¼ë¦¬ê°’ ì €ì¥í•  ê°ì²´
 
 		String member_id = session.getAttribute("id").toString();
 		String member_pw = request.getParameter("member_pw");
@@ -362,9 +403,9 @@ public class MemberController {
 		memberModel = (MemberModel) memberService.getMember(member_id);
 
 		if (memberModel.getMember_pw().equals(member_pw)) {
-			// ºñ¹Ğ¹øÈ£°¡ ¸ÂÀ¸¸é
+			// ë¹„ë°€ë²ˆí˜¸ê°€ ë§ìœ¼ë©´
 			deleteCheck = 1;
-			// »èÁ¦Äõ¸® ¤¡¤¡
+			// ì‚­ì œì¿¼ë¦¬ ã„±ã„±
 			memberService.memberDelete(member_id);
 			session.removeAttribute("member_id");
 		} else {
@@ -375,10 +416,10 @@ public class MemberController {
 		return mav;
 	}
 	
-	/********************* È¸¿ø ÁÖ¹® Ãë¼Ò ±³È¯ È¯ºÒ **********************/
+	/********************* íšŒì› ì£¼ë¬¸ ì·¨ì†Œ êµí™˜ í™˜ë¶ˆ **********************/
 	
 	
-	// ÁÖ¹®Ãë¼Ò¸ñ·Ï¸¸ »Ì¾Æ¿À´Â ·ÎÁ÷
+	// ì£¼ë¬¸ì·¨ì†Œëª©ë¡ë§Œ ë½‘ì•„ì˜¤ëŠ” ë¡œì§
 	@RequestMapping(value = "orderCancleList.cat")
 	public ModelAndView orderCancleList(HttpServletRequest request, HttpSession session) {
 
@@ -397,18 +438,18 @@ public class MemberController {
 		return mav;
 	}
 	
-	//ÁÖ¹®»èÁ¦ »ó¼¼º¸±â ·ÎÁ÷
+	//ì£¼ë¬¸ì‚­ì œ ìƒì„¸ë³´ê¸° ë¡œì§
 	@RequestMapping(value="orderCancleView.cat" , method=RequestMethod.GET)
 	public ModelAndView orderCancleView(HttpServletRequest request,HttpSession session) {
 		
-		CancleModel cancleModel = new CancleModel(); //cancleModelÀÌ¶ó´Â °´Ã¼»ı¼º
+		CancleModel cancleModel = new CancleModel(); //cancleModelì´ë¼ëŠ” ê°ì²´ìƒì„±
 		
-		int order_num = Integer.parseInt(request.getParameter("order_num")); //getÀ¸·Î µé¾î¿Â order_num¹Ş¾Æ¿À±â
+		int order_num = Integer.parseInt(request.getParameter("order_num")); //getìœ¼ë¡œ ë“¤ì–´ì˜¨ order_numë°›ì•„ì˜¤ê¸°
 
-		cancleModel.setMember_id((String)session.getAttribute("id")); //cancleModel¿¡ sessionÀÇ id¸¦ ´ã´Â´Ù
-		cancleModel.setOrder_num(order_num); //cancleModel¿¡ order_numÀ»´ã´Â´Ù.
+		cancleModel.setMember_id((String)session.getAttribute("id")); //cancleModelì— sessionì˜ idë¥¼ ë‹´ëŠ”ë‹¤
+		cancleModel.setOrder_num(order_num); //cancleModelì— order_numì„ë‹´ëŠ”ë‹¤.
 
-		cancleModel = memberService.orderCancleOne(cancleModel); //cancleModel¿¡ orderCancleOneÀ» ³ÖÀ½
+		cancleModel = memberService.orderCancleOne(cancleModel); //cancleModelì— orderCancleOneì„ ë„£ìŒ
 		
 		mav.addObject("cancleModel", cancleModel);
 		mav.setViewName("orderCancleView");
@@ -416,26 +457,26 @@ public class MemberController {
 	}
 
 
-	//ÁÖ¹®»èÁ¦Æû
+	//ì£¼ë¬¸ì‚­ì œí¼
 	@RequestMapping(value="orderCancle.cat",method=RequestMethod.GET)
 	public ModelAndView orderCancleForm(@RequestParam("order_num")int order_num,
-			HttpSession session) { //id¸¦ ¹Ş¾Æ¿À±âÀ§ÇÑ ¼¼¼Ç, get¹æ½ÄÀ¸·Î order_numÇÏ³ª¸¸ °¡Á®¿À±âÀ§ÇØ 
+			HttpSession session) { //idë¥¼ ë°›ì•„ì˜¤ê¸°ìœ„í•œ ì„¸ì…˜, getë°©ì‹ìœ¼ë¡œ order_numí•˜ë‚˜ë§Œ ê°€ì ¸ì˜¤ê¸°ìœ„í•´ 
 		
 		String member_id = session.getAttribute("id").toString();
 		
-		mav.addObject("member_id",member_id); //mav¿¡ member_id¶ó´Â ÀÌ¸§À¸·Î ¼¼¼Ç°ªÀ» ³Ö¾îÁÜ
-		mav.addObject("order_num",order_num); // order_numÀ» ¹Ş¾Æ¿Â°ÍÀ» ´ã¾Æ¼­ ³Ñ°ÜÁÜ
+		mav.addObject("member_id",member_id); //mavì— member_idë¼ëŠ” ì´ë¦„ìœ¼ë¡œ ì„¸ì…˜ê°’ì„ ë„£ì–´ì¤Œ
+		mav.addObject("order_num",order_num); // order_numì„ ë°›ì•„ì˜¨ê²ƒì„ ë‹´ì•„ì„œ ë„˜ê²¨ì¤Œ
 		mav.setViewName("orderCancle"); //orderCancle.jsp
 		return mav;
 	}
 	
-	//ÁÖ¹®»èÁ¦Ã³¸®
+	//ì£¼ë¬¸ì‚­ì œì²˜ë¦¬
 	@RequestMapping(value="orderCancle.cat",method=RequestMethod.POST)
 	public ModelAndView orderCancle(HttpServletRequest request,HttpSession session, 
 			CancleModel cancleModel,OrderModel orderModel) {
 		
 		memberService.orderCancle(cancleModel, orderModel);
-		 //2°³ÀÇ Äõ¸®¹® ½ÇÇà orderCancleÀº insert¿Í update 2°³¸¦ ÇÑ´Ù 
+		 //2ê°œì˜ ì¿¼ë¦¬ë¬¸ ì‹¤í–‰ orderCancleì€ insertì™€ update 2ê°œë¥¼ í•œë‹¤ 
 
 		mav.setViewName("member/orderCancleResult");
 		
@@ -443,7 +484,7 @@ public class MemberController {
 		
 	}
 	
-	// ÁÖ¹®È¯ºÒ¸ñ·Ï¸¸ »Ì¾Æ¿À´Â ·ÎÁ÷
+	// ì£¼ë¬¸í™˜ë¶ˆëª©ë¡ë§Œ ë½‘ì•„ì˜¤ëŠ” ë¡œì§
 	@RequestMapping(value = "orderRefundList.cat")
 	public ModelAndView orderRefundList(HttpServletRequest request, HttpSession session) {
 
@@ -462,7 +503,7 @@ public class MemberController {
 		return mav;
 	}
 
-	//ÁÖ¹® È¯ºÒ »ó¼¼º¸±â
+	//ì£¼ë¬¸ í™˜ë¶ˆ ìƒì„¸ë³´ê¸°
 	@RequestMapping(value="orderRefundView.cat", method=RequestMethod.GET)
 	public ModelAndView orderRefundView(HttpServletRequest request,HttpSession session) {
 		
@@ -480,7 +521,7 @@ public class MemberController {
 		return mav;
 	}
 	
-	//ÁÖ¹®È¯ºÒ Æû
+	//ì£¼ë¬¸í™˜ë¶ˆ í¼
 	@RequestMapping(value="orderRefund.cat", method=RequestMethod.GET)
 	public ModelAndView orderRefundForm(@RequestParam("order_num")int order_num,
 			HttpSession session) {
@@ -493,19 +534,19 @@ public class MemberController {
 		return mav;
 	}
 	
-	//°í°´ÁÖ¹®È¯ºÒ½ÅÃ»
+	//ê³ ê°ì£¼ë¬¸í™˜ë¶ˆì‹ ì²­
 	@RequestMapping(value="orderRefund.cat",method=RequestMethod.POST)
 	public ModelAndView orderRefund(RefundModel refundModel,OrderModel orderModel) {
 		
 		memberService.clientOrderRefund(refundModel,orderModel);
-		//2°³ÀÇ Äõ¸®¹®À¸·Î ÇÏ³ª´Â RefundModel¿¡ insert , OrderModelÀÇ »óÅÂ¸¦ ¹Ù²ãÁÖ±â À§ÇØ update
+		//2ê°œì˜ ì¿¼ë¦¬ë¬¸ìœ¼ë¡œ í•˜ë‚˜ëŠ” RefundModelì— insert , OrderModelì˜ ìƒíƒœë¥¼ ë°”ê¿”ì£¼ê¸° ìœ„í•´ update
 		
 		mav.setViewName("member/orderRefundResult");
 		
 		return mav;
 	}
 	
-	//ÁÖ¹®±³È¯ Æû
+	//ì£¼ë¬¸êµí™˜ í¼
 	@RequestMapping(value="orderChange.cat",method=RequestMethod.GET)
 	public ModelAndView orderChangeForm(@RequestParam("order_num")int order_num,
 			HttpSession session) {
@@ -519,19 +560,19 @@ public class MemberController {
 		return mav;
 	}
 	
-	//°í°´ÁÖ¹®±³È¯½ÅÃ»
+	//ê³ ê°ì£¼ë¬¸êµí™˜ì‹ ì²­
 	@RequestMapping(value="orderChange.cat",method=RequestMethod.POST)
 	public ModelAndView orderChange(ChangeModel changeModel,OrderModel orderModel) {
 		
 		memberService.clientOrderChange(changeModel,orderModel);
-		//2°³ÀÇ Äõ¸®¹®À¸·Î ÇÏ³ª´Â ChangeModel¿¡ insert , OrderModelÀÇ »óÅÂ¸¦ ¹Ù²ãÁÖ±â À§ÇØ update
+		//2ê°œì˜ ì¿¼ë¦¬ë¬¸ìœ¼ë¡œ í•˜ë‚˜ëŠ” ChangeModelì— insert , OrderModelì˜ ìƒíƒœë¥¼ ë°”ê¿”ì£¼ê¸° ìœ„í•´ update
 
 		mav.setViewName("member/orderChangeResult");
 		
 		return mav;
 	}
 	
-	// ÁÖ¹®±³È¯¸ñ·Ï¸¸ »Ì¾Æ¿À´Â ·ÎÁ÷
+	// ì£¼ë¬¸êµí™˜ëª©ë¡ë§Œ ë½‘ì•„ì˜¤ëŠ” ë¡œì§
 	@RequestMapping(value = "orderChangeList.cat")
 	public ModelAndView orderChangeList(HttpServletRequest request, HttpSession session) {
 
@@ -550,7 +591,7 @@ public class MemberController {
 		return mav;
 	}
 	
-	//ÁÖ¹®±³È¯»ó¼¼º¸±â
+	//ì£¼ë¬¸êµí™˜ìƒì„¸ë³´ê¸°
 	@RequestMapping(value="orderChangeView.cat")
 	public ModelAndView orderChangeView(HttpServletRequest request,HttpSession session) {
 		

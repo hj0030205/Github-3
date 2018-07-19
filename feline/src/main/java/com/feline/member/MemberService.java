@@ -23,6 +23,11 @@ public class MemberService implements MemberDao{
     public String memberLogin(MemberModel member) {
 	    return sqlSessionTemplate.selectOne("member.login", member);
     }
+	
+	@Override
+	public String adminLogin(MemberModel adminModel) {
+		return sqlSessionTemplate.selectOne("member.adminLogin", adminModel);
+	}
 
 	@Override
 	public MemberModel getMember(String id) {

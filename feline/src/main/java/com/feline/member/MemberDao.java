@@ -12,6 +12,9 @@ public interface MemberDao
 {
 	//로그인
 	 String memberLogin(MemberModel memberModel);
+	 
+	//관리자 로그인	
+	String adminLogin(MemberModel adminModel);
 
 	 //회원 정보 가져오기
 	 MemberModel getMember(String id);

@@ -120,11 +120,7 @@
 														<input type="hidden" name="basket_num" value="${basketList.basket_num}" />
 													</td>
 													<td>
-														<c:if test="${basketList.basket_goods_size} != null">
-															${basketList.basket_goods_size}
-														</c:if>
-														<c:if test="${basketList.basket_goods_size} == null">
-														</c:if>
+														${basketList.basket_goods_size}
 														<input type="hidden" name="basket_goods_size" value="${basketList.basket_goods_size}" />
 													</td>
 													<td>

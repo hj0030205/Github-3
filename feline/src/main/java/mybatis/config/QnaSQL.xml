@@ -54,21 +54,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- 작성자 아이디로 검색 -->
 		<select id="selectSearchW" resultMap="QnaBoardRes" parameterType="String">
 			<include refid="select-all"/>
-			 where id like #{id} and status=1
+			 where id like '%'||#{id}||'%' and status=1
 			 order by ref desc, re_step asc
 		</select>
 		
 		<!-- 게시물 제목으로 검색 -->
 		<select id="selectSearchS" resultMap="QnaBoardRes" parameterType="String">
 			<include refid="select-all"/>
-			 where subject like #{subject} and status=1
+			 where subject like '%'||#{subject}||'%' and status=1
 			  order by ref desc, re_step asc
 		</select>
 		
 		<!-- 게시물 내용으로 검색 -->
 		<select id="selectSearchC" resultMap="QnaBoardRes" parameterType="String">
 			<include refid="select-all"/>
-			 where content like #{content} and status=1
+			 where content like '%'||#{content}||'%' and status=1
 			  order by ref desc, re_step asc
 		</select>
 		
