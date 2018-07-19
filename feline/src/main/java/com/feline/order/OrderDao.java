@@ -3,6 +3,7 @@ package com.feline.order;
 import java.util.List;
 
 import com.feline.basket.BasketModel;
+import com.feline.goods.GoodsModel;
 import com.feline.member.MemberModel;
 
 public interface OrderDao {
@@ -34,6 +35,11 @@ public interface OrderDao {
 	// 장바구니 물품 삭제.
 	 Object basketDelete (int basket_num);
 	 
+	 //비회원 주문하기(장바구니 > 주문하기)
+	 GoodsModel selectGoods(int goods_num);
+	 
+	 //주문 완료 화면에서 주문번호 보여주기
+	 OrderModel selectNewestOrder(String member_id);
 
 
 }
