@@ -50,8 +50,9 @@
                 
             </div> 
             <div class="col-md-6">
-            <c:if test="${sessionScope.id eq null && sessionScope.n_id eq null}">
-                <ul class="menu">
+            <c:choose>
+            	<c:when test="${sessionScope.id == null and sessionScope.n_id == null }">
+            		<ul class="menu">
                     <li><a href="/feline/member/login.cat">로그인</a>
                     </li>
                     <li><a href="/feline/member/joinMemberCheck.cat">회원가입</a>
@@ -60,9 +61,9 @@
                     </li>
                     <li><a href="/feline/member/findPwd.cat">비밀번호 찾기</a>
                     </li>
-            </c:if>    
-            <c:if test="${sessionScope.id ne null}">
-            	<c:choose>
+            	</c:when>
+            	<c:otherwise>
+            		<c:choose>
             		<c:when test="${sessionScope.id eq 'admin'}">
             			<ul class="menu">
 	                    	<li><a class="cell">${sessionScope.id} 관리자님 환영합니다.</a>
@@ -72,12 +73,8 @@
             		</c:when>
             		<c:when test="${sessionScope.n_id ne null}">
             			<ul class="menu">
-	                    	<li><a class="cell">${sessionScope.n_id} 님 환영합니다.</a>
-	                    	</li>
-	                </c:when>
-            		<c:when test="${res.id ne null}">
-            			<ul class="menu">
-            				<li><a class="cell">${res.id} 회원님 환영합니다.</a>
+            				<li><a class="cell">${sessionScope.n_id} 님 환영합니다.</a>
+            				</li>
             		</c:when>
             		<c:otherwise>
             			<ul class="menu">
@@ -89,13 +86,8 @@
             	</c:choose>
 	            <li><a href="/feline/member/logout.cat">로그아웃</a>
 	            </li>
-            </c:if>
-            <c:if test="${sessionScope.n_id ne null}">
-          	  <ul class="menu">
-            	<li><font color="white">비회원으로 로그인하셨습니다.</font></li>
-	            <li><a href="/feline/member/logout.cat">로그아웃</a>
-	            </li>
-            </c:if>
+            	</c:otherwise>
+            </c:choose>
             <li><a href="#">주문조회</a>
             </li>
             <li><a href="/feline/notice/noticeList.cat">고객센터</a>

@@ -1,7 +1,9 @@
 package com.feline.member;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +34,56 @@ public class MemberController {
 	ModelAndView mav = new ModelAndView();
 	
 
+	//īī��α���
+	@RequestMapping(value="kakao.cat",method=RequestMethod.GET)
+	public String kakao() {
+		Kakao kakao = new Kakao();
+		System.out.println("kakao.getCode() :"+kakao.getCode() );
+		return "redirect:"+kakao.getCode();
+	}
+	
+	@RequestMapping(value="kakaoCallback.cat",method=RequestMethod.GET)
+	public ModelAndView kakaoLogin(@RequestParam("code") String code,HttpServletRequest request) {
+		
+		Kakao kakao = new Kakao();
+		System.out.println("code :" + code);
+		Calendar today = Calendar.getInstance();
+		String data = (String)kakao.getHtml((kakao.getAccesToken(code)));
+		
+		System.out.println("data :"+ data);
+		
+		Map<String, String> map = kakao.JsonStringMap(data);
+		System.out.println("map :" +map);
+		System.out.println("access_token :" +map.get("access_token"));
+		System.out.println("refresh_token :" +map.get("refresh_token"));
+		System.out.println("scope :" +map.get("scope"));
+		System.out.println("token_type :" +map.get("token_type"));
+		System.out.println("expires_in :" +map.get("expires_in"));
+		
+		//����� ��ü ��� �޾ƿ�⸦ �����ϰڽ�ϴ�.
+		String list = kakao.getAllList(map.get("access_token"));
+		System.out.println("list : "+list);
+		
+		Map<String, String> getAllListMap  = kakao.JsonStringMap(list);
+		System.out.println("getAllListMap :"+getAllListMap);
+		System.out.println("nickName : "+getAllListMap.get("nickName"));
 
-	// 로그인 폼
+		MemberModel memberModel = new MemberModel();
+
+
+		memberModel.setMember_id(getAllListMap.get("nickName"));
+		memberModel.setMember_name(getAllListMap.get("nickName"));
+		
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("n_id", memberModel.getMember_id());
+		System.out.println(memberModel.getMember_id());
+		mav.setViewName("redirect:/main.cat");
+		
+		return mav;
+	}
+	
+	
 	@RequestMapping(value = "login.cat", method = RequestMethod.GET)
 	public ModelAndView loginForm() {
 		mav.setViewName("login");
