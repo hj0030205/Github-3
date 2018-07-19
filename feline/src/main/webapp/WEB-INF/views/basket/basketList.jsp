@@ -11,6 +11,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
 
+function onlyNumber(obj){
+	$(obj).keyup(function(){
+		$(this).val($(this).val.replace(/[^0-9]/g,1));
+	})
+}
+
 function qty_value_set(id,qty,no)
 {
 	if($("#"+id).val() == "" || $("#"+id).val() < 1) 
@@ -117,7 +123,8 @@ function qty_value_change(id,qty,no,evt)
 													method="post">
 													<input type="text" id="goods_amount_${basketList.basket_num}" value="${basketList.basket_goods_amount}" name="goods_amount_${basketList.basket_num}"
 													 onchange="javascript:qty_value_set('goods_amount_${basketList.basket_num}',this.value,${basketList.basket_num});" 
-													 onkeyup="javascript:qty_value_change('goods_amount_${basketList.basket_num}',this.value,${basketList.basket_num},event);"/>
+													 onkeyup="javascript:qty_value_change('goods_amount_${basketList.basket_num}',this.value,${basketList.basket_num},event);"
+													 onkeydown="javascript:onlyNumber(this)"/>
 												</form>
 											</td>
 											<td><fmt:formatNumber value="${basketList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>

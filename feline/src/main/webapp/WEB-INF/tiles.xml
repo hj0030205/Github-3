@@ -324,6 +324,18 @@
 		<put-attribute name="body" value="/WEB-INF/views/wishlist/wishList.jsp" />
 	</definition>
 	
+	<!-- 비회원 주문조회 -->
+	<definition name="orderSelect" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/orderSelect.jsp" />
+	</definition>
+	
+	<definition name="b_orderList" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/b_orderList.jsp" />
+	</definition>
+	
+	<definition name="b_orderView" extends="main">
+		<put-attribute name="body" value="/WEB-INF/views/user/b_orderView.jsp" />
+    
 	<!-- ========================관리자 통계관련 페이지======================= -->
 	
 	<definition name="adminChart" extends="admin">
@@ -336,6 +348,7 @@
 	
 	<definition name="adminChartGoods" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/views/admin/adChart_goods.jsp"/>
+    
 	</definition>
 	
 

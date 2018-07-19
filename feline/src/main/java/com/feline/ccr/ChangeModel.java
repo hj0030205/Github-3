@@ -7,7 +7,14 @@ public class ChangeModel {
 	private String change_reason;
 	private int change_state;
 	private String member_id;
+	private String order_trade_num;
 	
+	public String getOrder_trade_num() {
+		return order_trade_num;
+	}
+	public void setOrder_trade_num(String order_trade_num) {
+		this.order_trade_num = order_trade_num;
+	}
 	public int getChange_num() {
 		return change_num;
 	}

@@ -34,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="order_num" column="order_num"/>
 		<result property="cancle_reason" column="cancle_reason"/>
 		<result property="member_id" column="member_id"/>
+		<result property="order_trade_num" column="order_trade_num"/>
 	</resultMap>
 	
 
@@ -44,6 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="trade_reason" column="trade_reason"/>
 		<result property="trade_state" column="trade_state"/>
 		<result property="member_id" column="member_id"/>
+		<result property="order_trade_num" column="order_trade_num"/>
 	</resultMap>
 	
 	
@@ -54,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="change_reason" column="change_reason"/>
 		<result property="change_state" column="change_state"/>
 		<result property="member_id" column="member_id"/>
+		<result property="order_trade_num" column="order_trade_num"/>
 	</resultMap>	
 	
 	
@@ -126,8 +129,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 취소테이블에 입력 -->
 	<insert id="insertCancle" parameterType="CancleModel">
-		insert into feline_order_cancle_list (cancle_num, order_num, cancle_reason, member_id) 
-		values(FELINE_ORDER_CANCLE_NUM_SEQ.NEXTVAL, #{order_num}, #{cancle_reason}, #{member_id})
+		insert into feline_order_cancle_list (cancle_num, order_num, cancle_reason, member_id, order_trade_num) 
+		values(FELINE_ORDER_CANCLE_NUM_SEQ.NEXTVAL, #{order_num}, #{cancle_reason}, #{member_id}, #{order_trade_num})
 	</insert>
 	
 	<!-- 취소상태변경 -->
@@ -150,8 +153,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <!-- 주문환불 입력 -->
 	 <insert id="insertRefund" parameterType="RefundModel">
-	 	insert into FELINE_TRADE_LIST(trade_num, order_num, trade_reason, trade_state, member_id) 
-	 	values(FELINE_ORDER_trade_NUM_SEQ.NEXTVAL, #{order_num},#{trade_reason},#{trade_state},#{member_id})
+	 	insert into FELINE_TRADE_LIST(trade_num, order_num, trade_reason, trade_state, member_id, order_trade_num) 
+	 	values(FELINE_ORDER_trade_NUM_SEQ.NEXTVAL, #{order_num},#{trade_reason},#{trade_state},#{member_id},#{order_trade_num})
 	 </insert>
 	 
 	 <!-- 환불상태변경 -->
@@ -174,8 +177,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <!-- 주문교환 입력-->
 	 <insert id="insertChange" parameterType="ChangeModel">
-	 	insert into FELINE_change_LIST(change_num, order_num, change_reason, change_state, member_id) 
-	 	values(FELINE_ORDER_trade_NUM_SEQ.NEXTVAL, #{order_num}, #{change_reason}, #{change_state}, #{member_id})
+	 	insert into FELINE_change_LIST(change_num, order_num, change_reason, change_state, member_id, order_trade_num) 
+	 	values(FELINE_ORDER_trade_NUM_SEQ.NEXTVAL, #{order_num}, #{change_reason}, #{change_state}, #{member_id}, #{order_trade_num})
 	 </insert>
 
 	 <!-- 교환상태변경 -->
@@ -282,4 +285,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		rownum r from feline_order where order_member_id=#{order_member_id} and status=1 order by order_date desc, order_num asc) where r=1 ]]>
 	</select>
 	 
+	 
+	 <!-- ////////////////비회원//////////////////// -->
+	 
+	 <!-- 비회원 주문조회 -->
+	 <select id="b_selectOrder" resultMap="orderRes" parameterType="String">
+	 	SELECT *
+	 	  FROM FELINE_ORDER
+	 	 WHERE ORDER_TRADE_NUM = #{order_trade_num} and status = 1
+	 </select>
+	 
+	 <!-- 취소목록가져오기 -->
+	 <select id="b_orderCancleList" resultMap="orderRes" parameterType="String">
+	 	select * 
+		from feline_order 
+		where ORDER_TRADE_NUM = #{order_trade_num} and status = 0
+	 </select>
+	 
+	 <!-- 주문취소상세보기  -->
+	 <select id="b_orderCancleOne" resultMap="cancleRes" parameterType="cancleModel">
+	 	select * from feline_order_cancle_list where order_num=#{order_num}
+	 </select> 
+	 
+	 
+	 <!-- 환불목록가져오기 -->
+	 <select id="b_orderRefundList" resultMap="orderRes" parameterType="String">
+	 	select *
+	 	from feline_order
+	 	where ORDER_TRADE_NUM = #{order_trade_num} and status = 2 or status = 3 or status = 4 
+	 </select>
+	 
+	 <!-- 환불상세보기 -->
+	 <select id="b_orderRefundOne" resultMap="refundRes" parameterType="refundModel">
+	 	select * from feline_trade_list where and order_num=#{order_num}
+	 </select>
+	 
+	 <!-- 교환목록가져오기 -->
+	 <select id="b_orderChangeList" resultMap="orderRes" parameterType="String">
+	 	select *
+	 	from feline_order
+	 	where ORDER_TRADE_NUM = #{order_trade_num} and status = 5 or status = 6 or status = 7
+	 </select>
+	 
+	 <!-- 교환상세보기 -->
+	 <select id="b_orderChangeOne" resultMap="changeRes" parameterType="changeModel">
+	 	select * from feline_change_list where and order_num=#{order_num}
+	 </select>
 </mapper>

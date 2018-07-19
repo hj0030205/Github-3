@@ -8,38 +8,37 @@ import com.feline.member.MemberModel;
 
 public interface OrderDao {
 	
-	// ÁÖ¹®ÇÏ±â.
+	// ï¿½Ö¹ï¿½ï¿½Ï±ï¿½.
 	 Object goodsOrder(OrderModel orderModel);
 	
-	//ÁÖ¹®¸ñ·Ï»Ì¾Æ¿À±â
+	//ï¿½Ö¹ï¿½ï¿½ï¿½Ï»Ì¾Æ¿ï¿½ï¿½ï¿½
 	 List<OrderModel> OrderList(OrderModel orderModel);
 
-	//ÁÖ¹®»ó¼¼º¸±â »Ì¾Æ¿À±â
+	//ï¿½Ö¹ï¿½ï¿½ó¼¼ºï¿½ï¿½ï¿½ ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½
 	 OrderModel OrdergetOne(int order_num);
 	 
-	 // Àå¹Ù±¸´Ï ¹°Ç° µî·Ï
+	 // ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½
 	 Object insertBasket(BasketModel basketModel);
 	
-	// Àå¹Ù±¸´Ï ¸ñ·Ï °¡Á®¿À±â.
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 	 List<BasketModel> basketList(BasketModel basketModel);
 	 
-	// »óÇ° »ó¼¼¿¡¼­ ÁÖ¹®ÇÏ±â·Î ¸ñ·Ï °¡Á®°¡±â
+	// ï¿½ï¿½Ç° ï¿½ó¼¼¿ï¿½ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½Ï±ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 List<BasketModel> orderBasketModel(BasketModel basketModel);
 	
-	// Àå¹Ù±¸´Ï È¸¿ø Á¤º¸ °¡Á®¿À±â.
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 	 MemberModel getMember(String id);
 	
-	// Àå¹Ù±¸´Ï »óÇ° Ã¼Å©.
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° Ã¼Å©.
 	 List<BasketModel> basketGoodsCheck(BasketModel basketModel);
 	
-	// Àå¹Ù±¸´Ï ¹°Ç° »èÁ¦.
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½.
 	 Object basketDelete (int basket_num);
 	 
-	 //ºñÈ¸¿ø ÁÖ¹®ÇÏ±â(Àå¹Ù±¸´Ï > ÁÖ¹®ÇÏ±â)
+	 //ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½Ï±ï¿½(ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ > ï¿½Ö¹ï¿½ï¿½Ï±ï¿½)
 	 GoodsModel selectGoods(int goods_num);
 	 
-	 //ÁÖ¹® ¿Ï·á È­¸é¿¡¼­ ÁÖ¹®¹øÈ£ º¸¿©ÁÖ±â
+	 //ï¿½Ö¹ï¿½ ï¿½Ï·ï¿½ È­ï¿½é¿¡ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
 	 OrderModel selectNewestOrder(String member_id);
-
 
 }

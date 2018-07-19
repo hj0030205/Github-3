@@ -10,72 +10,94 @@ import com.feline.order.OrderModel;
 
 public interface MemberDao 
 {
-	//·Î±×ÀÎ
+	//ï¿½Î±ï¿½ï¿½ï¿½
 	 String memberLogin(MemberModel memberModel);
 	 
 	//°ü¸®ÀÚ ·Î±×ÀÎ	
 	String adminLogin(MemberModel adminModel);
 
-	 //È¸¿ø Á¤º¸ °¡Á®¿À±â
+	 //È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 MemberModel getMember(String id);
 
-	// ¾ÆÀÌµğ Ã¼Å©
+	// ï¿½ï¿½ï¿½Ìµï¿½ Ã¼Å©
 	 String idCheck(String member_id);
 	
-	//ÀÌ¸ŞÀÏ Ã¼Å©
+	//ï¿½Ì¸ï¿½ï¿½ï¿½ Ã¼Å©
 	 String emailCheck(String email);
 	
-	//È¸¿ø °¡ÀÔ
+	//È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 Object insertMember(MemberModel memberModel);
 
-	// ¾ÆÀÌµğ Ã£±â
+	// ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
 	 String idFindByName(MemberModel memberModel);
 	
-	//ºñ¹Ğ¹øÈ£ Ã£±â
+	//ï¿½ï¿½Ğ¹ï¿½È£ Ã£ï¿½ï¿½
 	 String pwFindById(MemberModel memberModel);
 
-	// È¸¿ø Á¤º¸ ¼öÁ¤
+	// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 Object memberModify(MemberModel memberModel);
 
-	// È¸¿ø Å»Åğ
+	// È¸ï¿½ï¿½ Å»ï¿½ï¿½
 	 Object memberDelete(String id);
 	
-	//ÃÖ±ÙÁÖ¹®¸ñ·Ï10°³»Ì¾Æ¿À±â 
+	//ï¿½Ö±ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½10ï¿½ï¿½ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½ 
 	 List<OrderModel> selectNewOrderList(String member_id);
 	
-	//ÁÖ¹® ¸ñ·Ï °¡Á®¿À±â
+	//ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 List<OrderModel> OrderList(String member_id);
 
-	//ÁÖ¹® »ó¼¼º¸±â °¡Á®¿À±â
+	//ï¿½Ö¹ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 OrderModel OrdergetOne(int order_num);
 	 
-	 //ÁÖ¹® ¹°Ç° Á¤º¸ °¡Á®¿À±â
+	 //ï¿½Ö¹ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 GoodsModel goodsView(int goods_num);	
 
-	 //ÁÖ¹®Ãë¼Ò
+	 //ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
 	 void orderCancle(CancleModel cancleModel,OrderModel orderModel);
 
-	 //ÁÖ¹®Ãë¼Ò¸ñ·Ï °¡Á®¿À±â
+	 //ï¿½Ö¹ï¿½ï¿½ï¿½Ò¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 List<OrderModel> orderCancleList(String member_id);
 	 
-	 //ÁÖ¹®Ãë¼Ò»ó¼¼º¸±â
+	 //ï¿½Ö¹ï¿½ï¿½ï¿½Ò»ó¼¼ºï¿½ï¿½ï¿½
 	 CancleModel orderCancleOne(CancleModel cancleModel);
 	 
-	 //ÁÖ¹®È¯ºÒ(°í°´½ÃÁ¡)
+	 //ï¿½Ö¹ï¿½È¯ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 	 void clientOrderRefund(RefundModel refundModel,OrderModel orderModel);
 	 
-	 //ÁÖ¹®È¯ºÒ¸ñ·Ï °¡Á®¿À±â
+	 //ï¿½Ö¹ï¿½È¯ï¿½Ò¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 List<OrderModel> orderRefundList(String member_id);
 	 
-	 //ÁÖ¹®È¯ºÒ»ó¼¼º¸±â
+	 //ï¿½Ö¹ï¿½È¯ï¿½Ò»ó¼¼ºï¿½ï¿½ï¿½
 	 RefundModel orderRefundOne(RefundModel refundModel);
 	 
-	 //ÁÖ¹®±³È¯(°í°´½ÃÁ¡)
+	 //ï¿½Ö¹ï¿½ï¿½ï¿½È¯(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 	 void clientOrderChange(ChangeModel changeModel,OrderModel orderModel);
 	
-	 //ÁÖ¹®±³È¯¸ñ·Ï °¡Á®¿À±â
+	 //ï¿½Ö¹ï¿½ï¿½ï¿½È¯ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 List<OrderModel> orderChangeList(String member_id);
 	 
-	 //ÁÖ¹®±³È¯»ó¼¼º¸±â
+	 //ï¿½Ö¹ï¿½ï¿½ï¿½È¯ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	 ChangeModel orderChangeOne(ChangeModel changeModel);
+	 
+	 //ë¹„íšŒì› ì£¼ë¬¸ì¡°íšŒ
+	 List<OrderModel> b_selectOrder(String order_trade_num);
+	 
+	 //ë¹„íšŒì› ì·¨ì†Œëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+	 List<OrderModel> b_orderCancleList(String order_trade_num);
+	 
+	 //ë¹„íšŒì› ì£¼ë¬¸ì·¨ì†Œ ìƒì„¸ë³´ê¸°
+	 CancleModel b_orderCancleOne(int order_num);
+	 
+	 //ë¹„íšŒì› í™˜ë¶ˆëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+	 List<OrderModel> b_orderRefundList(String order_trade_num);
+	 
+	 //ë¹„íšŒì› í™˜ë¶ˆëª©ë¡ ìƒì„¸ë³´ê¸°
+	 RefundModel b_orderRefundOne(int order_num);
+	 
+	 //ë¹„íšŒì› êµí™˜ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+	 List<OrderModel> b_orderChangeList(String order_trade_num);
+	 
+	 //ë¹„íšŒì› êµí™˜ëª©ë¡ ìƒì„¸ë³´ê¸°
+	 ChangeModel b_orderChangeOne(int order_num);
+
 }

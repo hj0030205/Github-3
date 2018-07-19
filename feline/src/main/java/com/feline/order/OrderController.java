@@ -84,8 +84,6 @@ public class OrderController {
 					
 				} else if(n_id != null && n_id != "") { //비회원인 경우
 					
-					logger.info("장바구니에서 이동했다");
-					
 					String goods_num_s = (String) session.getAttribute("goods_num_s");
 					String goods_size_s = (String) session.getAttribute("goods_size_s");
 					String goods_amount_s = (String) session.getAttribute("goods_amount_s");
@@ -172,9 +170,7 @@ public class OrderController {
 		
 					}
 				} else if(n_id != null && n_id != "") { //비회원인 경우
-					
-					logger.info("상품 상세보기에서 이동했다");
-					
+
 					//세션에 해당 물품이 있는지 검사
 					String goods_num_s = (String) session.getAttribute("goods_num_s");
 					
@@ -203,8 +199,6 @@ public class OrderController {
 									"	}</script>");
 							out.flush();
 						} else {
-							
-							logger.info("상품이 장바구니에 없다");
 							
 							int goods_num_s1 = Integer.parseInt(request.getParameter("goods_num"));
 							String goods_size_s = request.getParameter("basket_goods_size");
@@ -283,7 +277,6 @@ public class OrderController {
 
 		String member_id = (String) session.getAttribute("id");
 		String n_id = (String) session.getAttribute("n_id");
-		String n_phone = (String) session.getAttribute("n_phone");
 		
 		Calendar today = Calendar.getInstance();
 		
@@ -449,38 +442,163 @@ public class OrderController {
 	public ModelAndView noBack(OrderModel orderModel,BasketModel basketModel,HttpSession session,
 			HttpServletRequest request) {
 		
-			Calendar today = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm");
-			String todayS = sdf.format(today.getTime());
-			
-			String member_id = (String) session.getAttribute("id");
-			
-			int count = basketList.size();
-
-			for (int i = 0; i < count; i++) {
-				
-				basketModel.setBasket_num(basketList.get(i).getBasket_num());
-				orderModel.setOrder_trade_num(todayS + member_id);
-				orderModel.setOrder_trans_num("");
-				orderModel.setGoods_num(basketList.get(i).getGoods_num());
-				orderModel.setOrder_goods_amount(basketList.get(i).getBasket_goods_amount());
-				orderModel.setOrder_goods_size(basketList.get(i).getBasket_goods_size());
-				orderModel.setOrder_member_id(member_id);
-				orderModel.setOrder_receive_name(orderModel.getOrder_receive_name());
-				orderModel.setOrder_receive_addr1(orderModel.getOrder_receive_addr1());
-				orderModel.setOrder_receive_addr2(orderModel.getOrder_receive_addr2());
-				orderModel.setOrder_memo(orderModel.getOrder_memo());
-				orderModel.setOrder_date(today.getTime());
-				orderModel.setOrder_receive_zipcode(orderModel.getOrder_receive_zipcode());
-				orderModel.setOrder_trade_type(orderModel.getOrder_trade_type());
-				orderModel.setOrder_trade_date(today.getTime());
-				orderModel.setOrder_trade_payer(orderModel.getOrder_trade_payer());
-
-				orderService.goodsOrder(orderModel);
-				orderService.basketDelete(basketList.get(i).getBasket_num());
-			}
+		String member_id = (String) session.getAttribute("id");
+		String n_id = (String) session.getAttribute("n_id");
 		
+		Calendar today = Calendar.getInstance();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+		String todayS = sdf.format(today.getTime());
+		
+		//ȸ���� ���
+		if(member_id != null && member_id != "") {
+			
+			if(request.getParameter("goods_num") == null) {
+				
+				basketModel.setMember_id(member_id);
+				basketList = orderService.basketList(basketModel);
+				
+			} else if(request.getParameter("goods_num") != null) {
+				
+				int goods_num = Integer.parseInt(request.getParameter("goods_num"));
+				basketModel.setMember_id(member_id);
+				basketModel.setGoods_num(goods_num);
+				basketList = orderService.orderBasketModel(basketModel);
+				
+			}
+			
+		} else if(n_id != null && n_id != "") {
+			
+			if(request.getParameter("goods_num") == null) {
+				
+				String goods_num_s = (String) session.getAttribute("goods_num_s");
+				String goods_size_s = (String) session.getAttribute("goods_size_s");
+				String goods_amount_s = (String) session.getAttribute("goods_amount_s");
+					
+				String[] goods_num_array = goods_num_s.split(",");
+				String[] goods_size_array = goods_size_s.split(",");
+				String[] goods_amount_array = goods_amount_s.split(",");
+					
+				int size = goods_num_array.length;
+					
+				int[] goods_num_i = new int[size];
+				int[] goods_amount_i = new int[size];
+					
+				for(int i = 0; i < size; i++) {
+					goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
+					goods_amount_i[i] = Integer.parseInt(goods_amount_array[i]);
+				}
+					
+				//���� ����
+				basketList.clear();
+					
+				//basketList�� basketModel ����
+				for(int j = 0; j < size; j++) {
+					GoodsModel goodsModel = new GoodsModel();
+					goodsModel = orderService.selectGoods(goods_num_i[j]);
+					
+					BasketModel basketModel1 = new BasketModel();
+					
+					basketModel1.setBasket_num(j);
+					basketModel1.setGoods_num(goodsModel.getGoods_num());
+					basketModel1.setGoods_name(goodsModel.getGoods_name());
+					basketModel1.setGoods_price(goodsModel.getGoods_price());
+					basketModel1.setBasket_goods_amount(goods_amount_i[j]);
+					basketModel1.setBasket_goods_size(goods_size_array[j]);
+						
+					basketList.add(j, basketModel1);
+				}
+				
+			} else if(request.getParameter("goods_num") != null) {
+				
+				int goods_num_s = Integer.parseInt(request.getParameter("goods_num"));
+				String goods_size_s = request.getParameter("basket_goods_size");
+				int goods_amount_s = Integer.parseInt(request.getParameter("basket_goods_amount"));
+				
+				//���� ����
+				basketList.clear();
+				
+				GoodsModel goodsModel = new GoodsModel();
+				goodsModel = orderService.selectGoods(goods_num_s);
+				
+				BasketModel basketModel1 = new BasketModel();
+				
+				basketModel1.setBasket_num(0);
+				basketModel1.setGoods_num(goodsModel.getGoods_num());
+				basketModel1.setGoods_name(goodsModel.getGoods_name());
+				basketModel1.setGoods_price(goodsModel.getGoods_price());
+				basketModel1.setBasket_goods_amount(goods_amount_s);
+				basketModel1.setBasket_goods_size(goods_size_s);
+					
+				basketList.add(basketModel1);
+				
+			}
+			
+		}
+
+		int count = basketList.size();
+
+		for (int i = 0; i < count; i++) {
+			basketModel.setBasket_num(basketList.get(i).getBasket_num());
+			if(member_id != null && member_id != "") {
+				orderModel.setOrder_trade_num(todayS + member_id);
+			} else if(n_id != null && n_id != "") {
+				orderModel.setOrder_trade_num(todayS + n_id);
+			}
+			orderModel.setOrder_trans_num("");
+			orderModel.setGoods_num(basketList.get(i).getGoods_num());
+			orderModel.setOrder_goods_amount(basketList.get(i).getBasket_goods_amount());
+			orderModel.setOrder_goods_size(basketList.get(i).getBasket_goods_size());
+			
+			if(member_id != null && member_id != "") {
+				orderModel.setOrder_member_id(member_id);
+			} else if(n_id != null && n_id != "") {
+				orderModel.setOrder_member_id(n_id);
+			}
+			orderModel.setOrder_receive_name(orderModel.getOrder_receive_name());
+			orderModel.setOrder_receive_addr1(orderModel.getOrder_receive_addr1());
+			orderModel.setOrder_receive_addr2(orderModel.getOrder_receive_addr2());
+			orderModel.setOrder_memo(orderModel.getOrder_memo());
+			orderModel.setOrder_date(today.getTime());
+			orderModel.setOrder_receive_zipcode(orderModel.getOrder_receive_zipcode());
+			orderModel.setOrder_trade_type(orderModel.getOrder_trade_type());
+			orderModel.setOrder_trade_date(today.getTime());
+			orderModel.setOrder_trade_payer(orderModel.getOrder_trade_payer());
+
+			orderService.goodsOrder(orderModel);
+			
+			if(member_id != null && member_id != "") {
+				orderService.basketDelete(basketList.get(i).getBasket_num());
+			} else if(n_id != null && n_id != "") {
+				
+				if(request.getParameter("goods_num") == null) {
+					
+					session.removeAttribute("goods_num_s");
+					session.removeAttribute("goods_size_s");
+					session.removeAttribute("goods_amount_s");
+					
+				} else if(request.getParameter("goods_num") != null) {
+					
+					basketList.clear();
+					
+				}
+			}
+		}
+		
+		
+		OrderModel orderModel2 = new OrderModel();
+		
+		if(member_id != null && member_id != "") {
+			
+		orderModel2 = orderService.selectNewestOrder(member_id);
+		
+		} else if(n_id != null && n_id != "") {
+		orderModel2 = orderService.selectNewestOrder(n_id);
+		}
+		
+		mav.addObject("orderModel", orderModel2);
 		mav.setViewName("noBank");
+		
 		return mav;
 	}
 

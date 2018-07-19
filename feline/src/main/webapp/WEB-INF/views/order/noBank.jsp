@@ -35,6 +35,8 @@
                     <div class="box">
 						<center>
                         <h3>주문이 접수완료 되었습니다.</h3>
+                        <br/>
+                        <p>주문번호: ${orderModel.order_trade_num}</p>
                         <div class="box">
                         	<center>
                         	<h4><strong><font color="red">입금계좌번호 : 110-354-417689 (신한은행)</font></strong></h4>

@@ -11,7 +11,12 @@
 
 <script type="text/javascript">
 alert("주문취소가 정상적으로 완료 되었습니다. 감사합니다!");
-location.href='orderList.cat';
+if(${sessionScope.id ne null} == true) {
+	location.href='orderList.cat';
+} else {
+	location.href='b_orderList.cat?order_trade_num=${order_trade_num}';
+}
+
 </script> 
 
 </body>
