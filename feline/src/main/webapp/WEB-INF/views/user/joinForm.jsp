@@ -54,7 +54,7 @@ function sample4_execDaumPostcode() {
 			return false;
 		}else{
 			window.name="checkid"
-			window.open('idCheck.yolo?member_id='+document.join.member_id.value,"idcheckForm", "scrollbars=no, status=no, resizable=no, width=400, height=150");
+			window.open('idCheck.cat?member_id='+document.join.member_id.value,"idcheckForm", "scrollbars=no, status=no, resizable=no, width=400, height=150");
 		}
 	}
 
