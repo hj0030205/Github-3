@@ -93,7 +93,7 @@
 	            </li>
             </c:if>
             <li><a href="/feline/basket/basketList.cat">장바구니</a></li>
-            <li><a href="#">주문조회</a>
+            <li><a href="/feline/member/b_orderSelectForm.cat">주문조회</a>
             </li>
             <li><a href="/feline/notice/noticeList.cat">고객센터</a></li>
            </ul>

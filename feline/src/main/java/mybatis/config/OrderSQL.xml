@@ -292,7 +292,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="b_selectOrder" resultMap="orderRes" parameterType="String">
 	 	SELECT *
 	 	  FROM FELINE_ORDER
-	 	 WHERE ORDER_TRADE_NUM = #{order_trade_num} and status = 1;
+	 	 WHERE ORDER_TRADE_NUM = #{order_trade_num} and status = 1
 	 </select>
 	 
 	 <!-- 취소목록가져오기 -->

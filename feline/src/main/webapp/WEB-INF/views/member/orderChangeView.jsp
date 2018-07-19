@@ -13,58 +13,94 @@
 	<div class="all">
 		<div class="content">
 			<div class="container">
-				<!-- 추가 -->
 				<div class="col-md-12">
 					<ul class="breadcrumb">
 						<li><a href="/feline/main.cat">메인</a></li>
-						<li>주문교환상세내역</li>
+						<c:choose>
+							<c:when test="${sessionScope.id ne null}">
+								<li>마이 페이지</li>
+							</c:when>
+							<c:otherwise>
+								<li>주문 내역</li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</div>
-				<!-- *** CUSTOMER MENU ***
- ________________________________________________________ -->
+				<!-- 홈으로가는 링크 생성 -->
 				<div class="col-md-3">
-
+					<!-- *** CUSTOMER MENU ***
+ _________________________________________________________ -->
 					<div class="panel panel-default sidebar-menu">
 
 						<div class="panel-heading">
-							<h3 class="panel-title">마이 페이지</h3>
+							<h3 class="panel-title">
+								<c:choose>
+									<c:when test="${sessionScope.id ne null}">
+										마이 페이지
+									</c:when>
+									<c:otherwise>
+										주문 내역
+									</c:otherwise>
+								</c:choose>
+							</h3>
 						</div>
 
 						<div class="panel-body">
 
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="mypage.cat">마이 페이지</a></li>
-								<li><a href="orderList.cat">
-								<i class="fa fa-list"></i>나의 주문 내역</a></li>
-								<li><a href="orderCancleList.cat">
-								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
-								<li><a href="orderRefundList.cat">
-								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
-								<li class="active"><a href="orderChangeList.cat">
-								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
-								<li><a href="/feline/basket/basketList.cat"><i
-										class="fa fa-shopping-cart"></i>장바구니</a></li>
-								<li><a href="/feline/wishlist/wishList.cat"><i class="fa fa-heart"></i>WISHLIST</a></li>
-								<li><a href="memberModify.cat"><i
-										class="fa fa-address-card"></i>회원정보수정</a></li>
-								<li><a href="memberDelete.cat"><i
-										class="fa fa-sign-out"></i>회원탈퇴</a></li>
-								
-							</ul>
+						<c:choose>
+							<c:when test="${sessionScope.id ne null}">
+								<ul class="nav nav-pills nav-stacked">
+									<li><a href="mypage.cat">마이 페이지</a></li>
+									<li><a href="orderList.cat">
+									<i class="fa fa-list"></i>나의 주문 내역</a></li>
+									<li><a href="orderCancleList.cat">
+									<i class="fa fa-times"></i>주문 취소 내역</a></li>	
+									<li><a href="orderRefundList.cat">
+									<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
+									<li class="active"><a href="orderChangeList.cat">
+									<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
+									<li><a href="/feline/basket/basketList.cat"><i
+											class="fa fa-shopping-cart"></i>장바구니</a></li>
+									<li><a href="/feline/wishlist/wishList.cat"><i class="fa fa-heart"></i>WISHLIST</a></li>
+									<li><a href="memberModify.cat"><i
+											class="fa fa-address-card"></i>회원정보수정</a></li>
+									<li><a href="memberDelete.cat"><i
+											class="fa fa-sign-out"></i>회원탈퇴</a></li>
+								</ul>
+							</c:when>
+							<c:otherwise>
+								<ul class="nav nav-pills nav-stacked">
+									<li><a href="b_orderList.cat?order_trade_num=${changeModel.order_trade_num}">
+									<i class="fa fa-list"></i>나의 주문 내역</a></li>
+									<li><a href="b_orderCancleList.cat?order_trade_num=${changeModel.order_trade_num}">
+									<i class="fa fa-times"></i>주문 취소 내역</a></li>	
+									<li><a href="b_orderRefundList.cat?order_trade_num=${changeModel.order_trade_num}">
+									<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
+									<li class="active"><a href="b_orderChangeList.cat?order_trade_num=${changeModel.order_trade_num}">
+									<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
+									
+								</ul>
+							</c:otherwise>
+						</c:choose>
 							
 						</div>
 
 					</div>
 					<!-- /.col-md-3 -->
 
+					<!-- *** CUSTOMER MENU END *** -->
 				</div>
-				<!-- *** CUSTOMER MENU END *** -->
 			<!-- ========================================================================================== -->
 				
 				<div class="col-md-9" id="customer-orders">
 					<div class="box">
 						<h3>
-							교환상세내역 <small>회원전용</small>
+							<c:choose>
+								<c:when test="${sessionScope.id ne null}">
+									교환상세내역 <small>회원전용</small>
+								</c:when>
+								<c:otherwise>교환상세내역 <small>비회원전용</small></c:otherwise>
+							</c:choose>
 						</h3>
 						<br>
 							<h2>교환리스트</h2>

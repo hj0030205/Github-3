@@ -33,13 +33,13 @@
 						<div class="panel-body">
 
 							<ul class="nav nav-pills nav-stacked">
-								<li class="active"><a href="b_orderList.cat">
+								<li class="active"><a href="b_orderList.cat?order_trade_num=${order_trade_num}">
 								<i class="fa fa-list"></i>나의 주문 내역</a></li>
-								<li><a href="b_orderCancleList.cat?order_trade_num=${orderList[0].order_trade_num}">
+								<li><a href="b_orderCancleList.cat?order_trade_num=${order_trade_num}">
 								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
-								<li><a href="b_orderRefundList.cat?order_trade_num=${orderList[0].order_trade_num}">
+								<li><a href="b_orderRefundList.cat?order_trade_num=${order_trade_num}">
 								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
-								<li><a href="b_orderChangeList.cat?order_trade_num=${orderList[0].order_trade_num}">
+								<li><a href="b_orderChangeList.cat?order_trade_num=${order_trade_num}">
 								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
 								
 							</ul>
@@ -80,7 +80,7 @@
 								<tr>
 									<td><fmt:formatDate value="${order.order_date}"
 													pattern="yyyy.MM.dd HH:MM" /></td>
-									<td><a href="orderView.cat?order_num=${order.order_num}">${order.order_num }</a></td>
+									<td><a href="b_orderView.cat?order_num=${order.order_num}">${order.order_num }</a></td>
 									<td>${goodsList[status.index].goods_category }</td>
 									<td>${goodsList[status.index].goods_name }</td>
 									<td>${order.order_goods_amount }</td>
@@ -126,7 +126,7 @@
 								<br />
 						<center>
 							<button type="button" class="btn btn-primary"
-								onClick="javascript:location.href='mypage.cat'">돌아가기</button>
+								onClick="javascript:location.href='/feline/main.cat'">돌아가기</button>
 						</center>
 					</div>
 				</div>

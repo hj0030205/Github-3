@@ -33,13 +33,13 @@
 						<div class="panel-body">
 
 							<ul class="nav nav-pills nav-stacked">
-								<li class="active"><a href="b_orderList.cat">
+								<li class="active"><a href="b_orderList.cat?order_trade_num=${orderModel.order_trade_num}">
 								<i class="fa fa-list"></i>나의 주문 내역</a></li>
-								<li><a href="orderCancleList.cat">
+								<li><a href="orderCancleList.cat?order_trade_num=${orderModel.order_trade_num}">
 								<i class="fa fa-times"></i>주문 취소 내역</a></li>	
-								<li><a href="orderRefundList.cat">
+								<li><a href="orderRefundList.cat?order_trade_num=${orderModel.order_trade_num}">
 								<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
-								<li><a href="orderChangeList.cat">
+								<li><a href="orderChangeList.cat?order_trade_num=${orderModel.order_trade_num}">
 								<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>
 								
 							</ul>

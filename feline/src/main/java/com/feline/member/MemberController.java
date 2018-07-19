@@ -390,7 +390,7 @@ public class MemberController {
 	public ModelAndView orderCancleForm(@RequestParam("order_num")int order_num,
 			HttpSession session) { //id를 받아오기위한 세션, get방식으로 order_num하나만 가져오기위해 
 		
-		String member_id = session.getAttribute("id").toString();
+		String member_id = (String) session.getAttribute("id");
 		
 		OrderModel orderModel = new OrderModel();
 		
@@ -421,6 +421,7 @@ public class MemberController {
 		memberService.orderCancle(cancleModel, orderModel);
 		 //2개의 쿼리문 실행 orderCancle은 insert와 update 2개를 한다 
 
+		mav.addObject("order_trade_num", orderModel.getOrder_trade_num());
 		mav.setViewName("member/orderCancleResult");
 		
 		return mav;
@@ -468,7 +469,7 @@ public class MemberController {
 	@RequestMapping(value="orderRefund.cat", method=RequestMethod.GET)
 	public ModelAndView orderRefundForm(@RequestParam("order_num")int order_num,
 			HttpSession session) {
-		String member_id = session.getAttribute("id").toString();
+		String member_id = (String) session.getAttribute("id");
 		
 		OrderModel orderModel = new OrderModel();
 		
@@ -497,6 +498,7 @@ public class MemberController {
 		memberService.clientOrderRefund(refundModel,orderModel);
 		//2개의 쿼리문으로 하나는 RefundModel에 insert , OrderModel의 상태를 바꿔주기 위해 update
 		
+		mav.addObject("order_trade_num", orderModel.getOrder_trade_num());
 		mav.setViewName("member/orderRefundResult");
 		
 		return mav;
@@ -507,7 +509,7 @@ public class MemberController {
 	public ModelAndView orderChangeForm(@RequestParam("order_num")int order_num,
 			HttpSession session) {
 		
-		String member_id = session.getAttribute("id").toString();
+		String member_id = (String) session.getAttribute("id");
 		
 		OrderModel orderModel = new OrderModel();
 		
@@ -536,6 +538,7 @@ public class MemberController {
 		memberService.clientOrderChange(changeModel,orderModel);
 		//2개의 쿼리문으로 하나는 ChangeModel에 insert , OrderModel의 상태를 바꿔주기 위해 update
 
+		mav.addObject("order_trade_num", orderModel.getOrder_trade_num());
 		mav.setViewName("member/orderChangeResult");
 		
 		return mav;
@@ -592,6 +595,7 @@ public class MemberController {
 		
 	}
 	
+	//비회원 주문조회
 	@RequestMapping(value="b_orderList.cat")
 	public ModelAndView b_orderSelectForm(HttpServletRequest request) {
 		
@@ -604,6 +608,7 @@ public class MemberController {
 			goodsList.add(memberService.goodsView(orderList.get(i).getGoods_num())); 
 		}
 		
+		mav.addObject("order_trade_num", order_trade_num);
 		mav.addObject("goodsList",goodsList);
 		mav.addObject("orderList", orderList);
 		
@@ -612,19 +617,37 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping(value = "b_orderView.cat")
+	public ModelAndView b_orderView(HttpServletRequest request, HttpSession session) {
+
+		OrderModel orderModel = new OrderModel();
+
+		int order_num = Integer.parseInt(request.getParameter("order_num"));
+
+		orderModel = memberService.OrdergetOne(order_num);
+		GoodsModel goodsModel = memberService.goodsView(orderModel.getGoods_num());
+
+		mav.addObject("goodsModel",goodsModel);
+		mav.addObject("orderModel", orderModel);
+		mav.setViewName("b_orderView");
+		return mav;
+	}
+
+	
 	// 주문취소목록만 뽑아오는 로직
 	@RequestMapping(value = "b_orderCancleList.cat")
 	public ModelAndView b_orderCancleList(HttpServletRequest request, HttpSession session) {
 
 		String order_trade_num = request.getParameter("order_trade_num");
 		
-		List<OrderModel> orderCancleList = memberService.orderCancleList(member_id);
+		List<OrderModel> orderCancleList = memberService.b_orderCancleList(order_trade_num);
 		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
 		
 		for(int i=0; i<orderCancleList.size(); i++) {
 			goodsList.add(memberService.goodsView(orderCancleList.get(i).getGoods_num())); 
 		}
 		
+		mav.addObject("order_trade_num", order_trade_num);
 		mav.addObject("goodsList",goodsList);
 		mav.addObject("orderCancleList", orderCancleList);
 		mav.setViewName("orderCancleList");
@@ -639,13 +662,10 @@ public class MemberController {
 		
 		int order_num = Integer.parseInt(request.getParameter("order_num")); //get으로 들어온 order_num받아오기
 
-		cancleModel.setMember_id((String)session.getAttribute("id")); //cancleModel에 session의 id를 담는다
-		cancleModel.setOrder_num(order_num); //cancleModel에 order_num을담는다.
-
-		cancleModel = memberService.orderCancleOne(cancleModel); //cancleModel에 orderCancleOne을 넣음
+		cancleModel = memberService.b_orderCancleOne(order_num); //cancleModel에 orderCancleOne을 넣음
 		
 		mav.addObject("cancleModel", cancleModel);
-		mav.setViewName("b_orderCancleView");
+		mav.setViewName("orderCancleView");
 		return mav;
 	}
 
@@ -654,15 +674,16 @@ public class MemberController {
 	@RequestMapping(value = "b_orderRefundList.cat")
 	public ModelAndView b_orderRefundList(HttpServletRequest request, HttpSession session) {
 
-		String member_id = (String) session.getAttribute("id").toString();
-		System.out.println(member_id);
-		List<OrderModel> orderRefundList = memberService.orderRefundList(member_id);
+		String order_trade_num = request.getParameter("order_trade_num");
+
+		List<OrderModel> orderRefundList = memberService.b_orderRefundList(order_trade_num);
 		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
 		
 		for(int i=0; i<orderRefundList.size(); i++) {
 			goodsList.add(memberService.goodsView(orderRefundList.get(i).getGoods_num())); 
 		}
 		
+		mav.addObject("order_trade_num", order_trade_num);
 		mav.addObject("goodsList",goodsList);
 		mav.addObject("orderRefundList", orderRefundList);
 		mav.setViewName("orderRefundList");
@@ -676,10 +697,8 @@ public class MemberController {
 		RefundModel refundModel= new RefundModel();
 		
 		int order_num = Integer.parseInt(request.getParameter("order_num")); 
-		refundModel.setMember_id((String)session.getAttribute("id"));
-		refundModel.setOrder_num(order_num);
 		
-		refundModel = memberService.orderRefundOne(refundModel);
+		refundModel = memberService.b_orderRefundOne(order_num);
 		
 		mav.addObject("refundModel",refundModel);
 		mav.setViewName("orderRefundView");
@@ -691,15 +710,16 @@ public class MemberController {
 	@RequestMapping(value = "b_orderChangeList.cat")
 	public ModelAndView b_orderChangeList(HttpServletRequest request, HttpSession session) {
 
-		String member_id = (String) session.getAttribute("id").toString();
-		System.out.println(member_id);
-		List<OrderModel> orderChangeList = memberService.orderChangeList(member_id);
+		String order_trade_num = request.getParameter("order_trade_num");
+		
+		List<OrderModel> orderChangeList = memberService.orderChangeList(order_trade_num);
 		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
 		
 		for(int i=0; i<orderChangeList.size(); i++) {
 			goodsList.add(memberService.goodsView(orderChangeList.get(i).getGoods_num())); 
 		}
 		
+		mav.addObject("order_trade_num", order_trade_num);
 		mav.addObject("goodsList",goodsList);
 		mav.addObject("orderChangeList", orderChangeList);
 		mav.setViewName("orderChangeList");
@@ -714,10 +734,7 @@ public class MemberController {
 		
 		int order_num = Integer.parseInt(request.getParameter("order_num")); 
 		
-		changeModel.setMember_id((String)session.getAttribute("id"));
-		changeModel.setOrder_num(order_num);
-		
-		changeModel = memberService.orderChangeOne(changeModel);
+		changeModel = memberService.b_orderChangeOne(order_num);
 		
 		mav.addObject("changeModel",changeModel);
 		mav.setViewName("orderChangeView");

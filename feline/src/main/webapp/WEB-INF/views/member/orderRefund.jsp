@@ -67,9 +67,9 @@
 									<li><a href="mypage.cat">마이 페이지</a></li>
 									<li><a href="orderList.cat">
 									<i class="fa fa-list"></i>나의 주문 내역</a></li>
-									<li class="active"><a href="orderCancleList.cat">
+									<li><a href="orderCancleList.cat">
 									<i class="fa fa-times"></i>주문 취소 내역</a></li>	
-									<li><a href="orderRefundList.cat">
+									<li class="active"><a href="orderRefundList.cat">
 									<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
 									<li><a href="orderChangeList.cat">
 									<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
@@ -84,13 +84,13 @@
 							</c:when>
 							<c:otherwise>
 								<ul class="nav nav-pills nav-stacked">
-									<li class="active"><a href="b_orderList.cat">
+									<li><a href="b_orderList.cat?order_trade_num=${orderModel.order_trade_num}">
 									<i class="fa fa-list"></i>나의 주문 내역</a></li>
-									<li><a href="b_orderCancleList.cat?order_trade_num=${orderList[0].order_trade_num}">
+									<li><a href="b_orderCancleList.cat?order_trade_num=${orderModel.order_trade_num}">
 									<i class="fa fa-times"></i>주문 취소 내역</a></li>	
-									<li><a href="b_orderRefundList.cat?order_trade_num=${orderList[0].order_trade_num}">
+									<li class="active"><a href="b_orderRefundList.cat?order_trade_num=${orderModel.order_trade_num}">
 									<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
-									<li><a href="b_orderChangeList.cat?order_trade_num=${orderList[0].order_trade_num}">
+									<li><a href="b_orderChangeList.cat?order_trade_num=${orderModel.order_trade_num}">
 									<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
 									
 								</ul>
@@ -109,7 +109,12 @@
 				<div class="col-md-9" id="customer-orders">
 					<div class="box">
 						<h3>
-							환불신청 <small>회원전용</small>
+							<c:choose>
+								<c:when test="${sessionScope.id ne null}">
+									환불신청 <small>회원전용</small>
+								</c:when>
+								<c:otherwise>환불신청 <small>비회원전용</small></c:otherwise>
+							</c:choose>
 						</h3>
 						<legend>
 							<h2>환불사유</h2>

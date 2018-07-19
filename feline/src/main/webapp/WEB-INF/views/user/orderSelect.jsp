@@ -30,7 +30,7 @@
                 <div class="col-md-8">
                     <div class="box">
                         <h1>주문조회</h1>
-						<form name="loginForm" id="loginForm" action="/feline/member/b_orderList.cat" method="POST">
+						<form name="b_orderListForm" id="b_orderListForm" action="/feline/member/b_orderList.cat" method="POST">
                             <div class="form-group">
                                 <label for="order_trade_num">주문번호</label>
                                 <input type="text" class="form-control" id="order_trade_num"name="order_trade_num"/>
