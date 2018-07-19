@@ -74,15 +74,13 @@
 										<i class="fa fa-search"></i>
 									</button>
 								</form>
-								<c:if test="${sessionScope.id ne null }">
-									<c:if test="${sessionScope.id eq 'admin' }">
-										<input id="noticeWriteBtn" type="button" value="게시물 등록"
-											class="btn btn-default"
-											onclick="javascript:location.href='noticeWrite.cat?currentPage=${currentPage}'"> &nbsp;
-									</c:if>
+								<c:if test="${sessionScope.adminId ne null }">
+									<input id="noticeWriteBtn" type="button" value="게시물 등록"
+										class="btn btn-default"
+										onclick="javascript:location.href='noticeWrite.cat?currentPage=${currentPage}'"> &nbsp;
 								</c:if>
 							</center>
-							
+
 						</div>
 					</div>
 				</div>
@@ -112,7 +110,7 @@
 								<li><a href="/feline/qna/qnaList.cat">Q&A</a></li>
 								<li><a href="/feline/faq/faqList.cat">FAQ</a></li>
 								<li><a href="/feline/map/mapView.cat">찾아오는 길</a></li>
-								
+
 							</ul>
 						</div>
 

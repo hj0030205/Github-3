@@ -45,16 +45,17 @@
 				</div>
 				<!-- /#blog-post -->
 				<center>
-					<c:if test="${sessionScope.id ne null }">
-						<c:if test="${sessionScope.id eq 'admin' }">
-							<input id="goodsWriteBtn" type="button" value="게시물 등록" class="btn btn-default"
-								onclick="javascript:location.href='noticeWrite.cat?currentPage=${currentPage}'"> &nbsp;
-						<input id="goodsModifyBtn" type="button" value="게시물 수정" class="btn btn-default"
-								onclick="javascript:location.href='noticeModify.cat?no=${noticeModel.no}&currentPage=${currentPage}'"> &nbsp;
-						<input id="goodsDeleteBtn" type="button" value="게시물 삭제" class="btn btn-default"
-								onclick="javascript:location.href='noticeDelete.cat?no=${noticeModel.no}'"> &nbsp;
+					<c:if test="${sessionScope.adminId ne null }">
+						<input id="goodsWriteBtn" type="button" value="게시물 등록"
+							class="btn btn-default"
+							onclick="javascript:location.href='noticeWrite.cat?currentPage=${currentPage}'"> &nbsp;
+						<input id="goodsModifyBtn" type="button" value="게시물 수정"
+							class="btn btn-default"
+							onclick="javascript:location.href='noticeModify.cat?no=${noticeModel.no}&currentPage=${currentPage}'"> &nbsp;
+						<input id="goodsDeleteBtn" type="button" value="게시물 삭제"
+							class="btn btn-default"
+							onclick="javascript:location.href='noticeDelete.cat?no=${noticeModel.no}'"> &nbsp;
 						</c:if>
-					</c:if>
 					<input id="list" type="button" value="목록으로" class="btn btn-primary"
 						onclick="javascript:location.href='noticeList.cat?currentPage=${currentPage}'">
 

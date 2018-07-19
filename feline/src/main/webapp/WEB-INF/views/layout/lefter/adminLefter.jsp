@@ -96,16 +96,16 @@
 						 <i class="mdi mdi-emoticon"></i> <span class="hide-menu">고객센터</span></a>
 						<ul class="nav-dropdown-items">
 							<li>
-								<a href="/feline/notice/notice.cat" aria-expanded="false">
-								 <i class="mdi mdi-information-outline"></i> <span class="nav-dropdown-item">공지사항 관리</span></a>
+								<a href="/feline/notice/noticeList.cat" aria-expanded="false">
+								 <i class="mdi mdi-information-outline"></i> <span class="nav-dropdown-item">공지사항</span></a>
 							</li>
 							<li>
-								<a href="/feline/qna/support.cat" aria-expanded="false">
-								 <i class="mdi mdi-help-circle-outline"></i> <span class="nav-dropdown-item">Q&A 관리</span></a>
+								<a href="/feline/qna/qnaList.cat" aria-expanded="false">
+								 <i class="mdi mdi-help-circle-outline"></i> <span class="nav-dropdown-item">Q&A</span></a>
 							</li>
 							<li>
-								<a href="/feline/faq/support.cat" aria-expanded="false">
-								 <i class="mdi mdi-help-circle-outline"></i> <span class="nav-dropdown-item">FAQ 관리</span></a>
+								<a href="/feline/faq/faqList.cat" aria-expanded="false">
+								 <i class="mdi mdi-help-circle-outline"></i> <span class="nav-dropdown-item">FAQ</span></a>
 							</li>
 						</ul>
 					</li>

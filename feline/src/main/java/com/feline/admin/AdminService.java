@@ -1,6 +1,7 @@
 package com.feline.admin;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -167,10 +168,6 @@ public class AdminService implements AdminDAO {
 		return sqlSessionTemplate.selectList("admin.weekOrderRegion");
 	}
 	
-	/********************* 관리자 로그인************************/
-	
-	
-	
 	/*********************** 회원 관리 *************************/
 	
 	// 관리자 회원관리
@@ -239,18 +236,11 @@ public class AdminService implements AdminDAO {
 		return sqlSessionTemplate.selectOne("goods.selectGoods", goods_num);
 	}
 
-	// 상품 명으로 검색
+	// 상품 검색
 	@Override
-	public List<GoodsModel> goodsSearchName(String goods_name) {
+	public List<GoodsModel> goodsSearch(Map<String,Object> map) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList("goods.selectSearchN", goods_name);
-	}
-
-	// 상품 카테고리로 검색
-	@Override
-	public List<GoodsModel> goodsSearchCategory(String goods_category) {
-		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList("goods.selectSearchC", goods_category);
+		return sqlSessionTemplate.selectList("goods.searchGoods", map);
 	}
 
 	// 상품 등록
