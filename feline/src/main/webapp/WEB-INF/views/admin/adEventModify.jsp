@@ -8,6 +8,50 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
+
+function check()
+{
+	if(!document.eventModify.event_name.value)
+	{
+		alert("이벤트명을 입력하세요.");
+		document.eventModify.event_name.focus();
+		return false;
+	}
+	if(!document.eventModify.dc_rate.value)
+	{
+		alert("할인율을 입력하세요.");
+		document.eventModify.dc_rate.focus();
+		return false;
+	}
+	if(!document.eventModify.start_date.value)
+	{
+		alert("시작일을 입력하세요.");
+		document.eventModify.start_date.focus();
+		return false;
+	}
+	
+	if(!document.eventModify.end_date.value)
+	{
+		alert("종료일을 입력하세요.");
+		document.eventModify.end_date.focus();
+		return false;
+	}
+	
+	if(!document.eventModify.goods_category1.value)
+	{
+		alert("카테고리를 선택하세요.");
+		document.eventModify.goods_category1.focus();
+		return false;
+	}
+	
+	if(!document.eventModify.goods_num.value)
+	{
+		alert("이벤트 대상 상품을 선택하세요.");
+		document.getElementById('goodsList').focus();
+		return false;
+	}
+}
+
 function goodsCategorySelect(goods_category) {
 	$.ajax({
 		type : "POST",
@@ -71,10 +115,11 @@ select{
 </head>
 <body>
 	<div class="container-fluid">
+	<form action="adEventModify.cat" name="eventModify" id="eventModify" onsubmit="return check()" method="post">
 		<!-- ///////////////////////////////row page title/////////////////////////////////////// -->
 		<div class="row page-titles">
 			<div class="col-md-5 col-8 align-self-center">
-				<form action="adEventModify.cat" method="post">
+				
 					<h3 class="text-themecolor">이벤트 수정</h3>
 					<input type="hidden" name="event_num" value="${eventModel.event_num}"/>
 				<ol class="breadcrumb">
@@ -197,11 +242,12 @@ select{
 								&nbsp; <a class="btn btn-warning" href="/feline/admin/adEventList.cat">목록으로</a>
 							</div>
 						</div>
-						</form>
+						
 					</div>
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 </body>
 <script>

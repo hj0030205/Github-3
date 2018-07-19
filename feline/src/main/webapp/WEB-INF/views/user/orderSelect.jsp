@@ -1,12 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<script>
+function check()
+{
+	if(!document.b_orderListForm.order_trade_num.value)
+	{
+		alert("주문번호를 입력해주세요.");
+		document.b_orderListForm.order_trade_num.focus();
+		return false;
+	}
 
+}
+</script>
 </head>
 <body>
  <div id="all">
@@ -30,7 +39,7 @@
                 <div class="col-md-8">
                     <div class="box">
                         <h1>주문조회</h1>
-						<form name="b_orderListForm" id="b_orderListForm" action="/feline/member/b_orderList.cat" method="POST">
+						<form name="b_orderListForm" id="b_orderListForm" action="/feline/member/b_orderList.cat" onsubmit="return check()" method="POST">
                             <div class="form-group">
                                 <label for="order_trade_num">주문번호</label>
                                 <input type="text" class="form-control" id="order_trade_num"name="order_trade_num"/>

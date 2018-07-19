@@ -51,6 +51,48 @@ function checkedValue(value) {
 
 };
 
+function check()
+{
+	if(!document.eventWrite.event_name.value)
+	{
+		alert("이벤트명을 입력하세요.");
+		document.eventWrite.event_name.focus();
+		return false;
+	}
+	if(!document.eventWrite.dc_rate.value)
+	{
+		alert("할인율을 입력하세요.");
+		document.eventWrite.dc_rate.focus();
+		return false;
+	}
+	if(!document.eventWrite.start_date.value)
+	{
+		alert("시작일을 입력하세요.");
+		document.eventWrite.start_date.focus();
+		return false;
+	}
+	
+	if(!document.eventWrite.end_date.value)
+	{
+		alert("종료일을 입력하세요.");
+		document.eventWrite.end_date.focus();
+		return false;
+	}
+	
+	if(!document.eventWrite.goods_category1.value)
+	{
+		alert("카테고리를 선택하세요.");
+		document.eventWrite.goods_category1.focus();
+		return false;
+	}
+	
+	if(!document.eventWrite.goods_num.value)
+	{
+		alert("이벤트 대상 상품을 선택하세요.");
+		document.getElementById('goodsList').focus();
+		return false;
+	}
+}
 </script>
 <style>
 .form-control {
@@ -71,10 +113,10 @@ select{
 </head>
 <body>
 	<div class="container-fluid">
+	<form action="adEventWrite.cat" name="eventWrite" id="eventWrite" onsubmit="return check()" onsubmit="return check()" method="post">
 		<!-- ///////////////////////////////row page title/////////////////////////////////////// -->
 		<div class="row page-titles">
 			<div class="col-md-5 col-8 align-self-center">
-				<form action="adEventWrite.cat" method="post">
 					<h3 class="text-themecolor">이벤트 등록</h3>
 
 				<ol class="breadcrumb">
@@ -101,7 +143,7 @@ select{
 												<div class="col-md-12">
 													<input type="text" name="event_name"
 														class="form-control form-control-line"
-														value="">
+														value=""/>
 												</div>
 											</div>
 											<div class="col-md-6">
@@ -109,7 +151,7 @@ select{
 												<div class="col-md-12">
 													<input type="text" name="dc_rate"
 														value=""
-														class="form-control form-control-line">
+														class="form-control form-control-line"/>
 												</div>
 											</div>
 										</div>
@@ -121,7 +163,7 @@ select{
 												<div class="col-md-12">
 													<input type="date" name="start_date"
 														class="form-control form-control-line"
-														value="" >
+														value="" />
 												</div>
 											</div>
 											<div class="col-md-6">
@@ -129,7 +171,7 @@ select{
 												<div class="col-md-12">
 													<input type="date" name="end_date"
 														value=""
-														class="form-control form-control-line">
+														class="form-control form-control-line"/>
 												</div>
 											</div>
 										</div>
@@ -176,21 +218,24 @@ select{
 										</tr>
 									<thead>
 									<tbody id="goodsList">
+										<tr>
+											<td colspan="4">카테고리를 선택해주세요.</td>
+										</tr>
 									</tbody>
 								</table>						
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-12" style="text-align: center;">
-								<input type="submit" class="btn btn-success" value="작성 완료">
+								<input type="submit" class="btn btn-success" value="작성 완료"/>
 								&nbsp; <a class="btn btn-warning" href="/feline/admin/adEventList.cat">목록으로</a>
 							</div>
 						</div>
-						</form>
 					</div>
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 </body>
 <script>
