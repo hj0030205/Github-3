@@ -140,6 +140,8 @@ public class QnaController {
 		mav.setViewName("qnaWrite");
 		return mav;
 	}
+	
+
 
 	// Q&A 답변글 쓰기 폼
 	@RequestMapping(value="qnaReplyWrite.cat", method=RequestMethod.GET)
@@ -161,6 +163,52 @@ public class QnaController {
 		mav.setViewName("qnaWrite");
 		return mav;
 	}
+	
+	// Q&A 답변
+	@RequestMapping(value = "qnaReplyAction.cat", method = RequestMethod.POST)
+	public ModelAndView qnaReply(@ModelAttribute("qnaModel") QnaModel qnaModel, HttpServletRequest request,
+			MultipartHttpServletRequest multipartRequest,HttpSession session) throws IOException {
+		ModelAndView mav = new ModelAndView();
+		
+		Calendar today = Calendar.getInstance();
+		String content = qnaModel.getContent().replaceAll("\r\n", "<br />");
+		
+		int ref=0;
+		int re_step=0;
+		
+		if(request.getParameter("ref")!=null && request.getParameter("re_step")!=null) {
+			ref=Integer.parseInt(request.getParameter("ref"));
+			re_step=Integer.parseInt(request.getParameter("re_step"));
+		}
+
+		
+		if(ref==0) {
+			qnaModel.setRe_step(0);
+		}else {
+			qnaModel.setRef(ref);
+			qnaModel.setRe_step(re_step);
+			qnaService.qnaSetReplyStep(qnaModel);
+			qnaService.qnaAnswer(ref);
+			
+			qnaModel.setRe_step(re_step+1);
+		}
+		
+		qnaModel.setId((String)session.getAttribute("id"));
+		qnaModel.setPassword("temporary");
+		qnaModel.setContent(content);
+		qnaModel.setRegdate(today.getTime());
+
+		if(ref==0) {
+			qnaService.qnaWrite(qnaModel);
+		}else {
+			qnaService.qnaReplyWrite(qnaModel);
+		}
+
+		mav.setViewName("redirect:qnaList.cat");
+		mav.addObject("qnaModel", qnaModel);
+		return mav;
+	}
+
 
 	// Q&A 글쓰기
 	@RequestMapping(value = "qnaWrite.cat", method = RequestMethod.POST)
@@ -203,9 +251,6 @@ public class QnaController {
 			qnaService.qnaReplyWrite(qnaModel);
 		}
 
-		if (file != null) {
-			qnaModel = fileUploading(file, oldfileName, qnaModel);
-		}
 
 		mav.addObject("qnaModel", qnaModel);
 		mav.setViewName("redirect:qnaList.cat");
@@ -254,17 +299,14 @@ public class QnaController {
 		ModelAndView mav = new ModelAndView();
 		
 
-		MultipartFile file = multipartRequest.getFile("file");
-		String oldfileName = request.getParameter("oldFile");
+		//MultipartFile file = multipartRequest.getFile("file");
+		//String oldfileName = request.getParameter("oldFile");
 		int qna_num = qnaModel.getNo();
 		String content = qnaModel.getContent().replaceAll("\r\n", "<br />");
 		
 		qnaModel.setContent(content);
 		qnaService.qnaModify(qnaModel);
 		
-		if (file != null) {
-			qnaModel = fileUploading(file, oldfileName, qnaModel);
-		} 
 		
 		mav.setViewName("redirect:qnaView.cat");
 		mav.addObject("currentPage",request.getParameter("currentPage"));
@@ -273,36 +315,7 @@ public class QnaController {
 		return mav;
 	}
 
-	// 파일 업로드.
-	private QnaModel fileUploading(MultipartFile file, String oldfileName, QnaModel qnaModel) throws IOException {
 
-		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";
-		String fileRealName = file.getOriginalFilename();
-		String fileName;
-		int lastNo;
-		if (oldfileName == null) {
-			lastNo = qnaService.qnaLastNo();
-			fileName = "feline_qna_" + lastNo+"."+fileRealName.substring(fileRealName.lastIndexOf(".")+1, fileRealName.length());
-
-			FileUpload.fileUpload(file, uploadPath, fileName);
-
-		} else {
-			lastNo = qnaModel.getNo();
-			fileName = "file_qna_" + lastNo+"."+fileRealName.substring(fileRealName.lastIndexOf(".")+1, fileRealName.length());
-
-			File deleteFile = new File(uploadPath + oldfileName);
-			deleteFile.delete();
-
-			FileUpload.fileUpload(file, uploadPath, fileName);
-		}
-		qnaModel.setNo(lastNo);
-		qnaModel.setImage_orgname(fileRealName);
-		qnaModel.setImage_savname(fileName);
-		qnaService.updateFile(qnaModel);
-		
-		return qnaModel;
-
-	}
 
 	@RequestMapping(value = "/fileUpload.cat", method = RequestMethod.POST)
 	public String fileUpload(Model model, MultipartRequest multipartRequest, HttpServletRequest request) throws IOException{
@@ -311,6 +324,7 @@ public class QnaController {
 		MultipartFile imgfile = multipartRequest.getFile("Filedata");
 		Calendar cal = Calendar.getInstance();
 		String fileName = imgfile.getOriginalFilename();
+	
 		String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		String replaceName = cal.getTimeInMillis() + fileType;  
 		

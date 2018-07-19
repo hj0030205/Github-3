@@ -46,10 +46,10 @@
 							<h1>Q&A 작성 페이지</h1>
 						</c:when>
 						<c:when test="${reply eq true }">
-							<form action="qnaReplyWrite.cat" method="post" enctype="multipart/form-data">
+							<form action="qnaReplyWrite.cat" id="qnaWriteForm" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="ref" value="${qnaModel.ref}"/>
 							<input type="hidden" name="re_step" value="${qnaModel.re_step}"/>
-							<h1>Q&A 작성 페이지</h1>
+							<h1>Q&A 답변 작성 페이지</h1>
 						</c:when>
 						<c:when test="${modify eq 'true' }">
 							<form action="qnaModifyAction.cat" id="qnaWriteForm" method="post" enctype="multipart/form-data">
@@ -130,6 +130,14 @@
 								</button>
 							</div>
 							</c:when>
+							<c:when test="${reply eq true}">
+							<div class="pull-right">
+							<input type="hidden" name="ref" value="${qnaModel.ref}"/>
+							<input type="hidden" name="re_step" value="${qnaModel.re_step}"/>
+							<button type="button" class="btn btn-primary" onclick="onReply()">
+									답변완료<i class="fa fa-chevron-right"></i>
+								</button>
+							</c:when>
 							</c:choose>
 						</div>
 						</form>
@@ -175,6 +183,13 @@ var onWrite = function(){
 	qnaWriteForm.submit();  
 }; 
 
+var onReply = function(){
+	oEditors.getById["txtContent"].exec("UPDATE_CONTENTS_FIELD", []); // 에디터의 내용이 textarea에 적용됨
+	var qnaWriteForm = document.getElementById("qnaWriteForm");  
+	
+	qnaWriteForm.action ="qnaReplyAction.cat";
+	qnaWriteForm.submit();  
+}; 
 var pasteHTML = function(filename){
     var sHTML = '<img src="${pageContext.request.contextPath}/resources/common/tempUpload/'+filename+'">';
     oEditors.getById["txtContent"].exec("PASTE_HTML", [sHTML]);
