@@ -42,33 +42,34 @@ public class OrderController {
 	
 	private Logger logger = Logger.getLogger(getClass());
 
-	/********************* ÁÖ¹® ºÎºĞ 
+	/********************* ì£¼ë¬¸ ë¶€ë¶„ 
 	 * @throws IOException **********************/
 
-	/* ÁÖ¹®ÆäÀÌÁö */
+	/* ì£¼ë¬¸í˜ì´ì§€ */
 	@RequestMapping(value = "goodsSettle.cat")
 	public ModelAndView goodsSettle(HttpSession session, HttpServletRequest request, HttpServletResponse response, BasketModel basketModel,
 			@ModelAttribute("memberModel") MemberModel memberModel) throws IOException {
 
-		// ¼¼¼ÇÀÌ ¾øÀ» °æ¿ì »õ·Î »ı¼ºÇÏÁö ¾ÊÀ½
+		// ì„¸ì…˜ì´ ì—†ì„ ê²½ìš° ìƒˆë¡œ ìƒì„±í•˜ì§€ ì•ŠìŒ
 		String member_id = (String) session.getAttribute("id");
+
 		String n_id = (String) session.getAttribute("n_id");
 		
 		if(member_id == null && n_id == null) {
 			
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.');</script>");
+			out.println("<script>alert('ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.');</script>");
 			out.flush();
 			
 			mav.setViewName("login");
 			
 		} else if(member_id != null || n_id != null){
 	
-			// »óÇ°¹øÈ£°¡ ÆÄ¶ó¹ÌÅÍ·Î ¾ø´Â °æ¿ì(Àå¹Ù±¸´Ï¿¡¼­ ÀÌµ¿)
+			// ìƒí’ˆë²ˆí˜¸ê°€ íŒŒë¼ë¯¸í„°ë¡œ ì—†ëŠ” ê²½ìš°(ì¥ë°”êµ¬ë‹ˆì—ì„œ ì´ë™)
 			if (request.getParameter("goods_num") == null) {
 				
-				//È¸¿øÀÎ °æ¿ì
+				//íšŒì›ì¸ ê²½ìš°
 				if(member_id != null && member_id != "") {
 					
 					basketModel.setMember_id(member_id);
@@ -81,7 +82,7 @@ public class OrderController {
 	
 					mav.setViewName("goodsSettle");
 					
-				} else if(n_id != null && n_id != "") { //ºñÈ¸¿øÀÎ °æ¿ì
+				} else if(n_id != null && n_id != "") { //ë¹„íšŒì›ì¸ ê²½ìš°
 					
 					String goods_num_s = (String) session.getAttribute("goods_num_s");
 					String goods_size_s = (String) session.getAttribute("goods_size_s");
@@ -101,10 +102,10 @@ public class OrderController {
 						goods_amount_i[i] = Integer.parseInt(goods_amount_array[i]);
 					}
 						
-					//½×ÀÓ ¹æÁö
+					//ìŒ“ì„ ë°©ì§€
 					basketList.clear();
 						
-					//basketList¿¡ basketModel »ğÀÔ
+					//basketListì— basketModel ì‚½ì…
 					for(int j = 0; j < size; j++) {
 						GoodsModel goodsModel = new GoodsModel();
 						goodsModel = orderService.selectGoods(goods_num_i[j]);
@@ -133,10 +134,10 @@ public class OrderController {
 	
 	
 			}
-			// »óÇ°¹øÈ£°¡ ÆÄ¶ó¹ÌÅÍ·Î ÀÖ´Â °æ¿ì(»óÇ° »ó¼¼ ÆäÀÌÁö¿¡¼­ ÀÌµ¿)
+			// ìƒí’ˆë²ˆí˜¸ê°€ íŒŒë¼ë¯¸í„°ë¡œ ìˆëŠ” ê²½ìš°(ìƒí’ˆ ìƒì„¸ í˜ì´ì§€ì—ì„œ ì´ë™)
 			else if (request.getParameter("goods_num") != null) {
 				
-				//È¸¿øÀÎ °æ¿ì
+				//íšŒì›ì¸ ê²½ìš°
 				if(member_id != null && member_id != "") {
 		
 					basketModel.setBasket_goods_amount(Integer.parseInt(request.getParameter("basket_goods_amount")));
@@ -144,21 +145,21 @@ public class OrderController {
 					basketModel.setMember_id(member_id);
 					basketModel.setGoods_num(Integer.parseInt(request.getParameter("goods_num")));
 					
-					// Àå¹Ù±¸´Ï¿¡ ÇØ´ç »óÇ°ÀÌ ÀÖ´ÂÁö È®ÀÎ
+					// ì¥ë°”êµ¬ë‹ˆì— í•´ë‹¹ ìƒí’ˆì´ ìˆëŠ”ì§€ í™•ì¸
 					basketGoodsCheck = orderService.basketGoodsCheck(basketModel);
 		
-					// Àå¹Ù±¸´Ï¿¡ ÇØ´ç »óÇ°ÀÌ ÀÖ´Â °æ¿ì
+					// ì¥ë°”êµ¬ë‹ˆì— í•´ë‹¹ ìƒí’ˆì´ ìˆëŠ” ê²½ìš°
 					if (basketGoodsCheck.size() > 0) {
 		
-						// Àå¹Ù±¸´Ï·Î ÀÌµ¿ÇÒÁö ¿©ºÎ¸¦ È®ÀÎ½ÃÅ°´Â ÆäÀÌÁö·Î ÀÌµ¿
+						// ì¥ë°”êµ¬ë‹ˆë¡œ ì´ë™í• ì§€ ì—¬ë¶€ë¥¼ í™•ì¸ì‹œí‚¤ëŠ” í˜ì´ì§€ë¡œ ì´ë™
 						mav.setViewName("/basket/moveToBasket");
 		
 					}
-					// Àå¹Ù±¸´Ï¿¡ ÇØ´ç »óÇ°ÀÌ ¾ø´Â °æ¿ì
+					// ì¥ë°”êµ¬ë‹ˆì— í•´ë‹¹ ìƒí’ˆì´ ì—†ëŠ” ê²½ìš°
 					else if (basketGoodsCheck.size() == 0) {
 						
 						orderService.insertBasket(basketModel);
-						// Àå¹Ù±¸´Ï Á¤º¸, È¸¿ø Á¤º¸¸¦ °¡Áö°í goodsSettle ÆäÀÌÁö·Î ÀÌµ¿
+						// ì¥ë°”êµ¬ë‹ˆ ì •ë³´, íšŒì› ì •ë³´ë¥¼ ê°€ì§€ê³  goodsSettle í˜ì´ì§€ë¡œ ì´ë™
 						basketList = orderService.orderBasketModel(basketModel);
 						memberModel = orderService.getMember(member_id);
 		
@@ -168,9 +169,9 @@ public class OrderController {
 						mav.setViewName("goodsSettle");
 		
 					}
-				} else if(n_id != null && n_id != "") { //ºñÈ¸¿øÀÎ °æ¿ì
-					
-					//¼¼¼Ç¿¡ ÇØ´ç ¹°Ç°ÀÌ ÀÖ´ÂÁö °Ë»ç
+				} else if(n_id != null && n_id != "") { //ë¹„íšŒì›ì¸ ê²½ìš°
+
+					//ì„¸ì…˜ì— í•´ë‹¹ ë¬¼í’ˆì´ ìˆëŠ”ì§€ ê²€ì‚¬
 					String goods_num_s = (String) session.getAttribute("goods_num_s");
 					
 					if(goods_num_s != null && goods_num_s!="") {
@@ -187,10 +188,10 @@ public class OrderController {
 						
 						if (list.contains(goods_numst) == true) {
 							
-							//¼¼¼Ç¿¡ »óÇ°ÀÌ ÀÖÀ¸¸é ¹Ù½ºÄÏÀ¸·Î ÀÌµ¿
+							//ì„¸ì…˜ì— ìƒí’ˆì´ ìˆìœ¼ë©´ ë°”ìŠ¤ì¼“ìœ¼ë¡œ ì´ë™
 							response.setContentType("text/html; charset=utf-8");
 							PrintWriter out = response.getWriter();
-							out.println("<script>var moveToBasket = confirm('µ¿ÀÏ »óÇ°ÀÌ Àå¹Ù±¸´Ï¿¡ Á¸ÀçÇÕ´Ï´Ù. \\nÀå¹Ù±¸´Ï·Î ÀÌµ¿ÇÏ½Ã°Ú½À´Ï±î?');\r\n" + 
+							out.println("<script>var moveToBasket = confirm('ë™ì¼ ìƒí’ˆì´ ì¥ë°”êµ¬ë‹ˆì— ì¡´ì¬í•©ë‹ˆë‹¤. \\nì¥ë°”êµ¬ë‹ˆë¡œ ì´ë™í•˜ì‹œê² ìŠµë‹ˆê¹Œ?');\r\n" + 
 									"	if(moveToBasket == true) {\r\n" + 
 									"		location.href='/feline/basket/basketList.cat';\r\n" + 
 									"	} else {\r\n" + 
@@ -203,7 +204,7 @@ public class OrderController {
 							String goods_size_s = request.getParameter("basket_goods_size");
 							int goods_amount_s = Integer.parseInt(request.getParameter("basket_goods_amount"));
 							
-							//½×ÀÓ ¹æÁö
+							//ìŒ“ì„ ë°©ì§€
 							List<BasketModel> basketList1 = new ArrayList<BasketModel>();
 							
 							GoodsModel goodsModel = new GoodsModel();
@@ -235,7 +236,7 @@ public class OrderController {
 						String goods_size_s = request.getParameter("basket_goods_size");
 						int goods_amount_s = Integer.parseInt(request.getParameter("basket_goods_amount"));
 						
-						//½×ÀÓ ¹æÁö
+						//ìŒ“ì„ ë°©ì§€
 						List<BasketModel> basketList1 = new ArrayList<BasketModel>();
 						
 						GoodsModel goodsModel = new GoodsModel();
@@ -269,7 +270,7 @@ public class OrderController {
 	}
 
 	
-	/* ÁÖ¹®Ã³¸® */
+	/* ì£¼ë¬¸ì²˜ë¦¬ */
 	@RequestMapping(value = "goodsOrder.cat")
 	public ModelAndView goodsOrder(HttpSession session, HttpServletRequest request, @ModelAttribute("basketModel") BasketModel basketModel,
 			@ModelAttribute("orderModel") OrderModel orderModel) {
@@ -282,7 +283,7 @@ public class OrderController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		String todayS = sdf.format(today.getTime());
 		
-		//È¸¿øÀÎ °æ¿ì
+		//íšŒì›ì¸ ê²½ìš°
 		if(member_id != null && member_id != "") {
 			
 			if(request.getParameter("goods_num") == null) {
@@ -321,10 +322,10 @@ public class OrderController {
 					goods_amount_i[i] = Integer.parseInt(goods_amount_array[i]);
 				}
 					
-				//½×ÀÓ ¹æÁö
+				//ìŒ“ì„ ë°©ì§€
 				basketList.clear();
 					
-				//basketList¿¡ basketModel »ğÀÔ
+				//basketListì— basketModel ì‚½ì…
 				for(int j = 0; j < size; j++) {
 					GoodsModel goodsModel = new GoodsModel();
 					goodsModel = orderService.selectGoods(goods_num_i[j]);
@@ -347,7 +348,7 @@ public class OrderController {
 				String goods_size_s = request.getParameter("basket_goods_size");
 				int goods_amount_s = Integer.parseInt(request.getParameter("basket_goods_amount"));
 				
-				//½×ÀÓ ¹æÁö
+				//ìŒ“ì„ ë°©ì§€
 				basketList.clear();
 				
 				GoodsModel goodsModel = new GoodsModel();
@@ -436,7 +437,7 @@ public class OrderController {
 	}
 	
 	
-	//¹«ÅëÀåÀÏ¶§ Ã³¸®ÇØÁÖ´Â ÆäÀÌÁö
+	//ë¬´í†µì¥ì¼ë•Œ ì²˜ë¦¬í•´ì£¼ëŠ” í˜ì´ì§€
 	@RequestMapping(value="/noBank.cat",method=RequestMethod.POST)
 	public ModelAndView noBack(OrderModel orderModel,BasketModel basketModel,HttpSession session,
 			HttpServletRequest request) {
@@ -449,7 +450,7 @@ public class OrderController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		String todayS = sdf.format(today.getTime());
 		
-		//È¸¿øÀÎ °æ¿ì
+		//È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if(member_id != null && member_id != "") {
 			
 			if(request.getParameter("goods_num") == null) {
@@ -488,10 +489,10 @@ public class OrderController {
 					goods_amount_i[i] = Integer.parseInt(goods_amount_array[i]);
 				}
 					
-				//½×ÀÓ ¹æÁö
+				//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				basketList.clear();
 					
-				//basketList¿¡ basketModel »ğÀÔ
+				//basketListï¿½ï¿½ basketModel ï¿½ï¿½ï¿½ï¿½
 				for(int j = 0; j < size; j++) {
 					GoodsModel goodsModel = new GoodsModel();
 					goodsModel = orderService.selectGoods(goods_num_i[j]);
@@ -514,7 +515,7 @@ public class OrderController {
 				String goods_size_s = request.getParameter("basket_goods_size");
 				int goods_amount_s = Integer.parseInt(request.getParameter("basket_goods_amount"));
 				
-				//½×ÀÓ ¹æÁö
+				//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				basketList.clear();
 				
 				GoodsModel goodsModel = new GoodsModel();

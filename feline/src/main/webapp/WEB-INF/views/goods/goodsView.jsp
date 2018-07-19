@@ -50,6 +50,7 @@ li.basic.active {
 </style>
 </head>
 <body>
+지금 세션 ${sessionScope.member_id }
 	<div id="all">
 
 		<div id="content">

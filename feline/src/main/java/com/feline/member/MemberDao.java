@@ -12,6 +12,9 @@ public interface MemberDao
 {
 	//ï¿½Î±ï¿½ï¿½ï¿½
 	 String memberLogin(MemberModel memberModel);
+	 
+	//°ü¸®ÀÚ ·Î±×ÀÎ	
+	String adminLogin(MemberModel adminModel);
 
 	 //È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 MemberModel getMember(String id);

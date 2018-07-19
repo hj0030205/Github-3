@@ -235,33 +235,28 @@ li.basic.active {
 					</div>
 
 					<c:if test="${not empty search}">
-						<h2>${search }</h2>
-						<h4 align="right"><font color="#4E4E4E">검색결과</font>&nbsp;<font size="3" color="#4E4E4E">${fn:length(goodsList)}개</font></h4>
-					
+						<h4 align="right">
+							<font color="#4E4E4E">검색결과</font>&nbsp;<font size="3"
+								color="#4E4E4E">${fn:length(goodsList)}개</font>
+						</h4>
 						<div class="box">
-							<form action="/feline/goods/goodsSearchList.cat" onsubmit="return calendar()" class="navbar-form" role="search" name="date">
+							<form action="/feline/goods/goodsSearchList.cat"
+								onsubmit="return calendar()" class="navbar-form" role="search"
+								name="date">
 								<div>
-									<span class="panel-heading">
-						            	<font size="4">카테고리</font>
-									</span>
-									<span>
-										&nbsp;
-										<select id="bigcat" size="1">
+									<span class="panel-heading"> <font size="4">카테고리</font>
+									</span> <span> &nbsp; <select id="bigcat" size="1">
 											<option value="">--</option>
-										</select>
-					
-										&nbsp;&nbsp;세부: &nbsp;
-										<select id="category" name="category" size="1">
+									</select> &nbsp;&nbsp;세부: &nbsp; <select id="category" name="category"
+										size="1">
 											<option value="">--</option>
-										</select>
+									</select>
 									</span>
-								</div><br/>
+								</div>
+								<br />
 								<div>
-									<span class="panel-heading">
-						            	<font size="4">가격대   </font>
-									</span>
-									<span>
-										최소값: &nbsp;<select name="minprice">
+									<span class="panel-heading"> <font size="4">가격대 </font>
+									</span> <span> 최소값: &nbsp;<select name="minprice">
 											<option value=""></option>
 											<option value="0">0원</option>
 											<option value="5000">5,000원</option>
@@ -274,8 +269,7 @@ li.basic.active {
 											<option value="100000">100,000원</option>
 											<option value="200000">200,000원</option>
 											<option value="300000">30,0000원</option>
-										</select>
-										&nbsp;~&nbsp;최대값: &nbsp;<select name="maxprice">
+									</select> &nbsp;~&nbsp;최대값: &nbsp;<select name="maxprice">
 											<option value=""></option>
 											<option value="5000">5,000원</option>
 											<option value="10000">10,000원</option>
@@ -288,9 +282,10 @@ li.basic.active {
 											<option value="200000">200,000원</option>
 											<option value="300000">300,000원</option>
 											<option value="500000">500,000원</option>
-										</select>
+									</select>
 									</span>
-								</div><br/>
+								</div>
+								<br />
 								<div>
 									<span class="panel-heading">
 						            	<font size="4">등록기간</font>
@@ -342,21 +337,23 @@ li.basic.active {
 											<option value="9">10</option>
 											<option value="10">11</option>
 											<option value="11">12</option>
-										</select>&nbsp;월
+									</select>&nbsp;월
 									</span>
-								</div><br/>
+								</div>
+								<br />
 								<div align="right">
-			                        <input type="text" class="form-control" name="search" value="${search }">
-			                        <span><button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button></span>
-		                        </div>
-			                </form>
-			            </div>
+									<input type="text" class="form-control" name="search"
+										value="${search }"> <span><button
+											class="btn btn-primary" type="submit">
+											<i class="fa fa-search"></i>
+										</button></span>
+								</div>
+							</form>
+						</div>
 					</c:if>
-
 					<c:if test="${fn:length(goodsList) le 0}">
-						등록된 상품이 없습니다
+							등록된 상품이 없습니다
 					</c:if>
-					
 					<div class="row products">
 						<c:forEach var="goodsList" items="${goodsList}" varStatus="stat">
 							<c:url var="viewURL" value="goodsView.cat">

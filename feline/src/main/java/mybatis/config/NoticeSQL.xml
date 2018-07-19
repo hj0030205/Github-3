@@ -51,13 +51,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 게시물 제목으로 검색 -->
 	<select id="selectSearchS" resultMap="NoticeBoardRes" parameterType="string">
 		<include refid="select-all" />
-		where subject like #{subject} and status=1
+		where subject like '%'||#{subject}||'%' and status=1
 		order by no desc
 	</select>
 
 	<select id="selectSearchC" resultMap="NoticeBoardRes" parameterType="string">
 		<include refid="select-all" />
-		where content like #{content}  and status=1
+		where content like '%'||#{content}||'%'  and status=1
 		order by no desc
 	</select>
 

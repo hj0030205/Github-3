@@ -27,6 +27,10 @@
 			<mvc:mapping path="/**" />
 				<beans:bean id="LoggerInterceptor" class="com.feline.logger.LoggerInterceptor" />
 		</mvc:interceptor>
+		<mvc:interceptor> 
+	   	   <mvc:mapping path="/admin/**"/> 
+	       <beans:bean id="SessionAdminInterceptor" class="com.feline.interceptor.AdminInterCeptor"/>
+	    </mvc:interceptor>
 	</mvc:interceptors>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->

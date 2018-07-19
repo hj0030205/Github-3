@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-
-
+	
 	<!-- Admin 메인페이지 - 상단 차트 -->
 	
 	<!-- 결제 대기중 -->
@@ -39,11 +38,11 @@
 	
 	<!-- 오늘 팔린 상품 순위 -->
 	<select id="todaySalesGoods" resultType="GoodsModel">
-		<![CDATA[ select c.* from (
-					select g.goods_num, g.goods_image_savname, g.goods_name, g.goods_price  
+		<![CDATA[ select goods_num, goods_image_savname, goods_name, goods_price, goods_hit from(
+                    select g.goods_num, g.goods_image_savname, g.goods_name, g.goods_price, sum(order_goods_amount) goods_hit 
                     from feline_order o left outer join feline_goods g on o.goods_num = g.goods_num 
                     where o.status = 1 and trunc(order_date)=trunc(sysdate)	
-                    group by g.goods_num, g.goods_image_savname, g.goods_name, g.goods_price order by sum(order_goods_amount) desc) c 
+                    group by g.goods_num, g.goods_image_savname, g.goods_name, g.goods_price order by sum(order_goods_amount) desc)
                     where rownum>=1 and rownum<=8]]>
 	</select>
 	
@@ -61,19 +60,163 @@
 	
 	<select id="todayOrderAge" resultType="ChartModel">
 		<![CDATA[
-			select substr(to_char(member_jumin1),1,2) key, count(*) value from (
+			  select nvl(substr(to_char(member_jumin1),1,2),0) key, count(*) value from (
 				select a.order_num, a.order_date, b.member_jumin1  
-				from feline_order a inner join feline_member b on a.order_member_id=b.member_id where trunc(order_date)=trunc(sysdate))
-			group by substr(to_char(member_jumin1),1,2)
+				from feline_order a left outer join feline_member b on a.order_member_id=b.member_id where trunc(order_date)=trunc(sysdate))
+			group by nvl(substr(to_char(member_jumin1),1,2),0)
 		]]>
 	</select>
 	
 	<select id="todayOrderRegion" resultType="ChartModel">
 		<![CDATA[
-			select substr(member_addr1,1,2) key, count(*) value from (
+			    select nvl(substr(member_addr1,1,2),0) key, count(*) value from (
 				select a.order_num, a.order_date, b.member_addr1 
-				from feline_order a inner join feline_member b on a.order_member_id=b.member_id where trunc(order_date)=trunc(sysdate))
-			group by substr(member_addr1,1,2)]]>
+				from feline_order a left outer join feline_member b on a.order_member_id=b.member_id where trunc(order_date)=trunc(sysdate))
+			group by nvl(substr(member_addr1,1,2),0)]]>
 	</select>
+	
+	<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- chartM으로 종합 통계 구현하기. 아래의 주간 통계의 날짜를 지정 가능 하도록 해서 종합 통계 제공 -->
+	
+	<!-- 날짜별 누적 회원수 -->
+	 <select id="chartAllM" resultType="ChartModel"> 
+		  <![CDATA[
+		  select to_char(member_join_date, 'mm-dd') key, count(*) value 
+		from feline_member group by to_char(member_join_date, 'mm-dd') order by key asc
+		]]>
+	</select>
+	
+	<!-- 최근 일주일 동안 가입한 회원 수 통계 -->
+	<select id="chartNewM" resultType="ChartModel"> 
+		<![CDATA[
+		 select to_char(member_join_date,'mm-dd') key, count(*) value from feline_member 
+		where member_join_date<trunc(sysdate)+1 and member_join_date>=trunc(sysdate)-6
+		group by to_char(member_join_date,'mm-dd') order by key asc
+		]]>
+	</select>
+	
+	<!-- 전체 회원 기준 연령 구분 파이 차트 -->
+	<select id="memberAge" resultType="ChartModel">
+		<![CDATA[
+		select substr(to_char(member_jumin1),1,2) key, count(*) value
+		from feline_member group by substr(to_char(member_jumin1),1,2)
+		]]>
+	</select>
+	
+	<!-- 최근 일주일 신규 회원 연령 구분 -->
+	<select id="newMemberAge" resultType="ChartModel">
+		<![CDATA[  
+		select substr(to_char(member_jumin1),1,2) key, count(*) value
+			from feline_member where member_join_date<trunc(sysdate)+1 and member_join_date>=trunc(sysdate)-6
+			group by substr(to_char(member_jumin1),1,2)
+			]]>
+	</select>
+	
+	<!-- 전체 회원 지역 구분 파이 차트 -->
+	<select id="memberRegion" resultType="ChartModel">
+		select substr(member_addr1,1,2) key, count(*) value from feline_member group by substr(member_addr1,1,2)
+	</select>
+	
+	<!-- 최근 일주일 신규 회원 지역 구분 -->
+	<select id="newMemberRegion" resultType="ChartModel">
+		<![CDATA[
+		select substr(member_addr1,1,2) key, count(*) value from feline_member 
+		where member_join_date<trunc(sysdate)+1 and member_join_date>=trunc(sysdate)-6 group by substr(member_addr1,1,2)
+		]]>
+	</select>
+	
+	<!-- //////////////////////////////////////// -->
+	
+	<select id="GoodsSelling" resultType="GoodsModel"><!-- 전체 기간 기준 가장 많이 팔인 책 8권 -->
+		<![CDATA[select a.* from (select goods_category, goods_num, goods_name, goods_hit, goods_image_savname, goods_price
+		from feline_goods order by goods_hit desc) a where rownum>=1 and rownum<=8]]>
+	</select>
+	
+	<select id="monthGoodsSelling" resultType="GoodsModel"><!-- 저번 달의 판매량 순위 -->
+		<![CDATA[select c.*, b.goods_category, b.goods_image_savname, b.goods_price from (
+					select g.goods_name, g.goods_num, sum(o.order_goods_amount) as goods_hit 
+                    from feline_goods g, feline_order o
+                    where o.status = 1 and g.goods_num = o.goods_num and extract(month from order_date)=extract(month from sysdate)-1 
+                    group by g.goods_name, g.goods_num order by goods_hit desc) c left outer join feline_goods b on c.goods_num = b.goods_num
+        where rownum>=1 and rownum<=8]]>
+	</select>
+	
+	<select id="weekGoodsSelling" resultType="GoodsModel"><!-- 최근 7일 판매량 순위 -->
+		<![CDATA[ select c.*, b.goods_category, b.goods_image_savname, b.goods_price from (
+					select g.goods_name, g.goods_num, sum(o.order_goods_amount) as goods_hit 
+                    from feline_goods g, feline_order o
+                    where o.status = 1 and g.goods_num = o.goods_num and order_date<=trunc(sysdate)+1 and order_date>=trunc(sysdate)-6
+                    group by g.goods_name, g.goods_num order by goods_hit desc) c left outer join feline_goods b on c.goods_num = b.goods_num
+        where rownum>=1 and rownum<=8]]>
+	</select>
+	
+	<!-- //////////////////////////////////////// -->
+	<!-- 차트 구현 후 기간 지정 가능 종합 통계 구현하기 --><!-- 매출 분석 순이익 필요? 매출 분석 시 결제 상태와 배송 상태 고려 -->
+	
+	<!-- 달별 주문량 조회 -->
+	<select id="monthOrderNum" resultType="ChartModel">
+		<![CDATA[  select to_char(order_date,'yy-mm') key, count(*) value
+			from feline_order group by to_char(order_date,'yy-mm') order by key]]>
+	</select>
+	
+	<!-- 달별 판매량 조회 -->
+	<select id="monthSales" resultType="ChartModel">
+		select to_char(o.order_date,'yy-mm') key, trunc(sum((o.order_goods_amount*g.goods_price)/1000),2) price
+		from feline_order o, feline_goods g where o.goods_num=g.goods_num group by to_char(order_date,'yy-mm') order by key
+	</select>
+	
+	<!-- 최근 7일 날짜별 주문량 조회 -->
+	<select id="weekOrderNum" resultType="ChartModel">
+		<![CDATA[ select to_char(order_date,'mm-dd') key, count(*) value from feline_order 
+		where order_date<=trunc(sysdate)+1 and order_date>=trunc(sysdate)-6
+		group by to_char(order_date,'mm-dd') order by key]]>
+	</select>
+	
+	<!-- 최근 7일 날짜별 판매량 -->
+	<select id="weekSales" resultType="ChartModel">
+		<![CDATA[select to_char(o.order_date,'yy-mm') key, trunc(sum((o.order_goods_amount*g.goods_price)/1000),2) price
+		from feline_order o, feline_goods g 
+		where o.goods_num=g.goods_num and o.order_date<=trunc(sysdate)+1 and o.order_date>=trunc(sysdate)-6 
+        group by to_char(order_date,'yy-mm') 
+        order by key]]>
+	</select>
+	
+	<!-- 달별 연령 구분 -->
+	<select id="monthOrderAge" resultType="ChartModel">
+		     select nvl(substr(to_char(member_jumin1),1,2),0) key, count(*) value from (
+			select b.member_jumin1 
+			from feline_order a left outer join feline_member b on a.order_member_id=b.member_id)
+		group by nvl(substr(to_char(member_jumin1),1,2),0) order by key
+	</select>
+	
+	<!-- 최근 7일 주문 회원 연령별 통계 -->
+	<select id="weekOrderAge" resultType="ChartModel">
+		<![CDATA[
+			  select nvl(substr(to_char(member_jumin1),1,2),0) key, count(*) value from (
+				select b.member_jumin1 
+				from feline_order a left outer join feline_member b on a.order_member_id=b.member_id 
+				where order_date<=trunc(sysdate)+1 and order_date>=trunc(sysdate)-6)
+			group by nvl(substr(to_char(member_jumin1),1,2),0)
+		]]>
+	</select>
+	
+	<!-- 달별 회원 지역 구분 -->
+	<select id="monthOrderRegion" resultType="ChartModel">
+		   select nvl(substr(member_addr1,1,2),0) key, count(*) value from (
+			select b.member_addr1 
+			from feline_order a left outer join feline_member b on a.order_member_id=b.member_id)
+		group by substr(member_addr1,1,2) order by key
+	</select>
+	
+	<!-- 최근 7일 회원 주문 지역별 통계 -->
+	<select id="weekOrderRegion" resultType="ChartModel">
+		<![CDATA[
+			   select nvl(substr(member_addr1,1,2),0) key, count(*) value from (
+				select b.member_addr1 
+				from feline_order a left outer join feline_member b on a.order_member_id=b.member_id 
+				where order_date<=trunc(sysdate)+1 and order_date>=trunc(sysdate)-6)
+			group by nvl(substr(member_addr1,1,2),0)]]>
+	</select>
+	
 	
 </mapper>

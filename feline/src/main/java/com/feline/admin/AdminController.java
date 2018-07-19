@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -47,10 +51,10 @@ public class AdminController {
 
 	@Resource
 	private AdminService adminService;
-	
+
 	@Resource
 	private EventService eventService;
-	
+
 	ModelAndView mav = new ModelAndView();
 
 	private int searchNum;
@@ -63,7 +67,7 @@ public class AdminController {
 	private int blockPage = 5;
 	private String pagingHtml;
 	private Paging page;
-	
+
 	Gson gson = new Gson();
 
 	private List<MemberModel> memberList = new ArrayList<MemberModel>();
@@ -72,48 +76,51 @@ public class AdminController {
 
 	private Logger logger = Logger.getLogger(getClass());
 
-
-	@SuppressWarnings("deprecation")
 	@RequestMapping("main.cat") // 관리자 페이지
 	public ModelAndView adMain() throws Exception {
-		
+
 		int countTrade = adminService.countTrade();
 		int countTrans = adminService.countTrans();
 		int countTrans2 = adminService.countTrans2();
 		int todayMember = adminService.todayMember();
 		int todayOrder = adminService.todayOrder();
 		int todaySalesM = adminService.todaySalesM();
-		
+
 		List<GoodsModel> todaySalesGoods = adminService.todaySalesGoods();
-		
-		Calendar today = Calendar.getInstance();
-		String sYear = Integer.toString(today.getTime().getYear());
-		int iYear = 17;
-				//Integer.parseInt(sYear.substring(0,1));
-		
-		//연령대1 - 회원
+
+		GregorianCalendar today = new GregorianCalendar();
+		String sYear = Integer.toString(today.get(today.YEAR)).substring(2,4);
+		int iYear = Integer.parseInt(sYear);
+		Map<Integer, Integer> mapYear = new HashMap<>();
+		int icell=0;
+
+		// 연령대1 - 회원
 		List<ChartModel> todayMemberAge = adminService.todayMemberAge();
 		GoogleChartDTO pie1 = new GoogleChartDTO();
-
+		
+		
 		pie1.addColumn("연령대", "string");
 		pie1.addColumn("number", "number");
 		pie1.createRows(todayMemberAge.size());
 
-		for (int i = 0; i < todayMemberAge.size(); i++) {
-			int mYear = Integer.parseInt(todayMemberAge.get(i).getKey());
-			if(mYear>=iYear) {
-				mYear = ((100+iYear)-mYear)/10;
-			}else {
-				mYear = (iYear-mYear)/10;
-			}
-			pie1.addCell(i, mYear + "0 년대");
-			pie1.addCell(i, todayMemberAge.get(i).getValue());
-		}
-		String memberAgePie = gson.toJson(pie1.getResult());
-		System.out.println("//////////////////////////////////////////"+memberAgePie);
-		mav.addObject("memberAgePie", memberAgePie);
+		mapYear = CalculationYear(todayMemberAge, iYear);
 		
-		//지역1 - 회원
+		icell=0;
+		for(Integer i : mapYear.keySet()) {
+			if(i==0) {
+				pie1.addCell(icell, "비회원");
+			}else {
+				pie1.addCell(icell, i+"0대");
+			}
+			pie1.addCell(icell, mapYear.get(i));
+			icell++;
+		}
+		
+		String memberAgePie = gson.toJson(pie1.getResult());
+		System.out.println("//////////////////////////////////////////" + memberAgePie);
+		mav.addObject("memberAgePie", memberAgePie);
+
+		// 지역1 - 회원
 		List<ChartModel> todayMemberRegion = adminService.todayMemberRegion();
 		GoogleChartDTO pie2 = new GoogleChartDTO();
 
@@ -126,10 +133,10 @@ public class AdminController {
 			pie2.addCell(i, todayMemberRegion.get(i).getValue());
 		}
 		String memberRegionPie = gson.toJson(pie2.getResult());
-		System.out.println("//////////////////////////////////////////"+memberRegionPie);
+		System.out.println("//////////////////////////////////////////" + memberRegionPie);
 		mav.addObject("memberRegionPie", memberRegionPie);
-		
-		//연령대2 - 주문
+
+		// 연령대2 - 주문
 		List<ChartModel> todayOrderAge = adminService.todayOrderAge();
 		GoogleChartDTO pie3 = new GoogleChartDTO();
 
@@ -137,15 +144,24 @@ public class AdminController {
 		pie3.addColumn("number", "number");
 		pie3.createRows(todayOrderAge.size());
 
-		for (int i = 0; i < todayOrderAge.size(); i++) {
-			pie3.addCell(i, todayOrderAge.get(i).getKey()+ "0 년대");
-			pie3.addCell(i, todayOrderAge.get(i).getValue());
-		}
-		String orderAgePie = gson.toJson(pie3.getResult());
-		System.out.println("//////////////////////////////////////////"+orderAgePie);
-		mav.addObject("orderAgePie", orderAgePie);
+		mapYear = CalculationYear(todayOrderAge, iYear);
 		
-		//지역2 - 주문
+		icell=0;
+		for(Integer i : mapYear.keySet()) {
+			if(i==0) {
+				pie3.addCell(icell, "비회원");
+			}else {
+				pie3.addCell(icell, i+"0대");
+			}
+			pie3.addCell(icell, mapYear.get(i));
+			icell++;
+		}
+		
+		String orderAgePie = gson.toJson(pie3.getResult());
+		System.out.println("//////////////////////////////////////////" + orderAgePie);
+		mav.addObject("orderAgePie", orderAgePie);
+
+		// 지역2 - 주문
 		List<ChartModel> todayOrderRegion = adminService.todayOrderRegion();
 		GoogleChartDTO pie4 = new GoogleChartDTO();
 
@@ -154,14 +170,17 @@ public class AdminController {
 		pie4.createRows(todayOrderRegion.size());
 
 		for (int i = 0; i < todayOrderRegion.size(); i++) {
-			pie4.addCell(i, todayOrderRegion.get(i).getKey());
+			if(todayOrderRegion.get(i).getKey().equals("0")) {
+				pie4.addCell(i, "비회원");
+			}else {
+				pie4.addCell(i, todayOrderRegion.get(i).getKey());
+			}
 			pie4.addCell(i, todayOrderRegion.get(i).getValue());
 		}
 		String orderRegionPie = gson.toJson(pie4.getResult());
-		System.out.println("//////////////////////////////////////////"+orderRegionPie);
+		System.out.println("//////////////////////////////////////////" + orderRegionPie);
 		mav.addObject("orderRegionPie", orderRegionPie);
-		
-		
+
 		mav.addObject("countTrade", countTrade);
 		mav.addObject("countTrans", countTrans);
 		mav.addObject("countTrans2", countTrans2);
@@ -170,19 +189,18 @@ public class AdminController {
 		mav.addObject("todayOrderMoney", todaySalesM);
 		mav.addObject("todaySalesGoods", todaySalesGoods);
 		mav.addObject("todayGoodsC", todaySalesGoods.size());
-		
+
 		mav.setViewName("admin");
 		return mav;
 	}
-	
+
 	/*********************** 회원 관리 *************************/
 
 	/* 회원 목록 */
 	@RequestMapping(value = "adMemberList.cat")
 	public ModelAndView adMemberList(HttpServletRequest request) throws UnsupportedEncodingException {
 
-		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
-				|| request.getParameter("currentPage").equals("0")) {
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty() || request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
 		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -190,7 +208,7 @@ public class AdminController {
 
 		keyword = request.getParameter("searchKeyword");
 
-		if (keyword != null && keyword!="") {
+		if (keyword != null && keyword != "") {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
 			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
 
@@ -284,7 +302,7 @@ public class AdminController {
 	}
 
 	/* 회원 정보 수정 폼 */
-	@RequestMapping(value = "adMemberModify.cat", method=RequestMethod.GET)
+	@RequestMapping(value = "adMemberModify.cat", method = RequestMethod.GET)
 	public ModelAndView adMemberModifyForm(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel memberModel) {
 
 		String member_id = request.getParameter("member_id");
@@ -300,7 +318,7 @@ public class AdminController {
 	}
 
 	/* 회원 정보 수정 */
-	@RequestMapping(value = "adMemberModify.cat",method=RequestMethod.POST)
+	@RequestMapping(value = "adMemberModify.cat", method = RequestMethod.POST)
 	public ModelAndView adMemberModify(@ModelAttribute("memberModel") MemberModel memberModel) {
 
 		adminService.updateMember(memberModel);
@@ -316,15 +334,14 @@ public class AdminController {
 	@RequestMapping(value = "adGoodsList.cat")
 	public ModelAndView adGoodsList(HttpServletRequest request) throws UnsupportedEncodingException {
 
-		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
-				|| request.getParameter("currentPage").equals("0")) {
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty() || request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
 		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
 		keyword = request.getParameter("searchKeyword");
-		
+
 		List<GoodsModel> adGoodsList = new ArrayList<GoodsModel>();
 
 		if (keyword != null) {
@@ -405,8 +422,7 @@ public class AdminController {
 
 	// Admin 상품 글쓰기
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.POST)
-	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel GoodsModel,
-			MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
+	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel GoodsModel, MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
 
 		MultipartFile file = multipartRequest.getFile("file");
 		Calendar today = Calendar.getInstance();
@@ -443,16 +459,15 @@ public class AdminController {
 
 	// Admin 상품 수정폼
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.GET)
-	public ModelAndView adGoodsModifyForm(GoodsModel GoodsModel, BindingResult result,
-			HttpServletRequest request) {
-		int goods_num= Integer.parseInt(request.getParameter("goods_num"));
-		currentPage=Integer.parseInt(request.getParameter("currentPage"));
+	public ModelAndView adGoodsModifyForm(GoodsModel GoodsModel, BindingResult result, HttpServletRequest request) {
+		int goods_num = Integer.parseInt(request.getParameter("goods_num"));
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		GoodsModel = adminService.goodsView(goods_num);
 
 		String content = GoodsModel.getGoods_content().replaceAll("<br />", "\r\n");
 		GoodsModel.setGoods_content(content);
-		
-		mav.addObject("currentPage",currentPage);
+
+		mav.addObject("currentPage", currentPage);
 		mav.addObject("goodsModel", GoodsModel);
 		mav.setViewName("adGoodsWrite");
 
@@ -461,8 +476,7 @@ public class AdminController {
 
 	// Admin 상품 수정
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.POST)
-	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel GoodsModel, HttpServletRequest request,
-			MultipartHttpServletRequest multipartRequest) throws IOException {
+	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel GoodsModel, HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws IOException {
 
 		MultipartFile file = multipartRequest.getFile("file");
 		String oldfileName = request.getParameter("oldFile");
@@ -490,15 +504,13 @@ public class AdminController {
 		int lastNo;
 		if (oldfileName == null) {
 			lastNo = adminService.goodsLastNum();
-			fileName = "feline_adGoods_" + lastNo+"."
-					+ fileRealName.substring(fileRealName.lastIndexOf(".") + 1, fileRealName.length());
+			fileName = "feline_adGoods_" + lastNo + "." + fileRealName.substring(fileRealName.lastIndexOf(".") + 1, fileRealName.length());
 
 			FileUpload.fileUpload(file, uploadPath, fileName);
 
 		} else {
 			lastNo = GoodsModel.getGoods_num();
-			fileName = "file_adGoods_" + lastNo+"."
-					+ fileRealName.substring(fileRealName.lastIndexOf(".") + 1, fileRealName.length());
+			fileName = "file_adGoods_" + lastNo + "." + fileRealName.substring(fileRealName.lastIndexOf(".") + 1, fileRealName.length());
 
 			File deleteFile = new File(uploadPath + oldfileName);
 			deleteFile.delete();
@@ -520,8 +532,7 @@ public class AdminController {
 	@RequestMapping("adOrderList.cat")
 	public ModelAndView OrderList(HttpServletRequest request) throws Exception {
 
-		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
-				|| request.getParameter("currentPage").equals("0")) {
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty() || request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
 		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -530,7 +541,6 @@ public class AdminController {
 		List<OrderModel> orderlist = adminService.orderAllList();
 
 		keyword = request.getParameter("searchKeyword");
-		
 
 		if (keyword != null) {
 			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
@@ -606,12 +616,12 @@ public class AdminController {
 	@RequestMapping(value = "adOrderModify.cat", method = RequestMethod.GET)
 	public ModelAndView orderModifyForm(HttpServletRequest request) {
 		int order_num = Integer.parseInt(request.getParameter("order_num"));
-		
+
 		OrderModel orderModel = adminService.OrderView(order_num);
 		GoodsModel goodsModel = adminService.goodsView(orderModel.getGoods_num());
-		
-		mav.addObject("orderModel",orderModel);
-		mav.addObject("goodsModel",goodsModel);
+
+		mav.addObject("orderModel", orderModel);
+		mav.addObject("goodsModel", goodsModel);
 		mav.setViewName("adOrderModify");
 
 		return mav;
@@ -624,78 +634,77 @@ public class AdminController {
 		adminService.orderModify(orderModel);
 
 		mav.setViewName("redirect:adOrderList.cat");
-		mav.addObject("currentPage",request.getParameter("currentPage"));
+		mav.addObject("currentPage", request.getParameter("currentPage"));
 		return mav;
 	}
-	
+
 	/*********************** 이벤트 관리 *************************/
-	
-	//이벤트 리스트
+
+	// 이벤트 리스트
 	@RequestMapping(value = "adEventList.cat")
 	public ModelAndView eventList(HttpServletRequest request) {
-		
+
 		eventList = eventService.eventList();
-		
-		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
-				|| request.getParameter("currentPage").equals("0")) {
+
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty() || request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
-			} else {
+		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		
+
 		keyword = request.getParameter("searchKeyword");
-		
+
 		totalCount = eventList.size();
-		
+
 		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adEventList");
 		pagingHtml = page.getPagingHtml().toString();
-		
+
 		int lastCount = totalCount;
-			if (page.getEndCount() < totalCount) {
+		if (page.getEndCount() < totalCount) {
 			lastCount = page.getEndCount() + 1;
 		}
-			eventList = eventList.subList(page.getStartCount(), lastCount);
-		
+		eventList = eventList.subList(page.getStartCount(), lastCount);
+
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("eventList", eventList);
 		mav.setViewName("adEventList");
-		
+
 		return mav;
-			
-		}
-		
-	//이벤트 추가 폼의 상품 리스트
+
+	}
+
+	// 이벤트 추가 폼의 상품 리스트
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "eventGoodsList.cat")
 	public void eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			
+
 			int goods_category = Integer.parseInt(request.getParameter("param"));
 			goodsList = eventService.goodsCategoryList(goods_category);
-			
+
 			JSONArray jsonArray = new JSONArray();
-			for(int i = 0; i < goodsList.size(); i++) {
+			for (int i = 0; i < goodsList.size(); i++) {
 				JSONObject sObject = new JSONObject();
 				sObject.put("goods_img_savname", goodsList.get(i).getGoods_image_savname());
 				sObject.put("goods_name", goodsList.get(i).getGoods_name());
 				sObject.put("goods_price", goodsList.get(i).getGoods_price());
 				sObject.put("goods_num", goodsList.get(i).getGoods_num());
 				jsonArray.add(i, sObject);
-				
+
 			}
-			
-			//jsonArray 넘김
+
+			// jsonArray 넘김
 			PrintWriter pw = response.getWriter();
 			pw.print(jsonArray.toString());
 			pw.flush();
 			pw.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("Controller error");
 		}
 
 	}
-	
+
 	// Admin 이벤트 등록 폼
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
@@ -704,30 +713,30 @@ public class AdminController {
 		mav.setViewName("adEventWrite");
 		return mav;
 	}
-	
+
 	// Admin 이벤트 등록
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
 	public ModelAndView adEventWrite(HttpServletRequest request) throws ParseException {
-		
+
 		EventModel eventModel = new EventModel();
-		
+
 		Calendar today = Calendar.getInstance();
-		
+
 		String goods_num = request.getParameter("goods_num");
-		
+
 		goods_num = goods_num.substring(1, goods_num.length());
-		
+
 		String start_date_s = request.getParameter("start_date");
 		Date start_date = new SimpleDateFormat("yyyy-MM-dd").parse(start_date_s);
-		
+
 		String end_date_s = request.getParameter("end_date");
 		Date end_date = new SimpleDateFormat("yyyy-MM-dd").parse(end_date_s);
-		
+
 		eventModel.setEvent_name(request.getParameter("event_name"));
-		
+
 		eventModel.setGoods_num(goods_num);
 		eventModel.setDc_rate(Integer.parseInt(request.getParameter("dc_rate")));
-		
+
 		eventModel.setStart_date(start_date);
 		eventModel.setEnd_date(end_date);
 		eventModel.setReg_date(today.getTime());
@@ -737,114 +746,114 @@ public class AdminController {
 		mav.setViewName("redirect:adEventList.cat");
 		return mav;
 	}
-	
-	//등록된 이벤트 보기
+
+	// 등록된 이벤트 보기
 	@RequestMapping(value = "adEventView.cat")
 	public ModelAndView adEventView(HttpServletRequest request) {
-		
+
 		EventModel eventModel = new EventModel();
-		
+
 		int event_num = Integer.parseInt(request.getParameter("event_num"));
-		
+
 		eventModel = eventService.eventSelectOne(event_num);
-		
-		//String으로 된 goods_num 받아서 파싱 후 Integer 타입으로 변환
+
+		// String으로 된 goods_num 받아서 파싱 후 Integer 타입으로 변환
 		String goods_num_s = eventModel.getGoods_num();
-		
+
 		String[] goods_num_array = goods_num_s.split(",");
-		
+
 		int[] goods_num_i = new int[goods_num_array.length];
-		
-		for(int i = 0; i < goods_num_array.length; i++) {
+
+		for (int i = 0; i < goods_num_array.length; i++) {
 			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
 		}
-		
-		//쌓임방지
+
+		// 쌓임방지
 		goodsList.clear();
-		
+
 		GoodsModel goodsModel1 = new GoodsModel();
-		
-		//goodsList에 goodsModel 삽입
-		for(int j = 0; j < goods_num_i.length; j++) {
+
+		// goodsList에 goodsModel 삽입
+		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
 			goodsList.add(j, goodsModel);
-			
+
 			goodsModel1.setGoods_category(goodsList.get(0).getGoods_category());
 		}
-		
+
 		mav.addObject("eventModel", eventModel);
 		mav.addObject("goodsList", goodsList);
 		mav.addObject("goodsModel1", goodsModel1);
-		
+
 		mav.setViewName("adEventView");
-		
+
 		return mav;
 	}
-	
-	//등록된 이벤트 수정하기 폼
+
+	// 등록된 이벤트 수정하기 폼
 	@RequestMapping(value = "adEventModify.cat", method = RequestMethod.GET)
 	public ModelAndView adEventModifyForm(HttpServletRequest request) {
-		
+
 		EventModel eventModel = new EventModel();
-		
+
 		int event_num = Integer.parseInt(request.getParameter("event_num"));
-		
+
 		eventModel = eventService.eventSelectOne(event_num);
-		
-		//String으로 된 goods_num 받아서 파싱 후 Integer 타입으로 변환
+
+		// String으로 된 goods_num 받아서 파싱 후 Integer 타입으로 변환
 		String goods_num_s = eventModel.getGoods_num();
-		
+
 		String[] goods_num_array = goods_num_s.split(",");
-		
+
 		int[] goods_num_i = new int[goods_num_array.length];
-		
-		for(int i = 0; i < goods_num_array.length; i++) {
+
+		for (int i = 0; i < goods_num_array.length; i++) {
 			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
 		}
-		
-		//쌓임방지
+
+		// 쌓임방지
 		goodsList.clear();
-	
-		//goodsList에 goodsModel 삽입
-		for(int j = 0; j < goods_num_i.length; j++) {
+
+		// goodsList에 goodsModel 삽입
+		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
 			goodsList.add(j, goodsModel);
-			
+
 		}
-		
+
 		mav.addObject("eventModel", eventModel);
 		mav.addObject("goodsList", goodsList);
-		
+
 		mav.setViewName("adEventModify");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "adEventModify.cat", method = RequestMethod.POST)
 	public ModelAndView adEventModify(HttpServletRequest request) throws ParseException {
-		
+
 		int event_num = Integer.parseInt(request.getParameter("event_num"));
-		
+
 		EventModel eventModel = new EventModel();
-		
+
 		String goods_num = request.getParameter("goods_num");
-		
-		if(goods_num.substring(1, 1) == ",") {
+
+		if (goods_num.substring(1, 1) == ",") {
 			goods_num = goods_num.substring(1, goods_num.length());
 		}
-		
+
 		String start_date_s = request.getParameter("start_date");
 		Date start_date = new SimpleDateFormat("yyyy-MM-dd").parse(start_date_s);
-		
+
 		String end_date_s = request.getParameter("end_date");
 		Date end_date = new SimpleDateFormat("yyyy-MM-dd").parse(end_date_s);
-		
+
 		eventModel.setEvent_name(request.getParameter("event_name"));
-		
+
 		eventModel.setGoods_num(goods_num);
 		eventModel.setDc_rate(Integer.parseInt(request.getParameter("dc_rate")));
-		
+
 		eventModel.setStart_date(start_date);
 		eventModel.setEnd_date(end_date);
 		eventModel.setEvent_num(event_num);
@@ -855,8 +864,8 @@ public class AdminController {
 		return mav;
 
 	}
-	
-	//이벤트 삭제하기
+
+	// 이벤트 삭제하기
 	@RequestMapping(value = "adEventDelete.cat")
 	public ModelAndView adEventDelete(HttpServletRequest request) {
 
@@ -868,300 +877,608 @@ public class AdminController {
 
 		return mav;
 	}
-	
-	//이벤트 중지하기
+
+	// 이벤트 중지하기
 	@RequestMapping(value = "adEventStop.cat")
 	public ModelAndView adEventStop(HttpServletRequest request) {
-		
+
 		EventModel eventModel = new EventModel();
-		
+
 		int event_num = Integer.parseInt(request.getParameter("event_num"));
-		
+
 		eventModel.setStatus(0);
 		eventModel.setEvent_num(event_num);
-		
+
 		eventService.eventOnOff(eventModel);
-		
+
 		eventModel = eventService.eventSelectOne(event_num);
-		
+
 		String goods_num_s = eventModel.getGoods_num();
 		int event_num1 = eventModel.getEvent_num();
-		
+
 		String[] goods_num_array = goods_num_s.split(",");
-		
-		for(int i = 0; i < goods_num_array.length; i++) {
+
+		for (int i = 0; i < goods_num_array.length; i++) {
 			EventModel eventModel1 = new EventModel();
-			
+
 			eventModel1.setGoods_num(goods_num_array[i]);
 			eventModel1.setEvent_num(event_num1);
-			
+
 			eventService.eventPriceOff(eventModel1);
 		}
-		
-		
+
 		mav.setViewName("redirect:adEventList.cat");
-		
+
 		return mav;
 	}
-	
-	
 
-	
-	////////////////////////////////////주문취소 환불 교환 목록 ////////////////////////////////////////////////
-	
-	
-	//고객주문취소 목록 리스트
-	@RequestMapping(value="adOrderCancleList.cat")
+	//////////////////////////////////// 주문취소 환불 교환 목록 ////////////////////////////////////////////////
+
+	// 고객주문취소 목록 리스트
+	@RequestMapping(value = "adOrderCancleList.cat")
 	public ModelAndView adOrderCancleList(HttpServletRequest request) {
-		
-		
+
 		List<CancleModel> adOrderCancleList = adminService.adOrderCancleList();
-		
-				
-		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
-				|| request.getParameter("currentPage").equals("0")) {
+
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty() || request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
-			} else {
+		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-				
+
 		totalCount = adOrderCancleList.size();
-		
+
 		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderCancleList");
 		pagingHtml = page.getPagingHtml().toString();
-		
+
 		int lastCount = totalCount;
-			if (page.getEndCount() < totalCount) {
+		if (page.getEndCount() < totalCount) {
 			lastCount = page.getEndCount() + 1;
 		}
-		
+
 		adOrderCancleList = adOrderCancleList.subList(page.getStartCount(), lastCount);
-			
-			
+
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
-		mav.addObject("adOrderCancleList",adOrderCancleList);
+		mav.addObject("adOrderCancleList", adOrderCancleList);
 		mav.setViewName("adOrderCancleList");
 		return mav;
 	}
-	
-	//고객주문 취소 상세보기
-	@RequestMapping(value="adOrderCancleView.cat")
-	public ModelAndView adOrderCancleView(@RequestParam("order_num")int order_num,
-			@RequestParam("cancle_num")int cancle_num,
-			HttpServletRequest request) {
-		
-		OrderModel orderModel= new OrderModel();
+
+	// 고객주문 취소 상세보기
+	@RequestMapping(value = "adOrderCancleView.cat")
+	public ModelAndView adOrderCancleView(@RequestParam("order_num") int order_num, @RequestParam("cancle_num") int cancle_num, HttpServletRequest request) {
+
+		OrderModel orderModel = new OrderModel();
 		CancleModel cancleModel = new CancleModel();
 		GoodsModel goodsModel = new GoodsModel();
-		
-		orderModel=adminService.adOrderCancleView(order_num);
-		
-		cancleModel=adminService.adOrderCancleView2(cancle_num);
-		
+
+		orderModel = adminService.adOrderCancleView(order_num);
+
+		cancleModel = adminService.adOrderCancleView2(cancle_num);
+
 		goodsModel = adminService.adOrderCancleView3(orderModel.getGoods_num());
 
-		mav.addObject("orderModel",orderModel);
-		mav.addObject("cancleModel",cancleModel);
-		mav.addObject("goodsModel",goodsModel);
+		mav.addObject("orderModel", orderModel);
+		mav.addObject("cancleModel", cancleModel);
+		mav.addObject("goodsModel", goodsModel);
 		mav.setViewName("adOrderCancleView");
 
 		return mav;
 	}
-	
-	
-	
-	//고객주문환불 목록 리스트
-	@RequestMapping(value="adOrderRefundList.cat", method=RequestMethod.GET)
+
+	// 고객주문환불 목록 리스트
+	@RequestMapping(value = "adOrderRefundList.cat", method = RequestMethod.GET)
 	public ModelAndView adOrderRefundList(HttpServletRequest request) {
-		
+
 		List<RefundModel> adOrderRefundList = adminService.adOrderRefundList();
-		
-		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
-				|| request.getParameter("currentPage").equals("0")) {
+
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty() || request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
-			} else {
+		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-				
+
 		totalCount = adOrderRefundList.size();
-		
+
 		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderRefundList");
 		pagingHtml = page.getPagingHtml().toString();
-		
+
 		int lastCount = totalCount;
-			if (page.getEndCount() < totalCount) {
+		if (page.getEndCount() < totalCount) {
 			lastCount = page.getEndCount() + 1;
 		}
-		
+
 		adOrderRefundList = adOrderRefundList.subList(page.getStartCount(), lastCount);
-		
+
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
-		mav.addObject("adOrderRefundList",adOrderRefundList);
+		mav.addObject("adOrderRefundList", adOrderRefundList);
 		mav.setViewName("adOrderRefundList");
-		
+
 		return mav;
 	}
-	
-	//고객주문 환불 상세보기
-	@RequestMapping(value="adOrderRefundView.cat")
-	public ModelAndView adOrderRefundView(@RequestParam("order_num")int order_num,
-			@RequestParam("trade_num")int trade_num,
-			HttpServletRequest request) {
-		
-		OrderModel orderModel= new OrderModel();
-		RefundModel refundModel= new RefundModel();
+
+	// 고객주문 환불 상세보기
+	@RequestMapping(value = "adOrderRefundView.cat")
+	public ModelAndView adOrderRefundView(@RequestParam("order_num") int order_num, @RequestParam("trade_num") int trade_num, HttpServletRequest request) {
+
+		OrderModel orderModel = new OrderModel();
+		RefundModel refundModel = new RefundModel();
 		GoodsModel goodsModel = new GoodsModel();
-		
-		orderModel=adminService.adOrderRefundView(order_num);
-		
-		refundModel=adminService.adOrderRefundView2(trade_num);
-		
+
+		orderModel = adminService.adOrderRefundView(order_num);
+
+		refundModel = adminService.adOrderRefundView2(trade_num);
+
 		goodsModel = adminService.adOrderRefundView3(orderModel.getGoods_num());
 
-		mav.addObject("orderModel",orderModel);
-		mav.addObject("refundModel",refundModel);
-		mav.addObject("goodsModel",goodsModel);
+		mav.addObject("orderModel", orderModel);
+		mav.addObject("refundModel", refundModel);
+		mav.addObject("goodsModel", goodsModel);
 		mav.setViewName("adOrderRefundView");
 
 		return mav;
 	}
-	
-	//환불 수락
-	@RequestMapping(value="adOrderRefundAgree.cat",method=RequestMethod.POST)
-	public ModelAndView RefundAgree(OrderModel orderModel,RefundModel refundModel,
-			@RequestParam("redirect_type")String redirect_type) {
-		
-		String url=null;
-		
+
+	// 환불 수락
+	@RequestMapping(value = "adOrderRefundAgree.cat", method = RequestMethod.POST)
+	public ModelAndView RefundAgree(OrderModel orderModel, RefundModel refundModel, @RequestParam("redirect_type") String redirect_type) {
+
+		String url = null;
+
 		adminService.adOrderRefundAgree(orderModel, refundModel);
-		
-		if(redirect_type.equals("list")) {
-			
-			url="redirect:/admin/adOrderRefundList.cat";
-		} else if(redirect_type.equals("detail")) {
-			
-			url="redirect:/admin/adOrderRefundView.cat?order_num="+refundModel.getOrder_num()+"&trade_num="+refundModel.getTrade_num();
+
+		if (redirect_type.equals("list")) {
+
+			url = "redirect:/admin/adOrderRefundList.cat";
+		} else if (redirect_type.equals("detail")) {
+
+			url = "redirect:/admin/adOrderRefundView.cat?order_num=" + refundModel.getOrder_num() + "&trade_num=" + refundModel.getTrade_num();
 		}
 
 		return new ModelAndView(url);
 	}
-	
-	//환불거절
-	@RequestMapping(value="adOrderRefundRefuse.cat",method=RequestMethod.POST)
-	public ModelAndView RefundRefuse(OrderModel orderModel,RefundModel refundModel,
-			@RequestParam("redirect_type")String redirect_type) {
-		
-		String url=null;
-		
+
+	// 환불거절
+	@RequestMapping(value = "adOrderRefundRefuse.cat", method = RequestMethod.POST)
+	public ModelAndView RefundRefuse(OrderModel orderModel, RefundModel refundModel, @RequestParam("redirect_type") String redirect_type) {
+
+		String url = null;
+
 		adminService.adOrderRefundRefuse(orderModel, refundModel);
-		if(redirect_type.equals("list")) {
-			
-			url="redirect:/admin/adOrderRefundList.cat";
-		} else if(redirect_type.equals("detail")) {
-			
-			url="redirect:/admin/adOrderRefundView.cat?order_num="+refundModel.getOrder_num()+"&trade_num="+refundModel.getTrade_num();
+		if (redirect_type.equals("list")) {
+
+			url = "redirect:/admin/adOrderRefundList.cat";
+		} else if (redirect_type.equals("detail")) {
+
+			url = "redirect:/admin/adOrderRefundView.cat?order_num=" + refundModel.getOrder_num() + "&trade_num=" + refundModel.getTrade_num();
 		}
-		
+
 		return new ModelAndView(url);
 	}
-	
-	//고객주문교환내역 목록 리스트
-	@RequestMapping(value="adOrderChangeList.cat",method=RequestMethod.GET)
+
+	// 고객주문교환내역 목록 리스트
+	@RequestMapping(value = "adOrderChangeList.cat", method = RequestMethod.GET)
 	public ModelAndView adOrderChangeList(HttpServletRequest request) {
-		
+
 		List<ChangeModel> adOrderChangeList = adminService.adOrderChangeList();
-		
-		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
-				|| request.getParameter("currentPage").equals("0")) {
+
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty() || request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
-			} else {
+		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-				
+
 		totalCount = adOrderChangeList.size();
-		
+
 		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderChangeList");
 		pagingHtml = page.getPagingHtml().toString();
-		
+
 		int lastCount = totalCount;
-			if (page.getEndCount() < totalCount) {
+		if (page.getEndCount() < totalCount) {
 			lastCount = page.getEndCount() + 1;
 		}
-		
-		
+
 		adOrderChangeList = adOrderChangeList.subList(page.getStartCount(), lastCount);
-		
+
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
-		mav.addObject("adOrderChangeList",adOrderChangeList);
+		mav.addObject("adOrderChangeList", adOrderChangeList);
 		mav.setViewName("adOrderChangeList");
-			
+
 		return mav;
 	}
-	
-	//고객주문 교환 상세보기
-	@RequestMapping(value="adOrderChangeView.cat")
-	public ModelAndView adOrderChangeView(@RequestParam("order_num")int order_num,
-			@RequestParam("change_num")int change_num,
-			HttpServletRequest request) {
-		
-		OrderModel orderModel= new OrderModel();
+
+	// 고객주문 교환 상세보기
+	@RequestMapping(value = "adOrderChangeView.cat")
+	public ModelAndView adOrderChangeView(@RequestParam("order_num") int order_num, @RequestParam("change_num") int change_num, HttpServletRequest request) {
+
+		OrderModel orderModel = new OrderModel();
 		ChangeModel changeModel = new ChangeModel();
 		GoodsModel goodsModel = new GoodsModel();
-		
-		orderModel=adminService.adOrderChangeView(order_num);
-		
-		changeModel=adminService.adOrderChangeView2(change_num);
-		
+
+		orderModel = adminService.adOrderChangeView(order_num);
+
+		changeModel = adminService.adOrderChangeView2(change_num);
+
 		goodsModel = adminService.adOrderChangeView3(orderModel.getGoods_num());
 
-		mav.addObject("orderModel",orderModel);
-		mav.addObject("changeModel",changeModel);
-		mav.addObject("goodsModel",goodsModel);
+		mav.addObject("orderModel", orderModel);
+		mav.addObject("changeModel", changeModel);
+		mav.addObject("goodsModel", goodsModel);
 		mav.setViewName("adOrderChangeView");
 
 		return mav;
 	}
-	
-	//교환 수락
-	@RequestMapping(value="adOrderChangeAgree.cat",method=RequestMethod.POST)
-	public ModelAndView ChangeAgree(OrderModel orderModel,ChangeModel changeModel,
-			@RequestParam("redirect_type")String redirect_type) {
-		
-		String url=null;
-		
+
+	// 교환 수락
+	@RequestMapping(value = "adOrderChangeAgree.cat", method = RequestMethod.POST)
+	public ModelAndView ChangeAgree(OrderModel orderModel, ChangeModel changeModel, @RequestParam("redirect_type") String redirect_type) {
+
+		String url = null;
+
 		adminService.adOrderChangeAgree(orderModel, changeModel);
-		
-		if(redirect_type.equals("list")) {
-			
-			url="redirect:/admin/adOrderChangeList.cat";
-		} else if(redirect_type.equals("detail")) {
-			
-			url="redirect:/admin/adOrderChangeView.cat?order_num="+changeModel.getOrder_num()+"&change_num="+changeModel.getChange_num();
+
+		if (redirect_type.equals("list")) {
+
+			url = "redirect:/admin/adOrderChangeList.cat";
+		} else if (redirect_type.equals("detail")) {
+
+			url = "redirect:/admin/adOrderChangeView.cat?order_num=" + changeModel.getOrder_num() + "&change_num=" + changeModel.getChange_num();
 		}
 
 		return new ModelAndView(url);
 	}
-	
-	//교환거절
-	@RequestMapping(value="adOrderChangeRefuse.cat",method=RequestMethod.POST)
-	public ModelAndView ChangeRefuse(OrderModel orderModel,ChangeModel changeModel,
-			@RequestParam("redirect_type")String redirect_type) {
-		
-		String url=null;
-		
+
+	// 교환거절
+	@RequestMapping(value = "adOrderChangeRefuse.cat", method = RequestMethod.POST)
+	public ModelAndView ChangeRefuse(OrderModel orderModel, ChangeModel changeModel, @RequestParam("redirect_type") String redirect_type) {
+
+		String url = null;
+
 		adminService.adOrderChangeRefuse(orderModel, changeModel);
-		if(redirect_type.equals("list")) {
-			
-			url="redirect:/admin/adOrderChangeList.cat";
-		} else if(redirect_type.equals("detail")) {
-			
-			url="redirect:/admin/adOrderChangeView.cat?order_num="+changeModel.getOrder_num()+"&change_num="+changeModel.getChange_num();
+		if (redirect_type.equals("list")) {
+
+			url = "redirect:/admin/adOrderChangeList.cat";
+		} else if (redirect_type.equals("detail")) {
+
+			url = "redirect:/admin/adOrderChangeView.cat?order_num=" + changeModel.getOrder_num() + "&change_num=" + changeModel.getChange_num();
 		}
-		
+
 		return new ModelAndView(url);
+	}
+
+	/////////////////////////////////////////////////////////////////
+
+	@RequestMapping("adChartMember.cat")
+	public ModelAndView chartM() {
+		
+		GregorianCalendar today = new GregorianCalendar();
+		String sYear = Integer.toString(today.get(today.YEAR)).substring(2,4);
+		int iYear = Integer.parseInt(sYear);
+		Map<Integer, Integer> mapYear = new HashMap<>();
+		int icell=0;
+
+		// 신규 회원 통계
+		List<ChartModel> listNew = adminService.chartNewM();
+
+		GoogleChartDTO goNew = new GoogleChartDTO();
+
+		goNew.addColumn("DAY", "string");
+		goNew.addColumn("신규 가입 회원수", "number");
+		goNew.createRows(listNew.size());
+
+		for (int i = 0; i < listNew.size(); i++) {
+			goNew.addCell(i, listNew.get(i).getKey() + "(일)");
+			goNew.addCell(i, listNew.get(i).getValue());
+		}
+
+		String jsonNew = gson.toJson(goNew.getResult());
+
+		// 전체 회원 통계
+		List<ChartModel> listAll = adminService.chartAllM();
+
+		GoogleChartDTO goAll = new GoogleChartDTO();
+
+		goAll.addColumn("DAY", "string");
+		goAll.addColumn("가입 회원수", "number");
+		goAll.createRows(listAll.size());
+
+		for (int i = 0; i < listAll.size(); i++) {
+			goAll.addCell(i, listAll.get(i).getKey() + "(월)");
+			goAll.addCell(i, listAll.get(i).getValue());
+		}
+
+		String jsonAll = gson.toJson(goAll.getResult());
+		System.out.println(jsonAll);
+
+		// 신규회원 연령 통계
+		List<ChartModel> newMemberAge = adminService.newMemberAge();
+		GoogleChartDTO pie = new GoogleChartDTO();
+
+		pie.addColumn("연령대", "string");
+		pie.addColumn("number", "number");
+		pie.createRows(newMemberAge.size());
+
+		mapYear = CalculationYear(newMemberAge, iYear);
+		
+		icell=0;
+		for(Integer i : mapYear.keySet()) {
+			if(i==0) {
+				pie.addCell(icell, "비회원");
+			}else {
+				pie.addCell(icell, i+"0대");
+			}
+			pie.addCell(icell, mapYear.get(i));
+			icell++;
+		}
+		String newAgePie = gson.toJson(pie.getResult());
+		System.out.println("//////////////////////////////////////////" + newAgePie);
+		mav.addObject("newAgePie", newAgePie);
+
+		// 신규회원 지역 통계
+		List<ChartModel> newMemberRegion = adminService.newMemberRegion();
+		GoogleChartDTO pie2 = new GoogleChartDTO();
+
+		pie2.addColumn("지역", "string");
+		pie2.addColumn("number", "number");
+		pie2.createRows(newMemberRegion.size());
+
+		for (int i = 0; i < newMemberRegion.size(); i++) {
+			pie2.addCell(i, newMemberRegion.get(i).getKey());
+			pie2.addCell(i, newMemberRegion.get(i).getValue());
+		}
+		String newRegionPie = gson.toJson(pie2.getResult());
+		mav.addObject("newRegionPie", newRegionPie);
+
+		// 전체 회원 나이 통계
+		List<ChartModel> memberAge = adminService.memberAge();
+		GoogleChartDTO pie3 = new GoogleChartDTO();
+
+		pie3.addColumn("연령대", "string");
+		pie3.addColumn("number", "number");
+		pie3.createRows(memberAge.size());
+
+		mapYear = CalculationYear(memberAge, iYear);
+		
+		icell=0;
+		for(Integer i : mapYear.keySet()) {
+			pie3.addCell(icell, i+"0대");
+			pie3.addCell(icell, mapYear.get(i));
+			icell++;
+		}
+		String agePie = gson.toJson(pie3.getResult());
+		System.out.println("//////////////////////////////////////////" + agePie);
+		mav.addObject("agePie", agePie);
+
+		// 전체 회원 지역 통계
+		List<ChartModel> memberRegion = adminService.memberRegion();
+		GoogleChartDTO pie4 = new GoogleChartDTO();
+
+		pie4.addColumn("지역", "string");
+		pie4.addColumn("number", "number");
+		pie4.createRows(memberRegion.size());
+
+		for (int i = 0; i < memberRegion.size(); i++) {
+			pie4.addCell(i, memberRegion.get(i).getKey());
+			pie4.addCell(i, memberRegion.get(i).getValue());
+		}
+		String regionPie = gson.toJson(pie4.getResult());
+		mav.addObject("regionPie", regionPie);
+
+		mav.addObject("jsonAll", jsonAll);
+		mav.addObject("jsonNew", jsonNew);
+		mav.setViewName("adminChartOrder");
+
+		return mav;
+	}
+	
+	@RequestMapping("adChartOrder.cat")
+	public ModelAndView chartO() {
+		
+		GregorianCalendar today = new GregorianCalendar();
+		String sYear = Integer.toString(today.get(today.YEAR)).substring(2,4);
+		int iYear = Integer.parseInt(sYear);
+		Map<Integer, Integer> mapYear = new HashMap<>();
+		int icell=0;
+
+		Gson gson = new Gson();
+
+		// 최근 7일 날짜별 주문량 조회
+		List<ChartModel> weekOrderNum = adminService.weekOrderNum();
+		GoogleChartDTO line1 = new GoogleChartDTO();
+
+		line1.addColumn("day", "string");
+		line1.addColumn("주문수", "number");
+		line1.createRows(weekOrderNum.size());
+
+		for (int i = 0; i < weekOrderNum.size(); i++) {
+			line1.addCell(i, weekOrderNum.get(i).getKey());
+			line1.addCell(i, weekOrderNum.get(i).getValue());
+		}
+		String jsonNew = gson.toJson(line1.getResult());
+		mav.addObject("jsonNew", jsonNew);
+
+		// 최근 7일 날짜별 판매량 조회
+		List<ChartModel> weekSales = adminService.weekSales();
+		GoogleChartDTO sales1 = new GoogleChartDTO();
+
+		sales1.addColumn("day", "string");
+		sales1.addColumn("판매금액", "number");
+		sales1.createRows(weekSales.size());
+
+		for (int i = 0; i < weekSales.size(); i++) {
+			sales1.addCell(i, weekSales.get(i).getKey());
+			sales1.addCell(i, weekSales.get(i).getPrice());
+		}
+		String salesNew = gson.toJson(sales1.getResult());
+		mav.addObject("salesNew", salesNew);
+
+		// 주간 연령 구분
+		List<ChartModel> weekOrderAge = adminService.weekOrderAge();
+		GoogleChartDTO pie1 = new GoogleChartDTO();
+
+		pie1.addColumn("연령대", "string");
+		pie1.addColumn("number", "number");
+		pie1.createRows(weekOrderAge.size());
+
+		mapYear = CalculationYear(weekOrderAge, iYear);
+		
+		icell=0;
+		for(Integer i : mapYear.keySet()) {
+			if(i==0) {
+				pie1.addCell(icell, "비회원");
+			}else {
+				pie1.addCell(icell, i+"0대");
+			}
+			pie1.addCell(icell, mapYear.get(i));
+			icell++;
+		}
+		String newAgePie = gson.toJson(pie1.getResult());
+		mav.addObject("newAgePie", newAgePie);
+
+		// 주간 지역 구분
+		List<ChartModel> weekOrderRegion = adminService.weekOrderRegion();
+		GoogleChartDTO pie2 = new GoogleChartDTO();
+
+		pie2.addColumn("지역", "string");
+		pie2.addColumn("number", "number");
+		pie2.createRows(weekOrderRegion.size());
+
+		for (int i = 0; i < weekOrderRegion.size(); i++) {
+			if(weekOrderRegion.get(i).getKey().equals("0")) {
+				pie2.addCell(i, "비회원");
+			}else {
+				pie2.addCell(i, weekOrderRegion.get(i).getKey());
+			}
+			pie2.addCell(i, weekOrderRegion.get(i).getValue());
+		}
+		String newRegionPie = gson.toJson(pie2.getResult());
+		System.out.println(newRegionPie);
+
+		mav.addObject("newRegionPie", newRegionPie);
+
+		// 달별 주문량
+		List<ChartModel> monthOrderNum = adminService.monthOrderNum();
+		GoogleChartDTO line2 = new GoogleChartDTO();
+
+		line2.addColumn("day", "string");
+		line2.addColumn("주문수", "number");
+		line2.createRows(monthOrderNum.size());
+
+		for (int i = 0; i < monthOrderNum.size(); i++) {
+			line2.addCell(i, monthOrderNum.get(i).getKey());
+			line2.addCell(i, monthOrderNum.get(i).getValue());
+		}
+		String jsonAll = gson.toJson(line2.getResult());
+		mav.addObject("jsonAll", jsonAll);
+
+		// 달별 판매량
+		List<ChartModel> monthSales = adminService.monthSales();
+		GoogleChartDTO sales2 = new GoogleChartDTO();
+
+		sales2.addColumn("day", "string");
+		sales2.addColumn("판매 금액", "number");
+		sales2.createRows(monthSales.size());
+
+		for (int i = 0; i < monthSales.size(); i++) {
+			sales2.addCell(i, monthSales.get(i).getKey());
+			sales2.addCell(i, monthSales.get(i).getPrice());
+		}
+		String salesAll = gson.toJson(sales2.getResult());
+		mav.addObject("salesAll", salesAll);
+
+		// 달별 연령 구분
+		List<ChartModel> monthOrderAge = adminService.monthOrderAge();
+		GoogleChartDTO pie3 = new GoogleChartDTO();
+
+		pie3.addColumn("항목", "string");
+		pie3.addColumn("값", "number");
+		pie3.createRows(monthOrderAge.size());
+
+		mapYear = CalculationYear(monthOrderAge, iYear);
+		
+		icell=0;
+		for(Integer k : mapYear.keySet()) {
+			if(k==0) {
+				pie3.addCell(icell, "비회원");
+			}else {
+				pie3.addCell(icell, k+"0대");
+			}
+			pie3.addCell(icell, mapYear.get(k));
+			icell++;
+		}
+		String agePie = gson.toJson(pie3.getResult());
+		mav.addObject("agePie", agePie);
+
+		// 달별 지역 구분
+		List<ChartModel> monthOrderRegion = adminService.monthOrderRegion();
+		GoogleChartDTO pie4 = new GoogleChartDTO();
+
+		pie4.addColumn("항목", "string");
+		pie4.addColumn("값", "number");
+		pie4.createRows(monthOrderRegion.size());
+
+		for (int i = 0; i < monthOrderRegion.size(); i++) {
+			if(monthOrderRegion.get(i).getKey().equals("0")) {
+				pie4.addCell(i, "비회원");
+			}else {
+				pie4.addCell(i, monthOrderRegion.get(i).getKey());
+			}
+			pie4.addCell(i, monthOrderRegion.get(i).getValue());
+		}
+		String regionPie = gson.toJson(pie4.getResult());
+		mav.addObject("regionPie", regionPie);
+
+		mav.setViewName("adminChart");
+		return mav;
+
+	}
+
+	@RequestMapping("adGoodsChart.cat")
+	public ModelAndView chartB() {
+
+		List<GoodsModel> GoodsSelling = adminService.GoodsSelling();
+		List<GoodsModel> monthGoodsSelling = adminService.monthGoodsSelling();
+		List<GoodsModel> weekGoodsSelling = adminService.weekGoodsSelling();
+
+		mav.addObject("GoodsSelling", GoodsSelling);
+		mav.addObject("monthGoodsSelling", monthGoodsSelling);
+		mav.addObject("weekGoodsSelling", weekGoodsSelling);
+		mav.setViewName("adminChartGoods");
+		return mav;
+	}
+	
+	private Map<Integer, Integer> CalculationYear(List<ChartModel> chartList, int iYear){
+		Map<Integer, Integer> map = new HashMap<>();
+		int mYear=0, kYear=0, yearValue=0, count=0;
+		for (int i = 0; i < chartList.size(); i++) {
+			mYear = Integer.parseInt(chartList.get(i).getKey());
+			yearValue = chartList.get(i).getValue();
+			count=0;
+			if (mYear >= iYear) {
+				kYear = ((100 + iYear) - mYear) / 10;
+				if(kYear>90)
+					kYear=10;
+			}else if(mYear==0) {
+				kYear=0;
+			}else {
+				kYear = (iYear - mYear) / 10;
+				if(kYear<10)
+					kYear=1;
+			}
+			count+=yearValue;
+			if(map.size()!=0 && map.containsKey(kYear)) {
+				count=map.get(kYear);
+				map.put(kYear, count);
+			}else if(map.size()==0 && !map.containsKey(kYear) && yearValue>0){
+				map.put(kYear, count);
+			}else {
+				map.put(kYear, ++count);
+			}
+		}
+		return map;
 	}
 
 }
