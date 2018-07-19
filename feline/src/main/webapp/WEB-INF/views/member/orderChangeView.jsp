@@ -140,8 +140,16 @@
 							</div>
 						</div>			
 				<!-- ========================================================================================== -->
-						<center><button class="btn btn-primary"
-						onclick="javascript:location.href='orderChangeList.cat'">목록</button><center>					
+						<center><c:choose>
+							<c:when test="${sessionScope.id ne null}">
+							<button class="btn btn-primary"
+							onclick="javascript:location.href='orderChangeList.cat'">목록</button>
+							</c:when>
+							<c:otherwise>
+							<button class="btn btn-primary" type="button" 
+							onclick="javascript:location.href='b_orderChangeList.cat?order_trade_num=${cancleModel.order_trade_num}'">목록</button>
+							</c:otherwise>
+						</c:choose><center>					
 					</div>
 				</div>
 			</div>

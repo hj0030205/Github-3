@@ -194,8 +194,16 @@
 								<button class="btn btn-danger" type="button" onclick="changeCheck();">교환신청하기</button>
 								<br />
 								<br />
-								<button class="btn btn-primary" type="button" 
+								<c:choose>
+									<c:when test="${sessionScope.id ne null}">
+									<button class="btn btn-primary" type="button" 
 									onclick="javascript:location.href='mypage.cat'">돌아가기</button>
+									</c:when>
+									<c:otherwise>
+									<button class="btn btn-primary" type="button" 
+									onclick="javascript:location.href='/feline/main.cat'">돌아가기</button>
+									</c:otherwise>
+								</c:choose>
 								</center>
 						</form>
 					</div>
