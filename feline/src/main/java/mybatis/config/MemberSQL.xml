@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
     <!-- 회원 로그인 -->
 	<select id="login" parameterType="String" resultType="String">
-		select member_id from FELINE_member where member_id=#{member_id} and member_pw=#{member_pw} and status= 1
+		select member_id from FELINE_member where member_id=#{member_id} and member_pw=#{member_pw} and member_status= 1
 	</select>
 
 	<!-- admin 로그인 -->
