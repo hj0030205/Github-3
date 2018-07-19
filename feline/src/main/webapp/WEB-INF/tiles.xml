@@ -5,6 +5,7 @@
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
 <tiles-definitions>
+
 	<!-- Main Page -->
 	<definition name="default" template="/WEB-INF/views/layout/main.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header/header.jsp" />
@@ -335,6 +336,7 @@
 	
 	<definition name="b_orderView" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/user/b_orderView.jsp" />
+    </definition>
     
 	<!-- ========================관리자 통계관련 페이지======================= -->
 	
@@ -351,5 +353,4 @@
     
 	</definition>
 	
-
 </tiles-definitions>
