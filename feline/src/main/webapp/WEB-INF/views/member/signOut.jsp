@@ -62,7 +62,11 @@
 					
 				</div>
 				<!-- *** CUSTOMER MENU END *** -->
-
+		<div class="col-md-9" id="customer-orders">
+					<div class="box">
+						<legend>
+							<h2>회원탈퇴</h2>
+						</legend>
 				<center>
 						<div class="row">
 							<form name="memberDeleteform" method="post" action="memberDelete.cat" onSubmit="return checkIt()">
@@ -77,6 +81,8 @@
 							</form>
 						</div>
 				</center>
+				</div>
+				</div>
 			</div>
 		</div>
 	</div>

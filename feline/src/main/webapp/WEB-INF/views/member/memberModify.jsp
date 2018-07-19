@@ -153,7 +153,7 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>전화번호</label>
+									<label>전화번호( - 포함)</label>
 									<input type="text" class="form-control" name="member_phone" value="${memberModel.member_phone }"/>
 								</div>
 							</div>
