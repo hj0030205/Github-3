@@ -24,10 +24,10 @@ function update(member_id){
 	document.location.href="adMemberModify.cat?member_id=" + member_id + "&currentPage=" + page;
 }
 
-/* 	$(function() {
+ 	$(function() {
 		$("#datepicker").datepicker();
 		$("#datepicker2").datepicker();
-	}); */
+	}); 
 </script>
 </head>
 <body>
@@ -51,28 +51,24 @@ function update(member_id){
 				<div class="card-block">
 					<div class="table-responsive">
 						<!-- 상세 검색 -->
-						<form class="form-inline" method="POST" action="adMemberList.cat">
+						<form class="form-inline" action="adMemberList.cat">
 							<table class="table">
-										<%-- <tr>
-								<th>기간별 검색 :</th>
+								<tr>
+									<th>기간별 검색 :</th>
 									<td style="text-align: left;"><input type="text"
 										class="form-control" name="date_min" id="datepicker"
 										placeholder="부터"> ~ <input type="text"
 										class="form-control" name="date_max" id="datepicker2"
 										placeholder="까지"></td>
-									<c:if test="${status eq 'all'}">
-										<td><label style="float: left;">회원 구분 : </label> <input
-											type="radio" name="active" checked="checked" value="0">전체
-											&nbsp; <input type="radio" name="active" value="1">활성화
-											회원 &nbsp; <input type="radio" name="active" value="2">차단된
-											회원</td>
-									</c:if> 
-
-								</tr>--%>
+									<td><label style="float: left;">회원 구분 : </label>
+									<input type="radio" name="status" checked="checked" value="0">전체&nbsp;
+									<input type="radio" name="status" value="1">가입한 회원
+									&nbsp; <input type="radio" name="status" value="2">탈퇴한 회원
+								</tr>
 								<tr>
-							<!-- 		<th>항목별 검색 :</th> -->
+								<th>항목별 검색 :</th>
 									<td><div class="input-group">
-											<select name="searchNum" class="form-control col-md-1">
+											<select name="searchNum" class="form-control col-md-2">
 												<option value="0">이름</option>
 												<option value="1">아이디</option>
 												<option value="2">주소</option>
@@ -98,6 +94,7 @@ function update(member_id){
 									<th>이메일</th>
 									<th>등록일</th>
 									<th>탈퇴여부</th>
+									<th>수정 / 삭제</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -112,22 +109,25 @@ function update(member_id){
 											varStatus="stat">
 											<!-- 아이디와 연결되는 URL -->
 											<c:url var="viewURL" value="adMemberView.cat">
-												<c:param name="member_id" value="${memberList.member_id}"/>
-												<c:param name="currentPage" value="${currentPage}"/>
+												<c:param name="member_id" value="${memberList.member_id}" />
+												<c:param name="currentPage" value="${currentPage}" />
 											</c:url>
 											<tr>
-												<td>${memberList.member_name}</td>
+												<td>${memberList.member_no}</td>
 												<td><a href="${viewURL}">${memberList.member_id}</a></td>
+												<td>${memberList.member_name }</td>
 												<td>${memberList.member_addr1}&nbsp;${memberList.member_addr2}</td>
 												<td>${memberList.member_phone}</td>
 												<td>${memberList.member_email}</td>
+												<td><fmt:formatDate
+														value="${memberList.member_join_date}"
+														pattern="yyyy.MM.dd" /></td>
 												<td><c:if test="${memberList.member_status eq 0}">
 												탈퇴한 회원
 												</c:if></td>
-												<td><fmt:formatDate value="${memberList.member_join_date}" pattern="yyyy.MM.dd"/></td>
 												<td><a class="mdi mdi-grease-pencil" title="수정"
-													href="javascript:update('${memberList.member_id}')"></a> <a
-													class="mdi mdi-delete" title="삭제"
+													href="javascript:update('${memberList.member_id}')"></a> &nbsp; 
+													<a class="mdi mdi-delete" title="삭제"
 													href="javascript:deleteCheck('${memberList.member_id}')"></a></td>
 											</tr>
 										</c:forEach>

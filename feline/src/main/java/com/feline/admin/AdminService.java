@@ -191,28 +191,8 @@ public class AdminService implements AdminDAO {
 
 	// 회원 검색
 	@Override
-	public List<MemberModel> memberSearchN(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchN", searchKeyword);
-	}
-
-	@Override
-	public List<MemberModel> memberSearchI(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchI", searchKeyword);
-	}
-
-	@Override
-	public List<MemberModel> memberSearchA(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchA", searchKeyword);
-	}
-
-	@Override
-	public List<MemberModel> memberSearchP(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchP", searchKeyword);
-	}
-
-	@Override
-	public List<MemberModel> memberSearchE(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchE", searchKeyword);
+	public List<MemberModel> searchMemberList(Map map) {
+		return sqlSessionTemplate.selectList("member.searchMemberList", map);
 	}
 
 	@Override

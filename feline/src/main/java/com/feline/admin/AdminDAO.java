@@ -63,15 +63,7 @@ public interface AdminDAO {
 
 	Object updateMember(MemberModel memberModel);
 
-	List<MemberModel> memberSearchN(String searchKeyword);
-
-	List<MemberModel> memberSearchI(String searchKeyword);
-
-	List<MemberModel> memberSearchA(String searchKeyword);
-
-	List<MemberModel> memberSearchP(String searchKeyword);
-
-	List<MemberModel> memberSearchE(String searchKeyword);
+	List<MemberModel> searchMemberList(Map map);
 
 	Object deleteMember(String member_id);
 

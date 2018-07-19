@@ -83,7 +83,7 @@ var page=${currentPage};
 									<th>카테고리</th>
 									<th>수량</th>
 									<th>등록일</th>
-									<th>수정/삭제</th>
+									<th>수정 / 삭제</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -113,7 +113,7 @@ var page=${currentPage};
 												<td><fmt:formatDate value="${list.goods_date}" pattern="yyyy.MM.dd"/></td>
 												<td>
 													<a class="mdi mdi-grease-pencil" title="Modify"
-														href="javascript:update('${list.goods_num}')"></a> 
+														href="javascript:update('${list.goods_num}')"></a> &nbsp; 
 														<a class="mdi mdi-delete" title="Delete" 
 														href="javascript:deleteCheck('${list.goods_num}')"></a>
 												</td>

@@ -206,49 +206,43 @@ public class AdminController {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		keyword = request.getParameter("searchKeyword");
+		searchNum = 0;
+		String date_min = request.getParameter("date_min");
+		String date_max = request.getParameter("date_max");
+		int status = 0;
 
-		if (keyword != null && keyword != "") {
+		if(request.getParameter("searchNum")!=null) {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
-			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
-
-			if (searchNum == 0) { // 이름검색
-				memberList = adminService.memberSearchN(keyword);
-			} else if (searchNum == 1) { // 아이디 검색
-				memberList = adminService.memberSearchI(keyword);
-			} else if (searchNum == 2) { // 주소 검색
-				memberList = adminService.memberSearchA(keyword);
-			} else if (searchNum == 3) { // 전화번호 검색
-				memberList = adminService.memberSearchP(keyword);
-			} else if (searchNum == 4) { // 이메일 검색
-				memberList = adminService.memberSearchE(keyword);
-			}
-
-			totalCount = memberList.size();
-
-			page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adMemberList");
-			pagingHtml = page.getPagingHtml().toString();
-
-			int lastCount = totalCount;
-
-			if (page.getEndCount() < totalCount) {
-				lastCount = page.getEndCount() + 1;
-			}
-
-			memberList = memberList.subList(page.getStartCount(), lastCount);
-
+		}
+		if (keyword==null) {
+			keyword = null;
+		}
+		if (date_min == null) {
+			date_min = null;
+		}
+		if (date_max == null) {
+			date_max = null;
+		}
+		if(request.getParameter("status")!=null) {
+			status = Integer.parseInt(request.getParameter("status"));
+		}
+		
+		map.put("searchNum", searchNum);
+		map.put("searchKeyword", keyword);
+		map.put("date_min", date_min);
+		map.put("date_max", date_max);
+		map.put("status", status);
+		
+		if (keyword == null && searchNum==0 && date_min==null && date_max==null && status==0) {
+			memberList = adminService.memberList();
+		}else {
+			memberList = adminService.searchMemberList(map);
 			mav.addObject("searchKeyword", keyword);
 			mav.addObject("searchNum", searchNum);
-			mav.addObject("totalCount", totalCount);
-			mav.addObject("pagingHtml", pagingHtml);
-			mav.addObject("currentPage", currentPage);
-			mav.addObject("memberList", memberList);
-			mav.setViewName("adMemberList");
-
-			return mav;
 		}
-
-		memberList = adminService.memberList();
 
 		totalCount = memberList.size();
 
@@ -262,11 +256,11 @@ public class AdminController {
 		}
 
 		memberList = memberList.subList(page.getStartCount(), lastCount);
-
+		
+		mav.addObject("totalCount", totalCount);
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("memberList", memberList);
-
 		mav.setViewName("adMemberList");
 
 		return mav;

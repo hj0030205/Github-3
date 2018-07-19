@@ -86,11 +86,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="searchNum==0">AND GOODS_NAME like '%'||#{searchKeyword}||'%'</if>
 			<if test="searchNum==1">AND GOODS_CATEGORY like '%'||#{searchKeyword}||'%'</if>
 			
+			<if test="price_min!=0"> <![CDATA[AND GOODS_PRICE >= #{price_min}]]></if>
+			<if test="price_max!=0"> <![CDATA[AND GOODS_PRICE <= #{price_max}]]></if>
+			
 			<if test="date_min!=null"> <![CDATA[AND GOODS_DATE >= #{date_min}]]></if>
 			<if test="date_max!=null"> <![CDATA[AND GOODS_DATE <= #{date_max}]]></if>
 			
-			<if test="price_min!=0"> <![CDATA[AND GOODS_PRICE >= #{price_min}]]></if>
-			<if test="price_max!=0"> <![CDATA[AND GOODS_PRICE <= #{price_max}]]></if>
 		</where>
 	</select>
 
