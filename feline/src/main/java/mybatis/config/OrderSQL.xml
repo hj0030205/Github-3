@@ -107,17 +107,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		select * from feline_order ORDER BY order_num DESC
 	</select>
 	
-	<select id="orderSearchNum" resultMap="orderRes" parameterType="String">
-		select * from feline_order where order_num like #{searchorder} ORDER BY order_num DESC
+	<select id="searchOrder" resultMap="orderRes" parameterType="map">
+		select * from feline_order
+		<where>
+			<if test="searchNum==0">AND ORDER_NUM like '%'||#{searchKeyword}||'%'</if>
+			<if test="searchNum==1">AND ORDER_MEMBER_ID like '%'||#{searchKeyword}||'%'</if>
+			<if test="searchNum==2">AND ORDER_RECEIVE_PHONE like '%'||#{searchKeyword}||'%'</if>
+			
+			<if test="date_min!=null"> <![CDATA[AND ORDER_DATE >= #{date_min}]]></if>
+			<if test="date_max!=null"> <![CDATA[AND ORDER_DATE <= #{date_max}]]></if>
+			
+			<if test="status!=1">AND STATUS=#{status}</if>
+		</where>
 	</select>
 	
-	<select id="orderSearchId" resultMap="orderRes" parameterType="String">
-		select * from feline_order where order_member_id like #{searchorder} ORDER BY order_num DESC
-	</select>	
-	
-	<select id="orderSearchP" resultMap="orderRes" parameterType="String">
-		select * from feline_order where order_receive_phone like #{searchorder} ORDER BY order_num DESC
-	</select>	
 	
 	<update id="orderModify" parameterType="orderModel">
 			UPDATE feline_order SET order_receive_name = #{order_receive_name}, 

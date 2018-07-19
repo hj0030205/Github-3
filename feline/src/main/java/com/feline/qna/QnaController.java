@@ -152,7 +152,7 @@ public class QnaController {
 		boolean reply=true; 
 		QnaModel qnaModel = qnaService.qnaView(no);
 		qnaModel.setSubject("[´äº¯]"+qnaModel.getSubject());
-		qnaModel.setId((String)session.getAttribute("id"));
+		qnaModel.setId((String)session.getAttribute("adminId"));
 		qnaModel.setPassword("temporary");
 		qnaModel.setContent("");
 		qnaModel.setImage_orgname(null);
@@ -193,7 +193,7 @@ public class QnaController {
 			qnaModel.setRe_step(re_step+1);
 		}
 		
-		qnaModel.setId((String)session.getAttribute("id"));
+		qnaModel.setId((String)session.getAttribute("adminId"));
 		qnaModel.setPassword("temporary");
 		qnaModel.setContent(content);
 		qnaModel.setRegdate(today.getTime());
@@ -240,7 +240,7 @@ public class QnaController {
 		}
 		
 		String content = qnaModel.getContent().replaceAll("\r\n", "<br />");
-		qnaModel.setId((String)session.getAttribute("id"));
+		qnaModel.setId((String)session.getAttribute("adminId"));
 		qnaModel.setPassword("temporary");
 		qnaModel.setContent(content);
 		qnaModel.setRegdate(today.getTime());

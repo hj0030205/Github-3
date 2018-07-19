@@ -65,6 +65,8 @@
 									</td>
 									<td>
 								<center>
+								<c:choose>
+								<c:when test="${adOrderRefundList.trade_state==0 }">
 									<form action="adOrderRefundAgree.cat" method="post">
 										<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
 										<input type="hidden" name="trade_num" value="${adOrderRefundList.trade_num}" />
@@ -78,6 +80,11 @@
 										<input type="submit" value="거절" class="btn btn-danger">
 									</form>
 								</center>
+								</c:when>
+								<c:otherwise>
+									처리완료
+								</c:otherwise>
+								</c:choose>
 									</td>
 									
 								</tr>

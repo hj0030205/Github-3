@@ -55,8 +55,8 @@
 		}
 	}
 	function listCheck() {
-		if (confirm("정말 목록으로 돌아가시겠습니까?") == true) {
-			document.location.href = "adMemberList.cat?currentPage=" + page;
+		if (confirm("정말 목록으로 돌아가시겠습니까?")) {
+			document.location.href = "adMemberList.cat?currentPage=" + ${currentPage};
 		} else {
 			return false;
 		}
@@ -116,8 +116,7 @@
 				</h4>
 				<div class="card">
 					<div class="card-block">
-						<form class="form-horizontal form-material" method="post" action="adMemberModify.cat"
-							id="memberModel" onsubmit="return updateCheck()">
+						<form class="form-horizontal form-material" method="post" action="adMemberModify.cat" id="memberModel">
 							<div class="col-md-2">
 								<h4>
 									<b>회원 기본 정보 ▽</b>
@@ -170,13 +169,8 @@
 										<div class="col-md-6">
 										<label for="member_email">이메일</label>
 											<input type="text" name="member_email" id="member_email"
-												value="${memberModel.member_email}"
+												value="${memberModel.member_email}" readonly="readonly"
 												class="form-control form-control-line">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="col-md-6">
-											<button class="btn btn-warning" onclick="">이메일 중복 확인</button>
 										</div>
 									</div>
 								</div>
@@ -204,8 +198,7 @@
 										</div>
 										<div class="col-md-6">
 										<label for="findZipcode"> </label>
-											<button id="findZipcode" onclick="sample4_execDaumPostcode()" class="btn btn-warning">우편번호
-												검색</button>
+											<input type="button" id="findZipcode" onclick="sample4_execDaumPostcode()" class="btn btn-warning" value="우편번호 검색">
 										</div>
 									</div>
 								</div>
@@ -236,8 +229,8 @@
 								<div class="row col-md-12">
 									<div class="col-sm-12">
 									<center>
-										<button class="btn btn-warning">회원 정보 수정</button>
-										&nbsp; <a class="btn btn-danger" onclick="listCheck()">목록으로</a>
+										<input type="submit" class="btn btn-warning" onclick="updateCheck()" value="회원 정보 수정">
+										&nbsp; <input type="button" class="btn btn-danger" onclick="listCheck()" value="목록으로">
 										</center>
 									</div>
 								</div>

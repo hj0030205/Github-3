@@ -61,9 +61,9 @@ function update(member_id){
 										class="form-control" name="date_max" id="datepicker2"
 										placeholder="까지"></td>
 									<td><label style="float: left;">회원 구분 : </label>
-									<input type="radio" name="status" checked="checked" value="0">전체&nbsp;
+									<input type="radio" name="status" checked="checked" value="2">전체&nbsp;
 									<input type="radio" name="status" value="1">가입한 회원
-									&nbsp; <input type="radio" name="status" value="2">탈퇴한 회원
+									&nbsp; <input type="radio" name="status" value="0">탈퇴한 회원
 								</tr>
 								<tr>
 								<th>항목별 검색 :</th>

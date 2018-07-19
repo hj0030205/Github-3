@@ -68,9 +68,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="searchNum==2">AND MEMBER_ADDR1 like '%'||#{searchKeyword}||'%' OR MEMBER_ADDR2 like '%'||#{searchKeyword}||'%'</if>
 			<if test="searchNum==3">AND MEMBER_PHONE like '%'||#{searchKeyword}||'%'</if>
 			<if test="searchNum==4">AND MEMBER_EMAIL like '%'||#{searchKeyword}||'%'</if>
+			
 			<if test="date_min!=null"> <![CDATA[AND MEMBER_JOIN_DATE >= #{date_min}]]></if>
 			<if test="date_max!=null"> <![CDATA[AND MEMBER_JOIN_DATE <= #{date_max}]]></if>
-			<if test="status!=0">AND MEMBER_STATUS=#{status}</if>
+			
+			<if test="status!=2">AND MEMBER_STATUS=#{status}</if>
 		 </where> 
 		 ORDER BY MEMBER_NO DESC
 	</select>

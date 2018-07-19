@@ -121,7 +121,7 @@ public class FaqController {
 			
 			Calendar today = Calendar.getInstance();
 			String content = faqModel.getContent().replaceAll("\r\n", "<br />");
-			faqModel.setId((String)session.getAttribute("id"));
+			faqModel.setId((String)session.getAttribute("adminId"));
 			faqModel.setContent(content);
 			faqModel.setRegdate(today.getTime());
 

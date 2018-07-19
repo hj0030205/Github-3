@@ -91,6 +91,8 @@
 						</div>
 							<div class="col-sm-12">	
 								<center>
+									<c:choose>
+									<c:when test="${refundModel.trade_state==0 }">
 									<form action="adOrderRefundAgree.cat" method="post">
 										<input type="hidden" name="order_num" value="${refundModel.order_num}" />
 										<input type="hidden" name="trade_num" value="${refundModel.trade_num}" />
@@ -103,6 +105,11 @@
 										<input type="hidden" name="redirect_type" value="detail"/>
 										<input type="submit" value="거절" class="btn btn-danger">
 									</form>
+									</c:when>
+									<c:otherwise>
+										처리완료
+									</c:otherwise>
+									</c:choose>
 								</center>
 							</div>
 						</div>

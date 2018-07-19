@@ -73,6 +73,12 @@
 	            			</li>
 	            			<li><a href="/feline/member/b_orderSelectForm.cat">주문조회</a></li> 				
             		</c:when>
+            		<c:when test="${sessionScope.adminId ne null }">
+            			<ul class="menu">
+            				<li><a class="cell">${sessionScope.adminId }님 환영합니다.</a>
+            				</li>
+            				<li><a href="/feline/admin/main.cat">관리자페이지</a></li>
+            		</c:when>
             		<c:otherwise>
             			<ul class="menu">
             				<li><a class="cell">${sessionScope.id} 회원님 환영합니다.</a>

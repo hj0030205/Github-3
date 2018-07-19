@@ -154,7 +154,7 @@ public class NoticeController {
 		 */
 
 		String content = noticeModel.getContent().replaceAll("\r\n", "<br />");
-		noticeModel.setId((String)session.getAttribute("id"));
+		noticeModel.setId((String)session.getAttribute("adminId"));
 		noticeModel.setContent(content);
 		noticeModel.setRegdate(today.getTime());
 

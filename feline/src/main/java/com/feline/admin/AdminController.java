@@ -145,7 +145,6 @@ public class AdminController {
 		pie3.createRows(todayOrderAge.size());
 
 		mapYear = CalculationYear(todayOrderAge, iYear);
-		
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
@@ -220,10 +219,10 @@ public class AdminController {
 		if (keyword==null) {
 			keyword = null;
 		}
-		if (date_min == null) {
+		if (date_min == null || request.getParameter("date_min").trim().isEmpty()) {
 			date_min = null;
 		}
-		if (date_max == null) {
+		if (date_max == null || request.getParameter("date_max").trim().isEmpty()) {
 			date_max = null;
 		}
 		if(request.getParameter("status")!=null) {
@@ -350,11 +349,11 @@ public class AdminController {
 		if (keyword==null) {
 			keyword = null;
 		}
-		if (date_min == null) {
+		if (date_min == null || request.getParameter("date_min").trim().isEmpty()) {
 			date_min = null;
 		}
 
-		if (date_max == null) {
+		if (date_max == null || request.getParameter("date_max").trim().isEmpty()) {
 			date_max = null;
 		}
 		if(request.getParameter("price_min")!=null && !request.getParameter("price_min").trim().isEmpty()) {
@@ -538,40 +537,45 @@ public class AdminController {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-		List<OrderModel> orderlist = adminService.orderAllList();
+		List<OrderModel> orderlist = new ArrayList<OrderModel>();
+		Map<String,Object> map = new HashMap<String,Object>();
 
 		keyword = request.getParameter("searchKeyword");
+		String date_min = request.getParameter("date_min");
+		String date_max = request.getParameter("date_max");
+		int status = 1;
+		searchNum=0;
 
-		if (keyword != null) {
-			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
+		if(request.getParameter("searchNum")!=null) {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
+		}
+		if (keyword==null) {
+			keyword = null;
+		}
+		if (date_min == null || request.getParameter("date_min").trim().isEmpty()) {
+			date_min = null;
+		}
 
-			if (searchNum == 0)
-				orderlist = adminService.orderSearchNum(keyword);
-			else if (searchNum == 1)
-				orderlist = adminService.orderSearchId(keyword);
-			else if (searchNum == 2)
-				orderlist = adminService.orderSearchP(keyword);
+		if (date_max == null || request.getParameter("date_max").trim().isEmpty()) {
+			date_max = null;
+		}
+		if(request.getParameter("status")!=null) {
+			status = Integer.parseInt(request.getParameter("status"));
+		}
 
-			totalCount = orderlist.size();
-			page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderList");
-			pagingHtml = page.getPagingHtml().toString();
-
-			int lastCount = totalCount;
-
-			if (page.getEndCount() < totalCount)
-				lastCount = page.getEndCount() + 1;
-
-			orderlist = orderlist.subList(page.getStartCount(), lastCount);
-
+		map.put("date_min", date_min);
+		map.put("date_max", date_max);
+		map.put("searchNum", searchNum);
+		map.put("searchKeyword", keyword);
+		map.put("status", status);
+		
+		
+		if (keyword == null && date_min==null && date_max==null && searchNum==0 && keyword==null && status==1) {
+			orderlist = adminService.orderAllList();
+		}else {
+			orderlist = adminService.searchOrder(map);
 			mav.addObject("searchKeyword", keyword);
 			mav.addObject("searchNum", searchNum);
-			mav.addObject("totalCount", totalCount);
-			mav.addObject("pagingHtml", pagingHtml);
-			mav.addObject("currentPage", currentPage);
-			mav.addObject("orderlist", orderlist);
-			mav.setViewName("adOrderList");
-			return mav;
 		}
 
 		totalCount = orderlist.size();
@@ -1155,7 +1159,7 @@ public class AdminController {
 	public ModelAndView chartM() {
 		
 		GregorianCalendar today = new GregorianCalendar();
-		String sYear = Integer.toString(today.get(today.YEAR)).substring(2,4);
+		String sYear = Integer.toString(today.get(Calendar.YEAR)).substring(2,4);
 		int iYear = Integer.parseInt(sYear);
 		Map<Integer, Integer> mapYear = new HashMap<>();
 		int icell=0;
@@ -1278,7 +1282,7 @@ public class AdminController {
 	public ModelAndView chartO() {
 		
 		GregorianCalendar today = new GregorianCalendar();
-		String sYear = Integer.toString(today.get(today.YEAR)).substring(2,4);
+		String sYear = Integer.toString(today.get(Calendar.YEAR)).substring(2,4);
 		int iYear = Integer.parseInt(sYear);
 		Map<Integer, Integer> mapYear = new HashMap<>();
 		int icell=0;

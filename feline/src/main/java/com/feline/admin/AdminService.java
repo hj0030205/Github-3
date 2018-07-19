@@ -191,7 +191,7 @@ public class AdminService implements AdminDAO {
 
 	// 회원 검색
 	@Override
-	public List<MemberModel> searchMemberList(Map map) {
+	public List<MemberModel> searchMemberList(Map<String, Object> map) {
 		return sqlSessionTemplate.selectList("member.searchMemberList", map);
 	}
 
@@ -266,18 +266,8 @@ public class AdminService implements AdminDAO {
 	}
 	
 	@Override
-	public List<OrderModel> orderSearchNum(String search){
-		return sqlSessionTemplate.selectList("order.orderSearchNum", "%"+search+"%");
-	}
-	
-	@Override
-	public List<OrderModel> orderSearchId(String search){
-		return sqlSessionTemplate.selectList("order.orderSearchId", "%"+search+"%");
-	}
-	
-	@Override
-	public List<OrderModel> orderSearchP(String search){
-		return sqlSessionTemplate.selectList("order.orderSearchP", "%"+search+"%");
+	public List<OrderModel> searchOrder(Map<String, Object> map){
+		return sqlSessionTemplate.selectList("order.searchOrder", map);
 	}
 	
 	@Override
