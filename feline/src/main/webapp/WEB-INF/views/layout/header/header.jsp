@@ -61,22 +61,17 @@
                     </li>
                     <li><a href="/feline/member/findPwd.cat">비밀번호 찾기</a>
                     </li>
+                    <li><a href="/feline/member/b_orderSelectForm.cat">주문조회</a></li>
             	</c:when>
             	<c:otherwise>
-            		<c:choose>
-            		<c:when test="${sessionScope.id eq 'admin'}">
-            			<ul class="menu">
-	                    	<li><a class="cell">${sessionScope.id} 관리자님 환영합니다.</a>
-	                    	</li>
-	                    	<li><a href="/feline/admin/main.cat">관리자페이지</a>
-	                    	</li>
-            		</c:when>
+            		<c:choose>            	
             		<c:when test="${sessionScope.n_id ne null}">
             			<ul class="menu">
 	                    	<li><a class="cell">${sessionScope.n_id} 님 환영합니다.</a>
 	                    	</li>
-            				<li><a class="cell">${sessionScope.n_id} 님 환영합니다.</a>
-            				</li>
+	                    	<li><a href="/feline/member/logout.cat">로그아웃</a>
+	            			</li>
+	            			<li><a href="/feline/member/b_orderSelectForm.cat">주문조회</a></li> 				
             		</c:when>
             		<c:otherwise>
             			<ul class="menu">
@@ -84,26 +79,15 @@
             				</li>
             				<li><a href="/feline/member/mypage.cat">마이페이지</a>
             				</li>
+            				<li><a href="/feline/member/logout.cat">로그아웃</a>
+	            			</li>
+	            			<li><a href="/feline/member/orderList.cat">주문조회</a>
             		</c:otherwise>
-            	</c:choose>
-	            <li><a href="/feline/member/logout.cat">로그아웃</a>
-	            </li>
-            </c:if>
-            <c:if test="${sessionScope.n_id ne null}">
-          	  <ul class="menu">
-            	<li><font color="white">비회원으로 로그인하셨습니다.</font></li>
-	            <li><a href="/feline/member/logout.cat">로그아웃</a>
-	            </li>
-            </c:if>
-            <li><a href="/feline/basket/basketList.cat">장바구니</a></li>
-            <li><a href="/feline/member/b_orderSelectForm.cat">주문조회</a>
+            	</c:choose>                  
             	</c:otherwise>
             </c:choose>
-            <li><a href="#">주문조회</a>
-            </li>
             <li><a href="/feline/notice/noticeList.cat">고객센터</a>
             </li>
-            <li><a href="/feline/notice/noticeList.cat">고객센터</a></li>
            </ul>
            </div>
         </div>
@@ -258,7 +242,7 @@
             <!--/.nav-collapse -->
 
             <div class="navbar-buttons">
-				<c:if test="${sessionScope.id!=null}">
+				<c:if test="${sessionScope.id!=null || sessionScope.n_id!=null}">
                 <div class="navbar-collapse collapse right" id="basket-overview">
                     <a onclick="javascript:location.href='/feline/basket/basketList.cat'" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm"></span></a>
                 </div>
