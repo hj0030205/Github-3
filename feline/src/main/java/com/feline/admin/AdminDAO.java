@@ -1,6 +1,7 @@
 package com.feline.admin;
 
 import java.util.List;
+import java.util.Map;
 
 import com.feline.ccr.CancleModel;
 import com.feline.ccr.ChangeModel;
@@ -83,10 +84,8 @@ public interface AdminDAO {
 	GoodsModel goodsView(int goods_num);
 
 	// 검색
-	List<GoodsModel> goodsSearchName(String goods_name);
-
-	List<GoodsModel> goodsSearchCategory(String goods_category);
-
+	List<GoodsModel> goodsSearch(Map<String,Object> map);
+	
 	// 상품등록
 	Object insertGoods(GoodsModel goodsModel);
 

@@ -12,12 +12,10 @@
 			<div class="container">
 				<div class="col-sm-12">
 					<ul class="breadcrumb">
-
 						<li><a href="/feline/main.cat">메인</a></li>
 						<li>FAQ</li>
 					</ul>
 				</div>
-
 				<!-- *** LEFT COLUMN ***
 		     _________________________________________________________ -->
 				<div class="col-md-9">
@@ -33,17 +31,16 @@
 												href="#faq${list.no }"> ${list.subject }</a>
 										</h4>
 									</div>
-									<div id="faq${list.no }"
-										class="panel-collapse collapse">
+									<div id="faq${list.no }" class="panel-collapse collapse">
 										<div class="panel-body">
+											<p>${list.content }</p>
 											<p>
-												${list.content }
-											</p>
-											<p>
-												<c:if test="${sessionScope.id eq 'admin' }">
-													<input id="faqBtn" type="button" class="btn btn-default" value="삭제"
+												<c:if test="${sessionScope.adminId ne null }">
+													<input id="faqBtn" type="button" class="btn btn-default"
+														value="삭제"
 														onclick="javascript:location.href='faqDelete.cat?no=${list.no}'" />
-													<input id="faqBtn" type="button" class="btn btn-default" value="수정"
+													<input id="faqBtn" type="button" class="btn btn-default"
+														value="수정"
 														onclick="javascript:location.href='faqModify.cat?no=${list.no}&currentPage=${currentPage }'" />
 												</c:if>
 											</p>
@@ -59,21 +56,19 @@
 								<select name="searchNum">
 									<option value="0">제목</option>
 									<option value="1">내용</option>
-								</select>
-								<input type="text" name="searchKeyword" size="30"/>
+								</select> <input type="text" name="searchKeyword" size="30" />
 								<button type="submit" class="btn btn-default">
 									<i class="fa fa-search"></i>
 								</button>
 							</form>
 						</center>
-						<c:if test="${sessionScope.id ne null }">
-							<c:if test="${sessionScope.id eq 'admin' }">
-								<center>
-									<input class="btn btn-primary" type="button" value="글쓰기"
-										onclick="javascript:location.href='faqWrite.cat?currentPage=${currentPage}'">
-								</center>
-							</c:if>
+						<c:if test="${sessionScope.adminId ne null}">
+							<center>
+								<input class="btn btn-primary" type="button" value="글쓰기"
+									onclick="javascript:location.href='faqWrite.cat?currentPage=${currentPage}'">
+							</center>
 						</c:if>
+
 					</div>
 				</div>
 				<!-- /.col-md-9 -->

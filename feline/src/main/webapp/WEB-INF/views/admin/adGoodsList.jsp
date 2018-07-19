@@ -47,14 +47,14 @@ var page=${currentPage};
 								<tr>
 								 	<th>기간별 검색 :</th>
 									<td style="text-align: left;" colspan=2>
-										<input type="text" class="form-control" id="datepicker" placeholder="부터">
-										~ <input type="text" class="form-control" id="datepicker2"
+										<input type="text" class="form-control" id="datepicker" name="date_min" placeholder="부터">
+										~ <input type="text" class="form-control" id="datepicker2" name="date_max"
 											placeholder="까지">
 									</td>
 									<th>가격별 검색 :</th>
 									<td style="text-align: left;" colspan=2>
-										<input type="text" class="form-control" placeholder="부터">
-										~ <input type="text" class="form-control"  placeholder="까지">
+										<input type="text" class="form-control" name="price_min" placeholder="부터">
+										~ <input type="text" class="form-control" name="price_max" placeholder="까지">
 									</td>
 								</tr>
 								<tr>
@@ -123,11 +123,13 @@ var page=${currentPage};
 								</c:choose>
 							</tbody>
 						</table>
+						<center>
 						<table class="paging">
 							<tr align=center>
 								<td colspan=8>${pagingHtml}</td>
 							</tr>
 						</table>
+						</center>
 					</div>
 				</div>
 			</div>

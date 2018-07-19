@@ -339,46 +339,54 @@ public class AdminController {
 		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-
-		keyword = request.getParameter("searchKeyword");
-
+		
+		Map<String,Object> map = new HashMap<String,Object>();
 		List<GoodsModel> adGoodsList = new ArrayList<GoodsModel>();
-
-		if (keyword != null) {
+		
+		keyword = request.getParameter("searchKeyword");
+		String date_min = request.getParameter("date_min");
+		String date_max = request.getParameter("date_max");
+		searchNum=0;
+		int price_min = 0;
+		int price_max = 0;
+		
+		if(request.getParameter("searchNum")!=null) {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
-
-			if (searchNum == 0)
-				adGoodsList = adminService.goodsSearchName(keyword);
-			else if (searchNum == 1)
-				adGoodsList = adminService.goodsSearchCategory(keyword);
-
-			totalCount = adGoodsList.size();
-			System.out.println(totalCount);
-			page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adGoodsList");
-			pagingHtml = page.getPagingHtml().toString();
-
-			int lastCount = totalCount;
-
-			if (page.getEndCount() < totalCount)
-				lastCount = page.getEndCount() + 1;
-
-			adGoodsList = adGoodsList.subList(page.getStartCount(), lastCount);
-
-			mav.addObject("searchKeyword", keyword);
-			mav.addObject("searchNum", searchNum);
-			mav.addObject("totalCount", totalCount);
-			mav.addObject("pagingHtml", pagingHtml);
-			mav.addObject("currentPage", currentPage);
-			mav.addObject("goodsList", adGoodsList);
-			mav.setViewName("adGoodsList");
-			return mav;
+		}
+		if (keyword==null) {
+			keyword = null;
+		}
+		if (date_min == null) {
+			date_min = null;
 		}
 
-		adGoodsList = adminService.goodsList();
+		if (date_max == null) {
+			date_max = null;
+		}
+		if(request.getParameter("price_min")!=null && !request.getParameter("price_min").trim().isEmpty()) {
+			price_min = Integer.parseInt(request.getParameter("price_min"));
+		}
+		
+		if(request.getParameter("price_max")!=null && !request.getParameter("price_max").trim().isEmpty()) {
+			price_max = Integer.parseInt(request.getParameter("price_max"));
+		}
+		map.put("date_min", date_min);
+		map.put("date_max", date_max);
+		map.put("searchNum", searchNum);
+		map.put("searchKeyword", keyword);
+		map.put("price_min", price_min);
+		map.put("price_max", price_max);
+		
+		if (keyword == null && searchNum==0 && date_min==null && date_max==null && price_min==0 &&price_max==0) {
+			adGoodsList = adminService.goodsList();
+		}else {
+			adGoodsList = adminService.goodsSearch(map);
+			mav.addObject("searchKeyword", keyword);
+			mav.addObject("searchNum", searchNum);
+		}
 
 		totalCount = adGoodsList.size();
-
-		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, "", "adGoodsList");
+		page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adGoodsList");
 		pagingHtml = page.getPagingHtml().toString();
 
 		int lastCount = totalCount;
@@ -401,13 +409,11 @@ public class AdminController {
 	public ModelAndView adGoodsView(HttpServletRequest request) {
 
 		int no = Integer.parseInt(request.getParameter("goods_num"));
-
 		GoodsModel GoodsModel = adminService.goodsView(no);
 
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("goodsModel", GoodsModel);
 		mav.setViewName("adGoodsView");
-
 		return mav;
 	}
 
@@ -1482,3 +1488,4 @@ public class AdminController {
 	}
 
 }
+

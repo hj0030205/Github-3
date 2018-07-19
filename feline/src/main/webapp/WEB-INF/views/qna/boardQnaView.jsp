@@ -81,7 +81,7 @@
 								<input id="qnaWriteBtn" type="button" value="게시물 등록"
 									class="btn btn-default"
 									onclick="javascript:location.href='qnaWrite.cat?currentPage=${currentPage}'">
-					&nbsp;
+								&nbsp;
 							<input id="qnaModifyBtn" type="button" value="게시물 수정"
 									class="btn btn-default"
 									onclick="javascript:location.href='qnaModify.cat?no=${qnaModel.no}&currentPage=${currentPage}'"> &nbsp;
@@ -89,7 +89,7 @@
 									class="btn btn-default"
 									onclick="javascript:location.href='qnaDelete.cat?no=${qnaModel.no}&currentPage=${currentPage}'"> &nbsp;
 						</c:when>
-							<c:when test="${sessionScope.id eq 'admin'}">
+							<c:when test="${sessionScope.adminId ne null}">
 								<input id="qnaReplyBtn" type="button" value="게시물 답변"
 									class="btn btn-default"
 									onclick="javascript:location.href='qnaReplyWrite.cat?no=${qnaModel.no }&currentPage=${currentPage}'"> &nbsp;
