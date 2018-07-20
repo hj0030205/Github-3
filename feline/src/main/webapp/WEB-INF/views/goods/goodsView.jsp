@@ -206,7 +206,7 @@ li.basic.active {
 										</tr>
 										<tr>
 											<td align="left" colspan="1">판매가</td>
-											<td align="left" colspan="1">${goodsModel.goods_price}원</td>
+											<td align="left" colspan="1"><fmt:formatNumber value="${goodsModel.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
 										</tr>
 									</table>
 									<p class="text-center buttons">
