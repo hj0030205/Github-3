@@ -38,11 +38,11 @@ public class MainController {
 	
 	private Logger logger = Logger.getLogger(getClass());
 	
-	/* ¸ŞÀÎÆäÀÌÁö */
+	/* ë©”ì¸í™”ë©´ */
 	@RequestMapping(value = "main.cat")
 	public ModelAndView main(HttpServletRequest request) {
 		
-		//ÀÌº¥Æ® ½ÃÀÛÇØ¾ß ÇÒ »óÇ° ¸ñ·Ï ºÒ·¯¿À±â
+		//ì‹œì‘í•  ì´ë²¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
 		startEventList = eventService.selectStartEvent();
 		
 		logger.info("startEventListSize : " + startEventList.size());
@@ -51,7 +51,7 @@ public class MainController {
 			String goods_num_s = null;
 			
 			for(int i = 0; i < startEventList.size(); i++) {
-				//goods_num_s ¸®½ºÆ® »ı¼º
+				//goods_num_s íŒŒì‹±í•´ì„œ ì´ë²¤íŠ¸ ê°€ê²© ì¡°ì •
 				goods_num_s = startEventList.get(i).getGoods_num();
 				String[] goods_num_array = goods_num_s.split(",");
 				
@@ -67,7 +67,7 @@ public class MainController {
 					eventService.eventPriceOn(eventModel);
 				}
 				
-				//status 1·Î ÀÌº¥Æ® È°¼ºÈ­
+				//status 1ë¡œ í™œì„±í™”
 				EventModel eventModel1 = new EventModel();
 				
 				eventModel1.setStatus(1);
@@ -77,7 +77,7 @@ public class MainController {
 			}
 		}
 		
-		//ÀÌº¥Æ® Á¾·áÇØ¾ß ÇÒ »óÇ° ¸ñ·Ï ºÒ·¯¿À±â
+		//ì¢…ë£Œí•  ì´ë²¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
 		endEventList = eventService.selectEndEvent();
 		
 		if(endEventList.size() > 0) {
@@ -85,7 +85,7 @@ public class MainController {
 			
 			for(int i = 0; i < endEventList.size(); i++) {
 				
-				//goods_num_s ¸®½ºÆ® »ı¼º
+				//goods_num_s íŒŒì‹±í•´ì„œ ì´ë²¤íŠ¸ ê°€ê²© ì¡°ì •
 				goods_num_s = startEventList.get(i).getGoods_num();
 				String[] goods_num_array = goods_num_s.split(",");
 				
@@ -101,7 +101,7 @@ public class MainController {
 					eventService.eventPriceOff(eventModel);
 				}
 				
-				//status=0À¸·Î ÀÌº¥Æ® ºñÈ°¼ºÈ­
+				//status=0ìœ¼ë¡œ ë¹„í™œì„±í™”
 				EventModel eventModel1 = new EventModel();
 				eventModel1.setStatus(0);
 				eventModel1.setEvent_num(startEventList.get(i).getEvent_num());
