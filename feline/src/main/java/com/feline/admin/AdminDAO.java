@@ -12,7 +12,7 @@ import com.feline.order.OrderModel;
 
 public interface AdminDAO {
 	
-	/*********************** ´ë½¬º¸µå »ó´Ü Â÷Æ® *********************/
+	/*********************** ï¿½ë½¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® *********************/
 	
 	public int countTrade();
 	public int countTrans();
@@ -21,7 +21,7 @@ public interface AdminDAO {
 	public int todayOrder();
 	public int todaySalesM();
 	
-	/*********************** ´ë½¬º¸µå ÇÏ´Ü Â÷Æ® *********************/
+	/*********************** ï¿½ë½¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½Æ® *********************/
 	
 	public List<GoodsModel> todaySalesGoods();
 	public List<ChartModel> todayMemberAge();
@@ -30,7 +30,7 @@ public interface AdminDAO {
 	public List<ChartModel> todayOrderRegion();
 	
 	
-	/***********************  Åë°è Â÷Æ® *********************/
+	/***********************  ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® *********************/
 	
 	public List<ChartModel> chartAllM();
 	public List<ChartModel> chartNewM();
@@ -54,9 +54,9 @@ public interface AdminDAO {
 	
 	
 
-	/*********************** È¸¿ø °ü¸® *************************/
+	/*********************** íšŒì›ê´€ë¦¬ *************************/
 
-	// È¸¿ø ¸ñ·Ï
+	// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½
 	List<MemberModel> memberList();
 
 	MemberModel memberSelect(String member_id);
@@ -75,37 +75,37 @@ public interface AdminDAO {
 
 	Object deleteMember(String member_id);
 
-	/*********************** »óÇ° °ü¸® *************************/
+	/*********************** ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ *************************/
 
-	// »óÇ°¸ñ·Ï
+	// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
 	List<GoodsModel> goodsList();
 
-	// »óÇ° »ó¼¼ ºä
+	// ï¿½ï¿½Ç° ï¿½ï¿½ ï¿½ï¿½
 	GoodsModel goodsView(int goods_num);
 
-	// °Ë»ö
+	// ï¿½Ë»ï¿½
 	List<GoodsModel> goodsSearch(Map<String,Object> map);
 	
-	// »óÇ°µî·Ï
+	// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
 	Object insertGoods(GoodsModel goodsModel);
 
-	// ±Û¼öÁ¤
+	// ï¿½Û¼ï¿½ï¿½ï¿½
 	int goodsModify(GoodsModel goodsModel);
 
-	// ¸¶Áö¸· °Ô½Ã¹° ¹øÈ£ ¹İÈ¯
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½È£ ï¿½ï¿½È¯
 	int goodsLastNum();
 
-	// Ã·ºÎÆÄÀÏ Ãß°¡ ¹× ¼öÁ¤
+	// Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	int updateFile(GoodsModel goodsModel);
 
-	// ±Û»èÁ¦
+	// ï¿½Û»ï¿½ï¿½ï¿½
 	int goodsDelete(int goods_num);
 
-	/*********************** ÁÖ¹® °ü¸® *************************/
+	/*********************** ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ï¿½ *************************/
 
 	List<OrderModel> orderAllList();
 
-	// ÁÖ¹®»ó¼¼º¸±â »Ì¾Æ¿À±â
+	// ï¿½Ö¹ï¿½ï¿½ó¼¼ºï¿½ï¿½ï¿½ ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½
 	OrderModel OrderView(int order_num);
 
 	List<OrderModel> orderSearchNum(String search);
@@ -116,53 +116,53 @@ public interface AdminDAO {
 
 	Object orderModify(OrderModel OrderModel);
 	
-	/**********************Ãë¼Ò/È¯ºÒ/±³È¯°ü¸®*****************************/
-	//Ãë¼Ò¸ñ·Ï »Ì¾Æ¿À±â
+	/**********************ï¿½ï¿½ï¿½/È¯ï¿½ï¿½/ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½*****************************/
+	//ï¿½ï¿½Ò¸ï¿½ï¿½ ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½
 	List<CancleModel> adOrderCancleList();
 	
-	//Ãë¼ÒµÈ ÁÖ¹® »ó¼¼ ³»¿ë ºÒ·¯¿À±â.
+	//ï¿½ï¿½Òµï¿½ ï¿½Ö¹ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½.
 	OrderModel adOrderCancleView(int order_num);
 	
-	//ÁÖ¹® Ãë¼Ò ³»¿ë °¡Á®¿À±â.
+	//ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 	CancleModel adOrderCancleView2(int cancle_num);
 
-	//ÁÖ¹® Ãë¼Ò ³»¿ë °¡Á®¿À±â2.
+	//ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2.
 	GoodsModel adOrderCancleView3(int goods_num);
 	
-	//È¯ºÒ ¸ñ·Ï »Ì¾Æ¿À±â
+	//È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½
 	List<RefundModel> adOrderRefundList();
 	
-	//È¯ºÒµÈ ÁÖ¹® »ó¼¼ ³»¿ë ºÒ·¯¿À±â.
+	//È¯ï¿½Òµï¿½ ï¿½Ö¹ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½.
 	OrderModel adOrderRefundView(int order_num);
 	
-	//ÁÖ¹® È¯ºÒ ³»¿ë °¡Á®¿À±â.
+	//ï¿½Ö¹ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 	RefundModel adOrderRefundView2(int trade_num);
 
-	//ÁÖ¹® È¯ºÒ ³»¿ë °¡Á®¿À±â2.
+	//ï¿½Ö¹ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2.
 	GoodsModel adOrderRefundView3(int goods_num);
 	
-	//È¯ºÒ ½ÂÀÎ
+	//È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	void adOrderRefundAgree(OrderModel orderModel, RefundModel refundModel);
 	
-	//È¯ºÒ °ÅÀı
+	//È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	void adOrderRefundRefuse(OrderModel orderModel,RefundModel refundModel);
 	
 	
-	//±³È¯ ¸ñ·Ï »Ì¾Æ¿À±â
+	//ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½
 	List<ChangeModel> adOrderChangeList();
 	
-	//±³È¯µÈ ÁÖ¹® »ó¼¼ ³»¿ë ºÒ·¯¿À±â.
+	//ï¿½ï¿½È¯ï¿½ï¿½ ï¿½Ö¹ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½.
 	OrderModel adOrderChangeView(int order_num);
 	
-	//ÁÖ¹® ±³È¯ ³»¿ë °¡Á®¿À±â.
+	//ï¿½Ö¹ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 	ChangeModel adOrderChangeView2(int change_num);
 
-	//ÁÖ¹® ±³È¯ ³»¿ë °¡Á®¿À±â2.
+	//ï¿½Ö¹ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2.
 	GoodsModel adOrderChangeView3(int goods_num);
 	
-	//±³È¯ ½ÂÀÎ
+	//ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½
 	void adOrderChangeAgree(OrderModel orderModel,ChangeModel changeModel);
 	
-	//±³È¯ °ÅÀı
+	//ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½
 	void adOrderChangeRefuse(OrderModel orderModel,ChangeModel changeModel);
 }
