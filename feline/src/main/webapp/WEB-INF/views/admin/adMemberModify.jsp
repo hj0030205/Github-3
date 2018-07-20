@@ -8,6 +8,33 @@
 <title>회원 수정하기</title>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
+
+function check()
+{
+	
+	if(!document.memberModel.member_phone.value)
+	{
+		alert("전화번호를 입력하세요.");
+		document.join.member_phone.focus();
+		return false;
+	}
+	
+	if(!document.memberModel.member_zipcode.value)
+	{
+		alert("우편번호 찾기를 통해 우편번호와 기본주소를 입력하세요.");
+		document.memberModel.member_zipcode.focus();
+		return false;
+	}
+	
+	if(!document.memberModel.member_address2.value)
+	{
+		alert("상세주소를 입력하세요.");
+		document.memberModel.member_address2.focus();
+		return false;
+	}
+	
+}
+
 	function sample4_execDaumPostcode() {
 		new daum.Postcode(
 				{
@@ -117,7 +144,7 @@
 				<div class="card">
 					<div class="card-block">
 						<form class="form-horizontal form-material" method="post" action="adMemberModify.cat"
-							id="memberModel" onsubmit="return updateCheck()">
+							id="memberModel" name="memberModel" onsubmit="return updateCheck()">
 							<div class="col-md-2">
 								<h4>
 									<b>회원 기본 정보 ▽</b>
@@ -200,7 +227,7 @@
 										<label for="sample4_postcode">우편번호</label>
 											<input type="text" id="sample4_postcode"
 												name="member_zipcode" class="form-control form-control-line"
-												value="${memberModel.member_zipcode}">
+												value="${memberModel.member_zipcode}" readonly="readonly">
 										</div>
 										<div class="col-md-6">
 										<label for="findZipcode"> </label>
@@ -217,7 +244,7 @@
 										<label for="sample4_roadAddress">주소</label>
 											<input type="text" name="member_addr1"
 												class="form-control form-control-line"
-												id="sample4_roadAddress" value="${memberModel.member_addr1}">
+												id="sample4_roadAddress" value="${memberModel.member_addr1}" readonly="readonly">
 										</div>
 										<div class="col-md-6">
 										<label for="member_addr2">상세주소</label>
