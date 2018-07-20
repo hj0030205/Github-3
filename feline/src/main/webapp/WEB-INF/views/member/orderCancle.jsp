@@ -66,10 +66,13 @@
 									<li><a href="mypage.cat">마이 페이지</a></li>
 									<li><a href="orderList.cat">
 									<i class="fa fa-list"></i>나의 주문 내역</a></li>
+									
 									<li class="active"><a href="orderCancleList.cat">
 									<i class="fa fa-times"></i>주문 취소 내역</a></li>	
+									
 									<li><a href="orderRefundList.cat">
-									<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
+									<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>
+										
 									<li><a href="orderChangeList.cat">
 									<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
 									<li><a href="/feline/basket/basketList.cat"><i

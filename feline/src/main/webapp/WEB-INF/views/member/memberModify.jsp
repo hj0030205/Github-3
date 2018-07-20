@@ -10,7 +10,9 @@
 <title>회원정보수정</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script>
+<script type="text/javascript">
+
+
 	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 	function sample4_execDaumPostcode() {
 		new daum.Postcode(
@@ -49,7 +51,7 @@
 				}).open();
 	}
 
- 	function openEmailChk() {
+/*  	function openEmailChk() {
  		if(document.memberModify.member_email.value == document.memberModify.member_email_own.value){
  			alert("기존의 이메일과 같습니다.");
  			return false;
@@ -58,9 +60,59 @@
 			window.open("member_emailCheck.cat?member_email="+ document.memberModify.member_email.value, "emailchkForm",
 					"width=500,height=300,resizable=no,scrollbars=no");
  		}
-	} 
-	
-</script>
+	}  */
+ 	
+ 	function onlyNumber(obj) {
+ 	    $(obj).keyup(function(){
+ 	         $(this).val($(this).val().replace(/[^0-9]/g,""));
+ 	    }); 
+ 	}
+
+ 	</script>
+ 	<script type='text/javaScript'>
+	$(document).ready(function(){
+    var u_phone = $('#phone');
+    
+    $('#btn_pass').click(function(){
+        // 정규식 -전화번호 유효성 검사
+        var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+
+        if(!regPhone.test(u_phone.val())){
+        	alert('전화번호에 " - "을 빼고 입력해주셔야합니다.');
+        	u_phone.focus();
+        	return false;
+        }
+    });
+    
+});
+	</script>
+	<script>
+	$(document).ready(function(){
+				
+				  var emailVal = $("#email");
+			  
+				  $('#emailchk').click(function(){
+				  var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+				  // 검증에 사용할 정규식 변수 regExp에 저장
+				  if(!regExp.test(emailVal.val())) {
+				    alert("이메일형식에 맞지 않습니다.");
+				    emailVal.focus();
+				    return false;
+				 }else {
+					 	if(document.memberModify.member_email.value == document.memberModify.member_email_own.value){
+					 	alert("기존의 이메일과 같습니다.");
+				 		return false;
+				 	}else{
+						window.name = "EmailChkForm"
+						window.open("member_emailCheck.cat?member_email="+ document.memberModify.member_email.value, "emailchkForm",									"width=500,height=300,resizable=no,scrollbars=no");
+			 		}
+				 }
+			});
+		});
+	</script>
+
+
+
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원수정 폼</title>
@@ -147,14 +199,17 @@
 						<div class="row">
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>생년월일<strong>(주민번호 앞번호 6자리)</strong></label>
-									<input type="text" class="form-control" name="member_jumin1" value="${memberModel.member_jumin1 }"/>
+									<label>생년월일</label>
+									<input type="text" class="form-control" 
+									onkeydown="onlyNumber(this)"
+									name="member_jumin1" value="${memberModel.member_jumin1 }"/>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>전화번호<strong>( - 포함)</strong></label>
-									<input type="text" class="form-control" name="member_phone" value="${memberModel.member_phone }"/>
+									<label>전화번호( - 을 빼고 입력하세요)</label>
+									<input type="text" class="form-control" id="phone"
+									name="member_phone" value="${memberModel.member_phone }"/>
 								</div>
 							</div>
 						</div>
@@ -163,7 +218,7 @@
 								<div class="col-sm-5">
 									<div class="form-group">
 										<label>이메일</label> 
-										<input type="text" class="form-control" name="member_email"  value="${memberModel.member_email }"/>
+										<input type="text" id="email" class="form-control" name="member_email"  value="${memberModel.member_email }"/>
 										<input type="hidden" name="member_email_own" value="${memberModel.member_email }"/>
 									</div>
 								</div>
@@ -173,7 +228,7 @@
 												<br />
 											</h2></label>
 										<button type="button" class="btn btn-default" id="emailchk"
-											onclick="openEmailChk()">중복확인</button>
+											>중복확인</button>
 									</div>
 								</div>
 							</div>
@@ -182,7 +237,7 @@
 								<div class="col-sm-4">
 									<div class="form-group">
 										<label>우편번호</label> 
-										<input type="text" class="form-control"
+										<input type="text" class="form-control" readonly="readonly"
 											id="sample4_postcode" name="member_zipcode"
 											value="${memberModel.member_zipcode }"/>
 									</div>
@@ -202,7 +257,7 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label>상세주소</label> 
-										<input type="text" class="form-control" name="member_addr1" id="sample4_roadAddress" value="${memberModel.member_addr1 }"/>
+										<input type="text" readonly="readonly" class="form-control" name="member_addr1" id="sample4_roadAddress" value="${memberModel.member_addr1 }"/>
 									</div>
 								</div>
 								<div class="col-sm-3">
@@ -215,7 +270,7 @@
  				<!-- =========================================================================== -->
 							<br /> <br />
 							<center>
-								<button type="submit" class="btn btn-primary">수정완료</button>
+								<button type="submit" id="btn_pass" class="btn btn-primary">수정완료</button>
 								&nbsp;
 								<button class="btn btn-primary" type="button"
 									onclick="javascript:location.href='mypage.cat'">취소하기</button>
