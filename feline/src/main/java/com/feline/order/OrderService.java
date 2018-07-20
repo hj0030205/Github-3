@@ -18,74 +18,74 @@ public class OrderService implements OrderDao {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	// ÁÖ¹® ¿Ï·á
+	// ï¿½Ö¹ï¿½ ï¿½Ï·ï¿½
 	@Override
 	public Object goodsOrder(OrderModel orderModel) {
 		return sqlSessionTemplate.insert("order.goodsOrder", orderModel);
 	}
 
-	// ÁÖ¹®³»¿ª»Ì¾Æ¿À±â
+	// ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½
 	@Override
 	public List<OrderModel> OrderList(OrderModel orderModel) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList("order.orderList", orderModel);
 	}
 
-	// ÁÖ¹®»ó¼¼º¸±â»Ì¾Æ¿À±â
+	// ï¿½Ö¹ï¿½ï¿½ó¼¼ºï¿½ï¿½ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½
 	@Override
 	public OrderModel OrdergetOne(int order_num) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("order.ordergetOne", order_num);
 	}
 
-	//Àå¹Ù±¸´Ï ³Ö±â
+	//ìƒí’ˆ ìƒì„¸ì—ì„œ êµ¬ë§¤ ì‹œ ì¥ë°”êµ¬ë‹ˆ í…Œì´ë¸”ì— ë‹´ì•„ì¤Œ
 	@Override
 	public Object insertBasket(BasketModel basketModel) {
 		return sqlSessionTemplate.insert("basket.insertBasket", basketModel);
 	}
 	
 	
-	// Àå¹Ù±¸´Ï »óÇ°µé °¡Á®¿À±â.
+	// ì¥ë°”êµ¬ë‹ˆ ë¦¬ìŠ¤íŠ¸ë¥¼ ë½‘ì•„ì™€ ì£¼ë¬¸í•˜ê¸°ì—ì„œ ë³´ì—¬ì¤Œ.
 	@Override
 	public List<BasketModel> basketList(BasketModel basketModel) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList("basket.basketList", basketModel);
 	}
 	
-	//»óÇ°»ó¼¼¿¡¼­ ÁÖ¹®ÇÏ±â·Î ¸®½ºÆ® °¡Á®°¡±â
+	// ìƒí’ˆìƒì„¸ì—ì„œ ì£¼ë¬¸í•˜ê¸°í™”ë©´ì— ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ê°€ê¸°
 	public List<BasketModel> orderBasketModel(BasketModel basketModel) {
 		return sqlSessionTemplate.selectList("basket.orderBasketList", basketModel);
 	}
 
-	// È¸¿ø Á¤º¸ °¡Á®¿À±â.
+	// êµ¬ë§¤í•˜ê¸° í™”ë©´ì—ì„œ ì£¼ë¬¸ì ì •ë³´ ë¿Œë ¤ì£¼ê¸°
 	@Override
 	public MemberModel getMember(String id) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("member.memberSelect", id);
 	}
 
-	// Àå¹Ù±¸´Ï »óÇ° Ã¼Å©
+	//ì¥ë°”êµ¬ë‹ˆì— ë™ì¼í•œ ìƒí’ˆì´ ìˆëŠ”ì§€ ì²´í¬
 	@Override
 	public List<BasketModel> basketGoodsCheck(BasketModel basketModel) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList("basket.basketGoodsCheck", basketModel);
 	}
 
-	// Àå¹Ù±¸´Ï ¹°Ç° »èÁ¦.
+	//ì£¼ë¬¸í•˜ë©´ì„œ ì¥ë°”êµ¬ë‹ˆ ì‚­ì œ
 	@Override
 	public Object basketDelete(int basket_num) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.delete("basket.basketDelete", basket_num);
 	}
 	
-	//ºñÈ¸¿ø ÁÖ¹®ÇÏ±â(Àå¹Ù±¸´Ï > ÁÖ¹®)
+	//ë¹„íšŒì›ìš©-goodsSettle í˜ì´ì§€ì—ì„œ ìƒí’ˆ ì •ë³´ ë³´ì—¬ì£¼ê¸°
 	@Override
 	public GoodsModel selectGoods(int goods_num) {
 		return sqlSessionTemplate.selectOne("goods.selectGoods", goods_num);
 	}
 	
 	
-	//ÁÖ¹® ¿Ï·á È­¸é¿¡¼­ ÁÖ¹®¹øÈ£ º¸¿©ÁÖ±â
+	//ì£¼ë¬¸ ì™„ë£Œ í™”ë©´ì—ì„œ ì£¼ë¬¸ë²ˆí˜¸ ë„ì›Œì£¼ê¸°ìš©
 	public OrderModel selectNewestOrder(String member_id) {
 		return sqlSessionTemplate.selectOne("order.selectNewestOrder", member_id);
 	}
