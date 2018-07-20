@@ -15,43 +15,43 @@ public class BasketService implements BasketDao {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	//Àå¹Ù±¸´Ï ³Ö±â
+	//ì¥ë°”êµ¬ë‹ˆ ë‹´ê¸°
 	@Override
 	public Object insertBasket(BasketModel basketModel) {
 		return sqlSessionTemplate.insert("basket.insertBasket", basketModel);
 	}
 	
-	//ºñÈ¸¿ø Àå¹Ù±¸´Ï¿¡ ³Ö±â - ¹°Ç° Á¤º¸ Á¶È¸
+	//ì¥ë°”êµ¬ë‹ˆì— ë‹´ê¸´ goods_ì •ë³´ ë°›ì•„ì˜¤ê¸°
 	@Override
 	public GoodsModel selectGoods(int goods_num) {
 		return sqlSessionTemplate.selectOne("goods.selectGoods", goods_num);
 	}
 	
-	//Àå¹Ù±¸´Ï ¸®½ºÆ®
+	//ì¥ë°”êµ¬ë‹ˆ ë¦¬ìŠ¤íŠ¸
 	@Override
 	public List<BasketModel> basketList(BasketModel basketModel){
 		return sqlSessionTemplate.selectList("basket.basketList", basketModel);
 	}
 	
-	//Àå¹Ù±¸´Ï Áßº¹ Ã¼Å©
+	//ì¥ë°”êµ¬ë‹ˆì— ë™ì¼í•œ ìƒí’ˆì´ ìˆëŠ”ì§€ ì²´í¬
 	@Override
 	public List<BasketModel> basketGoodsCheck (BasketModel basketModel) {
 		return sqlSessionTemplate.selectList("basket.basketGoodsCheck", basketModel);
 	}
 	
-	//Àå¹Ù±¸´Ï »èÁ¦
+	//ì¥ë°”êµ¬ë‹ˆ ì‚­ì œ
 	@Override
 	public Object basketDelete (int basket_num) {
 		return sqlSessionTemplate.delete("basket.basketDelete", basket_num);
 	}
 	
-	//Àå¹Ù±¸´Ï ¼ö·® Á¶Àı
+	//ì¥ë°”êµ¬ë‹ˆ ìˆ˜ëŸ‰ë³€ê²½
 	@Override
 	public int updateAmount (BasketModel basketModel) {
 		return sqlSessionTemplate.update("basket.updateAmount", basketModel);
 	}
 	
-	//»èÁ¦µÈ »óÇ° Á¦¿ÜÇÏ°í »óÇ° °¡Á®¿À±â
+	//ì‚­ì œìƒí’ˆ ì œì™¸í•˜ê³  ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<BasketModel> basketListCheckStatus(BasketModel basketModel) {
 		return sqlSessionTemplate.selectList("basket.basketListCheckStatus", basketModel);

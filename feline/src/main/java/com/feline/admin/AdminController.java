@@ -60,7 +60,7 @@ public class AdminController {
 	private int searchNum;
 	private String keyword;
 
-	// ÆäÀÌÂ¡À» À§ÇÑ º¯¼ö ¼³Á¤
+	// ï¿½ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private int currentPage = 1;
 	private int totalCount;
 	private int blockCount = 10;
@@ -76,7 +76,7 @@ public class AdminController {
 
 	private Logger logger = Logger.getLogger(getClass());
 
-	@RequestMapping("main.cat") // °ü¸®ÀÚ ÆäÀÌÁö
+	@RequestMapping("main.cat") // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public ModelAndView adMain() throws Exception {
 
 		int countTrade = adminService.countTrade();
@@ -94,12 +94,12 @@ public class AdminController {
 		Map<Integer, Integer> mapYear = new HashMap<>();
 		int icell=0;
 
-		// ¿¬·É´ë1 - È¸¿ø
+		// ï¿½ï¿½ï¿½É´ï¿½1 - È¸ï¿½ï¿½
 		List<ChartModel> todayMemberAge = adminService.todayMemberAge();
 		GoogleChartDTO pie1 = new GoogleChartDTO();
 		
 		
-		pie1.addColumn("¿¬·É´ë", "string");
+		pie1.addColumn("ï¿½ï¿½ï¿½É´ï¿½", "string");
 		pie1.addColumn("number", "number");
 		pie1.createRows(todayMemberAge.size());
 
@@ -108,9 +108,9 @@ public class AdminController {
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
-				pie1.addCell(icell, "ºñÈ¸¿ø");
+				pie1.addCell(icell, "ï¿½ï¿½È¸ï¿½ï¿½");
 			}else {
-				pie1.addCell(icell, i+"0´ë");
+				pie1.addCell(icell, i+"0ï¿½ï¿½");
 			}
 			pie1.addCell(icell, mapYear.get(i));
 			icell++;
@@ -120,11 +120,11 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + memberAgePie);
 		mav.addObject("memberAgePie", memberAgePie);
 
-		// Áö¿ª1 - È¸¿ø
+		// ï¿½ï¿½ï¿½ï¿½1 - È¸ï¿½ï¿½
 		List<ChartModel> todayMemberRegion = adminService.todayMemberRegion();
 		GoogleChartDTO pie2 = new GoogleChartDTO();
 
-		pie2.addColumn("Áö¿ª", "string");
+		pie2.addColumn("ï¿½ï¿½ï¿½ï¿½", "string");
 		pie2.addColumn("number", "number");
 		pie2.createRows(todayMemberRegion.size());
 
@@ -136,11 +136,11 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + memberRegionPie);
 		mav.addObject("memberRegionPie", memberRegionPie);
 
-		// ¿¬·É´ë2 - ÁÖ¹®
+		// ï¿½ï¿½ï¿½É´ï¿½2 - ï¿½Ö¹ï¿½
 		List<ChartModel> todayOrderAge = adminService.todayOrderAge();
 		GoogleChartDTO pie3 = new GoogleChartDTO();
 
-		pie3.addColumn("¿¬·É´ë", "string");
+		pie3.addColumn("ï¿½ï¿½ï¿½É´ï¿½", "string");
 		pie3.addColumn("number", "number");
 		pie3.createRows(todayOrderAge.size());
 
@@ -149,9 +149,9 @@ public class AdminController {
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
-				pie3.addCell(icell, "ºñÈ¸¿ø");
+				pie3.addCell(icell, "ï¿½ï¿½È¸ï¿½ï¿½");
 			}else {
-				pie3.addCell(icell, i+"0´ë");
+				pie3.addCell(icell, i+"0ï¿½ï¿½");
 			}
 			pie3.addCell(icell, mapYear.get(i));
 			icell++;
@@ -161,17 +161,17 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + orderAgePie);
 		mav.addObject("orderAgePie", orderAgePie);
 
-		// Áö¿ª2 - ÁÖ¹®
+		// ï¿½ï¿½ï¿½ï¿½2 - ï¿½Ö¹ï¿½
 		List<ChartModel> todayOrderRegion = adminService.todayOrderRegion();
 		GoogleChartDTO pie4 = new GoogleChartDTO();
 
-		pie4.addColumn("Áö¿ª", "string");
+		pie4.addColumn("ï¿½ï¿½ï¿½ï¿½", "string");
 		pie4.addColumn("number", "number");
 		pie4.createRows(todayOrderRegion.size());
 
 		for (int i = 0; i < todayOrderRegion.size(); i++) {
 			if(todayOrderRegion.get(i).getKey().equals("0")) {
-				pie4.addCell(i, "ºñÈ¸¿ø");
+				pie4.addCell(i, "ï¿½ï¿½È¸ï¿½ï¿½");
 			}else {
 				pie4.addCell(i, todayOrderRegion.get(i).getKey());
 			}
@@ -194,9 +194,9 @@ public class AdminController {
 		return mav;
 	}
 
-	/*********************** È¸¿ø °ü¸® *************************/
+	/*********************** È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ *************************/
 
-	/* È¸¿ø ¸ñ·Ï */
+	/* È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ */
 	@RequestMapping(value = "adMemberList.cat")
 	public ModelAndView adMemberList(HttpServletRequest request) throws UnsupportedEncodingException {
 
@@ -212,15 +212,15 @@ public class AdminController {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
 			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
 
-			if (searchNum == 0) { // ÀÌ¸§°Ë»ö
+			if (searchNum == 0) { // ï¿½Ì¸ï¿½ï¿½Ë»ï¿½
 				memberList = adminService.memberSearchN(keyword);
-			} else if (searchNum == 1) { // ¾ÆÀÌµð °Ë»ö
+			} else if (searchNum == 1) { // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ë»ï¿½
 				memberList = adminService.memberSearchI(keyword);
-			} else if (searchNum == 2) { // ÁÖ¼Ò °Ë»ö
+			} else if (searchNum == 2) { // ï¿½Ö¼ï¿½ ï¿½Ë»ï¿½
 				memberList = adminService.memberSearchA(keyword);
-			} else if (searchNum == 3) { // ÀüÈ­¹øÈ£ °Ë»ö
+			} else if (searchNum == 3) { // ï¿½ï¿½È­ï¿½ï¿½È£ ï¿½Ë»ï¿½
 				memberList = adminService.memberSearchP(keyword);
-			} else if (searchNum == 4) { // ÀÌ¸ÞÀÏ °Ë»ö
+			} else if (searchNum == 4) { // ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 				memberList = adminService.memberSearchE(keyword);
 			}
 
@@ -272,7 +272,7 @@ public class AdminController {
 		return mav;
 	}
 
-	/* È¸¿ø Á¤º¸ »ó¼¼º¸±â */
+	/* È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½ */
 	@RequestMapping(value = "adMemberView.cat")
 	public ModelAndView adMemberView(HttpServletRequest request) {
 
@@ -288,7 +288,7 @@ public class AdminController {
 		return mav;
 	}
 
-	/* È¸¿ø »èÁ¦ */
+	/* È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 	@RequestMapping(value = "adMemberDelete.cat")
 	public ModelAndView adMemberDelete(HttpServletRequest request) {
 
@@ -301,7 +301,7 @@ public class AdminController {
 		return mav;
 	}
 
-	/* È¸¿ø Á¤º¸ ¼öÁ¤ Æû */
+	/* È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ */
 	@RequestMapping(value = "adMemberModify.cat", method = RequestMethod.GET)
 	public ModelAndView adMemberModifyForm(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel memberModel) {
 
@@ -317,7 +317,7 @@ public class AdminController {
 		return mav;
 	}
 
-	/* È¸¿ø Á¤º¸ ¼öÁ¤ */
+	/* È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 	@RequestMapping(value = "adMemberModify.cat", method = RequestMethod.POST)
 	public ModelAndView adMemberModify(@ModelAttribute("memberModel") MemberModel memberModel) {
 
@@ -328,9 +328,9 @@ public class AdminController {
 		return mav;
 	}
 
-	/*********************** »óÇ° °ü¸® *************************/
+	/*********************** ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ *************************/
 
-	// Admin »óÇ° ¸®½ºÆ®(°Ë»ö Ã³¸® Æ÷ÇÔ)
+	// Admin ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½Æ®(ï¿½Ë»ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 	@RequestMapping(value = "adGoodsList.cat")
 	public ModelAndView adGoodsList(HttpServletRequest request) throws UnsupportedEncodingException {
 
@@ -404,7 +404,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin »óÇ° »ó¼¼º¸±â
+	// Admin ï¿½ï¿½Ç° ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	@RequestMapping("adGoodsView.cat")
 	public ModelAndView adGoodsView(HttpServletRequest request) {
 
@@ -417,7 +417,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin »óÇ° ±Û¾²±â Æû
+	// Admin ï¿½ï¿½Ç° ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsWriteForm() {
 
@@ -426,7 +426,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin »óÇ° ±Û¾²±â
+	// Admin ï¿½ï¿½Ç° ï¿½Û¾ï¿½ï¿½ï¿½
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.POST)
 	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel GoodsModel, MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
 
@@ -450,7 +450,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin »óÇ° »èÁ¦
+	// Admin ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping("adGoodsDelete.cat")
 	public ModelAndView adGoodsDelete(HttpServletRequest request) {
 
@@ -463,7 +463,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin »óÇ° ¼öÁ¤Æû
+	// Admin ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsModifyForm(GoodsModel GoodsModel, BindingResult result, HttpServletRequest request) {
 		int goods_num = Integer.parseInt(request.getParameter("goods_num"));
@@ -480,7 +480,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin »óÇ° ¼öÁ¤
+	// Admin ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.POST)
 	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel GoodsModel, HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws IOException {
 
@@ -501,7 +501,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ÆÄÀÏ ¾÷·Îµå.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½.
 	private GoodsModel fileUploading(MultipartFile file, String oldfileName, GoodsModel GoodsModel) throws IOException {
 
 		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";
@@ -532,9 +532,9 @@ public class AdminController {
 
 	}
 
-	/*********************** ÁÖ¹® °ü¸® *************************/
+	/*********************** ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ï¿½ *************************/
 
-	// ÁÖ¹® ¸ñ·Ï
+	// ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping("adOrderList.cat")
 	public ModelAndView OrderList(HttpServletRequest request) throws Exception {
 
@@ -601,7 +601,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin »óÇ° »ó¼¼º¸±â
+	// Admin ï¿½ï¿½Ç° ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	@RequestMapping("adOrderView.cat")
 	public ModelAndView adOrderView(HttpServletRequest request) {
 
@@ -618,7 +618,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ÁÖ¹® ¼öÁ¤ÇÏ±â Æû
+	// ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½
 	@RequestMapping(value = "adOrderModify.cat", method = RequestMethod.GET)
 	public ModelAndView orderModifyForm(HttpServletRequest request) {
 		int order_num = Integer.parseInt(request.getParameter("order_num"));
@@ -633,7 +633,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ÁÖ¹®¼öÁ¤
+	// ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "adOrderModify.cat", method = RequestMethod.POST)
 	public ModelAndView orderModify(@ModelAttribute("orderModel") OrderModel orderModel, HttpServletRequest request) {
 
@@ -644,9 +644,9 @@ public class AdminController {
 		return mav;
 	}
 
-	/*********************** ÀÌº¥Æ® °ü¸® *************************/
+	/*********************** ì´ë²¤íŠ¸ê´€ë¦¬ *************************/
 
-	// ÀÌº¥Æ® ¸®½ºÆ®
+	// ì´ë²¤íŠ¸ ë¦¬ìŠ¤íŠ¸
 	@RequestMapping(value = "adEventList.cat")
 	public ModelAndView eventList(HttpServletRequest request) {
 
@@ -680,7 +680,7 @@ public class AdminController {
 
 	}
 
-	// ÀÌº¥Æ® Ãß°¡ ÆûÀÇ »óÇ° ¸®½ºÆ®
+	// ì¹´í…Œê³ ë¦¬ì— ë”°ë¼ì„œ ìƒí’ˆ ë¦¬ìŠ¤íŠ¸ ë¿Œë ¤ì£¼ê¸°
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "eventGoodsList.cat")
 	public void eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
@@ -700,7 +700,7 @@ public class AdminController {
 
 			}
 
-			// jsonArray ³Ñ±è
+			// jsonArrayì— ë‹´ê¸´ ê°ì²´ë¥¼ ë·°ë¡œ ì „ì†¡
 			PrintWriter pw = response.getWriter();
 			pw.print(jsonArray.toString());
 			pw.flush();
@@ -711,7 +711,7 @@ public class AdminController {
 
 	}
 
-	// Admin ÀÌº¥Æ® µî·Ï Æû
+	// Admin ì´ë²¤íŠ¸ ë“±ë¡ í¼
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
 
@@ -720,7 +720,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin ÀÌº¥Æ® µî·Ï
+	// Admin ì´ë²¤íŠ¸ ë“±ë¡
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
 	public ModelAndView adEventWrite(HttpServletRequest request) throws ParseException {
 
@@ -753,7 +753,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// µî·ÏµÈ ÀÌº¥Æ® º¸±â
+	// ì´ë²¤íŠ¸ ìƒì„¸ íŽ˜ì´ì§€
 	@RequestMapping(value = "adEventView.cat")
 	public ModelAndView adEventView(HttpServletRequest request) {
 
@@ -763,7 +763,7 @@ public class AdminController {
 
 		eventModel = eventService.eventSelectOne(event_num);
 
-		// StringÀ¸·Î µÈ goods_num ¹Þ¾Æ¼­ ÆÄ½Ì ÈÄ Integer Å¸ÀÔÀ¸·Î º¯È¯
+		// Stringìœ¼ë¡œ ë°›ì•„ì˜¨ goods_numì„ Integerë¡œ ë³€í™˜
 		String goods_num_s = eventModel.getGoods_num();
 
 		String[] goods_num_array = goods_num_s.split(",");
@@ -774,12 +774,12 @@ public class AdminController {
 			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
 		}
 
-		// ½×ÀÓ¹æÁö
+		// ìŒ“ìž„ë°©ì§€
 		goodsList.clear();
 
 		GoodsModel goodsModel1 = new GoodsModel();
 
-		// goodsList¿¡ goodsModel »ðÀÔ
+		// goodsListì— goodsModel ë‹´ê¸°
 		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
@@ -797,7 +797,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// µî·ÏµÈ ÀÌº¥Æ® ¼öÁ¤ÇÏ±â Æû
+	// ì´ë²¤íŠ¸ ìˆ˜ì •
 	@RequestMapping(value = "adEventModify.cat", method = RequestMethod.GET)
 	public ModelAndView adEventModifyForm(HttpServletRequest request) {
 
@@ -807,7 +807,7 @@ public class AdminController {
 
 		eventModel = eventService.eventSelectOne(event_num);
 
-		// StringÀ¸·Î µÈ goods_num ¹Þ¾Æ¼­ ÆÄ½Ì ÈÄ Integer Å¸ÀÔÀ¸·Î º¯È¯
+		// Stringìœ¼ë¡œ ë°›ì•„ì˜¨ goods_numì„ Integerë¡œ ë³€í™˜
 		String goods_num_s = eventModel.getGoods_num();
 
 		String[] goods_num_array = goods_num_s.split(",");
@@ -818,10 +818,10 @@ public class AdminController {
 			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
 		}
 
-		// ½×ÀÓ¹æÁö
+		// ìŒ“ìž„ ë°©ì§€
 		goodsList.clear();
 
-		// goodsList¿¡ goodsModel »ðÀÔ
+		// goodsListì— goodsModel ë‹´ê¸°
 		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
@@ -871,7 +871,7 @@ public class AdminController {
 
 	}
 
-	// ÀÌº¥Æ® »èÁ¦ÇÏ±â
+	// ì´ë²¤íŠ¸ ì‚­ì œ
 	@RequestMapping(value = "adEventDelete.cat")
 	public ModelAndView adEventDelete(HttpServletRequest request) {
 
@@ -884,7 +884,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ÀÌº¥Æ® ÁßÁöÇÏ±â
+	// ì´ë²¤íŠ¸ ê°•ì œ ì¢…ë£Œ
 	@RequestMapping(value = "adEventStop.cat")
 	public ModelAndView adEventStop(HttpServletRequest request) {
 
@@ -918,9 +918,9 @@ public class AdminController {
 		return mav;
 	}
 
-	//////////////////////////////////// ÁÖ¹®Ãë¼Ò È¯ºÒ ±³È¯ ¸ñ·Ï ////////////////////////////////////////////////
+	//////////////////////////////////// ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ ////////////////////////////////////////////////
 
-	// °í°´ÁÖ¹®Ãë¼Ò ¸ñ·Ï ¸®½ºÆ®
+	// ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	@RequestMapping(value = "adOrderCancleList.cat")
 	public ModelAndView adOrderCancleList(HttpServletRequest request) {
 
@@ -951,7 +951,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// °í°´ÁÖ¹® Ãë¼Ò »ó¼¼º¸±â
+	// ï¿½ï¿½ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	@RequestMapping(value = "adOrderCancleView.cat")
 	public ModelAndView adOrderCancleView(@RequestParam("order_num") int order_num, @RequestParam("cancle_num") int cancle_num, HttpServletRequest request) {
 
@@ -973,7 +973,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// °í°´ÁÖ¹®È¯ºÒ ¸ñ·Ï ¸®½ºÆ®
+	// ï¿½ï¿½ï¿½Ö¹ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	@RequestMapping(value = "adOrderRefundList.cat", method = RequestMethod.GET)
 	public ModelAndView adOrderRefundList(HttpServletRequest request) {
 
@@ -1005,7 +1005,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// °í°´ÁÖ¹® È¯ºÒ »ó¼¼º¸±â
+	// ï¿½ï¿½ï¿½Ö¹ï¿½ È¯ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	@RequestMapping(value = "adOrderRefundView.cat")
 	public ModelAndView adOrderRefundView(@RequestParam("order_num") int order_num, @RequestParam("trade_num") int trade_num, HttpServletRequest request) {
 
@@ -1027,7 +1027,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// È¯ºÒ ¼ö¶ô
+	// È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "adOrderRefundAgree.cat", method = RequestMethod.POST)
 	public ModelAndView RefundAgree(OrderModel orderModel, RefundModel refundModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1046,7 +1046,7 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
-	// È¯ºÒ°ÅÀý
+	// È¯ï¿½Ò°ï¿½ï¿½ï¿½
 	@RequestMapping(value = "adOrderRefundRefuse.cat", method = RequestMethod.POST)
 	public ModelAndView RefundRefuse(OrderModel orderModel, RefundModel refundModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1064,7 +1064,7 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
-	// °í°´ÁÖ¹®±³È¯³»¿ª ¸ñ·Ï ¸®½ºÆ®
+	// ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	@RequestMapping(value = "adOrderChangeList.cat", method = RequestMethod.GET)
 	public ModelAndView adOrderChangeList(HttpServletRequest request) {
 
@@ -1096,7 +1096,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// °í°´ÁÖ¹® ±³È¯ »ó¼¼º¸±â
+	// ï¿½ï¿½ï¿½Ö¹ï¿½ ï¿½ï¿½È¯ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	@RequestMapping(value = "adOrderChangeView.cat")
 	public ModelAndView adOrderChangeView(@RequestParam("order_num") int order_num, @RequestParam("change_num") int change_num, HttpServletRequest request) {
 
@@ -1118,7 +1118,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ±³È¯ ¼ö¶ô
+	// ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "adOrderChangeAgree.cat", method = RequestMethod.POST)
 	public ModelAndView ChangeAgree(OrderModel orderModel, ChangeModel changeModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1137,7 +1137,7 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
-	// ±³È¯°ÅÀý
+	// ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "adOrderChangeRefuse.cat", method = RequestMethod.POST)
 	public ModelAndView ChangeRefuse(OrderModel orderModel, ChangeModel changeModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1166,44 +1166,44 @@ public class AdminController {
 		Map<Integer, Integer> mapYear = new HashMap<>();
 		int icell=0;
 
-		// ½Å±Ô È¸¿ø Åë°è
+		// ï¿½Å±ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½
 		List<ChartModel> listNew = adminService.chartNewM();
 
 		GoogleChartDTO goNew = new GoogleChartDTO();
 
 		goNew.addColumn("DAY", "string");
-		goNew.addColumn("½Å±Ô °¡ÀÔ È¸¿ø¼ö", "number");
+		goNew.addColumn("ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½", "number");
 		goNew.createRows(listNew.size());
 
 		for (int i = 0; i < listNew.size(); i++) {
-			goNew.addCell(i, listNew.get(i).getKey() + "(ÀÏ)");
+			goNew.addCell(i, listNew.get(i).getKey() + "(ï¿½ï¿½)");
 			goNew.addCell(i, listNew.get(i).getValue());
 		}
 
 		String jsonNew = gson.toJson(goNew.getResult());
 
-		// ÀüÃ¼ È¸¿ø Åë°è
+		// ï¿½ï¿½Ã¼ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½
 		List<ChartModel> listAll = adminService.chartAllM();
 
 		GoogleChartDTO goAll = new GoogleChartDTO();
 
 		goAll.addColumn("DAY", "string");
-		goAll.addColumn("°¡ÀÔ È¸¿ø¼ö", "number");
+		goAll.addColumn("ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½", "number");
 		goAll.createRows(listAll.size());
 
 		for (int i = 0; i < listAll.size(); i++) {
-			goAll.addCell(i, listAll.get(i).getKey() + "(¿ù)");
+			goAll.addCell(i, listAll.get(i).getKey() + "(ï¿½ï¿½)");
 			goAll.addCell(i, listAll.get(i).getValue());
 		}
 
 		String jsonAll = gson.toJson(goAll.getResult());
 		System.out.println(jsonAll);
 
-		// ½Å±ÔÈ¸¿ø ¿¬·É Åë°è
+		// ï¿½Å±ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		List<ChartModel> newMemberAge = adminService.newMemberAge();
 		GoogleChartDTO pie = new GoogleChartDTO();
 
-		pie.addColumn("¿¬·É´ë", "string");
+		pie.addColumn("ï¿½ï¿½ï¿½É´ï¿½", "string");
 		pie.addColumn("number", "number");
 		pie.createRows(newMemberAge.size());
 
@@ -1212,9 +1212,9 @@ public class AdminController {
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
-				pie.addCell(icell, "ºñÈ¸¿ø");
+				pie.addCell(icell, "ï¿½ï¿½È¸ï¿½ï¿½");
 			}else {
-				pie.addCell(icell, i+"0´ë");
+				pie.addCell(icell, i+"0ï¿½ï¿½");
 			}
 			pie.addCell(icell, mapYear.get(i));
 			icell++;
@@ -1223,11 +1223,11 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + newAgePie);
 		mav.addObject("newAgePie", newAgePie);
 
-		// ½Å±ÔÈ¸¿ø Áö¿ª Åë°è
+		// ï¿½Å±ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		List<ChartModel> newMemberRegion = adminService.newMemberRegion();
 		GoogleChartDTO pie2 = new GoogleChartDTO();
 
-		pie2.addColumn("Áö¿ª", "string");
+		pie2.addColumn("ï¿½ï¿½ï¿½ï¿½", "string");
 		pie2.addColumn("number", "number");
 		pie2.createRows(newMemberRegion.size());
 
@@ -1238,11 +1238,11 @@ public class AdminController {
 		String newRegionPie = gson.toJson(pie2.getResult());
 		mav.addObject("newRegionPie", newRegionPie);
 
-		// ÀüÃ¼ È¸¿ø ³ªÀÌ Åë°è
+		// ï¿½ï¿½Ã¼ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		List<ChartModel> memberAge = adminService.memberAge();
 		GoogleChartDTO pie3 = new GoogleChartDTO();
 
-		pie3.addColumn("¿¬·É´ë", "string");
+		pie3.addColumn("ï¿½ï¿½ï¿½É´ï¿½", "string");
 		pie3.addColumn("number", "number");
 		pie3.createRows(memberAge.size());
 
@@ -1250,7 +1250,7 @@ public class AdminController {
 		
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
-			pie3.addCell(icell, i+"0´ë");
+			pie3.addCell(icell, i+"0ï¿½ï¿½");
 			pie3.addCell(icell, mapYear.get(i));
 			icell++;
 		}
@@ -1258,11 +1258,11 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + agePie);
 		mav.addObject("agePie", agePie);
 
-		// ÀüÃ¼ È¸¿ø Áö¿ª Åë°è
+		// ï¿½ï¿½Ã¼ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		List<ChartModel> memberRegion = adminService.memberRegion();
 		GoogleChartDTO pie4 = new GoogleChartDTO();
 
-		pie4.addColumn("Áö¿ª", "string");
+		pie4.addColumn("ï¿½ï¿½ï¿½ï¿½", "string");
 		pie4.addColumn("number", "number");
 		pie4.createRows(memberRegion.size());
 
@@ -1291,12 +1291,12 @@ public class AdminController {
 
 		Gson gson = new Gson();
 
-		// ÃÖ±Ù 7ÀÏ ³¯Â¥º° ÁÖ¹®·® Á¶È¸
+		// ï¿½Ö±ï¿½ 7ï¿½ï¿½ ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 		List<ChartModel> weekOrderNum = adminService.weekOrderNum();
 		GoogleChartDTO line1 = new GoogleChartDTO();
 
 		line1.addColumn("day", "string");
-		line1.addColumn("ÁÖ¹®¼ö", "number");
+		line1.addColumn("ï¿½Ö¹ï¿½ï¿½ï¿½", "number");
 		line1.createRows(weekOrderNum.size());
 
 		for (int i = 0; i < weekOrderNum.size(); i++) {
@@ -1306,12 +1306,12 @@ public class AdminController {
 		String jsonNew = gson.toJson(line1.getResult());
 		mav.addObject("jsonNew", jsonNew);
 
-		// ÃÖ±Ù 7ÀÏ ³¯Â¥º° ÆÇ¸Å·® Á¶È¸
+		// ï¿½Ö±ï¿½ 7ï¿½ï¿½ ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ç¸Å·ï¿½ ï¿½ï¿½È¸
 		List<ChartModel> weekSales = adminService.weekSales();
 		GoogleChartDTO sales1 = new GoogleChartDTO();
 
 		sales1.addColumn("day", "string");
-		sales1.addColumn("ÆÇ¸Å±Ý¾×", "number");
+		sales1.addColumn("ï¿½Ç¸Å±Ý¾ï¿½", "number");
 		sales1.createRows(weekSales.size());
 
 		for (int i = 0; i < weekSales.size(); i++) {
@@ -1321,11 +1321,11 @@ public class AdminController {
 		String salesNew = gson.toJson(sales1.getResult());
 		mav.addObject("salesNew", salesNew);
 
-		// ÁÖ°£ ¿¬·É ±¸ºÐ
+		// ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		List<ChartModel> weekOrderAge = adminService.weekOrderAge();
 		GoogleChartDTO pie1 = new GoogleChartDTO();
 
-		pie1.addColumn("¿¬·É´ë", "string");
+		pie1.addColumn("ï¿½ï¿½ï¿½É´ï¿½", "string");
 		pie1.addColumn("number", "number");
 		pie1.createRows(weekOrderAge.size());
 
@@ -1334,9 +1334,9 @@ public class AdminController {
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
-				pie1.addCell(icell, "ºñÈ¸¿ø");
+				pie1.addCell(icell, "ï¿½ï¿½È¸ï¿½ï¿½");
 			}else {
-				pie1.addCell(icell, i+"0´ë");
+				pie1.addCell(icell, i+"0ï¿½ï¿½");
 			}
 			pie1.addCell(icell, mapYear.get(i));
 			icell++;
@@ -1344,17 +1344,17 @@ public class AdminController {
 		String newAgePie = gson.toJson(pie1.getResult());
 		mav.addObject("newAgePie", newAgePie);
 
-		// ÁÖ°£ Áö¿ª ±¸ºÐ
+		// ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		List<ChartModel> weekOrderRegion = adminService.weekOrderRegion();
 		GoogleChartDTO pie2 = new GoogleChartDTO();
 
-		pie2.addColumn("Áö¿ª", "string");
+		pie2.addColumn("ï¿½ï¿½ï¿½ï¿½", "string");
 		pie2.addColumn("number", "number");
 		pie2.createRows(weekOrderRegion.size());
 
 		for (int i = 0; i < weekOrderRegion.size(); i++) {
 			if(weekOrderRegion.get(i).getKey().equals("0")) {
-				pie2.addCell(i, "ºñÈ¸¿ø");
+				pie2.addCell(i, "ï¿½ï¿½È¸ï¿½ï¿½");
 			}else {
 				pie2.addCell(i, weekOrderRegion.get(i).getKey());
 			}
@@ -1365,12 +1365,12 @@ public class AdminController {
 
 		mav.addObject("newRegionPie", newRegionPie);
 
-		// ´Þº° ÁÖ¹®·®
+		// ï¿½Þºï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½
 		List<ChartModel> monthOrderNum = adminService.monthOrderNum();
 		GoogleChartDTO line2 = new GoogleChartDTO();
 
 		line2.addColumn("day", "string");
-		line2.addColumn("ÁÖ¹®¼ö", "number");
+		line2.addColumn("ï¿½Ö¹ï¿½ï¿½ï¿½", "number");
 		line2.createRows(monthOrderNum.size());
 
 		for (int i = 0; i < monthOrderNum.size(); i++) {
@@ -1380,12 +1380,12 @@ public class AdminController {
 		String jsonAll = gson.toJson(line2.getResult());
 		mav.addObject("jsonAll", jsonAll);
 
-		// ´Þº° ÆÇ¸Å·®
+		// ï¿½Þºï¿½ ï¿½Ç¸Å·ï¿½
 		List<ChartModel> monthSales = adminService.monthSales();
 		GoogleChartDTO sales2 = new GoogleChartDTO();
 
 		sales2.addColumn("day", "string");
-		sales2.addColumn("ÆÇ¸Å ±Ý¾×", "number");
+		sales2.addColumn("ï¿½Ç¸ï¿½ ï¿½Ý¾ï¿½", "number");
 		sales2.createRows(monthSales.size());
 
 		for (int i = 0; i < monthSales.size(); i++) {
@@ -1395,12 +1395,12 @@ public class AdminController {
 		String salesAll = gson.toJson(sales2.getResult());
 		mav.addObject("salesAll", salesAll);
 
-		// ´Þº° ¿¬·É ±¸ºÐ
+		// ï¿½Þºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		List<ChartModel> monthOrderAge = adminService.monthOrderAge();
 		GoogleChartDTO pie3 = new GoogleChartDTO();
 
-		pie3.addColumn("Ç×¸ñ", "string");
-		pie3.addColumn("°ª", "number");
+		pie3.addColumn("ï¿½×¸ï¿½", "string");
+		pie3.addColumn("ï¿½ï¿½", "number");
 		pie3.createRows(monthOrderAge.size());
 
 		mapYear = CalculationYear(monthOrderAge, iYear);
@@ -1408,9 +1408,9 @@ public class AdminController {
 		icell=0;
 		for(Integer k : mapYear.keySet()) {
 			if(k==0) {
-				pie3.addCell(icell, "ºñÈ¸¿ø");
+				pie3.addCell(icell, "ï¿½ï¿½È¸ï¿½ï¿½");
 			}else {
-				pie3.addCell(icell, k+"0´ë");
+				pie3.addCell(icell, k+"0ï¿½ï¿½");
 			}
 			pie3.addCell(icell, mapYear.get(k));
 			icell++;
@@ -1418,17 +1418,17 @@ public class AdminController {
 		String agePie = gson.toJson(pie3.getResult());
 		mav.addObject("agePie", agePie);
 
-		// ´Þº° Áö¿ª ±¸ºÐ
+		// ï¿½Þºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		List<ChartModel> monthOrderRegion = adminService.monthOrderRegion();
 		GoogleChartDTO pie4 = new GoogleChartDTO();
 
-		pie4.addColumn("Ç×¸ñ", "string");
-		pie4.addColumn("°ª", "number");
+		pie4.addColumn("ï¿½×¸ï¿½", "string");
+		pie4.addColumn("ï¿½ï¿½", "number");
 		pie4.createRows(monthOrderRegion.size());
 
 		for (int i = 0; i < monthOrderRegion.size(); i++) {
 			if(monthOrderRegion.get(i).getKey().equals("0")) {
-				pie4.addCell(i, "ºñÈ¸¿ø");
+				pie4.addCell(i, "ï¿½ï¿½È¸ï¿½ï¿½");
 			}else {
 				pie4.addCell(i, monthOrderRegion.get(i).getKey());
 			}
