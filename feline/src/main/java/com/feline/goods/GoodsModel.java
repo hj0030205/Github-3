@@ -13,11 +13,8 @@ public class GoodsModel {
 	private String goods_size;
 	private String goods_image_orgname;
 	private String goods_image_savname;
-	/*private String goods_detail_image_orgname;
-	private String goods_detail_image_savname;*/
 	private int goods_hit;
 	private Date goods_date;
-	/*private int goods_status;*/
 	
 	public int getGoods_num() {
 		return goods_num;
@@ -85,24 +82,6 @@ public class GoodsModel {
 	public void setGoods_date(Date goods_date) {
 		this.goods_date = goods_date;
 	}
-	/*public String getGoods_detail_image_orgname() {
-		return goods_detail_image_orgname;
-	}
-	public void setGoods_detail_image_orgname(String goods_detail_image_orgname) {
-		this.goods_detail_image_orgname = goods_detail_image_orgname;
-	}
-	public String getGoods_detail_image_savname() {
-		return goods_detail_image_savname;
-	}
-	public void setGoods_detail_image_savname(String goods_detail_image_savname) {
-		this.goods_detail_image_savname = goods_detail_image_savname;
-	}*/
-	/*public int getGoods_status() {
-		return goods_status;
-	}
-	public void setGoods_status(int goods_status) {
-		this.goods_status = goods_status;
-	}*/
 	
 	
 }

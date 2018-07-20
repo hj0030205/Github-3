@@ -75,7 +75,7 @@
 				</div>
 				<!-- /#blog-post -->
 				<center>
-					<c:if test="${sessionScope.id ne null }">
+					<c:if test="${sessionScope.id ne null || sessionScope.adminId ne null}">
 						<c:choose>
 							<c:when test="${sessionScope.id eq qnaModel.id }">
 								<input id="qnaWriteBtn" type="button" value="게시물 등록"

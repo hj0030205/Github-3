@@ -51,7 +51,7 @@
             </div> 
             <div class="col-md-6">
             <c:choose>
-            	<c:when test="${sessionScope.id == null and sessionScope.n_id == null }">
+            	<c:when test="${sessionScope.id == null and sessionScope.n_id == null and sessionScope.adminId == null}">
             		<ul class="menu">
                     <li><a href="/feline/member/login.cat">로그인</a>
                     </li>

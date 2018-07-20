@@ -16,9 +16,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="goods_size" column="goods_size" />
 		<result property="goods_image_orgname" column="goods_image_orgname" />
 		<result property="goods_image_savname" column="goods_image_savname" />
-		<!-- <result property="goods_detail_image_orgname" column="goods_detail_image_orgname" 
-			/> <result property="goods_detail_image_savname" column="goods_detail_image_savname" 
-			/> -->
 		<result property="goods_hit" column="goods_hit" />
 		<result property="goods_date" column="goods_date" />
 

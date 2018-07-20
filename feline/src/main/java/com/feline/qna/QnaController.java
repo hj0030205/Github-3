@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.feline.qna.QnaModel;
 import com.feline.util.FileUpload;
 import com.feline.util.Paging;
+import com.feline.validator.NoticeValidator;
+import com.feline.validator.QnaValidator;
 
 @Controller
 @RequestMapping("/qna")
@@ -35,7 +37,6 @@ public class QnaController {
 	private int searchNum;
 	private String keyword;
 
-	// ÆäÀÌÂ¡À» À§ÇÑ º¯¼ö ¼³Á¤
 	private int currentPage = 1;
 	private int totalCount;
 	private int blockCount = 10;
@@ -43,7 +44,6 @@ public class QnaController {
 	private String pagingHtml;
 	private Paging page;
 
-	// Q&A ¸®½ºÆ®(°Ë»ö Ã³¸® Æ÷ÇÔ)
 	@RequestMapping(value = "qnaList.cat", method = RequestMethod.GET)
 	public ModelAndView qnaList(HttpServletRequest request) throws UnsupportedEncodingException {
 		ModelAndView mav = new ModelAndView();
@@ -114,7 +114,6 @@ public class QnaController {
 		return mav;
 	}
 
-	// Q&A »ó¼¼º¸±â
 	@RequestMapping("qnaView.cat")
 	public ModelAndView qnaView(HttpServletRequest request) {
 
@@ -131,7 +130,6 @@ public class QnaController {
 		return mav;
 	}
 
-	// Q&A ±Û¾²±â Æû
 	@RequestMapping(value = "qnaWrite.cat", method = RequestMethod.GET)
 	public ModelAndView qnaWriteForm(HttpServletRequest request) {
 
@@ -143,7 +141,6 @@ public class QnaController {
 	
 
 
-	// Q&A ´äº¯±Û ¾²±â Æû
 	@RequestMapping(value="qnaReplyWrite.cat", method=RequestMethod.GET)
 	public ModelAndView qnaReplyWriteForm(HttpServletRequest request, HttpSession session) {
 
@@ -151,7 +148,7 @@ public class QnaController {
 		int no = Integer.parseInt(request.getParameter("no"));
 		boolean reply=true; 
 		QnaModel qnaModel = qnaService.qnaView(no);
-		qnaModel.setSubject("[´äº¯]"+qnaModel.getSubject());
+		qnaModel.setSubject("[ë‹µë³€]"+qnaModel.getSubject());
 		qnaModel.setId((String)session.getAttribute("adminId"));
 		qnaModel.setPassword("temporary");
 		qnaModel.setContent("");
@@ -164,12 +161,18 @@ public class QnaController {
 		return mav;
 	}
 	
-	// Q&A ´äº¯
 	@RequestMapping(value = "qnaReplyAction.cat", method = RequestMethod.POST)
-	public ModelAndView qnaReply(@ModelAttribute("qnaModel") QnaModel qnaModel, HttpServletRequest request,
+	public ModelAndView qnaReply(@ModelAttribute("qnaModel") QnaModel qnaModel, BindingResult result, HttpServletRequest request,
 			MultipartHttpServletRequest multipartRequest,HttpSession session) throws IOException {
 		ModelAndView mav = new ModelAndView();
 		
+		new QnaValidator().validate(qnaModel, result); 
+		if (result.hasErrors()) {
+			boolean reply=true;
+			mav.addObject("qnaModel",qnaModel);
+			mav.addObject("reply",reply);
+			mav.setViewName("qnaWrite"); return mav; }
+		 
 		Calendar today = Calendar.getInstance();
 		String content = qnaModel.getContent().replaceAll("\r\n", "<br />");
 		
@@ -210,11 +213,14 @@ public class QnaController {
 	}
 
 
-	// Q&A ±Û¾²±â
 	@RequestMapping(value = "qnaWrite.cat", method = RequestMethod.POST)
 	public ModelAndView qnaWrite(@ModelAttribute("qnaModel") QnaModel qnaModel,
-			MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
-
+			MultipartHttpServletRequest multipartRequest, BindingResult result,HttpServletRequest request, HttpSession session) throws IOException {
+		ModelAndView mav = new ModelAndView();
+		
+		new QnaValidator().validate(qnaModel, result); 
+		if (result.hasErrors()) { mav.setViewName("qnaWrite"); return mav; }
+		
 		MultipartFile file = multipartRequest.getFile("file");
 		Calendar today = Calendar.getInstance();
 		String oldfileName = request.getParameter("oldFile");
@@ -225,9 +231,6 @@ public class QnaController {
 			ref=Integer.parseInt(request.getParameter("ref"));
 			re_step=Integer.parseInt(request.getParameter("re_step"));
 		}
-
-		ModelAndView mav = new ModelAndView();
-		
 		if(ref==0) {
 			qnaModel.setRe_step(0);
 		}else {
@@ -251,14 +254,12 @@ public class QnaController {
 			qnaService.qnaReplyWrite(qnaModel);
 		}
 
-
 		mav.addObject("qnaModel", qnaModel);
 		mav.setViewName("redirect:qnaList.cat");
 
 		return mav;
 	}
 
-	// Q&A »èÁ¦
 	@RequestMapping("qnaDelete.cat")
 	public ModelAndView qnaDelete(HttpServletRequest request) {
 
@@ -270,12 +271,12 @@ public class QnaController {
 		return mav;
 	}
 
-	// Q&A ¼öÁ¤Æû
 	@RequestMapping(value = "qnaModify.cat", method = RequestMethod.GET)
 	public ModelAndView qnaModifyForm(@ModelAttribute("qnaModel") QnaModel qnaModel, BindingResult result,
 			HttpServletRequest request) {
 
 		ModelAndView mav = new ModelAndView();
+		
 		qnaModel = qnaService.qnaView(qnaModel.getNo());
 		int qna_num = qnaModel.getNo();
 
@@ -290,15 +291,15 @@ public class QnaController {
 		return mav;
 	}
 	
-	
-
-	// Q&A ¼öÁ¤
 	@RequestMapping(value = "qnaModifyAction.cat", method = RequestMethod.POST)
 	public ModelAndView qnaModify(@ModelAttribute("qnaModel") QnaModel qnaModel, HttpServletRequest request,
-			MultipartHttpServletRequest multipartRequest) throws IOException {
+			MultipartHttpServletRequest multipartRequest, BindingResult result) throws IOException {
 		ModelAndView mav = new ModelAndView();
+		new QnaValidator().validate(qnaModel, result); 
+		if (result.hasErrors()) {
+			mav.addObject("no",qnaModel.getNo());
+			mav.setViewName("redirect:qnaModify.cat"); return mav; }
 		
-
 		//MultipartFile file = multipartRequest.getFile("file");
 		//String oldfileName = request.getParameter("oldFile");
 		int qna_num = qnaModel.getNo();
@@ -319,7 +320,6 @@ public class QnaController {
 
 	@RequestMapping(value = "/fileUpload.cat", method = RequestMethod.POST)
 	public String fileUpload(Model model, MultipartRequest multipartRequest, HttpServletRequest request) throws IOException{
-		System.out.println("/fileUpload ¸Þ¼­µå");
 		
 		MultipartFile imgfile = multipartRequest.getFile("Filedata");
 		Calendar cal = Calendar.getInstance();
@@ -328,9 +328,7 @@ public class QnaController {
 		String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		String replaceName = cal.getTimeInMillis() + fileType;  
 		
-		//¼­¹ö¿¡ ¿Ã¸®±â
-		String path = request.getSession().getServletContext().getRealPath("/")+File.separator+"resources/common/tempUpload";
-		System.out.println("ÆÄÀÏ°æ·Î::"+path);
+		String path = request.getSession().getServletContext().getRealPath("/")+File.separator+"resources/upload/images";
 		
 		FileUpload.fileUpload(imgfile, path, replaceName);
 		
