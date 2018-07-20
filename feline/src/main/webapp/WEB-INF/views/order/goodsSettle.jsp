@@ -72,6 +72,36 @@
 			}
 		})
 	}) 
+	
+function check()
+{
+	if(!document.orderform.order_receive_name.value)
+	{
+		alert("수령하시는 분의 이름을 입력해주세요.");
+		document.orderform.order_receive_name.focus();
+		return false;
+	}
+	if(!document.orderform.order_receive_phone.value)
+	{
+		alert("수령하시는 분의 연락 가능한 전화번호를 입력해주세요.");
+		document.orderform.order_receive_phone.focus();
+		return false;
+	}
+	if(!document.orderform.order_receive_zipcode.value)
+	{
+		alert("우편번호찾기 버튼을 눌러 우편번호와 기본 주소를 입력해주세요");
+		document.orderform.order_receive_zipcode.focus();
+		return false;
+	}
+	
+	if(!document.orderform.order_receive_addr2.value)
+	{
+		alert("상세 주소를 입력해주세요.");
+		document.orderform.order_receive_addr2.focus();
+		return false;
+	}
+
+}
 </script>
 </head>
 <body>
@@ -91,7 +121,7 @@
 				<div class="col-md-12" id="checkout">
 
 					<div class="box">
-						<form method="post" name="orderform" id="orderform" action="/feline/order/goodsOrder.cat">
+						<form method="post" name="orderform" id="orderform" action="/feline/order/goodsOrder.cat" onsubmit="return check()">
 							<h1>주문하기</h1>
 							<div class="content">
 								<div class="table-responsive">

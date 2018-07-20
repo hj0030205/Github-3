@@ -50,7 +50,6 @@ li.basic.active {
 </style>
 </head>
 <body>
-지금 세션 ${sessionScope.member_id }
 	<div id="all">
 
 		<div id="content">
@@ -207,15 +206,20 @@ li.basic.active {
 										</tr>
 										<tr>
 											<td align="left" colspan="1">판매가</td>
-											<td align="left" colspan="1">${goodsModel.goods_price}원</td>
+											<td align="left" colspan="1"><fmt:formatNumber value="${goodsModel.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
 										</tr>
 									</table>
 									<p class="text-center buttons">
 										<a href="javascript:isBuy(goodsform)" class="btn btn-primary">구매하기</a> 
 										<a href="javascript:isBasket(goodsform)" class="btn btn-default"><i
 											class="fa fa-shopping-cart"></i></i>장바구니</a>
+										<c:choose>
+										<c:when test="${sessionScope.id ne null }">
 										<a href="javascript:isWishList(goodsform)" class="btn btn-default">
-										<i class="fa fa-heart"></i></a>	
+										<i class="fa fa-heart"></i></a>	</c:when>
+										<c:otherwise>
+										</c:otherwise>
+										</c:choose>
 									</p>
 								</form>
 							</div>

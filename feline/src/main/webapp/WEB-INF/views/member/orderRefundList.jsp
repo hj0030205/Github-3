@@ -54,14 +54,19 @@
 							<c:when test="${sessionScope.id ne null}">
 								<ul class="nav nav-pills nav-stacked">
 									<li><a href="mypage.cat">마이 페이지</a></li>
-									<li><a href="orderRefundList.cat">
+									
+									<li><a href="orderList.cat">
 									<i class="fa fa-list"></i>나의 주문 내역</a></li>
+									
 									<li><a href="orderCancleList.cat">
-									<i class="fa fa-times"></i>주문 취소 내역</a></li>	
+									<i class="fa fa-times"></i>주문 취소 내역</a></li>
+										
 									<li class="active"><a href="orderRefundList.cat">
 									<i class="fa fa-toggle-on"></i>주문 환불 내역</a></li>	
+									
 									<li><a href="orderChangeList.cat">
-									<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>															
+									<i class="fa fa-reply-all"></i>주문 교환 내역</a></li>
+																								
 									<li><a href="/feline/basket/basketList.cat"><i
 											class="fa fa-shopping-cart"></i>장바구니</a></li>
 									<li><a href="/feline/wishlist/wishList.cat"><i class="fa fa-heart"></i>WISHLIST</a></li>
@@ -128,7 +133,70 @@
 									<td><fmt:formatDate value="${order.order_date}"
 													pattern="yyyy.MM.dd HH:MM" /></td>
 									<td><a href="orderRefundView.cat?order_num=${order.order_num}">${order.order_num }</td></a>
-									<td>${goodsList[status.index].goods_category }</td>
+									<td>
+											<c:choose>
+											<c:when test="${goodsModel[status.index].goods_category == 0 }">
+											유기농/홀리스틱
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 1 }">
+											피부/피모건강
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 2 }">
+											헤어볼케어
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 3 }">
+											다이어트/비뇨건강
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 4 }">
+											캔/파우치
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 5 }">
+											저키/소시지
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 6 }">
+											비스켓/트릿
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 7 }">
+											캣닢/캣그라스
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 8 }">
+											응고형모래
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 9 }">
+											흡수형모래
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 10 }">
+											화장실/패드
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 11 }">
+											기타
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 12 }">
+											공/봉제인형
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 13 }">
+											레이져/낚시
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 14 }">
+											막대
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 15 }">
+											갯닢
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 16 }">
+											샴푸/린스
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 17 }">
+											구강관리
+											</c:when>
+											<c:when test="${goodsModel[status.index].goods_category == 18 }">
+											눈/귀/피부&피모건강
+											</c:when>
+											<c:otherwise>
+											브러쉬/털관리
+											</c:otherwise>
+											</c:choose>
+											</td>
 									<td>${goodsList[status.index].goods_name }</td>
 									<td>${order.order_goods_amount }</td>
 									<td>${goodsList[status.index].goods_price }</td>

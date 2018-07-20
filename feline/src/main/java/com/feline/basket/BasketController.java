@@ -34,7 +34,7 @@ public class BasketController {
 	private List<BasketModel> basketGoodsCheck = new ArrayList<BasketModel>();
 	private List<BasketModel> basketList = new ArrayList<BasketModel>();
 	
-	/*Àå¹Ù±¸´Ï¿¡ Ãß°¡*/
+	//ì¥ë°”êµ¬ë‹ˆ ë¬¼ê±´ë‹´ê¸°
 	@RequestMapping(value="basketAdd.cat")
 	public ModelAndView basketAdd(HttpSession session, @ModelAttribute("basketModel") BasketModel basketModel, 
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -42,7 +42,7 @@ public class BasketController {
 		String member_id = (String) session.getAttribute("id");		
 		String n_id = (String) session.getAttribute("n_id");
 		
-		//ºñÈ¸¿øÀ» À§ÇÑ goods_num, goods_size, goods_amount session ¼¼ÆÃ
+		//ë¹„íšŒì›ì¸ ê²½ìš° goods_num, goods_size, goods_amount sessionì—ì„œ ë°›ì•„ì™€ ì €ì¥í•  ê°ì²´
 		String goods_num_s = "";
 		String goods_size_s = "";
 		String goods_amount_s = "";
@@ -50,7 +50,7 @@ public class BasketController {
 		if(member_id == null && n_id == null) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.');</script>");
+			out.println("<script>alert('ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.');</script>");
 			out.flush();
 			mav.setViewName("login");
 		} else if(member_id != null && member_id != "") {
@@ -73,7 +73,7 @@ public class BasketController {
 			
 			if((String)session.getAttribute("goods_num_s") != null) {
 				
-				//¼¼¼Ç¿¡ ÇØ´ç ¹°Ç°ÀÌ ÀÖ´ÂÁö °Ë»ç
+				//ì„¸ì…˜ì— ë™ì¼í•œ ìƒí’ˆì´ ìˆëŠ”ì§€ ê²€ì‚¬
 				String goods_num = (String) session.getAttribute("goods_num_s");
 				String[] goods_num_array = goods_num.split(",");
 				
@@ -87,10 +87,10 @@ public class BasketController {
 				
 				if (list.contains(goods_numst) == true) {
 					
-					//¼¼¼Ç¿¡ »óÇ°ÀÌ ÀÖÀ¸¸é ¹Ù½ºÄÏÀ¸·Î ÀÌµ¿
+					//ì¥ë°”êµ¬ë‹ˆì— ë™ì¼ ìƒí’ˆì´ ì¡´ì¬í•  ê²½ìš°
 					response.setContentType("text/html; charset=utf-8");
 					PrintWriter out = response.getWriter();
-					out.println("<script>var moveToBasket = confirm('µ¿ÀÏ »óÇ°ÀÌ Àå¹Ù±¸´Ï¿¡ Á¸ÀçÇÕ´Ï´Ù. \\nÀå¹Ù±¸´Ï·Î ÀÌµ¿ÇÏ½Ã°Ú½À´Ï±î?');\r\n" + 
+					out.println("<script>var moveToBasket = confirm('ì¥ë°”êµ¬ë‹ˆì— ë™ì¼í•œ ìƒí’ˆì´ ì¡´ì¬í•©ë‹ˆë‹¤. \\ì¥ë°”êµ¬ë‹ˆë¡œ ì´ë™í•˜ì‹œê² ìŠµë‹ˆê¹Œ?');\r\n" + 
 							"	if(moveToBasket == true) {\r\n" + 
 							"		location.href='/feline/basket/basketList.cat';\r\n" + 
 							"	} else {\r\n" + 
@@ -100,7 +100,7 @@ public class BasketController {
 					
 				} else {
 
-					//¾Æ´Ï¶ó¸é ¼¼¼Ç ¼¼ÆÃ
+					//ì¥ë°”êµ¬ë‹ˆì— ë™ì¼ ìƒí’ˆì´ ì¡´ì¬í•˜ì§€ ì•Šì„ ê²½ìš°
 					goods_num_s = request.getParameter("goods_num") + "," + (String)session.getAttribute("goods_num_s");
 					goods_size_s = request.getParameter("basket_goods_size") + "," + (String)session.getAttribute("goods_size_s");
 					goods_amount_s =  request.getParameter("basket_goods_amount") + "," + (String)session.getAttribute("goods_amount_s");
@@ -133,7 +133,7 @@ public class BasketController {
 		return mav;
 	}
 	
-	/*Àå¹Ù±¸´Ï ¸®½ºÆ®*/
+	/*ì¥ë°”êµ¬ë‹ˆ ë¦¬ìŠ¤íŠ¸*/
 	@RequestMapping(value="basketList.cat")
 	public ModelAndView basketList(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
@@ -144,7 +144,7 @@ public class BasketController {
 			
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.');</script>");
+			out.println("<script>alert('ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.');</script>");
 			out.flush();
 			
 			mav.setViewName("login");
@@ -182,10 +182,10 @@ public class BasketController {
 					goods_amount_i[i] = Integer.parseInt(goods_amount_array[i]);
 				}
 				
-				//½×ÀÓ ¹æÁö
+				//ìŒ“ì„ë°©ì§€
 				basketList.clear();
 				
-				//basketList¿¡ basketModel »ğÀÔ
+				//basketListì— basketModel ê°ì²´ë¥¼ ë‹´ìŒ
 				for(int j = 0; j < size; j++) {
 					GoodsModel goodsModel = new GoodsModel();
 					goodsModel = basketService.selectGoods(goods_num_i[j]);
@@ -221,7 +221,7 @@ public class BasketController {
 		
 	}
 	
-	/*Àå¹Ù±¸´Ï ¼ö·®º¯°æ*/ 
+	/*ì¥ë°”êµ¬ë‹ˆ ìˆ˜ëŸ‰ë³€ê²½*/ 
 	@RequestMapping(value="updateAmount.cat")
 	public ModelAndView updateAmount(@ModelAttribute("basketModel") BasketModel basketModel, HttpServletRequest request, HttpSession session) {
 		
@@ -277,7 +277,7 @@ public class BasketController {
 		return mav;
 	}
 	
-	/*Àå¹Ù±¸´Ï »èÁ¦*/
+	/*ì¥ë°”êµ¬ë‹ˆ ì‚­ì œ*/
 	@RequestMapping(value="basketDelete.cat")
 	public ModelAndView basketDelete(@ModelAttribute("basketModel") BasketModel basketModel, HttpServletRequest request, HttpSession session) {
 		

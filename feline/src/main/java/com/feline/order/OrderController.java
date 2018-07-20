@@ -450,7 +450,7 @@ public class OrderController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		String todayS = sdf.format(today.getTime());
 		
-		//ȸ���� ���
+		//회원인 경우
 		if(member_id != null && member_id != "") {
 			
 			if(request.getParameter("goods_num") == null) {
@@ -489,10 +489,10 @@ public class OrderController {
 					goods_amount_i[i] = Integer.parseInt(goods_amount_array[i]);
 				}
 					
-				//���� ����
+				//쌓임 방지
 				basketList.clear();
 					
-				//basketList�� basketModel ����
+				//basketList에 basketModel 담기
 				for(int j = 0; j < size; j++) {
 					GoodsModel goodsModel = new GoodsModel();
 					goodsModel = orderService.selectGoods(goods_num_i[j]);
@@ -515,7 +515,7 @@ public class OrderController {
 				String goods_size_s = request.getParameter("basket_goods_size");
 				int goods_amount_s = Integer.parseInt(request.getParameter("basket_goods_amount"));
 				
-				//���� ����
+				//쌓임 방지
 				basketList.clear();
 				
 				GoodsModel goodsModel = new GoodsModel();

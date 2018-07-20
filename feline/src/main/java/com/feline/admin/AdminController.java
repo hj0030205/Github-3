@@ -59,6 +59,7 @@ public class AdminController {
 	private int searchNum;
 	private String keyword;
 
+
 	private int currentPage = 1;
 	private int totalCount;
 	private int blockCount = 10;
@@ -74,9 +75,11 @@ public class AdminController {
 
 	private Logger logger = Logger.getLogger(getClass());
 
+
 	/*********************** 관리자 메인 페이지-차트 ******************/
 	
 	@RequestMapping("main.cat")
+
 	public ModelAndView adMain() throws Exception {
 
 		int countTrade = adminService.countTrade();
@@ -93,6 +96,7 @@ public class AdminController {
 		int iYear = Integer.parseInt(sYear);
 		Map<Integer, Integer> mapYear = new HashMap<>();
 		int icell=0;
+
 
 		List<ChartModel> todayMemberAge = adminService.todayMemberAge();
 		GoogleChartDTO pie1 = new GoogleChartDTO();
@@ -134,6 +138,7 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + memberRegionPie);
 		mav.addObject("memberRegionPie", memberRegionPie);
 
+
 		// 회원 주문 나이
 		List<ChartModel> todayOrderAge = adminService.todayOrderAge();
 		GoogleChartDTO pie3 = new GoogleChartDTO();
@@ -146,6 +151,7 @@ public class AdminController {
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
+
 				pie3.addCell(icell, "비회원");
 			}else {
 				pie3.addCell(icell, i+"0대");
@@ -189,6 +195,7 @@ public class AdminController {
 		mav.setViewName("admin");
 		return mav;
 	}
+
 
 	/*********************** 관리자 메인 페이지- 멤버관리 ******************/
 	
@@ -288,6 +295,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping(value = "adMemberModify.cat", method = RequestMethod.GET)
 	public ModelAndView adMemberModifyForm(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel memberModel) {
 
@@ -303,6 +311,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping(value = "adMemberModify.cat", method = RequestMethod.POST)
 	public ModelAndView adMemberModify(@ModelAttribute("memberModel") MemberModel memberModel) {
 
@@ -312,6 +321,7 @@ public class AdminController {
 
 		return mav;
 	}
+
 
 	/*********************** 관리자 메인 페이지- 상품관리 ******************/
 	
@@ -388,6 +398,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping("adGoodsView.cat")
 	public ModelAndView adGoodsView(HttpServletRequest request) {
 
@@ -400,6 +411,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsWriteForm() {
 
@@ -407,6 +419,7 @@ public class AdminController {
 		mav.setViewName("adGoodsWrite");
 		return mav;
 	}
+
 
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.POST)
 	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel GoodsModel, MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
@@ -431,6 +444,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping("adGoodsDelete.cat")
 	public ModelAndView adGoodsDelete(HttpServletRequest request) {
 
@@ -442,6 +456,7 @@ public class AdminController {
 
 		return mav;
 	}
+
 
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsModifyForm(GoodsModel GoodsModel, BindingResult result, HttpServletRequest request) {
@@ -458,6 +473,7 @@ public class AdminController {
 
 		return mav;
 	}
+
 
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.POST)
 	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel GoodsModel, HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws IOException {
@@ -478,6 +494,7 @@ public class AdminController {
 		mav.addObject("goods_num", GoodsModel.getGoods_num());
 		return mav;
 	}
+
 
 	private GoodsModel fileUploading(MultipartFile file, String oldfileName, GoodsModel GoodsModel) throws IOException {
 
@@ -508,6 +525,7 @@ public class AdminController {
 		return GoodsModel;
 
 	}
+
 
 	/*********************** 관리자 메인 페이지- 주문관리 ******************/
 	
@@ -598,6 +616,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping(value = "adOrderModify.cat", method = RequestMethod.GET)
 	public ModelAndView orderModifyForm(HttpServletRequest request) {
 		int order_num = Integer.parseInt(request.getParameter("order_num"));
@@ -611,6 +630,7 @@ public class AdminController {
 
 		return mav;
 	}
+
 
 	@RequestMapping(value = "adOrderModify.cat", method = RequestMethod.POST)
 	public ModelAndView orderModify(@ModelAttribute("orderModel") OrderModel orderModel, HttpServletRequest request) {
@@ -657,6 +677,9 @@ public class AdminController {
 
 	}
 
+
+	// 카테고리에 따라서 상품 리스트 뿌려주기
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "eventGoodsList.cat")
 	public void eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
@@ -676,6 +699,9 @@ public class AdminController {
 
 			}
 
+
+			// jsonArray에 담긴 객체를 뷰로 전송
+
 			PrintWriter pw = response.getWriter();
 			pw.print(jsonArray.toString());
 			pw.flush();
@@ -686,6 +712,8 @@ public class AdminController {
 
 	}
 
+
+	// Admin 이벤트 등록 폼
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
 
@@ -693,6 +721,9 @@ public class AdminController {
 		mav.setViewName("adEventWrite");
 		return mav;
 	}
+
+
+	// Admin 이벤트 등록
 
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
 	public ModelAndView adEventWrite(HttpServletRequest request) throws ParseException {
@@ -726,6 +757,9 @@ public class AdminController {
 		return mav;
 	}
 
+
+	// 이벤트 상세 페이지
+
 	@RequestMapping(value = "adEventView.cat")
 	public ModelAndView adEventView(HttpServletRequest request) {
 
@@ -735,6 +769,8 @@ public class AdminController {
 
 		eventModel = eventService.eventSelectOne(event_num);
 
+
+		// String으로 받아온 goods_num을 Integer로 변환
 		String goods_num_s = eventModel.getGoods_num();
 
 		String[] goods_num_array = goods_num_s.split(",");
@@ -745,11 +781,12 @@ public class AdminController {
 			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
 		}
 
+		// 쌓임방지
 		goodsList.clear();
 
 		GoodsModel goodsModel1 = new GoodsModel();
 
-		// goodsListnumber goodsModel 지역
+		// goodsList에 goodsModel 담기
 		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
@@ -767,6 +804,7 @@ public class AdminController {
 		return mav;
 	}
 
+	// 이벤트 수정
 	@RequestMapping(value = "adEventModify.cat", method = RequestMethod.GET)
 	public ModelAndView adEventModifyForm(HttpServletRequest request) {
 
@@ -776,6 +814,7 @@ public class AdminController {
 
 		eventModel = eventService.eventSelectOne(event_num);
 
+		// String으로 받아온 goods_num을 Integer로 변환
 		String goods_num_s = eventModel.getGoods_num();
 
 		String[] goods_num_array = goods_num_s.split(",");
@@ -786,8 +825,8 @@ public class AdminController {
 			goods_num_i[i] = Integer.parseInt(goods_num_array[i]);
 		}
 
+		// 쌓임 방지
 		goodsList.clear();
-
 		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
@@ -837,6 +876,7 @@ public class AdminController {
 
 	}
 
+	// 이벤트 삭제
 	@RequestMapping(value = "adEventDelete.cat")
 	public ModelAndView adEventDelete(HttpServletRequest request) {
 
@@ -849,6 +889,7 @@ public class AdminController {
 		return mav;
 	}
 
+	// 이벤트 강제 종료
 	@RequestMapping(value = "adEventStop.cat")
 	public ModelAndView adEventStop(HttpServletRequest request) {
 
@@ -883,7 +924,6 @@ public class AdminController {
 	}
 
 	/*********************** 관리자 메인 페이지- 주문취소관리 ******************/
-	
 	@RequestMapping(value = "adOrderCancleList.cat")
 	public ModelAndView adOrderCancleList(HttpServletRequest request) {
 
@@ -914,6 +954,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping(value = "adOrderCancleView.cat")
 	public ModelAndView adOrderCancleView(@RequestParam("order_num") int order_num, @RequestParam("cancle_num") int cancle_num, HttpServletRequest request) {
 
@@ -935,8 +976,8 @@ public class AdminController {
 		return mav;
 	}
 
+
 	/*********************** 관리자 메인 페이지- 환불관리 ******************/
-	
 	@RequestMapping(value = "adOrderRefundList.cat", method = RequestMethod.GET)
 	public ModelAndView adOrderRefundList(HttpServletRequest request) {
 
@@ -967,7 +1008,7 @@ public class AdminController {
 
 		return mav;
 	}
-	
+  
 	@RequestMapping(value = "adOrderRefundView.cat")
 	public ModelAndView adOrderRefundView(@RequestParam("order_num") int order_num, @RequestParam("trade_num") int trade_num, HttpServletRequest request) {
 
@@ -988,7 +1029,7 @@ public class AdminController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "adOrderRefundAgree.cat", method = RequestMethod.POST)
 	public ModelAndView RefundAgree(OrderModel orderModel, RefundModel refundModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1007,6 +1048,7 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
+
 	@RequestMapping(value = "adOrderRefundRefuse.cat", method = RequestMethod.POST)
 	public ModelAndView RefundRefuse(OrderModel orderModel, RefundModel refundModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1024,8 +1066,9 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
+
 	/*********************** 관리자 메인 페이지- 교환관리 ******************/
-	
+
 	@RequestMapping(value = "adOrderChangeList.cat", method = RequestMethod.GET)
 	public ModelAndView adOrderChangeList(HttpServletRequest request) {
 
@@ -1057,6 +1100,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping(value = "adOrderChangeView.cat")
 	public ModelAndView adOrderChangeView(@RequestParam("order_num") int order_num, @RequestParam("change_num") int change_num, HttpServletRequest request) {
 
@@ -1078,6 +1122,7 @@ public class AdminController {
 		return mav;
 	}
 
+
 	@RequestMapping(value = "adOrderChangeAgree.cat", method = RequestMethod.POST)
 	public ModelAndView ChangeAgree(OrderModel orderModel, ChangeModel changeModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1095,6 +1140,7 @@ public class AdminController {
 
 		return new ModelAndView(url);
 	}
+
 
 	@RequestMapping(value = "adOrderChangeRefuse.cat", method = RequestMethod.POST)
 	public ModelAndView ChangeRefuse(OrderModel orderModel, ChangeModel changeModel, @RequestParam("redirect_type") String redirect_type) {

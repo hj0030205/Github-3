@@ -13,8 +13,11 @@
 
 function onlyNumber(obj){
 	$(obj).keyup(function(){
-		$(this).val($(this).val.replace(/[^0-9]/g,1));
+		$(this).val($(this).val.replace(/[^0-9]/g,""));
 	})
+	
+	if($("#"+id).val() == "" || $("#"+id).val() < 1) 
+		$("#"+id).val(1);	
 }
 
 function qty_value_set(id,qty,no)
@@ -68,7 +71,6 @@ function qty_value_change(id,qty,no,evt)
 
 
 </script>
-<title>Insert title here</title>
 </head>
 <body>
 	<br>
