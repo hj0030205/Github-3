@@ -37,16 +37,14 @@ $(function() {
 								<tr>
 									<th>기간별 검색 :</th>
 									<td style="text-align: left;" colspan=2>
-										<input type="text" class="form-control" id="datepicker" placeholder="부터">
-										~ <input type="text" class="form-control" id="datepicker2" placeholder="까지">
+										<input type="text" class="form-control" name="date_min" id="datepicker" placeholder="부터">
+										~ <input type="text" class="form-control" name="date_max" id="datepicker2" placeholder="까지">
 									</td>
-									<%-- <c:if test="${status eq 'all'}">
 									<th>주문 상태 : </th>
 									<td>
-										<input type="radio" name="active" checked="checked" value="0">전체 &nbsp;
-										<input type="radio" name="active" value="1">취소됨 &nbsp;
+										<input type="radio" name="status" checked="checked" value="1">전체 &nbsp;
+										<input type="radio" name="status" value="0">취소됨 &nbsp;
 									</td>
-									</c:if> --%>
 								</tr>
 								<tr>
 									<th>항목별 검색 :</th>
@@ -61,21 +59,6 @@ $(function() {
 											<button class="fa fa-search" style="padding-left: 10px;"></button>
 										</div>
 									</td>
-								<%-- 	<c:if test="${status eq 'all'}">
-									<td colspan=2>
-										<select class="form-control" name="payment_status">
-											<option value="0">결제상태</option>
-											<option value="1">PS01</option>
-											<option value="2">PS02</option>
-										</select>
-										<select class="form-control" name="order_trans_status">
-											<option value="0">배송상태</option>
-											<option value="1">ST01</option>
-											<option value="2">ST02</option>
-											<option value="3">ST03</option>
-										</select>
-									</td> 
-									</c:if> --%>
 								</tr>
 							</table>
 						</form>
@@ -88,7 +71,6 @@ $(function() {
 									<th>배송번호</th>
 									<th>수취인</th>
 									<th>수취인 번호</th>
-									<%-- <c:if test="${status eq 'all'}"> --%>
 									<th>배송상태</th>
 									<th>주문날짜</th>
 								</tr>
@@ -116,12 +98,23 @@ $(function() {
 												<td>${list.order_trans_num}</td>
 												<td>${list.order_receive_name}</td>
 												<td>${list.order_receive_phone}</td>
-												<td><select name="order_status" disabled>
-													<option value="0" <c:if test="${list.order_status eq 0 }"> selected  </c:if>>결제완료</option>
-													<option value="1" <c:if test="${list.order_status eq 1 }"> selected </c:if>>배송준비</option>
-													<option value="2" <c:if test="${list.order_status eq 2 }"> selected </c:if>>배송중</option>
-													<option value="3" <c:if test="${list.order_status eq 3 }"> selected </c:if>>배송완료</option>
-												</select></td>
+												<td><c:choose>
+														<c:when test="${list.status!=0}">
+															<select name="order_status" disabled>
+																<option value="0"
+																	<c:if test="${list.order_status eq 0 }"> selected  </c:if>>결제완료</option>
+																<option value="1"
+																	<c:if test="${list.order_status eq 1 }"> selected </c:if>>배송준비</option>
+																<option value="2"
+																	<c:if test="${list.order_status eq 2 }"> selected </c:if>>배송중</option>
+																<option value="3"
+																	<c:if test="${list.order_status eq 3 }"> selected </c:if>>배송완료</option>
+															</select>
+														</c:when>
+														<c:otherwise>
+															<font color="red">취소상태</font>
+														</c:otherwise>
+													</c:choose></td>
 												<td><fmt:formatDate value="${list.order_date}" pattern="yyyy.MM.dd HH:MM"/></td>
 											</tr>
 										</c:forEach>

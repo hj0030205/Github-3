@@ -93,18 +93,26 @@
 						</div>
 							<div class="col-sm-12">	
 								<center>
-									<form action="adOrderChangeAgree.cat" method="post">
-										<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
-										<input type="hidden" name="change_num" value="${adOrderRefundList.change_num}" />
-										<input type="hidden" name="redirect_type" value="detail"/>
-										<input type="submit" value="승인" class="btn btn-success" >
-									</form>
-									<form action="adOrderChangeRefuse.cat" method="post">
-										<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
-										<input type="hidden" name="change_num" value="${adOrderRefundList.change_num}" />
-										<input type="hidden" name="redirect_type" value="detail"/>
-										<input type="submit" value="거절" class="btn btn-danger">
-									</form>
+									<c:choose>
+										<c:when test="${changeModel.change_state==0 }">
+										<form action="adOrderChangeAgree.cat" method="post">
+											<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
+											<input type="hidden" name="change_num" value="${adOrderRefundList.change_num}" />
+											<input type="hidden" name="redirect_type" value="detail"/>
+											<input type="submit" value="승인" class="btn btn-success" >
+										</form>
+										<form action="adOrderChangeRefuse.cat" method="post">
+											<input type="hidden" name="order_num" value="${adOrderRefundList.order_num}" />
+											<input type="hidden" name="change_num" value="${adOrderRefundList.change_num}" />
+											<input type="hidden" name="redirect_type" value="detail"/>
+											<input type="submit" value="거절" class="btn btn-danger">
+										</form>
+									</c:when>
+									<c:otherwise>
+										처리완료
+									</c:otherwise>
+									</c:choose>
+									
 								</center>
 							</div>
 						</div>

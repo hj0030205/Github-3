@@ -16,9 +16,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="goods_size" column="goods_size" />
 		<result property="goods_image_orgname" column="goods_image_orgname" />
 		<result property="goods_image_savname" column="goods_image_savname" />
-		<!-- <result property="goods_detail_image_orgname" column="goods_detail_image_orgname" 
-			/> <result property="goods_detail_image_savname" column="goods_detail_image_savname" 
-			/> -->
 		<result property="goods_hit" column="goods_hit" />
 		<result property="goods_date" column="goods_date" />
 
@@ -86,11 +83,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="searchNum==0">AND GOODS_NAME like '%'||#{searchKeyword}||'%'</if>
 			<if test="searchNum==1">AND GOODS_CATEGORY like '%'||#{searchKeyword}||'%'</if>
 			
+			<if test="price_min!=0"> <![CDATA[AND GOODS_PRICE >= #{price_min}]]></if>
+			<if test="price_max!=0"> <![CDATA[AND GOODS_PRICE <= #{price_max}]]></if>
+			
 			<if test="date_min!=null"> <![CDATA[AND GOODS_DATE >= #{date_min}]]></if>
 			<if test="date_max!=null"> <![CDATA[AND GOODS_DATE <= #{date_max}]]></if>
 			
-			<if test="price_min!=0"> <![CDATA[AND GOODS_PRICE >= #{price_min}]]></if>
-			<if test="price_max!=0"> <![CDATA[AND GOODS_PRICE <= #{price_max}]]></if>
 		</where>
 	</select>
 

@@ -1,4 +1,10 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/feline/admin/AdminController.java=UTF-8
 encoding//src/main/java/com/feline/logger/LoggerAspect.java=UTF-8
 encoding//src/main/java/com/feline/logger/LoggerInterceptor.java=UTF-8
 encoding//src/main/java/com/feline/member/MemberController.java=UTF-8
+encoding//src/main/java/com/feline/member/MemberDao.java=UTF-8
+encoding//src/main/java/com/feline/member/MemberModel.java=UTF-8
+encoding//src/main/java/com/feline/member/MemberService.java=UTF-8
+encoding//src/main/java/com/feline/order/OrderController.java=UTF-8
+encoding//src/main/java/com/feline/order/OrderDao.java=UTF-8

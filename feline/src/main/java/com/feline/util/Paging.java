@@ -1,20 +1,20 @@
 package com.feline.util;
 
 public class Paging {
-	private int currentPage; //ÇöÀç ÆäÀÌÁö
-	private int totalCount; //ÀüÃ¼ °Ô½Ã¹° ¼ö
-	private int totalPage; //ÀüÃ¼ ÆäÀÌÁö¼ö
-	private int blockCount; //ÇÑ ÆäÀÌÁöÀÇ °Ô½Ã¹°ÀÇ ¼ö
-	private int blockPage; //ÇÑ È­¸é¿¡ º¸¿©ÁÙ ÆäÀÌÁö ¼ö
-	private int startCount; //ÇÑ ÆäÀÌÁö¿¡¼­ º¸¿©ÁÙ °Ô½Ã±ÛÀÇ ½ÃÀÛ¹øÈ£
-	private int endCount; //ÇÑ ÆäÀÌÁö¿¡¼­ º¸¿©ÁÙ °Ô½Ã±ÛÀÇ ³¡ ¹øÈ£
-	private int startPage; //½ÃÀÛ ÆäÀÌÁö
-	private int endPage; //¸¶Áö¸·ÆäÀÌÁö
-	private String pageName; // ÀÌµ¿ÇÒ ÆäÀÌÁö ÀÌ¸§.
+	private int currentPage; 
+	private int totalCount;
+	private int totalPage; 
+	private int blockCount; 
+	private int blockPage; 
+	private int startCount; 
+	private int endCount; 
+	private int startPage; 
+	private int endPage; 
+	private String pageName; 
 	
 	private StringBuffer pagingHtml;
 	
-	/*¼öÁ¤µÈ ºÎºĞ - ¸Å°³º¯¼ö ¼öÁ¤µÊ*/
+	
 	public Paging(int currentPage, int totalCount, int blockCount,
 			int blockPage, int searchNum, String keyword, String pageName){
 		this.blockCount = blockCount;
@@ -23,34 +23,34 @@ public class Paging {
 		this.totalCount = totalCount;
 		this.pageName = pageName;
 		
-		//ÀüÃ¼ ÆäÀÌÁö¼ö
+		
 		totalPage = (int) Math.ceil((double)totalCount/blockCount);
 		if(totalPage==0){
 			totalPage = 1;
 		}
 		
-		//ÇöÀç ÆäÀÌÁö°¡ ÀüÃ¼ ÆäÀÌÁö ¼öº¸´Ù Å©¸é ÀüÃ¼ ÆäÀÌÁö ¼ö·Î ¼³Á¤
+
 		if(currentPage > totalPage){
 			currentPage = totalPage;
 		}
 		
-		//ÇöÀç ÆäÀÌÁöÀÇ Ã³À½°ú ¸¶Áö¸· ±ÛÀÇ ¹øÈ£ °¡Á®¿À±â
+
 		startCount = (currentPage - 1) * blockCount;
 		endCount = startCount + blockCount - 1;
 		
-		//½ÃÀÛ ÆäÀÌÁö¿Í ¸¶Áö¸· ÆäÀÌÁö °ª ±¸ÇÏ±â
+
 		startPage = (int)((currentPage-1)/blockPage)*blockPage+1;
 		endPage = startPage + blockPage-1;
 		
-		//¸¶Áö¸· ÆäÀÌÁö°¡ ÀüÃ¼ ÆäÀÌÁö¼ö º¸´Ù Å©¸é ÀüÃ¼ ÆäÀÌÁö¼ö·Î ¼³Á¤
+
 		if(endPage > totalPage){
 			endPage = totalPage;
 		}
 		
-		//ÀÌÀü blockÆäÀÌÁö
+
 		pagingHtml = new StringBuffer();
 		if(currentPage > blockPage){
-			/*¼öÁ¤µÈ ºÎºĞ*/
+
 			if(keyword!="" && keyword!=null){
 				pagingHtml.append("<a href='"+pageName+".cat?currentPage="
 						+(startPage-1)+"&searchKeyword="+keyword+"&searchNum="+searchNum+"'>");
@@ -59,12 +59,12 @@ public class Paging {
 				pagingHtml.append("<a href='"+pageName+".cat?currentPage="
 						+(startPage-1)+"'>");
 			}
-			pagingHtml.append("[ÀÌÀü]");
+			pagingHtml.append("[ì´ì „]");
 			pagingHtml.append("</a>");
 		}
 		pagingHtml.append("&nbsp; |&nbsp;");
 		
-		//ÆäÀÌÁö ¹øÈ£. ÇöÀç ÆäÀÌÁö´Â »¡°£»öÀ¸·Î °­Á¶ÇÏ°í ¸µÅ©¸¦ Á¦°Å
+
 		for(int i=startPage; i<=endPage; i++){
 			if(i>totalPage){
 				break;
@@ -76,7 +76,7 @@ public class Paging {
 			}else{
 				pagingHtml.append("&nbsp;<a href='"+pageName+".cat?currentPage=");
 				pagingHtml.append(i);
-				/*¼öÁ¤µÈ ºÎºĞ*/
+
 				if(keyword!="" && keyword!=null){
 					pagingHtml.append("&searchKeyword="+keyword);
 				}
@@ -87,17 +87,17 @@ public class Paging {
 			pagingHtml.append("&nbsp");
 		}
 		pagingHtml.append("&nbsp; &nbsp; |&nbsp; &nbsp;");
-		//´ÙÀ½ block ÆäÀÌÁö
+
 		if(totalPage- startPage >=blockPage){
 			pagingHtml.append("<a href='"+pageName+".cat?currentPage=");
-			/*¼öÁ¤µÈ ºÎºĞ*/
+
 			pagingHtml.append((endPage+1));
-			/*¼öÁ¤µÈ ºÎºĞ*/
+
 			if(keyword!="" && keyword!=null){
 				pagingHtml.append("&searchKeyword="+keyword+"&searchNum="+searchNum);
 			}
 			pagingHtml.append("'>");
-			pagingHtml.append("[´ÙÀ½]");
+			pagingHtml.append("[ë‹¤ìŒ]");
 			pagingHtml.append("</a>");
 		}
 	}

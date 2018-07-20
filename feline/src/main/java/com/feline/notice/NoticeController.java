@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.util.FileUpload;
 import com.feline.util.Paging;
+import com.feline.validator.NoticeValidator;
 
 @Controller
 @RequestMapping("/notice")
@@ -32,7 +33,6 @@ public class NoticeController {
 	private int searchNum;
 	private String keyword;
 
-	// 페이징을 위한 변수 설정
 	private int currentPage = 1;
 	private int totalCount;
 	private int blockCount = 10;
@@ -40,7 +40,6 @@ public class NoticeController {
 	private String pagingHtml;
 	private Paging page;
 
-	// 공지사항 리스트(검색 처리 포함)
 	@RequestMapping(value = "noticeList.cat", method = RequestMethod.GET)
 	public ModelAndView noticeList(HttpServletRequest request) throws UnsupportedEncodingException {
 		ModelAndView mav = new ModelAndView();
@@ -108,7 +107,6 @@ public class NoticeController {
 		return mav;
 	}
 
-	// 공지사항 상세보기
 	@RequestMapping("noticeView.cat")
 	public ModelAndView noticeView(HttpServletRequest request) {
 
@@ -127,7 +125,6 @@ public class NoticeController {
 		return mav;
 	}
 	
-	// 공지사항 글쓰기 폼
 	@RequestMapping(value = "noticeWrite.cat", method = RequestMethod.GET)
 	public ModelAndView noticeWriteForm(HttpServletRequest request) {
 
@@ -136,7 +133,6 @@ public class NoticeController {
 		return mav;
 	}
 
-	// 공지사항 글쓰기
 	@RequestMapping(value = "noticeWrite.cat", method = RequestMethod.POST)
 	public ModelAndView noticeWrite(@ModelAttribute("noticeModel") NoticeModel noticeModel, BindingResult result,
 			MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
@@ -147,14 +143,13 @@ public class NoticeController {
 
 		ModelAndView mav = new ModelAndView();
 
-		/* new NoticeValidator().validate(noticeModel, result); */
-
-		/*
-		 * if (result.hasErrors()) { mav.setViewName("noticeForm"); return mav; }
-		 */
+		new NoticeValidator().validate(noticeModel, result); 
+		if (result.hasErrors()) { 
+			mav.setViewName("noticeWrite"); return mav; }
+		 
 
 		String content = noticeModel.getContent().replaceAll("\r\n", "<br />");
-		noticeModel.setId((String)session.getAttribute("id"));
+		noticeModel.setId((String)session.getAttribute("adminId"));
 		noticeModel.setContent(content);
 		noticeModel.setRegdate(today.getTime());
 
@@ -170,7 +165,6 @@ public class NoticeController {
 		return mav;
 	}
 
-	// 공지사항 삭제
 	@RequestMapping("noticeDelete.cat")
 	public ModelAndView noticeDelete(HttpServletRequest request) {
 
@@ -182,12 +176,13 @@ public class NoticeController {
 		return mav;
 	}
 
-	// 공지사항 수정폼
+	
 	@RequestMapping(value="noticeModify.cat", method=RequestMethod.GET)
-	public ModelAndView noticeModifyForm(@ModelAttribute("noticeModel") NoticeModel noticeModel, BindingResult result,
+	public ModelAndView noticeModifyForm(@ModelAttribute("noticeModel") NoticeModel noticeModel, 
 			HttpServletRequest request) {
 
 		ModelAndView mav = new ModelAndView();
+		
 		noticeModel = noticeService.noticeView(noticeModel.getNo());
 
 		String content = noticeModel.getContent().replaceAll("<br />", "\r\n");
@@ -199,16 +194,20 @@ public class NoticeController {
 		return mav;
 	}
 
-	// 공지사항 수정
 	@RequestMapping(value = "noticeModify.cat", method = RequestMethod.POST)
-	public ModelAndView noticeModify(@ModelAttribute("noticeModel") NoticeModel noticeModel, HttpServletRequest request,
-			MultipartHttpServletRequest multipartRequest) throws IOException{
+	public ModelAndView noticeModify(@ModelAttribute("noticeModel") NoticeModel noticeModel, HttpServletRequest request, 
+			MultipartHttpServletRequest multipartRequest, BindingResult result) throws IOException{
 
+		ModelAndView mav = new ModelAndView();
+		new NoticeValidator().validate(noticeModel, result); 
+		if (result.hasErrors()) { 
+			mav.addObject("noticeModel", noticeModel);
+			mav.setViewName("noticeWrite"); return mav; }
 		
 		MultipartFile file = multipartRequest.getFile("file");
 		String oldfileName = request.getParameter("oldFile");
 		int notice_num = noticeModel.getNo();
-		ModelAndView mav = new ModelAndView("redirect:noticeView.cat");
+		mav.setViewName("redirect:noticeView.cat");
 
 		String content = noticeModel.getContent().replaceAll("\r\n", "<br />");
 		noticeModel.setContent(content);
@@ -223,7 +222,6 @@ public class NoticeController {
 		return mav;
 	}
 
-	// 파일 업로드.
 	private NoticeModel fileUploading(MultipartFile file, String oldfileName, NoticeModel noticeModel) throws IOException {
 
 		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";

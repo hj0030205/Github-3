@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,7 +59,7 @@ public class AdminController {
 	private int searchNum;
 	private String keyword;
 
-	// ����¡�� ���� ���� ����
+
 	private int currentPage = 1;
 	private int totalCount;
 	private int blockCount = 10;
@@ -76,7 +75,11 @@ public class AdminController {
 
 	private Logger logger = Logger.getLogger(getClass());
 
-	@RequestMapping("main.cat") // ������ ������
+
+	/*********************** 관리자 메인 페이지-차트 ******************/
+	
+	@RequestMapping("main.cat")
+
 	public ModelAndView adMain() throws Exception {
 
 		int countTrade = adminService.countTrade();
@@ -94,12 +97,11 @@ public class AdminController {
 		Map<Integer, Integer> mapYear = new HashMap<>();
 		int icell=0;
 
-		// ���ɴ�1 - ȸ��
+
 		List<ChartModel> todayMemberAge = adminService.todayMemberAge();
 		GoogleChartDTO pie1 = new GoogleChartDTO();
 		
-		
-		pie1.addColumn("���ɴ�", "string");
+		pie1.addColumn("연령대", "string");
 		pie1.addColumn("number", "number");
 		pie1.createRows(todayMemberAge.size());
 
@@ -108,9 +110,9 @@ public class AdminController {
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
-				pie1.addCell(icell, "��ȸ��");
+				pie1.addCell(icell, "비회원");
 			}else {
-				pie1.addCell(icell, i+"0��");
+				pie1.addCell(icell, i+"0 대");
 			}
 			pie1.addCell(icell, mapYear.get(i));
 			icell++;
@@ -120,11 +122,11 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + memberAgePie);
 		mav.addObject("memberAgePie", memberAgePie);
 
-		// ����1 - ȸ��
+		// 금일 회원 지역
 		List<ChartModel> todayMemberRegion = adminService.todayMemberRegion();
 		GoogleChartDTO pie2 = new GoogleChartDTO();
 
-		pie2.addColumn("����", "string");
+		pie2.addColumn("지역", "string");
 		pie2.addColumn("number", "number");
 		pie2.createRows(todayMemberRegion.size());
 
@@ -136,22 +138,23 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + memberRegionPie);
 		mav.addObject("memberRegionPie", memberRegionPie);
 
-		// ���ɴ�2 - �ֹ�
+
+		// 회원 주문 나이
 		List<ChartModel> todayOrderAge = adminService.todayOrderAge();
 		GoogleChartDTO pie3 = new GoogleChartDTO();
 
-		pie3.addColumn("���ɴ�", "string");
+		pie3.addColumn("연령", "string");
 		pie3.addColumn("number", "number");
 		pie3.createRows(todayOrderAge.size());
 
 		mapYear = CalculationYear(todayOrderAge, iYear);
-		
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
-				pie3.addCell(icell, "��ȸ��");
+
+				pie3.addCell(icell, "비회원");
 			}else {
-				pie3.addCell(icell, i+"0��");
+				pie3.addCell(icell, i+"0대");
 			}
 			pie3.addCell(icell, mapYear.get(i));
 			icell++;
@@ -161,17 +164,16 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + orderAgePie);
 		mav.addObject("orderAgePie", orderAgePie);
 
-		// ����2 - �ֹ�
 		List<ChartModel> todayOrderRegion = adminService.todayOrderRegion();
 		GoogleChartDTO pie4 = new GoogleChartDTO();
 
-		pie4.addColumn("����", "string");
+		pie4.addColumn("지역", "string");
 		pie4.addColumn("number", "number");
 		pie4.createRows(todayOrderRegion.size());
 
 		for (int i = 0; i < todayOrderRegion.size(); i++) {
 			if(todayOrderRegion.get(i).getKey().equals("0")) {
-				pie4.addCell(i, "��ȸ��");
+				pie4.addCell(i, "비회원");
 			}else {
 				pie4.addCell(i, todayOrderRegion.get(i).getKey());
 			}
@@ -194,9 +196,9 @@ public class AdminController {
 		return mav;
 	}
 
-	/*********************** ȸ�� ���� *************************/
 
-	/* ȸ�� ��� */
+	/*********************** 관리자 메인 페이지- 멤버관리 ******************/
+	
 	@RequestMapping(value = "adMemberList.cat")
 	public ModelAndView adMemberList(HttpServletRequest request) throws UnsupportedEncodingException {
 
@@ -206,49 +208,43 @@ public class AdminController {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		keyword = request.getParameter("searchKeyword");
+		searchNum = 0;
+		String date_min = request.getParameter("date_min");
+		String date_max = request.getParameter("date_max");
+		int status = 0;
 
-		if (keyword != null && keyword != "") {
+		if(request.getParameter("searchNum")!=null) {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
-			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
-
-			if (searchNum == 0) { // �̸��˻�
-				memberList = adminService.memberSearchN(keyword);
-			} else if (searchNum == 1) { // ���̵� �˻�
-				memberList = adminService.memberSearchI(keyword);
-			} else if (searchNum == 2) { // �ּ� �˻�
-				memberList = adminService.memberSearchA(keyword);
-			} else if (searchNum == 3) { // ��ȭ��ȣ �˻�
-				memberList = adminService.memberSearchP(keyword);
-			} else if (searchNum == 4) { // �̸��� �˻�
-				memberList = adminService.memberSearchE(keyword);
-			}
-
-			totalCount = memberList.size();
-
-			page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adMemberList");
-			pagingHtml = page.getPagingHtml().toString();
-
-			int lastCount = totalCount;
-
-			if (page.getEndCount() < totalCount) {
-				lastCount = page.getEndCount() + 1;
-			}
-
-			memberList = memberList.subList(page.getStartCount(), lastCount);
-
+		}
+		if (keyword==null) {
+			keyword = null;
+		}
+		if (date_min == null || request.getParameter("date_min").trim().isEmpty()) {
+			date_min = null;
+		}
+		if (date_max == null || request.getParameter("date_max").trim().isEmpty()) {
+			date_max = null;
+		}
+		if(request.getParameter("status")!=null) {
+			status = Integer.parseInt(request.getParameter("status"));
+		}
+		
+		map.put("searchNum", searchNum);
+		map.put("searchKeyword", keyword);
+		map.put("date_min", date_min);
+		map.put("date_max", date_max);
+		map.put("status", status);
+		
+		if (keyword == null && searchNum==0 && date_min==null && date_max==null && status==0) {
+			memberList = adminService.memberList();
+		}else {
+			memberList = adminService.searchMemberList(map);
 			mav.addObject("searchKeyword", keyword);
 			mav.addObject("searchNum", searchNum);
-			mav.addObject("totalCount", totalCount);
-			mav.addObject("pagingHtml", pagingHtml);
-			mav.addObject("currentPage", currentPage);
-			mav.addObject("memberList", memberList);
-			mav.setViewName("adMemberList");
-
-			return mav;
 		}
-
-		memberList = adminService.memberList();
 
 		totalCount = memberList.size();
 
@@ -262,17 +258,16 @@ public class AdminController {
 		}
 
 		memberList = memberList.subList(page.getStartCount(), lastCount);
-
+		
+		mav.addObject("totalCount", totalCount);
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("memberList", memberList);
-
 		mav.setViewName("adMemberList");
 
 		return mav;
 	}
 
-	/* ȸ�� ���� �󼼺��� */
 	@RequestMapping(value = "adMemberView.cat")
 	public ModelAndView adMemberView(HttpServletRequest request) {
 
@@ -288,7 +283,6 @@ public class AdminController {
 		return mav;
 	}
 
-	/* ȸ�� ���� */
 	@RequestMapping(value = "adMemberDelete.cat")
 	public ModelAndView adMemberDelete(HttpServletRequest request) {
 
@@ -301,7 +295,7 @@ public class AdminController {
 		return mav;
 	}
 
-	/* ȸ�� ���� ���� �� */
+
 	@RequestMapping(value = "adMemberModify.cat", method = RequestMethod.GET)
 	public ModelAndView adMemberModifyForm(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel memberModel) {
 
@@ -317,7 +311,7 @@ public class AdminController {
 		return mav;
 	}
 
-	/* ȸ�� ���� ���� */
+
 	@RequestMapping(value = "adMemberModify.cat", method = RequestMethod.POST)
 	public ModelAndView adMemberModify(@ModelAttribute("memberModel") MemberModel memberModel) {
 
@@ -328,9 +322,9 @@ public class AdminController {
 		return mav;
 	}
 
-	/*********************** ��ǰ ���� *************************/
 
-	// Admin ��ǰ ����Ʈ(�˻� ó�� ����)
+	/*********************** 관리자 메인 페이지- 상품관리 ******************/
+	
 	@RequestMapping(value = "adGoodsList.cat")
 	public ModelAndView adGoodsList(HttpServletRequest request) throws UnsupportedEncodingException {
 
@@ -356,11 +350,11 @@ public class AdminController {
 		if (keyword==null) {
 			keyword = null;
 		}
-		if (date_min == null) {
+		if (date_min == null || request.getParameter("date_min").trim().isEmpty()) {
 			date_min = null;
 		}
 
-		if (date_max == null) {
+		if (date_max == null || request.getParameter("date_max").trim().isEmpty()) {
 			date_max = null;
 		}
 		if(request.getParameter("price_min")!=null && !request.getParameter("price_min").trim().isEmpty()) {
@@ -404,7 +398,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin ��ǰ �󼼺���
+
 	@RequestMapping("adGoodsView.cat")
 	public ModelAndView adGoodsView(HttpServletRequest request) {
 
@@ -417,7 +411,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin ��ǰ �۾��� ��
+
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsWriteForm() {
 
@@ -426,7 +420,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin ��ǰ �۾���
+
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.POST)
 	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel GoodsModel, MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
 
@@ -450,7 +444,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin ��ǰ ����
+
 	@RequestMapping("adGoodsDelete.cat")
 	public ModelAndView adGoodsDelete(HttpServletRequest request) {
 
@@ -463,7 +457,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin ��ǰ ������
+
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsModifyForm(GoodsModel GoodsModel, BindingResult result, HttpServletRequest request) {
 		int goods_num = Integer.parseInt(request.getParameter("goods_num"));
@@ -480,7 +474,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin ��ǰ ����
+
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.POST)
 	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel GoodsModel, HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws IOException {
 
@@ -501,7 +495,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ���� ���ε�.
+
 	private GoodsModel fileUploading(MultipartFile file, String oldfileName, GoodsModel GoodsModel) throws IOException {
 
 		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";
@@ -532,9 +526,9 @@ public class AdminController {
 
 	}
 
-	/*********************** �ֹ� ���� *************************/
 
-	// �ֹ� ���
+	/*********************** 관리자 메인 페이지- 주문관리 ******************/
+	
 	@RequestMapping("adOrderList.cat")
 	public ModelAndView OrderList(HttpServletRequest request) throws Exception {
 
@@ -544,40 +538,45 @@ public class AdminController {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-		List<OrderModel> orderlist = adminService.orderAllList();
+		List<OrderModel> orderlist = new ArrayList<OrderModel>();
+		Map<String,Object> map = new HashMap<String,Object>();
 
 		keyword = request.getParameter("searchKeyword");
+		String date_min = request.getParameter("date_min");
+		String date_max = request.getParameter("date_max");
+		int status = 1;
+		searchNum=0;
 
-		if (keyword != null) {
-			keyword = new String(keyword.getBytes("8859_1"), "UTF-8");
+		if(request.getParameter("searchNum")!=null) {
 			searchNum = Integer.parseInt(request.getParameter("searchNum"));
+		}
+		if (keyword==null) {
+			keyword = null;
+		}
+		if (date_min == null || request.getParameter("date_min").trim().isEmpty()) {
+			date_min = null;
+		}
 
-			if (searchNum == 0)
-				orderlist = adminService.orderSearchNum(keyword);
-			else if (searchNum == 1)
-				orderlist = adminService.orderSearchId(keyword);
-			else if (searchNum == 2)
-				orderlist = adminService.orderSearchP(keyword);
+		if (date_max == null || request.getParameter("date_max").trim().isEmpty()) {
+			date_max = null;
+		}
+		if(request.getParameter("status")!=null) {
+			status = Integer.parseInt(request.getParameter("status"));
+		}
 
-			totalCount = orderlist.size();
-			page = new Paging(currentPage, totalCount, blockCount, blockPage, searchNum, keyword, "adOrderList");
-			pagingHtml = page.getPagingHtml().toString();
-
-			int lastCount = totalCount;
-
-			if (page.getEndCount() < totalCount)
-				lastCount = page.getEndCount() + 1;
-
-			orderlist = orderlist.subList(page.getStartCount(), lastCount);
-
+		map.put("date_min", date_min);
+		map.put("date_max", date_max);
+		map.put("searchNum", searchNum);
+		map.put("searchKeyword", keyword);
+		map.put("status", status);
+		
+		
+		if (keyword == null && date_min==null && date_max==null && searchNum==0 && keyword==null && status==1) {
+			orderlist = adminService.orderAllList();
+		}else {
+			orderlist = adminService.searchOrder(map);
 			mav.addObject("searchKeyword", keyword);
 			mav.addObject("searchNum", searchNum);
-			mav.addObject("totalCount", totalCount);
-			mav.addObject("pagingHtml", pagingHtml);
-			mav.addObject("currentPage", currentPage);
-			mav.addObject("orderlist", orderlist);
-			mav.setViewName("adOrderList");
-			return mav;
 		}
 
 		totalCount = orderlist.size();
@@ -601,7 +600,6 @@ public class AdminController {
 		return mav;
 	}
 
-	// Admin ��ǰ �󼼺���
 	@RequestMapping("adOrderView.cat")
 	public ModelAndView adOrderView(HttpServletRequest request) {
 
@@ -618,7 +616,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// �ֹ� �����ϱ� ��
+
 	@RequestMapping(value = "adOrderModify.cat", method = RequestMethod.GET)
 	public ModelAndView orderModifyForm(HttpServletRequest request) {
 		int order_num = Integer.parseInt(request.getParameter("order_num"));
@@ -633,7 +631,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// �ֹ�����
+
 	@RequestMapping(value = "adOrderModify.cat", method = RequestMethod.POST)
 	public ModelAndView orderModify(@ModelAttribute("orderModel") OrderModel orderModel, HttpServletRequest request) {
 
@@ -644,9 +642,8 @@ public class AdminController {
 		return mav;
 	}
 
-	/*********************** 이벤트관리 *************************/
-
-	// 이벤트 리스트
+	/*********************** 관리자 메인 페이지- 이벤트관리 ******************/
+	
 	@RequestMapping(value = "adEventList.cat")
 	public ModelAndView eventList(HttpServletRequest request) {
 
@@ -680,7 +677,9 @@ public class AdminController {
 
 	}
 
+
 	// 카테고리에 따라서 상품 리스트 뿌려주기
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "eventGoodsList.cat")
 	public void eventGoodsList(HttpServletRequest request, HttpServletResponse response) {
@@ -700,7 +699,9 @@ public class AdminController {
 
 			}
 
+
 			// jsonArray에 담긴 객체를 뷰로 전송
+
 			PrintWriter pw = response.getWriter();
 			pw.print(jsonArray.toString());
 			pw.flush();
@@ -711,6 +712,7 @@ public class AdminController {
 
 	}
 
+
 	// Admin 이벤트 등록 폼
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adEventWriteForm() {
@@ -720,7 +722,9 @@ public class AdminController {
 		return mav;
 	}
 
+
 	// Admin 이벤트 등록
+
 	@RequestMapping(value = "adEventWrite.cat", method = RequestMethod.POST)
 	public ModelAndView adEventWrite(HttpServletRequest request) throws ParseException {
 
@@ -753,7 +757,9 @@ public class AdminController {
 		return mav;
 	}
 
+
 	// 이벤트 상세 페이지
+
 	@RequestMapping(value = "adEventView.cat")
 	public ModelAndView adEventView(HttpServletRequest request) {
 
@@ -762,6 +768,7 @@ public class AdminController {
 		int event_num = Integer.parseInt(request.getParameter("event_num"));
 
 		eventModel = eventService.eventSelectOne(event_num);
+
 
 		// String으로 받아온 goods_num을 Integer로 변환
 		String goods_num_s = eventModel.getGoods_num();
@@ -820,8 +827,6 @@ public class AdminController {
 
 		// 쌓임 방지
 		goodsList.clear();
-
-		// goodsList에 goodsModel 담기
 		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
@@ -918,9 +923,7 @@ public class AdminController {
 		return mav;
 	}
 
-	//////////////////////////////////// �ֹ���� ȯ�� ��ȯ ��� ////////////////////////////////////////////////
-
-	// ���ֹ���� ��� ����Ʈ
+	/*********************** 관리자 메인 페이지- 주문취소관리 ******************/
 	@RequestMapping(value = "adOrderCancleList.cat")
 	public ModelAndView adOrderCancleList(HttpServletRequest request) {
 
@@ -951,7 +954,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ���ֹ� ��� �󼼺���
+
 	@RequestMapping(value = "adOrderCancleView.cat")
 	public ModelAndView adOrderCancleView(@RequestParam("order_num") int order_num, @RequestParam("cancle_num") int cancle_num, HttpServletRequest request) {
 
@@ -973,7 +976,8 @@ public class AdminController {
 		return mav;
 	}
 
-	// ���ֹ�ȯ�� ��� ����Ʈ
+
+	/*********************** 관리자 메인 페이지- 환불관리 ******************/
 	@RequestMapping(value = "adOrderRefundList.cat", method = RequestMethod.GET)
 	public ModelAndView adOrderRefundList(HttpServletRequest request) {
 
@@ -1004,8 +1008,7 @@ public class AdminController {
 
 		return mav;
 	}
-
-	// ���ֹ� ȯ�� �󼼺���
+  
 	@RequestMapping(value = "adOrderRefundView.cat")
 	public ModelAndView adOrderRefundView(@RequestParam("order_num") int order_num, @RequestParam("trade_num") int trade_num, HttpServletRequest request) {
 
@@ -1027,7 +1030,6 @@ public class AdminController {
 		return mav;
 	}
 
-	// ȯ�� ����
 	@RequestMapping(value = "adOrderRefundAgree.cat", method = RequestMethod.POST)
 	public ModelAndView RefundAgree(OrderModel orderModel, RefundModel refundModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1046,7 +1048,7 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
-	// ȯ�Ұ���
+
 	@RequestMapping(value = "adOrderRefundRefuse.cat", method = RequestMethod.POST)
 	public ModelAndView RefundRefuse(OrderModel orderModel, RefundModel refundModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1064,7 +1066,9 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
-	// ���ֹ���ȯ���� ��� ����Ʈ
+
+	/*********************** 관리자 메인 페이지- 교환관리 ******************/
+
 	@RequestMapping(value = "adOrderChangeList.cat", method = RequestMethod.GET)
 	public ModelAndView adOrderChangeList(HttpServletRequest request) {
 
@@ -1096,7 +1100,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ���ֹ� ��ȯ �󼼺���
+
 	@RequestMapping(value = "adOrderChangeView.cat")
 	public ModelAndView adOrderChangeView(@RequestParam("order_num") int order_num, @RequestParam("change_num") int change_num, HttpServletRequest request) {
 
@@ -1118,7 +1122,7 @@ public class AdminController {
 		return mav;
 	}
 
-	// ��ȯ ����
+
 	@RequestMapping(value = "adOrderChangeAgree.cat", method = RequestMethod.POST)
 	public ModelAndView ChangeAgree(OrderModel orderModel, ChangeModel changeModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1137,7 +1141,7 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
-	// ��ȯ����
+
 	@RequestMapping(value = "adOrderChangeRefuse.cat", method = RequestMethod.POST)
 	public ModelAndView ChangeRefuse(OrderModel orderModel, ChangeModel changeModel, @RequestParam("redirect_type") String redirect_type) {
 
@@ -1155,55 +1159,55 @@ public class AdminController {
 		return new ModelAndView(url);
 	}
 
-	/////////////////////////////////////////////////////////////////
+	/*********************** 관리자 메인 페이지- 통계 ******************/
 
 	@RequestMapping("adChartMember.cat")
 	public ModelAndView chartM() {
 		
 		GregorianCalendar today = new GregorianCalendar();
-		String sYear = Integer.toString(today.get(today.YEAR)).substring(2,4);
+		String sYear = Integer.toString(today.get(Calendar.YEAR)).substring(2,4);
 		int iYear = Integer.parseInt(sYear);
 		Map<Integer, Integer> mapYear = new HashMap<>();
 		int icell=0;
 
-		// �ű� ȸ�� ���
+		// 신규 회원 통계
 		List<ChartModel> listNew = adminService.chartNewM();
 
 		GoogleChartDTO goNew = new GoogleChartDTO();
 
 		goNew.addColumn("DAY", "string");
-		goNew.addColumn("�ű� ���� ȸ����", "number");
+		goNew.addColumn("신규 회원수", "number");
 		goNew.createRows(listNew.size());
 
 		for (int i = 0; i < listNew.size(); i++) {
-			goNew.addCell(i, listNew.get(i).getKey() + "(��)");
+			goNew.addCell(i, listNew.get(i).getKey() + "(number)");
 			goNew.addCell(i, listNew.get(i).getValue());
 		}
 
 		String jsonNew = gson.toJson(goNew.getResult());
 
-		// ��ü ȸ�� ���
+		// 전체 회원 통계
 		List<ChartModel> listAll = adminService.chartAllM();
 
 		GoogleChartDTO goAll = new GoogleChartDTO();
 
 		goAll.addColumn("DAY", "string");
-		goAll.addColumn("���� ȸ����", "number");
+		goAll.addColumn("전체 회원수", "number");
 		goAll.createRows(listAll.size());
 
 		for (int i = 0; i < listAll.size(); i++) {
-			goAll.addCell(i, listAll.get(i).getKey() + "(��)");
+			goAll.addCell(i, listAll.get(i).getKey() + "(number)");
 			goAll.addCell(i, listAll.get(i).getValue());
 		}
 
 		String jsonAll = gson.toJson(goAll.getResult());
 		System.out.println(jsonAll);
 
-		// �ű�ȸ�� ���� ���
+		// 신규 회원 (나이)
 		List<ChartModel> newMemberAge = adminService.newMemberAge();
 		GoogleChartDTO pie = new GoogleChartDTO();
 
-		pie.addColumn("���ɴ�", "string");
+		pie.addColumn("연령대", "string");
 		pie.addColumn("number", "number");
 		pie.createRows(newMemberAge.size());
 
@@ -1212,9 +1216,9 @@ public class AdminController {
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
-				pie.addCell(icell, "��ȸ��");
+				pie.addCell(icell, "비회원");
 			}else {
-				pie.addCell(icell, i+"0��");
+				pie.addCell(icell, i+"0대");
 			}
 			pie.addCell(icell, mapYear.get(i));
 			icell++;
@@ -1223,11 +1227,11 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + newAgePie);
 		mav.addObject("newAgePie", newAgePie);
 
-		// �ű�ȸ�� ���� ���
+		// 신규 회원 (지역)
 		List<ChartModel> newMemberRegion = adminService.newMemberRegion();
 		GoogleChartDTO pie2 = new GoogleChartDTO();
 
-		pie2.addColumn("����", "string");
+		pie2.addColumn("지역", "string");
 		pie2.addColumn("number", "number");
 		pie2.createRows(newMemberRegion.size());
 
@@ -1238,11 +1242,11 @@ public class AdminController {
 		String newRegionPie = gson.toJson(pie2.getResult());
 		mav.addObject("newRegionPie", newRegionPie);
 
-		// ��ü ȸ�� ���� ���
+		// 전체 회원(나이)
 		List<ChartModel> memberAge = adminService.memberAge();
 		GoogleChartDTO pie3 = new GoogleChartDTO();
 
-		pie3.addColumn("���ɴ�", "string");
+		pie3.addColumn("연령대", "string");
 		pie3.addColumn("number", "number");
 		pie3.createRows(memberAge.size());
 
@@ -1250,7 +1254,7 @@ public class AdminController {
 		
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
-			pie3.addCell(icell, i+"0��");
+			pie3.addCell(icell, i+"0대");
 			pie3.addCell(icell, mapYear.get(i));
 			icell++;
 		}
@@ -1258,11 +1262,11 @@ public class AdminController {
 		System.out.println("//////////////////////////////////////////" + agePie);
 		mav.addObject("agePie", agePie);
 
-		// ��ü ȸ�� ���� ���
+		// 전체 회원 (지역)
 		List<ChartModel> memberRegion = adminService.memberRegion();
 		GoogleChartDTO pie4 = new GoogleChartDTO();
 
-		pie4.addColumn("����", "string");
+		pie4.addColumn("지역", "string");
 		pie4.addColumn("number", "number");
 		pie4.createRows(memberRegion.size());
 
@@ -1284,19 +1288,19 @@ public class AdminController {
 	public ModelAndView chartO() {
 		
 		GregorianCalendar today = new GregorianCalendar();
-		String sYear = Integer.toString(today.get(today.YEAR)).substring(2,4);
+		String sYear = Integer.toString(today.get(Calendar.YEAR)).substring(2,4);
 		int iYear = Integer.parseInt(sYear);
 		Map<Integer, Integer> mapYear = new HashMap<>();
 		int icell=0;
 
 		Gson gson = new Gson();
 
-		// �ֱ� 7�� ��¥�� �ֹ��� ��ȸ
+		// 7일 간의 주문 내역
 		List<ChartModel> weekOrderNum = adminService.weekOrderNum();
 		GoogleChartDTO line1 = new GoogleChartDTO();
 
 		line1.addColumn("day", "string");
-		line1.addColumn("�ֹ���", "number");
+		line1.addColumn("주문수", "number");
 		line1.createRows(weekOrderNum.size());
 
 		for (int i = 0; i < weekOrderNum.size(); i++) {
@@ -1306,12 +1310,12 @@ public class AdminController {
 		String jsonNew = gson.toJson(line1.getResult());
 		mav.addObject("jsonNew", jsonNew);
 
-		// �ֱ� 7�� ��¥�� �Ǹŷ� ��ȸ
+		// 7일 간의 주문 금액
 		List<ChartModel> weekSales = adminService.weekSales();
 		GoogleChartDTO sales1 = new GoogleChartDTO();
 
 		sales1.addColumn("day", "string");
-		sales1.addColumn("�Ǹűݾ�", "number");
+		sales1.addColumn("판매금액", "number");
 		sales1.createRows(weekSales.size());
 
 		for (int i = 0; i < weekSales.size(); i++) {
@@ -1321,11 +1325,11 @@ public class AdminController {
 		String salesNew = gson.toJson(sales1.getResult());
 		mav.addObject("salesNew", salesNew);
 
-		// �ְ� ���� ����
+		// 주간 연령 구분
 		List<ChartModel> weekOrderAge = adminService.weekOrderAge();
 		GoogleChartDTO pie1 = new GoogleChartDTO();
 
-		pie1.addColumn("���ɴ�", "string");
+		pie1.addColumn("연령대", "string");
 		pie1.addColumn("number", "number");
 		pie1.createRows(weekOrderAge.size());
 
@@ -1334,9 +1338,9 @@ public class AdminController {
 		icell=0;
 		for(Integer i : mapYear.keySet()) {
 			if(i==0) {
-				pie1.addCell(icell, "��ȸ��");
+				pie1.addCell(icell, "비회원");
 			}else {
-				pie1.addCell(icell, i+"0��");
+				pie1.addCell(icell, i+"0대");
 			}
 			pie1.addCell(icell, mapYear.get(i));
 			icell++;
@@ -1344,17 +1348,17 @@ public class AdminController {
 		String newAgePie = gson.toJson(pie1.getResult());
 		mav.addObject("newAgePie", newAgePie);
 
-		// �ְ� ���� ����
+		// 주간 지역 구분
 		List<ChartModel> weekOrderRegion = adminService.weekOrderRegion();
 		GoogleChartDTO pie2 = new GoogleChartDTO();
 
-		pie2.addColumn("����", "string");
+		pie2.addColumn("지역", "string");
 		pie2.addColumn("number", "number");
 		pie2.createRows(weekOrderRegion.size());
 
 		for (int i = 0; i < weekOrderRegion.size(); i++) {
 			if(weekOrderRegion.get(i).getKey().equals("0")) {
-				pie2.addCell(i, "��ȸ��");
+				pie2.addCell(i, "비회원");
 			}else {
 				pie2.addCell(i, weekOrderRegion.get(i).getKey());
 			}
@@ -1365,12 +1369,12 @@ public class AdminController {
 
 		mav.addObject("newRegionPie", newRegionPie);
 
-		// �޺� �ֹ���
+		// 달별 주문량
 		List<ChartModel> monthOrderNum = adminService.monthOrderNum();
 		GoogleChartDTO line2 = new GoogleChartDTO();
 
 		line2.addColumn("day", "string");
-		line2.addColumn("�ֹ���", "number");
+		line2.addColumn("주문수", "number");
 		line2.createRows(monthOrderNum.size());
 
 		for (int i = 0; i < monthOrderNum.size(); i++) {
@@ -1380,12 +1384,12 @@ public class AdminController {
 		String jsonAll = gson.toJson(line2.getResult());
 		mav.addObject("jsonAll", jsonAll);
 
-		// �޺� �Ǹŷ�
+		// 달별 판매량
 		List<ChartModel> monthSales = adminService.monthSales();
 		GoogleChartDTO sales2 = new GoogleChartDTO();
 
 		sales2.addColumn("day", "string");
-		sales2.addColumn("�Ǹ� �ݾ�", "number");
+		sales2.addColumn("판매 금액", "number");
 		sales2.createRows(monthSales.size());
 
 		for (int i = 0; i < monthSales.size(); i++) {
@@ -1395,12 +1399,12 @@ public class AdminController {
 		String salesAll = gson.toJson(sales2.getResult());
 		mav.addObject("salesAll", salesAll);
 
-		// �޺� ���� ����
+		//  지역
 		List<ChartModel> monthOrderAge = adminService.monthOrderAge();
 		GoogleChartDTO pie3 = new GoogleChartDTO();
 
-		pie3.addColumn("�׸�", "string");
-		pie3.addColumn("��", "number");
+		pie3.addColumn("지역", "string");
+		pie3.addColumn("number", "number");
 		pie3.createRows(monthOrderAge.size());
 
 		mapYear = CalculationYear(monthOrderAge, iYear);
@@ -1408,9 +1412,9 @@ public class AdminController {
 		icell=0;
 		for(Integer k : mapYear.keySet()) {
 			if(k==0) {
-				pie3.addCell(icell, "��ȸ��");
+				pie3.addCell(icell, "비회원");
 			}else {
-				pie3.addCell(icell, k+"0��");
+				pie3.addCell(icell, k+"0대");
 			}
 			pie3.addCell(icell, mapYear.get(k));
 			icell++;
@@ -1418,17 +1422,17 @@ public class AdminController {
 		String agePie = gson.toJson(pie3.getResult());
 		mav.addObject("agePie", agePie);
 
-		// �޺� ���� ����
+		//  지역
 		List<ChartModel> monthOrderRegion = adminService.monthOrderRegion();
 		GoogleChartDTO pie4 = new GoogleChartDTO();
 
-		pie4.addColumn("�׸�", "string");
-		pie4.addColumn("��", "number");
+		pie4.addColumn("지역", "string");
+		pie4.addColumn("number", "number");
 		pie4.createRows(monthOrderRegion.size());
 
 		for (int i = 0; i < monthOrderRegion.size(); i++) {
 			if(monthOrderRegion.get(i).getKey().equals("0")) {
-				pie4.addCell(i, "��ȸ��");
+				pie4.addCell(i, "비회원");
 			}else {
 				pie4.addCell(i, monthOrderRegion.get(i).getKey());
 			}

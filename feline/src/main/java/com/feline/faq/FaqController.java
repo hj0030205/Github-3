@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.faq.FaqModel;
 import com.feline.util.Paging;
+import com.feline.validator.FaqValidator;
+import com.feline.validator.NoticeValidator;
 
 @Controller
 @RequestMapping("/faq")
@@ -29,7 +32,6 @@ public class FaqController {
 	private int searchNum;
 	private String keyword;
 
-	// ÆäÀÌÂ¡À» À§ÇÑ º¯¼ö ¼³Á¤
 	private int currentPage = 1;
 	private int totalCount;
 	private int blockCount = 10;
@@ -37,7 +39,6 @@ public class FaqController {
 	private String pagingHtml;
 	private Paging page;
 	
-	// FAQ ¸®½ºÆ®(°Ë»ö Ã³¸® Æ÷ÇÔ)
 		@RequestMapping(value = "faqList.cat", method = RequestMethod.GET)
 		public ModelAndView faqList(HttpServletRequest request) throws UnsupportedEncodingException {
 			ModelAndView mav = new ModelAndView();
@@ -104,7 +105,7 @@ public class FaqController {
 			return mav;
 		}
 
-		// FAQ ±Û¾²±â Æû
+
 		@RequestMapping(value = "faqWrite.cat", method = RequestMethod.GET)
 		public ModelAndView faqWriteForm(HttpServletRequest request) {
 
@@ -113,15 +114,18 @@ public class FaqController {
 			return mav;
 		}
 
-		// FAQ ±Û¾²±â
 		@RequestMapping(value = "faqWrite.cat", method = RequestMethod.POST)
 		public ModelAndView faqWrite(@ModelAttribute("faqModel") FaqModel faqModel,
-				HttpServletRequest request, HttpSession session) throws IOException {
+				HttpServletRequest request, HttpSession session, BindingResult result) throws IOException {
 			ModelAndView mav = new ModelAndView();
+			
+			new FaqValidator().validate(faqModel, result); 
+			if (result.hasErrors()) { mav.setViewName("faqWrite"); return mav; }
+			
 			
 			Calendar today = Calendar.getInstance();
 			String content = faqModel.getContent().replaceAll("\r\n", "<br />");
-			faqModel.setId((String)session.getAttribute("id"));
+			faqModel.setId((String)session.getAttribute("adminId"));
 			faqModel.setContent(content);
 			faqModel.setRegdate(today.getTime());
 
@@ -132,7 +136,7 @@ public class FaqController {
 			return mav;
 		}
 
-		// FAQ »èÁ¦
+		// FAQ ï¿½ï¿½ï¿½ï¿½
 		@RequestMapping("faqDelete.cat")
 		public ModelAndView faqDelete(HttpServletRequest request) {
 
@@ -144,7 +148,6 @@ public class FaqController {
 			return mav;
 		}
 
-		// FAQ ¼öÁ¤Æû
 		@RequestMapping(value="faqModify.cat", method=RequestMethod.GET)
 		public ModelAndView faqModifyForm(FaqModel faqModel,
 				HttpServletRequest request) {
@@ -161,12 +164,19 @@ public class FaqController {
 			return mav;
 		}
 
-		// FAQ ¼öÁ¤
 		@RequestMapping(value = "faqModify.cat", method = RequestMethod.POST)
-		public ModelAndView faqModify(@ModelAttribute("faqModel") FaqModel faqModel, HttpServletRequest request) throws IOException{
+		public ModelAndView faqModify(@ModelAttribute("faqModel") FaqModel faqModel, HttpServletRequest request
+				, BindingResult result) throws IOException{
 			
-			ModelAndView mav = new ModelAndView("redirect:faqList.cat");
+			ModelAndView mav = new ModelAndView();
 
+			new FaqValidator().validate(faqModel, result); 
+			if (result.hasErrors()) { 
+				mav.addObject("faqModel",faqModel);
+				mav.setViewName("faqWrite"); return mav; }
+			
+			mav.setViewName("redirect:faqList.cat");
+			
 			String content = faqModel.getContent().replaceAll("\r\n", "<br />");
 			faqModel.setContent(content);
 

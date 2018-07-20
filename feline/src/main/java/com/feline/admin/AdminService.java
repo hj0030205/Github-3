@@ -191,28 +191,8 @@ public class AdminService implements AdminDAO {
 
 	// 회원 검색
 	@Override
-	public List<MemberModel> memberSearchN(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchN", searchKeyword);
-	}
-
-	@Override
-	public List<MemberModel> memberSearchI(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchI", searchKeyword);
-	}
-
-	@Override
-	public List<MemberModel> memberSearchA(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchA", searchKeyword);
-	}
-
-	@Override
-	public List<MemberModel> memberSearchP(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchP", searchKeyword);
-	}
-
-	@Override
-	public List<MemberModel> memberSearchE(String searchKeyword) {
-		return sqlSessionTemplate.selectList("member.memberSearchE", searchKeyword);
+	public List<MemberModel> searchMemberList(Map<String, Object> map) {
+		return sqlSessionTemplate.selectList("member.searchMemberList", map);
 	}
 
 	@Override
@@ -286,18 +266,8 @@ public class AdminService implements AdminDAO {
 	}
 	
 	@Override
-	public List<OrderModel> orderSearchNum(String search){
-		return sqlSessionTemplate.selectList("order.orderSearchNum", "%"+search+"%");
-	}
-	
-	@Override
-	public List<OrderModel> orderSearchId(String search){
-		return sqlSessionTemplate.selectList("order.orderSearchId", "%"+search+"%");
-	}
-	
-	@Override
-	public List<OrderModel> orderSearchP(String search){
-		return sqlSessionTemplate.selectList("order.orderSearchP", "%"+search+"%");
+	public List<OrderModel> searchOrder(Map<String, Object> map){
+		return sqlSessionTemplate.selectList("order.searchOrder", map);
 	}
 	
 	@Override

@@ -67,18 +67,25 @@
 									</td>
 									<td>
 									<center>
-										<form action="adOrderChangeAgree.cat" method="post">
-											<input type="hidden" name="order_num" value="${adOrderChangeList.order_num}" />
-											<input type="hidden" name="change_num" value="${adOrderChangeList.change_num}" />
-											<input type="hidden" name="redirect_type" value="list"/>
-											<input type="submit" value="승인" class="btn btn-success" >
-										</form>
-										<form action="adOrderChangeRefuse.cat" method="post">
-											<input type="hidden" name="order_num" value="${adOrderChangeList.order_num}" />
-											<input type="hidden" name="change_num" value="${adOrderChangeList.change_num}" />
-											<input type="hidden" name="redirect_type" value="list"/>
-											<input type="submit" value="거절" class="btn btn-danger">
-										</form>
+										<c:choose>
+										<c:when test="${adOrderChangeList.change_state==0 }">
+											<form action="adOrderChangeAgree.cat" method="post">
+												<input type="hidden" name="order_num" value="${adOrderChangeList.order_num}" />
+												<input type="hidden" name="change_num" value="${adOrderChangeList.change_num}" />
+												<input type="hidden" name="redirect_type" value="list"/>
+												<input type="submit" value="승인" class="btn btn-success" >
+											</form>
+											<form action="adOrderChangeRefuse.cat" method="post">
+												<input type="hidden" name="order_num" value="${adOrderChangeList.order_num}" />
+												<input type="hidden" name="change_num" value="${adOrderChangeList.change_num}" />
+												<input type="hidden" name="redirect_type" value="list"/>
+												<input type="submit" value="거절" class="btn btn-danger">
+											</form>
+										</c:when>
+										<c:otherwise>
+											처리완료
+										</c:otherwise>
+										</c:choose>
 									</center>
 									</td>
 								</tr>

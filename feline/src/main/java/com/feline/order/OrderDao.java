@@ -8,13 +8,10 @@ import com.feline.member.MemberModel;
 
 public interface OrderDao {
 	
-	// �ֹ��ϱ�.
 	 Object goodsOrder(OrderModel orderModel);
-	
-	//�ֹ���ϻ̾ƿ���
+
 	 List<OrderModel> OrderList(OrderModel orderModel);
 
-	//�ֹ��󼼺��� �̾ƿ���
 	 OrderModel OrdergetOne(int order_num);
 	 
 	 //상품 상세에서 구매 시 장바구니 테이블에 담아줌

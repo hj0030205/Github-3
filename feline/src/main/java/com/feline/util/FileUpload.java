@@ -25,11 +25,11 @@ public class FileUpload {
 				out = new FileOutputStream(path +"/"+ fileName);
 				FileCopyUtils.copy(is, out);
 			}else{
-				new IOException("Àß¸øµÈ ÆÄÀÏÀ» ¾÷·Îµå ÇÏ¼Ì½À´Ï´Ù.");
+				new IOException("íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			new IOException("ÆÄÀÏ ¾÷·Îµå¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
+			new IOException("íŒŒì¼ ì—…ë¡œë“œì— ì‹¤íŒ¨í•˜ì…¨ìŠµë‹ˆë‹¤.");
 		}finally{
 			if(out != null){out.close();}
 			if(is != null){is.close();}

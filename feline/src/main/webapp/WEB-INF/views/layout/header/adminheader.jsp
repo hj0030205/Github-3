@@ -52,14 +52,9 @@
 			<!-- Logo -->
 			<!-- ============================================================== -->
 			<div class="navbar-header">
-				<a class="navbar-brand" href="/feline/admin/main.cat"> 
-				<!-- Logo icon -->
-					<!-- <i class="wi wi-sunset"></i> -->
-					<img src="/namuduri/img/Logo-icon.png" height="40px" style="margin-bottom: 5%;">
+				<a class="navbar-brand" href="/feline/main.cat"> 
 				<!-- Logo text --> 
 					<span> 
-						<!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /> -->
-						<!-- <img src="/namuduri/img/Logo-grey.png" height="30px"> -->
 						<font style="color: white; font-weight: bold; font-size: 27px;">FELINE</font>
 					</span>
 				</a>

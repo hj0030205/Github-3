@@ -60,7 +60,6 @@ public class MemberController {
 		System.out.println("token_type :" +map.get("token_type"));
 		System.out.println("expires_in :" +map.get("expires_in"));
 		
-		//����� ��ü ��� �޾ƿ�⸦ �����ϰڽ�ϴ�.
 		String list = kakao.getAllList(map.get("access_token"));
 		System.out.println("list : "+list);
 		

@@ -60,42 +60,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 회원 검색 -->
 	<!-- 이름으로 검색 -->
-	<select id="memberSearchN" resultMap="memberRes" parameterType="String">
-		SELECT * 
-		  FROM FELINE_MEMBER 
-		 WHERE MEMBER_NAME like '%'||#{searchKeyword}||'%' 
-		 ORDER BY MEMBER_NO DESC
-	</select>
-	
-	<!-- 아이디로 검색 -->
-	<select id="memberSearchI" resultMap="memberRes" parameterType="String">
-		SELECT * 
-		  FROM FELINE_MEMBER 
-		 WHERE MEMBER_ID like '%'||#{searchKeyword}||'%'  
-		 ORDER BY MEMBER_NO DESC
-	</select>
-	
-	<!-- 주소로 검색 -->
-	<select id="memberSearchA" resultMap="memberRes" parameterType="String">
-		SELECT * 
-		  FROM FELINE_MEMBER 
-		 WHERE MEMBER_ADDR1 like '%'||#{searchKeyword}||'%' 
-		 ORDER BY MEMBER_NO DESC
-	</select>
-	
-	<!-- 전화번호로 검색 -->
-	<select id="memberSearchP" resultMap="memberRes" parameterType="String">
-		SELECT * 
-		  FROM FELINE_MEMBER 
-		 WHERE MEMBER_PHONE like '%'||#{searchKeyword}||'%'  
-		 ORDER BY MEMBER_NO DESC
-	</select>
-	
-	<!-- 이메일로 검색 -->
-	<select id="memberSearchE" resultMap="memberRes" parameterType="String">
-		SELECT * 
-		  FROM FELINE_MEMBER 
-		 WHERE MEMBER_EMAIL like '%'||#{searchKeyword}||'%' 
+	<select id="searchMemberList" resultMap="memberRes" parameterType="map">
+		SELECT * FROM FELINE_MEMBER  
+		<where>
+			<if test="searchNum==0">AND MEMBER_NAME like '%'||#{searchKeyword}||'%'</if>
+			<if test="searchNum==1">AND MEMBER_ID like '%'||#{searchKeyword}||'%'</if>
+			<if test="searchNum==2">AND MEMBER_ADDR1 like '%'||#{searchKeyword}||'%' OR MEMBER_ADDR2 like '%'||#{searchKeyword}||'%'</if>
+			<if test="searchNum==3">AND MEMBER_PHONE like '%'||#{searchKeyword}||'%'</if>
+			<if test="searchNum==4">AND MEMBER_EMAIL like '%'||#{searchKeyword}||'%'</if>
+			
+			<if test="date_min!=null"> <![CDATA[AND MEMBER_JOIN_DATE >= #{date_min}]]></if>
+			<if test="date_max!=null"> <![CDATA[AND MEMBER_JOIN_DATE <= #{date_max}]]></if>
+			
+			<if test="status!=2">AND MEMBER_STATUS=#{status}</if>
+		 </where> 
 		 ORDER BY MEMBER_NO DESC
 	</select>
 	

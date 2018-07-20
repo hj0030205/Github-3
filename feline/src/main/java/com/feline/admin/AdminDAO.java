@@ -63,15 +63,7 @@ public interface AdminDAO {
 
 	Object updateMember(MemberModel memberModel);
 
-	List<MemberModel> memberSearchN(String searchKeyword);
-
-	List<MemberModel> memberSearchI(String searchKeyword);
-
-	List<MemberModel> memberSearchA(String searchKeyword);
-
-	List<MemberModel> memberSearchP(String searchKeyword);
-
-	List<MemberModel> memberSearchE(String searchKeyword);
+	List<MemberModel> searchMemberList(Map<String, Object> map);
 
 	Object deleteMember(String member_id);
 
@@ -108,11 +100,7 @@ public interface AdminDAO {
 	// �ֹ��󼼺��� �̾ƿ���
 	OrderModel OrderView(int order_num);
 
-	List<OrderModel> orderSearchNum(String search);
-
-	List<OrderModel> orderSearchId(String search);
-
-	List<OrderModel> orderSearchP(String search);
+	List<OrderModel> searchOrder(Map<String, Object> map);
 
 	Object orderModify(OrderModel OrderModel);
 	
