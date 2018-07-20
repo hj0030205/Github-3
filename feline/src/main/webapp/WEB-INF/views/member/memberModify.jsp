@@ -51,7 +51,7 @@
 				}).open();
 	}
 
- 	function openEmailChk() {
+/*  	function openEmailChk() {
  		if(document.memberModify.member_email.value == document.memberModify.member_email_own.value){
  			alert("기존의 이메일과 같습니다.");
  			return false;
@@ -60,7 +60,7 @@
 			window.open("member_emailCheck.cat?member_email="+ document.memberModify.member_email.value, "emailchkForm",
 					"width=500,height=300,resizable=no,scrollbars=no");
  		}
-	} 
+	}  */
  	
  	function onlyNumber(obj) {
  	    $(obj).keyup(function(){
@@ -70,36 +70,47 @@
 
  	</script>
  	<script type='text/javaScript'>
-$(document).ready(function(){
-    var u_email = $('#email');
+	$(document).ready(function(){
     var u_phone = $('#phone');
-
+    
     $('#btn_pass').click(function(){
-        // 정규식 - 이메일 유효성 검사
-        var regEmail = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
         // 정규식 -전화번호 유효성 검사
         var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
 
         if(!regPhone.test(u_phone.val())){
-        	alert('-을 빼고 입력해주셔야합니다.');
+        	alert('전화번호에 " - "을 빼고 입력해주셔야합니다.');
         	u_phone.focus();
         	return false;
         }
-        else if( !u_email.val() ){
-            alert('이메일주소를 입력 해 주세요');
-            u_email.focus();
-            return false;
-        } else {
-            if(!regEmail.test(u_email.val())) {
-                alert('이메일 주소가 유효하지 않습니다');
-                u_email.focus();
-                return false;
-            }
-        }
     });
-
+    
 });
-</script>
+	</script>
+	<script>
+	$(document).ready(function(){
+				
+				  var emailVal = $("#email");
+			  
+				  $('#emailchk').click(function(){
+				  var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+				  // 검증에 사용할 정규식 변수 regExp에 저장
+				  if(!regExp.test(emailVal.val())) {
+				    alert("이메일형식에 맞지 않습니다.");
+				    emailVal.focus();
+				    return false;
+				 }else {
+					 	if(document.memberModify.member_email.value == document.memberModify.member_email_own.value){
+					 	alert("기존의 이메일과 같습니다.");
+				 		return false;
+				 	}else{
+						window.name = "EmailChkForm"
+						window.open("member_emailCheck.cat?member_email="+ document.memberModify.member_email.value, "emailchkForm",									"width=500,height=300,resizable=no,scrollbars=no");
+			 		}
+				 }
+			});
+		});
+	</script>
+
 
 
 
@@ -217,7 +228,7 @@ $(document).ready(function(){
 												<br />
 											</h2></label>
 										<button type="button" class="btn btn-default" id="emailchk"
-											onclick="openEmailChk()">중복확인</button>
+											>중복확인</button>
 									</div>
 								</div>
 							</div>
