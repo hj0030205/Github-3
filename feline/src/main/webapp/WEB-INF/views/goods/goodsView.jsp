@@ -213,8 +213,13 @@ li.basic.active {
 										<a href="javascript:isBuy(goodsform)" class="btn btn-primary">구매하기</a> 
 										<a href="javascript:isBasket(goodsform)" class="btn btn-default"><i
 											class="fa fa-shopping-cart"></i></i>장바구니</a>
+										<c:choose>
+										<c:when test="${sessionScope.id ne null }">
 										<a href="javascript:isWishList(goodsform)" class="btn btn-default">
-										<i class="fa fa-heart"></i></a>	
+										<i class="fa fa-heart"></i></a>	</c:when>
+										<c:otherwise>
+										</c:otherwise>
+										</c:choose>
 									</p>
 								</form>
 							</div>
