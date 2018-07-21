@@ -51,23 +51,55 @@
 				}).open();
 	}
 
-/*  	function openEmailChk() {
- 		if(document.memberModify.member_email.value == document.memberModify.member_email_own.value){
- 			alert("기존의 이메일과 같습니다.");
- 			return false;
- 		}else{
-			window.name = "EmailChkForm"
-			window.open("member_emailCheck.cat?member_email="+ document.memberModify.member_email.value, "emailchkForm",
-					"width=500,height=300,resizable=no,scrollbars=no");
- 		}
-	}  */
- 	
  	function onlyNumber(obj) {
  	    $(obj).keyup(function(){
  	         $(this).val($(this).val().replace(/[^0-9]/g,""));
  	    }); 
  	}
 
+ 	
+ 	/* function check(){
+ 		if(!document.memberModify.member_name.value)
+ 		{
+ 			alert("이름을 입력해주세요.");
+ 			document.memberModify.member_name.focus();
+ 			return false;
+ 		}
+ 		if(!document.memberModify.member_pw.value)
+ 		{
+ 			alert("비밀번호를 입력해주세요.");
+ 			document.memberModify.member_pw.focus();
+ 			return false;
+ 		}
+ 		if(!document.memberModify.member_jumin1.value)
+ 		{
+ 			alert("생년월일을 입력해주세요.");
+ 			document.memberModify.member_jumin1.focus();
+ 			return false;
+ 		}
+ 		
+ 		if(!document.memberModify.member_phone.value)
+ 		{
+ 			alert("핸드폰번호를 입력해주세요.");
+ 			document.memberModify.member_phone.focus();
+ 			return false;
+ 		}
+ 		
+ 		if(!document.memberModify.member_addr2.value)
+ 		{
+ 			alert("상세주소를 입력해주세요.");
+ 			document.memberModify.member_addr2.focus();
+ 			return false;
+ 		}
+ 		
+ 		if(!document.memberModify.member_email.value)
+ 		{
+ 			alert("이메일주소를 입력해주세요.");
+ 			document.memberModify.member_email.focus();
+ 			return false;
+ 		}
+ 	} */
+ 	
  	</script>
  	<script type='text/javaScript'>
 	$(document).ready(function(){
@@ -173,12 +205,12 @@
 						<legend>
 							<h2>회원정보 입력</h2>
 						</legend>
-						<form name="memberModify" action="memberModify.cat" method="post" >
+						<form name="memberModify" action="memberModify.cat" id="memberModify" method="post">
 						<div class="row">
 						<!-- 이름 hidden -->
 						<div class="col-sm-3">
 									<div class="form-group">
-										<label>이름</label> 
+										<label for="member_name">이름</label> 
 										<input type="text" id="member_name" class="form-control" name="member_name" value="${memberModel.member_name}"/> 
 									</div>
 								</div>
@@ -190,7 +222,7 @@
 						</div>		
 						<div class="col-sm-4">
 							<div class="form-group">
-								<label>비밀번호</label>
+								<label for="member_pw">비밀번호</label>
 								<input type="password" class="form-control" name="member_pw" value="${memberModel.member_pw }"/>
 							</div>
 						</div>
@@ -199,7 +231,7 @@
 						<div class="row">
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>생년월일</label>
+									<label for="member_jumin1">생년월일</label>
 									<input type="text" class="form-control" 
 									onkeydown="onlyNumber(this)"
 									name="member_jumin1" value="${memberModel.member_jumin1 }"/>
@@ -207,7 +239,7 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>전화번호( - 을 빼고 입력하세요)</label>
+									<label for="member_phone">전화번호( - 을 빼고 입력하세요)</label>
 									<input type="text" class="form-control" id="phone"
 									name="member_phone" value="${memberModel.member_phone }"/>
 								</div>
@@ -217,7 +249,7 @@
 							<div class="row">
 								<div class="col-sm-5">
 									<div class="form-group">
-										<label>이메일</label> 
+										<label for="member_email">이메일</label> 
 										<input type="text" id="email" class="form-control" name="member_email"  value="${memberModel.member_email }"/>
 										<input type="hidden" name="member_email_own" value="${memberModel.member_email }"/>
 									</div>
@@ -262,7 +294,7 @@
 								</div>
 								<div class="col-sm-3">
 									<div class="form-group">
-										<label>상세주소</label> 
+										<label for="member_addr2">상세주소</label> 
 										<input type="text" class="form-control"name="member_addr2" id="detailaddr2" value="${memberModel.member_addr2 }"/>
 									</div>
 								</div>
