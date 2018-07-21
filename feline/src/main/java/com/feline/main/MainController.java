@@ -84,9 +84,9 @@ public class MainController {
 			String goods_num_s = null;
 			
 			for(int i = 0; i < endEventList.size(); i++) {
-				
 				//goods_num_s 파싱해서 이벤트 가격 조정
-				goods_num_s = startEventList.get(i).getGoods_num();
+				goods_num_s = endEventList.get(i).getGoods_num();
+				
 				String[] goods_num_array = goods_num_s.split(",");
 				
 				int event_num = endEventList.get(i).getEvent_num();
@@ -104,7 +104,7 @@ public class MainController {
 				//status=0으로 비활성화
 				EventModel eventModel1 = new EventModel();
 				eventModel1.setStatus(0);
-				eventModel1.setEvent_num(startEventList.get(i).getEvent_num());
+				eventModel1.setEvent_num(endEventList.get(i).getEvent_num());
 				
 				eventService.eventOnOff(eventModel1);
 			}
