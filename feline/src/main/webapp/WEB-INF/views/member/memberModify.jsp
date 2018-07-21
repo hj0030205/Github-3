@@ -58,7 +58,7 @@
  	}
 
  	
- 	/* function check(){
+ 	 function check(){
  		if(!document.memberModify.member_name.value)
  		{
  			alert("이름을 입력해주세요.");
@@ -98,7 +98,7 @@
  			document.memberModify.member_email.focus();
  			return false;
  		}
- 	} */
+ 	} 
  	
  	</script>
  	<script type='text/javaScript'>
@@ -205,7 +205,7 @@
 						<legend>
 							<h2>회원정보 입력</h2>
 						</legend>
-						<form name="memberModify" action="memberModify.cat" id="memberModify" method="post">
+						<form name="memberModify" action="memberModify.cat" id="memberModify" method="post" onsubmit="return check()">
 						<div class="row">
 						<!-- 이름 hidden -->
 						<div class="col-sm-3">
