@@ -14,7 +14,6 @@ public class MainService implements MainDao{
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	//최신등록상품 출력
 	@Override
 	public List<GoodsModel> selectNewGoodsList() {
 		return sqlSessionTemplate.selectList("goods.selectNewGoodsList");

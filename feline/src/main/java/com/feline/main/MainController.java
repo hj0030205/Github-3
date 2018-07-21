@@ -38,11 +38,9 @@ public class MainController {
 	
 	private Logger logger = Logger.getLogger(getClass());
 	
-	/* 메인페이지 */
 	@RequestMapping(value = "main.cat")
 	public ModelAndView main(HttpServletRequest request) {
 		
-		//이벤트 시작해야 할 상품 목록 불러오기
 		startEventList = eventService.selectStartEvent();
 		
 		logger.info("startEventListSize : " + startEventList.size());
@@ -51,7 +49,7 @@ public class MainController {
 			String goods_num_s = null;
 			
 			for(int i = 0; i < startEventList.size(); i++) {
-				//goods_num_s 리스트 생성
+				
 				goods_num_s = startEventList.get(i).getGoods_num();
 				String[] goods_num_array = goods_num_s.split(",");
 				
@@ -67,7 +65,6 @@ public class MainController {
 					eventService.eventPriceOn(eventModel);
 				}
 				
-				//status 1로 이벤트 활성화
 				EventModel eventModel1 = new EventModel();
 				
 				eventModel1.setStatus(1);
@@ -77,7 +74,6 @@ public class MainController {
 			}
 		}
 		
-		//이벤트 종료해야 할 상품 목록 불러오기
 		endEventList = eventService.selectEndEvent();
 		
 		if(endEventList.size() > 0) {
@@ -85,8 +81,7 @@ public class MainController {
 			
 			for(int i = 0; i < endEventList.size(); i++) {
 				
-				//goods_num_s 리스트 생성
-				goods_num_s = startEventList.get(i).getGoods_num();
+				goods_num_s = endEventList.get(i).getGoods_num();
 				String[] goods_num_array = goods_num_s.split(",");
 				
 				int event_num = endEventList.get(i).getEvent_num();
@@ -101,10 +96,9 @@ public class MainController {
 					eventService.eventPriceOff(eventModel);
 				}
 				
-				//status=0으로 이벤트 비활성화
 				EventModel eventModel1 = new EventModel();
 				eventModel1.setStatus(0);
-				eventModel1.setEvent_num(startEventList.get(i).getEvent_num());
+				eventModel1.setEvent_num(endEventList.get(i).getEvent_num());
 				
 				eventService.eventOnOff(eventModel1);
 			}
