@@ -19,7 +19,5 @@ public class GoodsValidator implements Validator {
 		// TODO Auto-generated method stub
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "goods_name", "goods_name");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "goods_price", "goods_price");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "goods_amount", "goods_amount");
 	}
 }

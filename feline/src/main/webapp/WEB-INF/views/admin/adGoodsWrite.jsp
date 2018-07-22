@@ -2,19 +2,49 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script>
-	function goodsList() {
-		if (confirm("목록으로 이동하시겠습니까?")) {
-			document.location.href = "adGoodsList.cat?currentPage=${currentPage}";
-		} else {
-			return false;
-		}
+<script>	
+
+function goodsList() {
+	if (confirm("목록으로 이동하시겠습니까?")) {
+		document.location.href = "adGoodsList.cat?currentPage=${currentPage}";
+	} else {
+		return false;
 	}
+}
+
+function checkCategory(){
+	var sel = $("#category1").val();
+	var p = document.getElementById("goods_price").value;
+	var a = document.getElementById("goods_amount").value;
+	
+	if(isNaN(p)==true || isNaN(a)==true){
+		alert("재고와 가격입련란에는 숫자만 입력해주세요.");
+		return false;
+	}
+	
+	if(p.match("0") || !p){
+		alert("가격입력란에 1이상 입력해주세요.");
+		return false;
+	}
+	if(a.match("0") || !a){
+		alert("재고입력란에 1이상 입력해주세요.");
+		return false;
+	}
+	
+	if(sel.match(null)){
+		alert("카테고리를 선택해주세요.");
+		return false;
+	}else{
+		document.getElementById("goodsWriteForm").submit();
+	}
+}
 </script>
 <style>
 .form-control {
@@ -25,21 +55,22 @@
 .fg {
 	font-size: 19px;
 }
-select{
-	width:200px;
-	height:25px;
-	font-size:17px;
-	
+
+select {
+	width: 200px;
+	height: 25px;
+	font-size: 17px;
 }
 </style>
 </head>
 <body>
+	<spring:hasBindErrors name="GoodsModel" />
 	<div class="container-fluid">
 		<!-- ///////////////////////////////row page title/////////////////////////////////////// -->
 		<div class="row page-titles">
 			<div class="col-md-5 col-8 align-self-center">
 				<c:choose>
-					<c:when test="${goodsModel.goods_num eq null }">
+					<c:when test="${goodsModel.goods_num eq null || goodsModel.goods_num == 0 }">
 						<h3 class="text-themecolor">상품 등록</h3>
 					</c:when>
 					<c:otherwise>
@@ -50,7 +81,7 @@ select{
 					<li class="breadcrumb-item"><a href="/feline/admin/main.cat">관리자
 							메인</a></li>
 					<c:choose>
-						<c:when test="${goodsModel.goods_num eq null }">
+						<c:when test="${goodsModel.goods_num eq null || goodsModel.goods_num == 0 }">
 							<li class="breadcrumb-item active">상품 등록</li>
 						</c:when>
 						<c:otherwise>
@@ -65,15 +96,15 @@ select{
 				<h3>상품 정보</h3>
 				<div class="card">
 					<div class="card-block">
-						<c:choose>
-							<c:when test="${goodsModel.goods_num eq null }">
-								<form class="form-horizontal form-material"
-									action="adGoodsWrite.cat" name="goodsForm" method="POST"
-									enctype="multipart/form-data">
-							</c:when>
-							<c:otherwise>
-								<form class="form-horizontal form-material"
-									action="adGoodsModify.cat" name="goodsForm" method="POST"
+					<c:choose>
+						<c:when test="${goodsModel.goods_num eq null || goodsModel.goods_num == 0  }">
+							<form class="form-horizontal form-material" id="goodsWriteForm"
+								action="adGoodsWrite.cat" name="goodsWriteForm" method="POST"
+								enctype="multipart/form-data">
+						</c:when>
+						<c:otherwise>
+								<form class="form-horizontal form-material" id="goodsModifyForm"
+									action="adGoodsModify.cat" name="goodsModifyForm" method="POST"
 									enctype="multipart/form-data">
 									<input type="hidden" name="goods_num"
 										value="${goodsModel.goods_num }" /> <input type="hidden"
@@ -122,12 +153,13 @@ select{
 													<input type="text" name="goods_name"
 														class="form-control form-control-line"
 														value="${goodsModel.goods_name}">
+													<font color="red"><form:errors path="goodsModel.goods_name" /></font>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<label class="col-md-6">가격</label>
 												<div class="col-md-12">
-													<input type="text" name="goods_price"
+													<input type="text" name="goods_price" id="goods_price"
 														value="${goodsModel.goods_price}"
 														class="form-control form-control-line">
 												</div>
@@ -141,7 +173,7 @@ select{
 											<label class="col-md-6">대분류</label>
 											<div class="col-md-12">
 												<select id="category1" name="category1" onchange="al();">
-													<option value="null">choose one</option>
+													<option value="null" selected>choose one</option>
 													<option value="0">사료</option>
 													<option value="1">간식</option>
 													<option value="2">모래/화장실</option>
@@ -154,7 +186,6 @@ select{
 											<label class="col-md-6">카테고리</label>
 											<div class="col-md-12">
 												<select id="goods_category1" name="goods_category">
-													<option>대분류를 선택해주세요</option>
 												</select>
 											</div>
 										</div>
@@ -166,7 +197,7 @@ select{
 										<div class="col-md-6">
 											<label class="col-md-6">상품 갯수</label>
 											<div class="col-md-12">
-												<input type="text" name="goods_amount"
+												<input type="text" name="goods_amount" id="goods_amount"
 													value="${goodsModel.goods_amount}"
 													class="form-control form-control-line">
 											</div>
@@ -175,7 +206,7 @@ select{
 											<label class="col-md-6">상품 사이즈</label>
 											<div class="col-md-12">
 												<input type="text" name="goods_size"
-													value="${goodsModel.goods_size}"
+													value="${goodsModel.goods_size}" 
 													class="form-control form-control-line">
 											</div>
 										</div>
@@ -192,7 +223,7 @@ select{
 						</div>
 						<div class="form-group">
 							<div class="col-sm-12" style="text-align: center;">
-								<input type="submit" class="btn btn-success" value="작성 완료">
+								<button type="button" class="btn btn-success" onclick="return checkCategory();">작성 완료</button>
 								&nbsp; <a class="btn btn-warning" href="javascript:goodsList()">목록으로</a>
 							</div>
 						</div>
@@ -204,11 +235,15 @@ select{
 	</div>
 </body>
 <script>
+
 	var big = document.getElementById('category1');
 	var small = document.getElementById('goods_category1');
 
 	function al() {
 		keyValue = big.value;
+		if(keyValue==null){
+			return false;
+		}
 		switch (keyValue) {
 
 		case '0':
