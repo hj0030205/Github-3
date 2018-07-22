@@ -43,6 +43,7 @@ import com.feline.member.MemberModel;
 import com.feline.order.OrderModel;
 import com.feline.util.FileUpload;
 import com.feline.util.Paging;
+import com.feline.validator.GoodsValidator;
 
 @Controller
 @RequestMapping("/admin")
@@ -414,31 +415,39 @@ public class AdminController {
 
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsWriteForm() {
-
-		mav.addObject("goodsModel", new GoodsModel());
+		mav.addObject("goodsModel",new GoodsModel());
 		mav.setViewName("adGoodsWrite");
 		return mav;
 	}
 
 
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.POST)
-	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel GoodsModel, MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
+	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel goodsModel, MultipartHttpServletRequest multipartRequest, 
+			HttpServletRequest request, HttpSession session, BindingResult result) throws IOException {
 
+		ModelAndView mav = new ModelAndView();
+		
+		new GoodsValidator().validate(goodsModel, result);
+		if(result.hasErrors()) {
+			mav.setViewName("adGoodsWrite");
+			return mav;
+		}
+		
 		MultipartFile file = multipartRequest.getFile("file");
 		Calendar today = Calendar.getInstance();
 		String oldfileName = request.getParameter("oldFile");
 
-		String content = GoodsModel.getGoods_content().replaceAll("\r\n", "<br />");
-		GoodsModel.setGoods_content(content);
-		GoodsModel.setGoods_date(today.getTime());
+		String content = goodsModel.getGoods_content().replaceAll("\r\n", "<br />");
+		goodsModel.setGoods_content(content);
+		goodsModel.setGoods_date(today.getTime());
 
-		adminService.insertGoods(GoodsModel);
+		adminService.insertGoods(goodsModel);
 
 		if (file != null) {
-			GoodsModel = fileUploading(file, oldfileName, GoodsModel);
+			goodsModel = fileUploading(file, oldfileName, goodsModel);
 		}
 
-		mav.addObject("goodsModel", GoodsModel);
+		mav.addObject("goodsModel", goodsModel);
 		mav.setViewName("redirect:adGoodsList.cat");
 
 		return mav;
@@ -476,22 +485,31 @@ public class AdminController {
 
 
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.POST)
-	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel GoodsModel, HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws IOException {
-
+	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel goodsModel, 
+			HttpServletRequest request, MultipartHttpServletRequest multipartRequest, BindingResult result) throws IOException {
+		ModelAndView mav = new ModelAndView();
+		
 		MultipartFile file = multipartRequest.getFile("file");
 		String oldfileName = request.getParameter("oldFile");
 
+		new GoodsValidator().validate(goodsModel, result);
+		if(result.hasErrors()) {
+			mav.addObject("goodsModel", goodsModel);
+			mav.setViewName("adGoodsWrite");
+			return mav;
+		}
+		
 		mav = new ModelAndView("redirect:adGoodsView.cat");
 
-		String content = GoodsModel.getGoods_content().replaceAll("\r\n", "<br />");
-		GoodsModel.setGoods_content(content);
+		String content = goodsModel.getGoods_content().replaceAll("\r\n", "<br />");
+		goodsModel.setGoods_content(content);
 
-		adminService.goodsModify(GoodsModel);
+		adminService.goodsModify(goodsModel);
 		if (file != null) {
-			GoodsModel = fileUploading(file, oldfileName, GoodsModel);
+			goodsModel = fileUploading(file, oldfileName, goodsModel);
 		}
 
-		mav.addObject("goods_num", GoodsModel.getGoods_num());
+		mav.addObject("goods_num", goodsModel.getGoods_num());
 		return mav;
 	}
 
