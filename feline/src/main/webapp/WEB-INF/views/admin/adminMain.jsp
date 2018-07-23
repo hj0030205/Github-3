@@ -230,7 +230,7 @@
 							</div>
 							<div class="col-sm-6 col-lg-3">
 								<div class="callout">
-									<strong class="h4">금일 도서 판매 순위</strong>
+									<strong class="h4">금일 상품 판매 순위</strong>
 								</div>
 								<hr class="mt-0">
 								<c:choose>
