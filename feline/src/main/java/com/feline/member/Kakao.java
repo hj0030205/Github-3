@@ -20,12 +20,12 @@ public class Kakao {
 		private static final String RestApiKey = "4791a43e3d2c10da96766e98f07c423b";
 
 		// redirect_uri
-		private static final String Redirect_URL = "http://localhost:8080/feline/member/kakaoCallback.cat";
+		private static final String Redirect_URL = "http://http://192.168.30.182:8080/feline/member/kakaoCallback.cat";
 
 		// HOST
 		private static final String keyHost = "https://kauth.kakao.com";
 		
-		// TODO : CODE ¹Þ±â
+		// TODO : CODE ï¿½Þ±ï¿½
 		/*
 		 * GET /oauth/authorize?client_id={app_key}&redirect_uri={redirect_uri}&
 		 * response_type=code HTTP/1.1 Host: kauth.kakao.com
@@ -39,7 +39,7 @@ public class Kakao {
 			return getcode;
 		}
 		
-		// TODO : »ç¿ëÀÚ ÅäÅ« ¹Þ±â
+		// TODO : ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å« ï¿½Þ±ï¿½
 		public static String getAccesToken(String authorize_code) {
 
 			/*
@@ -60,17 +60,17 @@ public class Kakao {
 			HttpURLConnection urlconn = null;
 			String returnresult = null;
 			try {
-				// 1.URL °´Ã¼ »ý¼º
+				// 1.URL ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 				URL url = new URL(accesstoken);
-				// 2.ÇØ´ç URL¿¡ URL.openConnection() ¸Þ¼­µå¸¦ ÅëÇØ¼­,
-				// HttpURLConnection Á¢¼Ó °´Ã¼¸¦ »ý¼ºÇÏ¿© url¿¡ Á¢¼ÓÇÕ´Ï´Ù.
+				// 2.ï¿½Ø´ï¿½ URLï¿½ï¿½ URL.openConnection() ï¿½Þ¼ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½Ø¼ï¿½,
+				// HttpURLConnection ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ urlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 				urlconn = (HttpURLConnection) url.openConnection();
-				// 3. url Á¢¼Ó ÈÄ http ¹æ½ÄÀ¸·Î ¿äÃ»ÇÏ±â À§ÇØ¼­´Â Ä«Ä«¿ÀÅåÀÌ ÁöÁ¤ÇÑ ¹æ½ÄÀ¸·Î ¿äÃ»ÇÑ´Ù.
+				// 3. url ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ http ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ Ä«Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½Ñ´ï¿½.
 				urlconn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-				// Ä«Ä«¿ÀÅå(Response) : Content-Type : application/json;charset=UTF-8
-				// 4.POST¹æ½ÄÀ¸·Î ¿äÃ»ÇÏ±â
+				// Ä«Ä«ï¿½ï¿½ï¿½ï¿½(Response) : Content-Type : application/json;charset=UTF-8
+				// 4.POSTï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½Ï±ï¿½
 				urlconn.setRequestMethod("POST");
-				// 5.¿äÃ»ÇÑ °ªÀ» ÀÐ¾î¿Ã°ÍÀÌ´Ù. true·Î ÁöÁ¤.
+				// 5.ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½Ã°ï¿½ï¿½Ì´ï¿½. trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 				urlconn.setDoOutput(true);
 				// 6.Connect
 				urlconn.connect();
@@ -88,30 +88,30 @@ public class Kakao {
 				returnresult = sb.toString();
 
 			} catch (MalformedURLException e) {
-				// URLÀÌ ¿Ã¹Ù¸£Áö ¾ÊÀ»¶§
+				// URLï¿½ï¿½ ï¿½Ã¹Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				e.printStackTrace();
 			} catch (IOException e) {
-				// ¿¬°áÀÌ ½ÇÆÐ ÇßÀ» °æ¿ì
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 				e.printStackTrace();
 			}
 			return returnresult;
 		}
 
-		// TODO :JSON µ¥ÀÌÅÍ °¡Á®¿À±â
+		// TODO :JSON ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		public static Map<String, String> JsonStringMap(String data) {
-			// 1. map¿¡ ´ã¾Æ¼­ ¸®ÅÏÇØÁÖ±â À§ÇØ¼­ map »ý¼º
+			// 1. mapï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ map ï¿½ï¿½ï¿½ï¿½
 			Map<String, String> map = new HashMap<String, String>();
 
-			// 2. ObjectMapper °´Ã¼ »ý¼º
-			// ObjectMapperÀÇ readValue()¸¦ ÅëÇØ¼­ Jsonµ¥ÀÌÅÍ¸¦ º¯È¯½ÃÄÑ ÁÙ °Í.
+			// 2. ObjectMapper ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+			// ObjectMapperï¿½ï¿½ readValue()ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ Jsonï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½.
 			ObjectMapper mapper = new ObjectMapper();
 
 			try {
-				// 3. ¹Þ¾Æ¿Â data¸¦ TypeReference¸¦ ÅëÇØ¼­ mapÀ¸·Î º¯È­½ÃÄÑÁØ µÚ¿¡
-				// mapper.readValue¸¦ ÅëÇØ¼­ map¿¡ ÀúÀå
+				// 3. ï¿½Þ¾Æ¿ï¿½ dataï¿½ï¿½ TypeReferenceï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ mapï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½
+				// mapper.readValueï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ mapï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				map = mapper.readValue(data, new TypeReference<HashMap<String, String>>() {
 				});
-				// 4. ¿¹¿ÜÃ³¸®
+				// 4. ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
 			} catch (JsonParseException e) {
 				e.printStackTrace();
 			} catch (JsonMappingException e) {
@@ -119,11 +119,11 @@ public class Kakao {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// 5.data¸¦ map¿¡´Ù°¡ ÀúÀåÀÌ ¿Ï·á µÇ¾úÀ¸¹Ç·Î map ¸®ÅÏ
+			// 5.dataï¿½ï¿½ mapï¿½ï¿½ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ map ï¿½ï¿½ï¿½ï¿½
 			return map;
 		}
 
-		// TODO : ¿äÃ»ÇÑ °ª ÀÐ¾î¿À±â
+		// TODO : ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½
 		public static String getAllList(String access_token) {
 			HttpURLConnection urlconn = null;
 			String returnresult = null;
