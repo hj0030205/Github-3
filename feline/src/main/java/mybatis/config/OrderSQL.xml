@@ -284,8 +284,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (select order_num, order_trade_num, order_trans_num, goods_num, 
 		order_goods_amount, order_goods_size,order_member_id,order_receive_name,order_receive_addr1,
 		order_receive_addr2,order_receive_phone,order_memo,order_trade_type,order_trade_date,
-		order_trade_payer,order_date,order_status,order_receive_zipcode, 
-		rownum r from feline_order where order_member_id=#{order_member_id} and status=1 order by order_date desc, order_num asc) where r=1 ]]>
+		order_trade_payer,order_date,order_status,order_receive_zipcode, rownum r from (select *
+		from feline_order where order_member_id=#{order_member_id} and status=1 order by order_num desc)) where r = 1 ]]>
 	</select>
 	 
 	 
