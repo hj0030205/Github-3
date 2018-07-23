@@ -20,7 +20,7 @@ public class Kakao {
 		private static final String RestApiKey = "4791a43e3d2c10da96766e98f07c423b";
 
 		// redirect_uri
-		private static final String Redirect_URL = "http://http://192.168.30.182:8080/feline/member/kakaoCallback.cat";
+		private static final String Redirect_URL = "http://192.168.30.182:8080/feline/member/kakaoCallback.cat";
 
 		// HOST
 		private static final String keyHost = "https://kauth.kakao.com";
