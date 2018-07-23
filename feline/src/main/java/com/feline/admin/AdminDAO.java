@@ -104,53 +104,53 @@ public interface AdminDAO {
 
 	Object orderModify(OrderModel OrderModel);
 	
-	/**********************���/ȯ��/��ȯ����*****************************/
-	//��Ҹ�� �̾ƿ���
+	/**********************취소/교환/환불*****************************/
+	//관리자쪽 고객들 주문취소 리스트
 	List<CancleModel> adOrderCancleList();
 	
-	//��ҵ� �ֹ� �� ���� �ҷ�����.
+	//주문취소 상세보기(주문내역)
 	OrderModel adOrderCancleView(int order_num);
 	
-	//�ֹ� ��� ���� ��������.
+	//주문취소 상세보기(취소 이유)
 	CancleModel adOrderCancleView2(int cancle_num);
 
-	//�ֹ� ��� ���� ��������2.
+	//주문취소 상세보기(주문내역2)
 	GoodsModel adOrderCancleView3(int goods_num);
 	
-	//ȯ�� ��� �̾ƿ���
+	//관리자쪽 고객들 주문환불 리스트
 	List<RefundModel> adOrderRefundList();
 	
-	//ȯ�ҵ� �ֹ� �� ���� �ҷ�����.
+	//주문환불 상세보기(주문내역)
 	OrderModel adOrderRefundView(int order_num);
 	
-	//�ֹ� ȯ�� ���� ��������.
+	//주문환불 상세보기(환불 이유)
 	RefundModel adOrderRefundView2(int trade_num);
 
-	//�ֹ� ȯ�� ���� ��������2.
+	//주문환불 상세보기(주문내역2)
 	GoodsModel adOrderRefundView3(int goods_num);
 	
-	//ȯ�� ����
+	//환불수락(관리자)
 	void adOrderRefundAgree(OrderModel orderModel, RefundModel refundModel);
 	
-	//ȯ�� ����
+	//환불거절(관리자)
 	void adOrderRefundRefuse(OrderModel orderModel,RefundModel refundModel);
 	
 	
-	//��ȯ ��� �̾ƿ���
+	//관리자쪽 고객들 주문교환 리스트
 	List<ChangeModel> adOrderChangeList();
 	
-	//��ȯ�� �ֹ� �� ���� �ҷ�����.
+	//주문교환 상세보기(주문내역)
 	OrderModel adOrderChangeView(int order_num);
 	
-	//�ֹ� ��ȯ ���� ��������.
+	//주문교환 상세보기(교환이유)
 	ChangeModel adOrderChangeView2(int change_num);
 
-	//�ֹ� ��ȯ ���� ��������2.
+	//주문교환 상세보기(주문내역2)
 	GoodsModel adOrderChangeView3(int goods_num);
 	
-	//��ȯ ����
+	//교환수락(관리자)
 	void adOrderChangeAgree(OrderModel orderModel,ChangeModel changeModel);
 	
-	//��ȯ ����
+	//교환거절(관리자)
 	void adOrderChangeRefuse(OrderModel orderModel,ChangeModel changeModel);
 }

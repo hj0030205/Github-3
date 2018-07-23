@@ -924,6 +924,7 @@ public class AdminController {
 	}
 
 	/*********************** 관리자 메인 페이지- 주문취소관리 ******************/
+	
 	@RequestMapping(value = "adOrderCancleList.cat")
 	public ModelAndView adOrderCancleList(HttpServletRequest request) {
 

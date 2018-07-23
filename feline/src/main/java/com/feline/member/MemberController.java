@@ -34,7 +34,7 @@ public class MemberController {
 	ModelAndView mav = new ModelAndView();
 	
 
-	//īī��α���
+	//카카오로그인
 	@RequestMapping(value="kakao.cat",method=RequestMethod.GET)
 	public String kakao() {
 		Kakao kakao = new Kakao();
@@ -423,7 +423,7 @@ public class MemberController {
 	public ModelAndView orderCancleList(HttpServletRequest request, HttpSession session) {
 
 		String member_id = (String) session.getAttribute("id").toString();
-		System.out.println(member_id);
+
 		List<OrderModel> orderCancleList = memberService.orderCancleList(member_id);
 		List<GoodsModel> goodsList = new ArrayList<GoodsModel>();
 		
