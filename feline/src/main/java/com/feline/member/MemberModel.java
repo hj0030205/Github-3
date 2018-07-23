@@ -89,5 +89,6 @@ public class MemberModel
 	public void setMember_status(int member_status) {
 		this.member_status = member_status;
 	}
-
+	
+	
 }
