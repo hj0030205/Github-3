@@ -191,10 +191,10 @@ select{
 												</td>
 												<td>${goodsList.goods_name}</td>
 												<td><fmt:formatNumber value="${goodsList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
-												<c:if test="${goodsList.goods_status eq 0}">
+												<c:if test="${goodsList.goods_status==0}">
 												<td><font color="red">판매종료</font></td>
 												</c:if>
-												<c:if test="${goodsList.goods_status eq 0}">
+												<c:if test="${goodsList.goods_status==1}">
 												<td><font color="blue">판매중</font></td>
 												</c:if>
 											</tr>

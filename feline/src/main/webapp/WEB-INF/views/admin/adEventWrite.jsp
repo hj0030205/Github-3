@@ -23,9 +23,9 @@ function goodsCategorySelect(goods_category) {
 					str += '<tr>';
 					str += '<td>' + "<input type='checkbox' id='selected[]' name='selected[]' value='" + result[i].goods_num + "' onclick='checkedValue(this.value)'>" + "</td>";
 					str += '<td>' + "<img src='/feline/resources/upload/images/"+ result[i].goods_image_savname + "'/></td><td>" + result[i].goods_name + '</td><td>' + result[i].goods_price + '</td>';
-					if(result[i].goods_status == 0) {
+ 					if(result[i].goods_status==0) {
 						str += '<td><font color="red">판매종료</font></td>'
-					} else if(result[i].goods_status == 1) {
+					} else if(result[i].goods_status==1) {
 						str += '<td><font color="blue">판매중</font></td>'
 					}
 					str += '</tr>';
@@ -225,7 +225,7 @@ select{
 									<thead>
 									<tbody id="goodsList">
 										<tr>
-											<td colspan="4">카테고리를 선택해주세요.</td>
+											<td colspan="5">카테고리를 선택해주세요.</td>
 										</tr>
 									</tbody>
 								</table>						
