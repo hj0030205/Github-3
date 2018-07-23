@@ -720,6 +720,7 @@ public class AdminController {
 				sObject.put("goods_name", goodsList.get(i).getGoods_name());
 				sObject.put("goods_price", goodsList.get(i).getGoods_price());
 				sObject.put("goods_num", goodsList.get(i).getGoods_num());
+				sObject.put("goods_status", goodsList.get(i).getGoods_status());
 				jsonArray.add(i, sObject);
 
 			}
