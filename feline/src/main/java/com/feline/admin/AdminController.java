@@ -808,10 +808,14 @@ public class AdminController {
 		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
+			
+			logger.info("goods_image_savname : " + goodsModel.getGoods_image_savname());
+			
 			goodsList.add(j, goodsModel);
 
-			goodsModel1.setGoods_category(goodsList.get(0).getGoods_category());
 		}
+		
+		goodsModel1 = eventService.selectGoods(goods_num_i[0]);
 
 		mav.addObject("eventModel", eventModel);
 		mav.addObject("goodsList", goodsList);
@@ -867,10 +871,8 @@ public class AdminController {
 		EventModel eventModel = new EventModel();
 
 		String goods_num = request.getParameter("goods_num");
-
-		if (goods_num.substring(1, 1) == ",") {
-			goods_num = goods_num.substring(1, goods_num.length());
-		}
+		
+		goods_num = goods_num.substring(1, goods_num.length());
 
 		String start_date_s = request.getParameter("start_date");
 		Date start_date = new SimpleDateFormat("yyyy-MM-dd").parse(start_date_s);
