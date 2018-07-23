@@ -9,32 +9,6 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 
-function check()
-{
-	
-	if(!document.memberModel.member_phone.value)
-	{
-		alert("전화번호를 입력하세요.");
-		document.join.member_phone.focus();
-		return false;
-	}
-	
-	if(!document.memberModel.member_zipcode.value)
-	{
-		alert("우편번호 찾기를 통해 우편번호와 기본주소를 입력하세요.");
-		document.memberModel.member_zipcode.focus();
-		return false;
-	}
-	
-	if(!document.memberModel.member_address2.value)
-	{
-		alert("상세주소를 입력하세요.");
-		document.memberModel.member_address2.focus();
-		return false;
-	}
-	
-}
-
 	function sample4_execDaumPostcode() {
 		new daum.Postcode(
 				{
@@ -75,6 +49,28 @@ function check()
 </script>
 <script>
 	function updateCheck() {
+		
+		if(!document.memberModel.member_phone.value)
+		{
+			alert("전화번호를 입력하세요.");
+			document.join.member_phone.focus();
+			return false;
+		}
+		
+		if(!document.memberModel.member_zipcode.value)
+		{
+			alert("우편번호 찾기를 통해 우편번호와 기본주소를 입력하세요.");
+			document.memberModel.member_zipcode.focus();
+			return false;
+		}
+		
+		if(!document.memberModel.member_address2.value)
+		{
+			alert("상세주소를 입력하세요.");
+			document.memberModel.member_address2.focus();
+			return false;
+		}
+		
 		if (confirm("정말 수정하시겠습니까?")) {
 			document.memberModel.submit();
 		} else {
