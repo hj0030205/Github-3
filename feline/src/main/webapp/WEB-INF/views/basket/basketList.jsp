@@ -92,6 +92,7 @@ function qty_value_change(id,qty,no,evt)
 
 						<h1>장바구니</h1>
 						<!-- <p class="text-muted">You currently have 3 item(s) in your cart.</p> -->
+						<form action="/feline/order/goodsSettle.cat" name="goodsSettle" id="goodsSettle" method="post">
 						<div class="table-responsive">
 							<table class="table">
 								<thead>
@@ -163,12 +164,12 @@ function qty_value_change(id,qty,no,evt)
 									class="fa fa-chevron-left"></i>쇼핑 계속하기</a>
 							</div>
 							<div class="pull-right">
-								<button type="button" class="btn btn-primary"
-									onclick="javascript:location.href='/feline/order/goodsSettle.cat'">
+								<button type="submit" class="btn btn-primary">
 									주문하기<i class="fa fa-chevron-right"></i>
 								</button>
 							</div>
 						</div>
+						</form>
 
 					</div>
 					<!-- /.box -->

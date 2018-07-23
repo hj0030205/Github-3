@@ -43,6 +43,7 @@ import com.feline.member.MemberModel;
 import com.feline.order.OrderModel;
 import com.feline.util.FileUpload;
 import com.feline.util.Paging;
+import com.feline.validator.GoodsValidator;
 
 @Controller
 @RequestMapping("/admin")
@@ -340,6 +341,7 @@ public class AdminController {
 		keyword = request.getParameter("searchKeyword");
 		String date_min = request.getParameter("date_min");
 		String date_max = request.getParameter("date_max");
+		int goods_status = 1;
 		searchNum=0;
 		int price_min = 0;
 		int price_max = 0;
@@ -364,14 +366,20 @@ public class AdminController {
 		if(request.getParameter("price_max")!=null && !request.getParameter("price_max").trim().isEmpty()) {
 			price_max = Integer.parseInt(request.getParameter("price_max"));
 		}
+		if(request.getParameter("goods_status")!=null) {
+			goods_status=Integer.parseInt(request.getParameter("goods_status"));
+		}
+		
+		
 		map.put("date_min", date_min);
 		map.put("date_max", date_max);
 		map.put("searchNum", searchNum);
 		map.put("searchKeyword", keyword);
 		map.put("price_min", price_min);
 		map.put("price_max", price_max);
+		map.put("goods_status",goods_status);
 		
-		if (keyword == null && searchNum==0 && date_min==null && date_max==null && price_min==0 &&price_max==0) {
+		if (keyword == null && searchNum==0 && date_min==null && date_max==null && price_min==0 &&price_max==0 || goods_status==1) {
 			adGoodsList = adminService.goodsList();
 		}else {
 			adGoodsList = adminService.goodsSearch(map);
@@ -414,31 +422,39 @@ public class AdminController {
 
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.GET)
 	public ModelAndView adGoodsWriteForm() {
-
-		mav.addObject("goodsModel", new GoodsModel());
+		mav.addObject("goodsModel",new GoodsModel());
 		mav.setViewName("adGoodsWrite");
 		return mav;
 	}
 
 
 	@RequestMapping(value = "adGoodsWrite.cat", method = RequestMethod.POST)
-	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel GoodsModel, MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpSession session) throws IOException {
+	public ModelAndView adGoodsWrite(@ModelAttribute("goodsModel") GoodsModel goodsModel, MultipartHttpServletRequest multipartRequest, 
+			HttpServletRequest request, HttpSession session, BindingResult result) throws IOException {
 
+		ModelAndView mav = new ModelAndView();
+		
+		new GoodsValidator().validate(goodsModel, result);
+		if(result.hasErrors()) {
+			mav.setViewName("adGoodsWrite");
+			return mav;
+		}
+		
 		MultipartFile file = multipartRequest.getFile("file");
 		Calendar today = Calendar.getInstance();
 		String oldfileName = request.getParameter("oldFile");
 
-		String content = GoodsModel.getGoods_content().replaceAll("\r\n", "<br />");
-		GoodsModel.setGoods_content(content);
-		GoodsModel.setGoods_date(today.getTime());
+		String content = goodsModel.getGoods_content().replaceAll("\r\n", "<br />");
+		goodsModel.setGoods_content(content);
+		goodsModel.setGoods_date(today.getTime());
 
-		adminService.insertGoods(GoodsModel);
+		adminService.insertGoods(goodsModel);
 
 		if (file != null) {
-			GoodsModel = fileUploading(file, oldfileName, GoodsModel);
+			goodsModel = fileUploading(file, oldfileName, goodsModel);
 		}
 
-		mav.addObject("goodsModel", GoodsModel);
+		mav.addObject("goodsModel", goodsModel);
 		mav.setViewName("redirect:adGoodsList.cat");
 
 		return mav;
@@ -476,22 +492,31 @@ public class AdminController {
 
 
 	@RequestMapping(value = "adGoodsModify.cat", method = RequestMethod.POST)
-	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel GoodsModel, HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws IOException {
-
+	public ModelAndView adGoodsModify(@ModelAttribute("goodsModel") GoodsModel goodsModel, 
+			HttpServletRequest request, MultipartHttpServletRequest multipartRequest, BindingResult result) throws IOException {
+		ModelAndView mav = new ModelAndView();
+		
 		MultipartFile file = multipartRequest.getFile("file");
 		String oldfileName = request.getParameter("oldFile");
 
+		new GoodsValidator().validate(goodsModel, result);
+		if(result.hasErrors()) {
+			mav.addObject("goodsModel", goodsModel);
+			mav.setViewName("adGoodsWrite");
+			return mav;
+		}
+		
 		mav = new ModelAndView("redirect:adGoodsView.cat");
 
-		String content = GoodsModel.getGoods_content().replaceAll("\r\n", "<br />");
-		GoodsModel.setGoods_content(content);
+		String content = goodsModel.getGoods_content().replaceAll("\r\n", "<br />");
+		goodsModel.setGoods_content(content);
 
-		adminService.goodsModify(GoodsModel);
+		adminService.goodsModify(goodsModel);
 		if (file != null) {
-			GoodsModel = fileUploading(file, oldfileName, GoodsModel);
+			goodsModel = fileUploading(file, oldfileName, goodsModel);
 		}
 
-		mav.addObject("goods_num", GoodsModel.getGoods_num());
+		mav.addObject("goods_num", goodsModel.getGoods_num());
 		return mav;
 	}
 
@@ -695,6 +720,7 @@ public class AdminController {
 				sObject.put("goods_name", goodsList.get(i).getGoods_name());
 				sObject.put("goods_price", goodsList.get(i).getGoods_price());
 				sObject.put("goods_num", goodsList.get(i).getGoods_num());
+				sObject.put("goods_status", goodsList.get(i).getGoods_status());
 				jsonArray.add(i, sObject);
 
 			}
@@ -790,10 +816,14 @@ public class AdminController {
 		for (int j = 0; j < goods_num_i.length; j++) {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
+			
+			logger.info("goods_image_savname : " + goodsModel.getGoods_image_savname());
+			
 			goodsList.add(j, goodsModel);
 
-			goodsModel1.setGoods_category(goodsList.get(0).getGoods_category());
 		}
+		
+		goodsModel1 = eventService.selectGoods(goods_num_i[0]);
 
 		mav.addObject("eventModel", eventModel);
 		mav.addObject("goodsList", goodsList);
@@ -849,10 +879,8 @@ public class AdminController {
 		EventModel eventModel = new EventModel();
 
 		String goods_num = request.getParameter("goods_num");
-
-		if (goods_num.substring(1, 1) == ",") {
-			goods_num = goods_num.substring(1, goods_num.length());
-		}
+		
+		goods_num = goods_num.substring(1, goods_num.length());
 
 		String start_date_s = request.getParameter("start_date");
 		Date start_date = new SimpleDateFormat("yyyy-MM-dd").parse(start_date_s);
@@ -1181,7 +1209,7 @@ public class AdminController {
 		goNew.createRows(listNew.size());
 
 		for (int i = 0; i < listNew.size(); i++) {
-			goNew.addCell(i, listNew.get(i).getKey() + "(number)");
+			goNew.addCell(i, listNew.get(i).getKey() + "일");
 			goNew.addCell(i, listNew.get(i).getValue());
 		}
 
@@ -1197,7 +1225,7 @@ public class AdminController {
 		goAll.createRows(listAll.size());
 
 		for (int i = 0; i < listAll.size(); i++) {
-			goAll.addCell(i, listAll.get(i).getKey() + "(number)");
+			goAll.addCell(i, listAll.get(i).getKey() + "일");
 			goAll.addCell(i, listAll.get(i).getValue());
 		}
 

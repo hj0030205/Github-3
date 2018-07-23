@@ -314,11 +314,6 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin/adOrderChangeView.jsp"></put-attribute>
 	</definition>	
 	
-
-  <!-- 관리자 이벤트 관리 -->
-	<definition name="adEventWrite" extends="main">
-		<put-attribute name="body" value="/WEB-INF/views/admin/adEventWrite.jsp" />
-	</definition>
 	
 	<!-- 위시리스트 -->
 	<definition name="wishList" extends="main">

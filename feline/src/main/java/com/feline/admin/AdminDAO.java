@@ -67,43 +67,35 @@ public interface AdminDAO {
 
 	Object deleteMember(String member_id);
 
-	/*********************** ��ǰ ���� *************************/
+	/*********************** 상품 관리 *************************/
 
-	// ��ǰ���
 	List<GoodsModel> goodsList();
 
-	// ��ǰ �� ��
 	GoodsModel goodsView(int goods_num);
 
-	// �˻�
 	List<GoodsModel> goodsSearch(Map<String,Object> map);
 	
-	// ��ǰ���
 	Object insertGoods(GoodsModel goodsModel);
 
-	// �ۼ���
 	int goodsModify(GoodsModel goodsModel);
 
-	// ������ �Խù� ��ȣ ��ȯ
 	int goodsLastNum();
 
-	// ÷������ �߰� �� ����
 	int updateFile(GoodsModel goodsModel);
 
-	// �ۻ���
 	int goodsDelete(int goods_num);
 
-	/*********************** �ֹ� ���� *************************/
+	/*********************** 주문 관리 *************************/
 
 	List<OrderModel> orderAllList();
 
-	// �ֹ��󼼺��� �̾ƿ���
 	OrderModel OrderView(int order_num);
 
 	List<OrderModel> searchOrder(Map<String, Object> map);
 
 	Object orderModify(OrderModel OrderModel);
 	
+
 	/**********************취소/교환/환불*****************************/
 	//관리자쪽 고객들 주문취소 리스트
 	List<CancleModel> adOrderCancleList();
@@ -151,6 +143,5 @@ public interface AdminDAO {
 	//교환수락(관리자)
 	void adOrderChangeAgree(OrderModel orderModel,ChangeModel changeModel);
 	
-	//교환거절(관리자)
 	void adOrderChangeRefuse(OrderModel orderModel,ChangeModel changeModel);
 }

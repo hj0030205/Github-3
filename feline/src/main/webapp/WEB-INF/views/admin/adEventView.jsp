@@ -180,6 +180,7 @@ select{
 											<th>상품이미지</th>
 											<th>상품명</th>
 											<th>상품가격</th>
+											<th>판매여부</th>
 										</tr>
 									<thead>
 									<tbody id="goodsList">
@@ -190,6 +191,12 @@ select{
 												</td>
 												<td>${goodsList.goods_name}</td>
 												<td><fmt:formatNumber value="${goodsList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
+												<c:if test="${goodsList.goods_status==0}">
+												<td><font color="red">판매종료</font></td>
+												</c:if>
+												<c:if test="${goodsList.goods_status==1}">
+												<td><font color="blue">판매중</font></td>
+												</c:if>
 											</tr>
 										</c:forEach>
 									</tbody>

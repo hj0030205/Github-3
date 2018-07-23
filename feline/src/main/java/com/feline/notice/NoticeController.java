@@ -156,7 +156,7 @@ public class NoticeController {
 		noticeService.noticeWrite(noticeModel);
 
 		if (file != null) {
-			noticeModel=fileUploading(file, oldfileName, noticeModel);
+			noticeModel=fileUploading(request, file, oldfileName, noticeModel);
 		}
 
 		mav.addObject("noticeModel", noticeModel);
@@ -214,7 +214,7 @@ public class NoticeController {
 
 		noticeService.noticeModify(noticeModel);
 		if (file != null) {
-			noticeModel=fileUploading(file, oldfileName, noticeModel);
+			noticeModel=fileUploading(request, file, oldfileName, noticeModel);
 		}
 
 		mav.addObject("no", notice_num);
@@ -222,9 +222,9 @@ public class NoticeController {
 		return mav;
 	}
 
-	private NoticeModel fileUploading(MultipartFile file, String oldfileName, NoticeModel noticeModel) throws IOException {
+	private NoticeModel fileUploading(HttpServletRequest request,MultipartFile file, String oldfileName, NoticeModel noticeModel) throws IOException {
 
-		String uploadPath = "E:\\Github-3\\feline\\src\\main\\webapp\\resources\\upload\\images";
+		String uploadPath = request.getSession().getServletContext().getRealPath("/")+File.separator+"resources/upload/images";
 		String fileRealName = file.getOriginalFilename();
 		String fileName;
 		int lastNo;

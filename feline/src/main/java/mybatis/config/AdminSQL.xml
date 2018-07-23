@@ -174,10 +174,10 @@
 	
 	<!-- 최근 7일 날짜별 판매량 -->
 	<select id="weekSales" resultType="ChartModel">
-		<![CDATA[select to_char(o.order_date,'yy-mm') key, trunc(sum((o.order_goods_amount*g.goods_price)/1000),2) price
+		<![CDATA[select to_char(o.order_date,'mm-dd') key, trunc(sum((o.order_goods_amount*g.goods_price)/1000),2) price
 		from feline_order o, feline_goods g 
 		where o.goods_num=g.goods_num and o.order_date<=trunc(sysdate)+1 and o.order_date>=trunc(sysdate)-6 
-        group by to_char(order_date,'yy-mm') 
+        group by to_char(order_date,'mm-dd') 
         order by key]]>
 	</select>
 	

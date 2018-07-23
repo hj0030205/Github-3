@@ -78,6 +78,8 @@
             				<li><a class="cell">${sessionScope.adminId }님 환영합니다.</a>
             				</li>
             				<li><a href="/feline/admin/main.cat">관리자페이지</a></li>
+            				<li><a href="/feline/member/logout.cat">로그아웃</a>
+	            			</li>
             		</c:when>
             		<c:otherwise>
             			<ul class="menu">

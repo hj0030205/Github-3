@@ -63,7 +63,15 @@ function deleteCheck(goods_num) {
 											<b>등록일 : </b> <fmt:formatDate value="${goodsModel.goods_date}" pattern="yyyy.MM.dd HH:MM:SS"/> 
 										</div>
 										<div class="col-md-4 fg">
-											<b>품절 여부 :</b> 
+											<b>품절 여부 :</b>
+											<c:choose> 
+											<c:when test="${goodsModel.goods_status==0}">
+												<font color="red">품절</font>
+											</c:when>
+											<c:otherwise>
+												<font color="blue">판매중</font>
+											</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>

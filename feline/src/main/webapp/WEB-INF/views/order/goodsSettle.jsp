@@ -146,16 +146,12 @@ function check()
 														<a href="/feline/goods/goodsView.cat?goods_num=${basketList.goods_num}">
 															${basketList.goods_name}
 														</a>
-														<input type="hidden" name="goods_num" value="${basketList.goods_num}" />
-														<input type="hidden" name="basket_num" value="${basketList.basket_num}" />
 													</td>
 													<td>
 														${basketList.basket_goods_size}
-														<input type="hidden" name="basket_goods_size" value="${basketList.basket_goods_size}" />
 													</td>
 													<td>
 														${basketList.basket_goods_amount}
-														<input type="hidden" name="basket_goods_amount" value="${basketList.basket_goods_amount}" />
 													</td>
 													<td>
 														<fmt:formatNumber value="${basketList.goods_price}" type="number" pattern="#,###"/>&nbsp;원
