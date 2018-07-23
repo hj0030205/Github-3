@@ -1198,7 +1198,7 @@ public class AdminController {
 		goNew.createRows(listNew.size());
 
 		for (int i = 0; i < listNew.size(); i++) {
-			goNew.addCell(i, listNew.get(i).getKey() + "(number)");
+			goNew.addCell(i, listNew.get(i).getKey() + "일");
 			goNew.addCell(i, listNew.get(i).getValue());
 		}
 
@@ -1214,7 +1214,7 @@ public class AdminController {
 		goAll.createRows(listAll.size());
 
 		for (int i = 0; i < listAll.size(); i++) {
-			goAll.addCell(i, listAll.get(i).getKey() + "(number)");
+			goAll.addCell(i, listAll.get(i).getKey() + "일");
 			goAll.addCell(i, listAll.get(i).getValue());
 		}
 
