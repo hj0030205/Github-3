@@ -195,10 +195,20 @@ function check()
 									</div>
 									<div class="col-sm-4">
 											<div class="form-group">
-											<label for="member_phone">전화번호</label> <input type="text"
+											<label for="member_phone">전화번호</label> 
+											<c:choose>
+											<c:when test="${memberModel.member_phone ne null or sessionScope.n_phone ne null}">
+											<input type="text"
 												class="form-control" id="member_phone" name="member_phone"
 												value="${memberModel.member_phone}"
 												readonly="readonly">
+											</c:when>
+											<c:otherwise>
+												<input type="text"
+												class="form-control" id="member_phone" name="member_phone"
+												value="">
+											</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 									<div class="col-sm-4">							
