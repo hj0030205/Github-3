@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="goods_image_savname" column="goods_image_savname" />
 		<result property="goods_hit" column="goods_hit" />
 		<result property="goods_date" column="goods_date" />
+		<result property="goods_status" column="goods_status"/>
 
 	</resultMap>
 
@@ -89,6 +90,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="date_min!=null"> <![CDATA[AND GOODS_DATE >= #{date_min}]]></if>
 			<if test="date_max!=null"> <![CDATA[AND GOODS_DATE <= #{date_max}]]></if>
 			
+			<if test="goods_status!=2">AND GOODS_STATUS=${goods_status}</if>
+			
 		</where>
 	</select>
 
@@ -121,10 +124,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- delete 쿼리문 정의 -->
 	<!-- 상품 삭제 -->
-	<delete id="deleteGoods" parameterType="Integer">
-		delete from feline_goods 
+	<update id="deleteGoods" parameterType="Integer">
+		update feline_goods set goods_status=0  
 		<include refid="where-num" />
-	</delete>
+	</update>
 
 <!--  ////////////////관리자 주문취소,교환,환불 목록 상세보기 ////////////////////////////////////////// -->
 

@@ -15,6 +15,7 @@ public class GoodsModel {
 	private String goods_image_savname;
 	private int goods_hit;
 	private Date goods_date;
+	private int goods_status;
 	
 	public int getGoods_num() {
 		return goods_num;
@@ -82,6 +83,13 @@ public class GoodsModel {
 	public void setGoods_date(Date goods_date) {
 		this.goods_date = goods_date;
 	}
+	public int getGoods_status() {
+		return goods_status;
+	}
+	public void setGoods_status(int goods_status) {
+		this.goods_status = goods_status;
+	}
+	
 	
 	
 }

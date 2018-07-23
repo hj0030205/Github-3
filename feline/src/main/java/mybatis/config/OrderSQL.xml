@@ -117,7 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="date_min!=null"> <![CDATA[AND ORDER_DATE >= #{date_min}]]></if>
 			<if test="date_max!=null"> <![CDATA[AND ORDER_DATE <= #{date_max}]]></if>
 			
-			<if test="status!=1">AND STATUS=#{status}</if>
+			<if test="status!=2">AND STATUS=#{status}</if>
 		</where>
 	</select>
 	

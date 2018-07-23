@@ -67,90 +67,65 @@ public interface AdminDAO {
 
 	Object deleteMember(String member_id);
 
-	/*********************** ��ǰ ���� *************************/
+	/*********************** 상품 관리 *************************/
 
-	// ��ǰ���
 	List<GoodsModel> goodsList();
 
-	// ��ǰ �� ��
 	GoodsModel goodsView(int goods_num);
 
-	// �˻�
 	List<GoodsModel> goodsSearch(Map<String,Object> map);
 	
-	// ��ǰ���
 	Object insertGoods(GoodsModel goodsModel);
 
-	// �ۼ���
 	int goodsModify(GoodsModel goodsModel);
 
-	// ������ �Խù� ��ȣ ��ȯ
 	int goodsLastNum();
 
-	// ÷������ �߰� �� ����
 	int updateFile(GoodsModel goodsModel);
 
-	// �ۻ���
 	int goodsDelete(int goods_num);
 
-	/*********************** �ֹ� ���� *************************/
+	/*********************** 주문 관리 *************************/
 
 	List<OrderModel> orderAllList();
 
-	// �ֹ��󼼺��� �̾ƿ���
 	OrderModel OrderView(int order_num);
 
 	List<OrderModel> searchOrder(Map<String, Object> map);
 
 	Object orderModify(OrderModel OrderModel);
 	
-	/**********************���/ȯ��/��ȯ����*****************************/
-	//��Ҹ�� �̾ƿ���
+	/********************** 주문취소,환불,교환 관리 *****************************/
 	List<CancleModel> adOrderCancleList();
 	
-	//��ҵ� �ֹ� �� ���� �ҷ�����.
 	OrderModel adOrderCancleView(int order_num);
 	
-	//�ֹ� ��� ���� ��������.
 	CancleModel adOrderCancleView2(int cancle_num);
 
-	//�ֹ� ��� ���� ��������2.
 	GoodsModel adOrderCancleView3(int goods_num);
 	
-	//ȯ�� ��� �̾ƿ���
 	List<RefundModel> adOrderRefundList();
 	
-	//ȯ�ҵ� �ֹ� �� ���� �ҷ�����.
 	OrderModel adOrderRefundView(int order_num);
 	
-	//�ֹ� ȯ�� ���� ��������.
 	RefundModel adOrderRefundView2(int trade_num);
 
-	//�ֹ� ȯ�� ���� ��������2.
 	GoodsModel adOrderRefundView3(int goods_num);
 	
-	//ȯ�� ����
 	void adOrderRefundAgree(OrderModel orderModel, RefundModel refundModel);
 	
-	//ȯ�� ����
 	void adOrderRefundRefuse(OrderModel orderModel,RefundModel refundModel);
 	
 	
-	//��ȯ ��� �̾ƿ���
 	List<ChangeModel> adOrderChangeList();
 	
-	//��ȯ�� �ֹ� �� ���� �ҷ�����.
 	OrderModel adOrderChangeView(int order_num);
 	
-	//�ֹ� ��ȯ ���� ��������.
 	ChangeModel adOrderChangeView2(int change_num);
-
-	//�ֹ� ��ȯ ���� ��������2.
+	
 	GoodsModel adOrderChangeView3(int goods_num);
 	
-	//��ȯ ����
 	void adOrderChangeAgree(OrderModel orderModel,ChangeModel changeModel);
 	
-	//��ȯ ����
 	void adOrderChangeRefuse(OrderModel orderModel,ChangeModel changeModel);
 }

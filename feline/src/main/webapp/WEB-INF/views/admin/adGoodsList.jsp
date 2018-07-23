@@ -59,7 +59,7 @@ var page=${currentPage};
 								</tr>
 								<tr>
 									<th>항목별 검색 :</th>
-									<td colspan=3>
+									<td>
 										<div class="input-group">
 											<select name="searchNum" class="form-control col-md-3">
 												<option value="0">상품명</option>
@@ -68,6 +68,12 @@ var page=${currentPage};
 											<input class="form-control col-md-9" type="text" name="searchKeyword">
 											<button class="fa fa-search" style="padding-left: 10px;"></button>
 										</div>
+									</td>
+									<th> 상품 상태 : </th>
+									<td>
+										<input type="radio" name="goods_status" checked="checked" value="2">전체 &nbsp;
+										<input type="radio" name="goods_status" value="0">품절됨&nbsp;
+										<input type="radio" name="goods_status" value="1">판매중
 									</td>
 								</tr>
 							</table>
@@ -83,6 +89,7 @@ var page=${currentPage};
 									<th>카테고리</th>
 									<th>수량</th>
 									<th>등록일</th>
+									<th>품절여부</th>
 									<th>수정 / 삭제</th>
 								</tr>
 							</thead>
@@ -111,6 +118,15 @@ var page=${currentPage};
 												<td>${list.goods_category}</td>
 												<td>${list.goods_amount}</td>
 												<td><fmt:formatDate value="${list.goods_date}" pattern="yyyy.MM.dd"/></td>
+												<td>
+												<c:choose>
+												<c:when test="${list.goods_status==0}">
+														<font color="red">품절</font>
+													</c:when>
+													<c:otherwise>
+														<font color="blue">판매중</font>
+													</c:otherwise>
+													</c:choose></td>
 												<td>
 													<a class="mdi mdi-grease-pencil" title="Modify"
 														href="javascript:update('${list.goods_num}')"></a> &nbsp; 

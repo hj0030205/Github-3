@@ -341,6 +341,7 @@ public class AdminController {
 		keyword = request.getParameter("searchKeyword");
 		String date_min = request.getParameter("date_min");
 		String date_max = request.getParameter("date_max");
+		int goods_status = 1;
 		searchNum=0;
 		int price_min = 0;
 		int price_max = 0;
@@ -365,14 +366,20 @@ public class AdminController {
 		if(request.getParameter("price_max")!=null && !request.getParameter("price_max").trim().isEmpty()) {
 			price_max = Integer.parseInt(request.getParameter("price_max"));
 		}
+		if(request.getParameter("goods_status")!=null) {
+			goods_status=Integer.parseInt(request.getParameter("goods_status"));
+		}
+		
+		
 		map.put("date_min", date_min);
 		map.put("date_max", date_max);
 		map.put("searchNum", searchNum);
 		map.put("searchKeyword", keyword);
 		map.put("price_min", price_min);
 		map.put("price_max", price_max);
+		map.put("goods_status",goods_status);
 		
-		if (keyword == null && searchNum==0 && date_min==null && date_max==null && price_min==0 &&price_max==0) {
+		if (keyword == null && searchNum==0 && date_min==null && date_max==null && price_min==0 &&price_max==0 || goods_status==1) {
 			adGoodsList = adminService.goodsList();
 		}else {
 			adGoodsList = adminService.goodsSearch(map);
