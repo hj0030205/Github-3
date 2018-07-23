@@ -42,8 +42,9 @@ $(function() {
 									</td>
 									<th>주문 상태 : </th>
 									<td>
-										<input type="radio" name="status" checked="checked" value="1">전체 &nbsp;
+										<input type="radio" name="status" checked="checked" value="2">전체 &nbsp;
 										<input type="radio" name="status" value="0">취소됨 &nbsp;
+										<input type="radio" name="status" value="1">주문됨
 									</td>
 								</tr>
 								<tr>
