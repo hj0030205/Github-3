@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -43,11 +43,9 @@
 
 </head>
 <body>
-	<spring:hasBindErrors name="memberModel" />
 	<div class="all">
 		<div class="content">
 			<div class="container">
-
 				<div class="col-md-12">
 					<ul class="breadcrumb">
 						<li><a href="main.cat">메인</a></li>
@@ -64,8 +62,6 @@
 					</center>
 				</div>
 				<div class="container">
-
-
 					<div class="col-md-12">
 						<div class="box">
 
@@ -74,9 +70,8 @@
 							</center>
 
 							<div class="Join">
-
 								<textarea class="checking1"
-									style="width: 100%; margin-left: 10px" rows="10"
+								style="width: 100%; margin-left: 10px" rows="10"
 									readonly="readonly">
 	인터넷 쇼핑몰 『FELINE 쇼핑몰』회원 약관
 
@@ -289,25 +284,22 @@
 ① “몰”과 이용자 간에 발생한 전자상거래 분쟁에 관한 소송은 제소 당시의 이용자의 주소에 의하고, 주소가 없는 경우에는 거소를 관할하는 지방법원의 전속관할로 합니다. 다만, 제소 당시 이용자의 주소 또는 거소가 분명하지 않거나 외국 거주자의 경우에는 민사소송법상의 관할법원에 제기합니다.
 ② “몰”과 이용자 간에 제기된 전자상거래 소송에는 한국법을 적용합니다.
 본 약관은 2018년5월04일부터 적용됩니다.
-		</textarea>
-
+								</textarea>
+								</div>
+								<hr>
 							</div>
-
-							<hr>
 						</div>
-					</div>
-
-					<div class="col-md-12">
-						<div class="box">
-
-							<center>
+	
+						<div class="col-md-12">
+							<div class="box">
+	
+								<center>
 								<h2>개인정보처리 약관</h2>
 							</center>
 
 							<div class="Join">
-
 								<textarea class="checking1"
-									style="width: 100%; margin-left: 10px" rows="10"
+								style="width: 100%; margin-left: 10px" rows="10"
 									readonly="readonly">
  FELINE 개인정보 처리방침
 
@@ -461,17 +453,14 @@
   ② 이전의 개인정보 처리방침은 아래에서 확인하실 수 있습니다. 
      - 2018. 5. 4 ~ 2018. 5. 4 적용   (클릭) 
 
-		</textarea>
-
+								</textarea>
+								</div>
+								<hr>
 							</div>
-
-							<hr>
 						</div>
-					</div>
-					<form name="joincheck" method="post" onsubmit="return check()">
+						<form name="joincheck" method="post" onsubmit="return check()">
 						<div class="col-md-12">
 							<div class="box">
-
 								<div class="Join">
 									<div class="inner">
 										<!-- 약관 동의 체크 부분 -->
@@ -485,7 +474,6 @@
 								</div>
 							</div>
 						</div>
-
 						<!-- 이메일 입력 부분 -->
 
 						<div class="col-md-12">

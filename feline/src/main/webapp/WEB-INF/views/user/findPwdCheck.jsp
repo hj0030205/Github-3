@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -64,6 +65,7 @@
 	}
 </script>
 <body bgcolor="#f5f5f5">
+	<spring:hasBindErrors name="memberModel" />
 	<div id="all">
 		<div id="content">
 			<div class="container">
@@ -81,7 +83,7 @@
 							</div>
 						</div>
 					</c:when>
-					<c:otherwise>
+					<c:when test="${checkNum eq 0}">
 						<%-- 만약 1이라면 찾은 PW를 표시한다. --%>
 						<div class="rTable" width="100%" border=0>
 							<div class="form-group" align="center">
@@ -99,6 +101,25 @@
 										이메일 : <input type="text" class="form-control" name="member_email" />
 										<br /> 아이디 : <input type="text" class="form-control" name="member_id" />
 										<br />
+									</div>
+									<div class="form-group" align="center">
+										<button type="submit" class="btn btn-primary">비밀번호 찾기</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="box">
+							<form action="findPwdEx.cat" name="checkForm">
+								<div class="rTable" width="100%" border=0>
+									<div class="form-group" align="left">
+										이름 : <input type="text" class="form-control" name="member_name" />
+										<font color="red"><form:errors path="memberModel.member_name" /></font><br/><br/>
+										이메일 : <input type="text" class="form-control" name="member_email" />
+										<font color="red"><form:errors path="memberModel.member_email" /></font><br/><br/>
+										아이디 : <input type="text" class="form-control" name="member_id" />
+										<font color="red"><form:errors path="memberModel.member_id" /></font>
 									</div>
 									<div class="form-group" align="center">
 										<button type="submit" class="btn btn-primary">비밀번호 찾기</button>

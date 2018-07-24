@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +28,6 @@
 </script>
 </head>
 <body>
-<spring:hasBindErrors name="memberModel" />
 <div id="all">
 	<div id="content">
 		<div class="container">
@@ -48,12 +46,10 @@
 								<div class="form-group">
 									<label for="name"><font size="2">이름:</font></label>
 									<input type="text" class="form-control" name="member_name"/>
-									<font color="red"><form:errors path="memberModel.member_name" /></font>
 								</div>
 								<div class="form-group">
 									<label for="name"><font size="2">이메일:</font></label>
 									<input type="text" class="form-control" name="member_email"/>
-									<font color="red"><form:errors path="memberModel.member_email" /></font>
 								</div>
 							</div>
 							<br>

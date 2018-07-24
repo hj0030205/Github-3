@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -57,11 +58,12 @@ function windowclose(){
 </script>
 <body>
 <div id="all">
+	<spring:hasBindErrors name="memberModel" />
 	<div id="content">
 		<div class="container">
 			<div class="col-md-12">
+				${checkNum }
 				<!-- 만약 checkNumb이 0이면 입력한 정보와 일치하는 ID가 없는 것이기 때문에 다시 실행한다. -->
-				
 				<c:choose>
 				<c:when test="${checkNum == '1'}">
 					<div class="box">
@@ -75,7 +77,7 @@ function windowclose(){
 					</div>
 				</c:when>
 				<%-- 만약 1이라면 찾은 ID를 표시한다. --%>
-				<c:otherwise>
+				<c:when test="${checkNum == '0'}">
 					<div class="rTable" width="100%" border=0>
 						<div class="form-group" align="center">
 							<ul class="breadcrumb">
@@ -98,13 +100,28 @@ function windowclose(){
 							</div>
 						</form>
 					</div>
-					</c:otherwise>
+				</c:when>
+				<c:otherwise>
+					<div class="box">
+						<form action="findIdEx.cat" name="checkForm">
+							<div class="rTable" width="100%" border="0">
+								<div class="form-group" align="left">
+									이름 : <input type="text" name="member_name" class="form-control"/>
+									<font color="red"><form:errors path="memberModel.member_name" /></font><br/><br/>
+									이메일 : <input type="text" name="member_email" class="form-control"/>
+									<font color="red"><form:errors path="memberModel.member_email" /></font>
+								</div>
+								<div class="form-group" align="center">
+									<button type="submit" class="btn btn-primary">아이디 찾기</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
 	</div>
 </div>
- 
-   
 </body>
 </html>
