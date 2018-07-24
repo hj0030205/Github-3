@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -58,7 +59,7 @@ function sample4_execDaumPostcode() {
 		}
 	}
 
-	function check()
+/* 	function check()
 	{
 		if(!document.join.member_id.value)
 		{
@@ -127,10 +128,11 @@ function sample4_execDaumPostcode() {
 			document.join.member_pw.focus();
 			return false;
 		}
-	}
+	} */
 </script>
 </head>
 <body>
+	<spring:hasBindErrors name="memberModel" />
 	<div id="all">
 		<div id="content">
 			<div class="container">
@@ -145,57 +147,62 @@ function sample4_execDaumPostcode() {
 							<legend>
 								<h2>회원정보 입력</h2>
 							</legend>
-							<form name="join" method="post" action="joinForm.cat"
-								onsubmit="return check()">
+							<form name="join" method="post" action="joinForm.cat">
 								<div class="rTable" width="100%" border=0>
 									<div class="form-group">
 										<label for="name">이름:</label> <input type="text"
-											class="form-control" name="member_name" />
+											class="form-control" id="member_name" name="member_name" />
+										<font color="red"><form:errors path="memberModel.member_name" /></font>
 									</div>
 									<div class="form-group">
 										<label for="id">아이디:</label>
 										<!-- 텍스트필드는 긴 문장을 넣을 때 사용. 짧은 문장이나 한 줄짜리는 input이다. -->
 										<input type="text" class="form-control" name="member_id"
 											id="member_id" />
+										<font color="red"><form:errors path="memberModel.member_id" /></font>
 										<button type="button" class="btn btn-primary"
 											onclick="idCheck()">중복확인</button>
 									</div>
 									<div class="form-group">
 										<label for="password">비밀번호:</label> <input type="password"
 											class="form-control" name="member_pw" />
+										<font color="red"><form:errors path="memberModel.member_pw" /></font>
 									</div>
 									<div class="form-group">
 										<label for="passwordchk">비밀번호확인:</label> <input
-											type="password" class="form-control" name="member_pwchk"
-											value="">
+											type="password" class="form-control" name="member_pwchk">
+										<font color="red"><form:errors path="memberModel.member_pwchk" /></font>
 									</div>
 									<div class="form-group">
 										<label for="jumin1">생년월일:</label> <input type="text"
 											class="form-control" name="member_jumin1" />
+										<font color="red"><form:errors path="memberModel.member_jumin1" /></font>
 									</div>
 									<div class="form-group">
 										<label for="phone">전화번호:</label> <input type="text"
 											class="form-control" name="member_phone" />
+										<font color="red"><form:errors path="memberModel.member_phone" /></font>
 									</div>
 									<div class="form-group">
 										<label for="email">이메일:</label> <input type="text"
-											class="form-control" name="member_email"
-											value="${member_email}" readonly="readonly">
+											class="form-control" name="member_email" value="${member_email}" readonly="readonly">
 									</div>
 									<div class="form-group">
 										<label for="zipcode">우편번호:</label> <input type="text"
-											class="form-control" id="sample4_postcode"
-											name="member_zipcode" />
+											class="form-control" id="sample4_postcode" name="member_zipcode" />
+										<font color="red"><form:errors path="memberModel.member_zipcode" /></font>
 										<button type="button" class="btn btn-primary"
 											onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
 									</div>
 									<div class="form-group">
 										<label for="address1">주소:</label> <input type="text"
 											class="form-control" id="sample4_roadAddress" name="member_addr1" />
+										<font color="red"><form:errors path="memberModel.member_addr1" /></font>
 									</div>
 									<div class="form-group">
 										<label for="address2">상세주소:</label> <input type="text"
 											class="form-control" id="member_addr2" name="member_addr2" />
+										<font color="red"><form:errors path="memberModel.member_addr2" /></font>
 									</div>
 								</div>
 								<br>

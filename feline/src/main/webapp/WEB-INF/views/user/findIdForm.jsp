@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script>
-	function check()
+	/* function check()
 	{
 		if(!document.id.member_name.value)
 		{
@@ -20,7 +21,7 @@
 			document.id.email.focus();
 			return false;
 		}
-	}
+	} */
 	function openFindId(){
 		window.name="FindIdForm"
 		window.open("findIdEx.cat?member_name="+document.id.member_name.value+"&member_email="+document.id.member_email.value,"emailchkForm","width=500,height=400,resizable=no,scrollbars=no");
@@ -28,6 +29,7 @@
 </script>
 </head>
 <body>
+<spring:hasBindErrors name="memberModel" />
 <div id="all">
 	<div id="content">
 		<div class="container">
@@ -46,15 +48,17 @@
 								<div class="form-group">
 									<label for="name"><font size="2">이름:</font></label>
 									<input type="text" class="form-control" name="member_name"/>
+									<font color="red"><form:errors path="memberModel.member_name" /></font>
 								</div>
 								<div class="form-group">
 									<label for="name"><font size="2">이메일:</font></label>
 									<input type="text" class="form-control" name="member_email"/>
+									<font color="red"><form:errors path="memberModel.member_email" /></font>
 								</div>
 							</div>
 							<br>
 							<div class="text-center">
-							     <button type="submit" class="btn btn-primary" onclick="return check()"><i class="fa fa-user-md"></i>아이디 찾기</button>
+							     <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i>아이디 찾기</button>
 							</div>
 						</form>
 					</fieldset>

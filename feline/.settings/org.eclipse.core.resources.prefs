@@ -8,3 +8,6 @@ encoding//src/main/java/com/feline/member/MemberModel.java=UTF-8
 encoding//src/main/java/com/feline/member/MemberService.java=UTF-8
 encoding//src/main/java/com/feline/order/OrderController.java=UTF-8
 encoding//src/main/java/com/feline/order/OrderDao.java=UTF-8
+encoding//src/main/java/messages/boardMessage_ko.properties=UTF-8
+encoding//src/main/java/messages/goodsMessage_ko.properties=UTF-8
+encoding//src/main/java/messages/userMessage_ko.properties=UTF-8

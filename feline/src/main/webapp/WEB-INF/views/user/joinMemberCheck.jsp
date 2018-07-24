@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,11 +17,11 @@
 	         alert("개인정보처리 약관에 동의하지 않으셨습니다.");
 	         return false;
 	      }
-	      if (email.length==0) {
+	    /*   if (email.length==0) {
 	         alert("이메일을 입력하세요.");
 	         document.joincheck.member_email.focus();
 	         return false;
-	      }
+	      } */
 	      if(email.length != null) {
 	      window.name = "checkEmail"
 	      window.open("EmailCheck.cat?&member_email="
@@ -42,6 +43,7 @@
 
 </head>
 <body>
+	<spring:hasBindErrors name="memberModel" />
 	<div class="all">
 		<div class="content">
 			<div class="container">
@@ -492,7 +494,8 @@
 									<center>
 										<label>이메일&nbsp; </label> <input type="text" size="50"
 											name="member_email" id="member_email"
-											value="${member_email}"/> 
+											value="${member_email}"/>
+											<font color="red"><form:errors path="memberModel.member_email" /></font>
 											<br>
 										<br>
 										<button type="submit" class="btn btn-primary">이메일중복확인</button>
