@@ -195,10 +195,6 @@
 		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqList.jsp" />
 	</definition>
 	
-	<definition name="faqView" extends="main">
-		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqView.jsp" />
-	</definition>
-
 	<definition name="faqWrite" extends="main">
 		<put-attribute name="body" value="/WEB-INF/views/faq/boardFaqWrite.jsp" />
 	</definition>
