@@ -177,21 +177,22 @@ public class MemberController {
 	}
 
 	@RequestMapping("joinMemberCheck.cat")
-	public String memberJoincheckForm() {
-
+	public String memberJoincheckForm(){
+		
 		return "joinMemberCheck";
 	}
 
 	@RequestMapping("EmailCheck.cat")
 	public ModelAndView memberEmailCheck(@ModelAttribute("memberModel") MemberModel memberModel, BindingResult result, 
-			HttpServletRequest request, HttpSession session) throws IOException {
+			HttpServletRequest request) throws IOException {
 
 		ModelAndView mav = new ModelAndView();
 		
 		new MemberValidator().validateemail(memberModel, result); 
 		if (result.hasErrors()) 
 		{ 
-			mav.setViewName("joinMemberCheck"); 
+			mav.addObject("checkNum", "2");
+			mav.setViewName("/user/emailPro");
 			return mav; 
 		}
 		
@@ -267,23 +268,20 @@ public class MemberController {
 
 	@RequestMapping(value="findIdEx.cat")
 	public ModelAndView memberIdFind(@ModelAttribute("memberModel") MemberModel memberModel, BindingResult result, 
-		HttpServletRequest request, HttpSession session) throws IOException {
+		HttpServletRequest request) throws IOException {
 
 		ModelAndView mav = new ModelAndView();
-
-		new MemberValidator().validateid(memberModel, result); 
-		if (result.hasErrors()) 
-		{ 
-			mav.setViewName("findIdForm"); 
-			return mav; 
-		}
-		
 		int checkNum;
 		String member_id = memberService.idFindByName(memberModel);
+		
+		new MemberValidator().validateid(memberModel, result); 
 
 		if(member_id!=null) {
 			checkNum=1;
-		}else {
+		}else if(result.hasErrors()) {
+			checkNum=2;
+		}
+		else {
 			checkNum=0;
 		}
 		mav.addObject("checkNum", checkNum);
@@ -301,23 +299,18 @@ public class MemberController {
 
 	@RequestMapping(value="findPwdEx.cat")
 	public ModelAndView memberPwFind(@ModelAttribute("memberModel") MemberModel memberModel, BindingResult result, 
-			HttpServletRequest request, HttpSession session) throws IOException {
+			HttpServletRequest request) throws IOException {
 
 		ModelAndView mav = new ModelAndView();
-		
-		new MemberValidator().validatepw(memberModel, result); 
-		if (result.hasErrors()) 
-		{ 
-			mav.setViewName("findPwdForm"); 
-			return mav; 
-		}
-		
 		int checkNum;
-		
 		String member_pw = memberService.pwFindById(memberModel);
 
+		new MemberValidator().validatepw(memberModel, result); 
+		
 		if(member_pw!=null) {
 			checkNum=1;
+		}else if(result.hasErrors()) {
+			checkNum=2;
 		}else {
 			checkNum=0;
 		}
