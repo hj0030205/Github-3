@@ -2,6 +2,7 @@
     pageEncoding="utf-8"%>
     
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,11 +11,10 @@
 
 </head>
 <body>
- <div id="all">
+	<spring:hasBindErrors name="memberModel" />
+ 	<div id="all">
         <div id="content">
             <div class="container">
-            	
-
                 <div class="col-md-12">
 
                     <ul class="breadcrumb">
@@ -34,10 +34,12 @@
                             <div class="form-group">
                                 <label for="member_id">아이디</label>
                                 <input type="text" class="form-control" id="member_id"name="member_id"/>
+                                <font color="red"><form:errors path="memberModel.member_id" /></font>
                             </div>
                             <div class="form-group">
                                 <label for="member_pw">비밀번호</label>
                                 <input type="password" class="form-control"id="member_pw" name="member_pw"/>
+                            	<font color="red"><form:errors path="memberModel.member_pw" /></font>
                             </div>
                             <div class="text-center">
                             	<button type="submit" class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i>로그인</button>

@@ -7,6 +7,7 @@ public class MemberModel
 	private int member_no;
 	private String member_id;
 	private String member_pw;
+	private String member_pwchk;
 	private String member_name;
 	private String member_jumin1;
 	private String member_email;
@@ -34,6 +35,12 @@ public class MemberModel
 	}
 	public void setMember_pw(String member_pw) {
 		this.member_pw = member_pw;
+	}
+	public String getMember_pwchk() {
+		return member_pwchk;
+	}
+	public void setMember_pwchk(String member_pwchk) {
+		this.member_pwchk = member_pwchk;
 	}
 	public String getMember_name() {
 		return member_name;

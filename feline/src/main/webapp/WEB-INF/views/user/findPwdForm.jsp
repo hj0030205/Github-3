@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script>
-	function checkPwd() {
+/* 	function checkPwd() {
 		if (!document.pwd.member_name.value) {
 			alert("이름을 입력하세요.");
 			document.pwd.member_name.focus();
@@ -23,7 +24,7 @@
 			document.pwd.email.focus();
 			return false;
 		}
-	}
+	} */
 	function openFindPwd(){
 		window.name="findPwdwin"
 		window.open("findPwdEx.cat?member_name="+document.pwd.member_name.value+"&member_email="+document.pwd.member_email.value+"&member_id="+document.pwd.member_id.value,
@@ -33,6 +34,7 @@
 </script>
 </head>
 <body>
+<spring:hasBindErrors name="memberModel" />
 <div id="all">
 	<div id="content">
 		<div class="container">
@@ -51,20 +53,23 @@
 							<div class="rTable">  
 								<div class="form-group">
 									<label for="name"><font size="2">이름:</font></label>
-									<input type="text" class="form-control" name="member_name" value="" />
+									<input type="text" class="form-control" name="member_name"/>
+									<font color="red"><form:errors path="memberModel.member_name" /></font>
 								</div>
 								<div class="form-group">
 									<label for="name"><font size="2">이메일:</font></label>
-									<input type="text" class="form-control" name="member_email" value=""/>
+									<input type="text" class="form-control" name="member_email"/>
+									<font color="red"><form:errors path="memberModel.member_email" /></font>
 								</div>
 								<div class="form-group">
 									<label for="name"><font size="2">아이디:</font></label>
-									<input type="text" class="form-control" name="member_id" value=""/>
+									<input type="text" class="form-control" name="member_id"/>
+									<font color="red"><form:errors path="memberModel.member_id" /></font>
 								</div>
 							</div>
 							<br>
 							<div class="text-center">
-							     <button type="submit" class="btn btn-primary" onclick="return checkPwd()"><i class="fa fa-user-md"></i>비밀번호 찾기</button>
+							     <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i>비밀번호 찾기</button>
 							</div>
 						</form>
 					</fieldset>

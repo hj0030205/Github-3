@@ -80,31 +80,55 @@ public class GoodsController {
 		
 		if(!category.equals(""))
 		{
-			for(int i = 0; i < goodslist.size(); i++) 
+			if(search.equals(""))
 			{
-				for(int j = 0; !goodslist.get(i).getGoods_category().equals(category); j++)
+				mav.addObject("search", null);
+				mav.addObject("goodsList", goodslist);
+				mav.setViewName("goodsList");
+				
+				return mav;
+			}
+			
+			else 
+			{
+				for(int i = 0; i < goodslist.size(); i++) 
 				{
-					goodslist.remove(i);
-					
-					if(goodslist.size() == 0)
+					for(int j = 0; !goodslist.get(i).getGoods_category().equals(category); j++)
 					{
-						break;
+						goodslist.remove(i);
+						
+						if(goodslist.size() == 0 || goodslist.size() == 1)
+						{
+							break;
+						}
 					}
 				}
 			}
 		}
-		
+			
 		if(!minprice.equals(""))
 		{
-			for(int i = 0; i < goodslist.size(); i++) 
+			if(search.equals(""))
 			{
-				for(int j = 0;goodslist.get(i).getGoods_price() < Integer.parseInt(minprice); j++)
+				mav.addObject("search", null);
+				mav.addObject("goodsList", goodslist);
+				mav.setViewName("goodsList");
+				
+				return mav;
+			}
+			
+			else 
+			{
+				for(int i = 0; i < goodslist.size(); i++) 
 				{
-					goodslist.remove(i);
-					
-					if(goodslist.size() == 0)
+					for(int j = 0; goodslist.get(i).getGoods_price() < Integer.parseInt(minprice); j++)
 					{
-						break;
+						goodslist.remove(i);
+						
+						if(goodslist.size() == 0)
+						{
+							break;
+						}
 					}
 				}
 			}
@@ -112,35 +136,59 @@ public class GoodsController {
 		
 		if(!maxprice.equals(""))
 		{
-			for(int i = 0; i < goodslist.size(); i++) 
+			if(search.equals(""))
 			{
-				for(int j = 0; Integer.parseInt(maxprice) < goodslist.get(i).getGoods_price(); j++)
+				mav.addObject("search", null);
+				mav.addObject("goodsList", goodslist);
+				mav.setViewName("goodsList");
+				
+				return mav;
+			}
+			
+			else 
+			{
+				for(int i = 0; i < goodslist.size(); i++) 
 				{
-					goodslist.remove(i);
-					
-					if(goodslist.size() == 0)
+					for(int j = 0; Integer.parseInt(maxprice) < goodslist.get(i).getGoods_price(); j++)
 					{
-						break;
+						goodslist.remove(i);
+						
+						if(goodslist.size() == 0)
+						{
+							break;
+						}
 					}
 				}
 			}
 		}
 		
 		if(!fromyear.equals("") && !frommonth.equals(""))
-		{		
-			Date fromdate = new Date();
-			fromdate.setYear(Integer.parseInt(fromyear));
-			fromdate.setMonth(Integer.parseInt(frommonth));
-			
-			for(int i = 0; i < goodslist.size(); i++) 
+		{
+			if(search.equals(""))
 			{
-				for(int j = 0; goodslist.get(i).getGoods_date().before(fromdate) ; j++)
+				mav.addObject("search", null);
+				mav.addObject("goodsList", goodslist);
+				mav.setViewName("goodsList");
+				
+				return mav;
+			}
+			
+			else 
+			{
+				Date fromdate = new Date();
+				fromdate.setYear(Integer.parseInt(fromyear));
+				fromdate.setMonth(Integer.parseInt(frommonth));
+				
+				for(int i = 0; i < goodslist.size(); i++) 
 				{
-					goodslist.remove(i);
-					
-					if(goodslist.size() == 0)
+					for(int j = 0; goodslist.get(i).getGoods_date().before(fromdate) ; j++)
 					{
-						break;
+						goodslist.remove(i);
+						
+						if(goodslist.size() == 0)
+						{
+							break;
+						}
 					}
 				}
 			}
@@ -148,19 +196,31 @@ public class GoodsController {
 		
 		if(!toyear.equals("") && !tomonth.equals(""))
 		{		
-			Date todate = new Date();
-			todate.setYear(Integer.parseInt(toyear));
-			todate.setMonth(Integer.parseInt(tomonth));
-			
-			for(int i = 0; i < goodslist.size(); i++) 
+			if(search.equals(""))
 			{
-				for(int j = 0; goodslist.get(i).getGoods_date().after(todate) ; j++)
+				mav.addObject("search", null);
+				mav.addObject("goodsList", goodslist);
+				mav.setViewName("goodsList");
+				
+				return mav;
+			}
+			
+			else 
+			{
+				Date todate = new Date();
+				todate.setYear(Integer.parseInt(toyear));
+				todate.setMonth(Integer.parseInt(tomonth));
+				
+				for(int i = 0; i < goodslist.size(); i++) 
 				{
-					goodslist.remove(i);
-					
-					if(goodslist.size() == 0)
+					for(int j = 0; goodslist.get(i).getGoods_date().after(todate) ; j++)
 					{
-						break;
+						goodslist.remove(i);
+						
+						if(goodslist.size() == 0)
+						{
+							break;
+						}
 					}
 				}
 			}

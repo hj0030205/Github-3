@@ -1,5 +1,6 @@
 package com.feline.member;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -10,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feline.ccr.CancleModel;
@@ -21,6 +24,7 @@ import com.feline.ccr.ChangeModel;
 import com.feline.ccr.RefundModel;
 import com.feline.goods.GoodsModel;
 import com.feline.order.OrderModel;
+import com.feline.validator.MemberValidator;
 
 
 @Controller
@@ -92,8 +96,17 @@ public class MemberController {
 	// 로그인동작 및 세션 생성
 	@RequestMapping(value = "login.cat", method = RequestMethod.POST)
 	public ModelAndView memberLogin(HttpServletRequest request, @ModelAttribute("memberModel") MemberModel member,
-			HttpSession session) {
-
+			BindingResult result, HttpSession session) throws IOException{ 
+		
+		ModelAndView mav = new ModelAndView();
+		
+		new MemberValidator().validatelogin(member, result); 
+		if (result.hasErrors()) 
+		{ 
+			mav.setViewName("loginError"); 
+			return mav; 
+		}
+		
 		String member_id = memberService.memberLogin(member);
 		if (member_id != null) {
 			session.setAttribute("id", member_id);
@@ -170,8 +183,18 @@ public class MemberController {
 	}
 
 	@RequestMapping("EmailCheck.cat")
-	public ModelAndView memberEmailCheck(HttpServletRequest request) {
+	public ModelAndView memberEmailCheck(@ModelAttribute("memberModel") MemberModel memberModel, BindingResult result, 
+			HttpServletRequest request, HttpSession session) throws IOException {
 
+		ModelAndView mav = new ModelAndView();
+		
+		new MemberValidator().validateemail(memberModel, result); 
+		if (result.hasErrors()) 
+		{ 
+			mav.setViewName("joinMemberCheck"); 
+			return mav; 
+		}
+		
 		String email = request.getParameter("member_email");
 		String check_email = memberService.emailCheck(email);
 		if (email.equals(check_email)) {
@@ -214,7 +237,18 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "joinForm.cat", method = RequestMethod.POST)
-	public ModelAndView memberJoin(@ModelAttribute("memberModel") MemberModel memberModel, HttpSession session) {
+	public ModelAndView memberJoin(@ModelAttribute("memberModel") MemberModel memberModel, BindingResult result, 
+			HttpServletRequest request, HttpSession session) throws IOException {
+
+		ModelAndView mav = new ModelAndView();
+		
+		new MemberValidator().validate(memberModel, result); 
+		if (result.hasErrors()) 
+		{ 
+			mav.addObject("member_email", request.getParameter("member_email"));
+			mav.setViewName("joinForm"); 
+			return mav; 
+		}
 
 		memberService.insertMember(memberModel);
 		
@@ -232,8 +266,18 @@ public class MemberController {
 	}
 
 	@RequestMapping(value="findIdEx.cat")
-	public ModelAndView memberIdFind(@ModelAttribute("memberModel") MemberModel memberModel, HttpServletRequest request) {
+	public ModelAndView memberIdFind(@ModelAttribute("memberModel") MemberModel memberModel, BindingResult result, 
+		HttpServletRequest request, HttpSession session) throws IOException {
 
+		ModelAndView mav = new ModelAndView();
+
+		new MemberValidator().validateid(memberModel, result); 
+		if (result.hasErrors()) 
+		{ 
+			mav.setViewName("findIdForm"); 
+			return mav; 
+		}
+		
 		int checkNum;
 		String member_id = memberService.idFindByName(memberModel);
 
@@ -256,8 +300,18 @@ public class MemberController {
 	}
 
 	@RequestMapping(value="findPwdEx.cat")
-	public ModelAndView memberPwFind(@ModelAttribute("memberModel") MemberModel memberModel, HttpServletRequest request) {
+	public ModelAndView memberPwFind(@ModelAttribute("memberModel") MemberModel memberModel, BindingResult result, 
+			HttpServletRequest request, HttpSession session) throws IOException {
 
+		ModelAndView mav = new ModelAndView();
+		
+		new MemberValidator().validatepw(memberModel, result); 
+		if (result.hasErrors()) 
+		{ 
+			mav.setViewName("findPwdForm"); 
+			return mav; 
+		}
+		
 		int checkNum;
 		
 		String member_pw = memberService.pwFindById(memberModel);

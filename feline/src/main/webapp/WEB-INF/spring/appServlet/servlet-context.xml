@@ -21,6 +21,7 @@
 			<beans:list>
 				<beans:value>messages.boardMessage_ko</beans:value>
 				<beans:value>messages.goodsMessage_ko</beans:value>
+				<beans:value>messages.userMessage_ko</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="defaultEncoding" value="UTF-8"/>
