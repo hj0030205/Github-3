@@ -1068,10 +1068,10 @@ public class AdminController {
 
 		if (redirect_type.equals("list")) {
 
-			url = "redirect:/admin/adOrderRefundList.cat";
+			url = "redirect:adOrderRefundList.cat";
 		} else if (redirect_type.equals("detail")) {
 
-			url = "redirect:/admin/adOrderRefundView.cat?order_num=" + refundModel.getOrder_num() + "&trade_num=" + refundModel.getTrade_num();
+			url = "redirect:adOrderRefundView.cat?order_num=" + refundModel.getOrder_num() + "&trade_num=" + refundModel.getTrade_num();
 		}
 
 		return new ModelAndView(url);
@@ -1086,10 +1086,10 @@ public class AdminController {
 		adminService.adOrderRefundRefuse(orderModel, refundModel);
 		if (redirect_type.equals("list")) {
 
-			url = "redirect:/admin/adOrderRefundList.cat";
+			url = "redirect:adOrderRefundList.cat";
 		} else if (redirect_type.equals("detail")) {
 
-			url = "redirect:/admin/adOrderRefundView.cat?order_num=" + refundModel.getOrder_num() + "&trade_num=" + refundModel.getTrade_num();
+			url = "redirect:adOrderRefundView.cat?order_num=" + refundModel.getOrder_num() + "&trade_num=" + refundModel.getTrade_num();
 		}
 
 		return new ModelAndView(url);
@@ -1161,10 +1161,10 @@ public class AdminController {
 
 		if (redirect_type.equals("list")) {
 
-			url = "redirect:/admin/adOrderChangeList.cat";
+			url = "redirect:adOrderChangeList.cat";
 		} else if (redirect_type.equals("detail")) {
 
-			url = "redirect:/admin/adOrderChangeView.cat?order_num=" + changeModel.getOrder_num() + "&change_num=" + changeModel.getChange_num();
+			url = "redirect:adOrderChangeView.cat?order_num=" + changeModel.getOrder_num() + "&change_num=" + changeModel.getChange_num();
 		}
 
 		return new ModelAndView(url);
@@ -1179,10 +1179,10 @@ public class AdminController {
 		adminService.adOrderChangeRefuse(orderModel, changeModel);
 		if (redirect_type.equals("list")) {
 
-			url = "redirect:/admin/adOrderChangeList.cat";
+			url = "redirect:adOrderChangeList.cat";
 		} else if (redirect_type.equals("detail")) {
 
-			url = "redirect:/admin/adOrderChangeView.cat?order_num=" + changeModel.getOrder_num() + "&change_num=" + changeModel.getChange_num();
+			url = "redirect:adOrderChangeView.cat?order_num=" + changeModel.getOrder_num() + "&change_num=" + changeModel.getChange_num();
 		}
 
 		return new ModelAndView(url);

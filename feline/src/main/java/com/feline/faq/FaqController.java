@@ -79,7 +79,7 @@ public class FaqController {
 				mav.addObject("pagingHtml", pagingHtml);
 				mav.addObject("currentPage", currentPage);
 				mav.addObject("faqList", faqList);
-				mav.setViewName("boardFaqList");
+				mav.setViewName("faqList");
 				return mav;
 			}
 
