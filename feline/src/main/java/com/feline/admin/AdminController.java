@@ -727,7 +727,7 @@ public class AdminController {
 
 
 			// jsonArray에 담긴 객체를 뷰로 전송
-
+			response.setContentType("application/json; charset=UTF-8");
 			PrintWriter pw = response.getWriter();
 			pw.print(jsonArray.toString());
 			pw.flush();
