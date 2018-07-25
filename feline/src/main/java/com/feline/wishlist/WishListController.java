@@ -30,7 +30,6 @@ public class WishListController {
 	private List<WishListModel> wishCheck=new ArrayList<WishListModel>();
 	private List<WishListModel> wishList=new ArrayList<WishListModel>();
 	
-	/*¿ßΩ√∏ÆΩ∫∆Æ √ﬂ∞°*/
 	@RequestMapping(value="wishAdd.cat")
 	public ModelAndView wishAdd(HttpSession session, HttpServletRequest request, @ModelAttribute("WishListModel") WishListModel WishListModel, HttpServletResponse response) throws IOException{
 		
@@ -39,7 +38,7 @@ public class WishListController {
 		if(member_id == null) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('∑Œ±◊¿Œ¿Ã « ø‰«’¥œ¥Ÿ.');</script>");
+			out.println("<script>alert('Î°úÍ∑∏Ïù∏Ïù¥ ÌïÑÏöîÌï©ÎãàÎã§..');</script>");
 			out.flush();
 			mav.setViewName("login");
 		}else if(member_id != null && member_id != "") {
@@ -59,7 +58,6 @@ public class WishListController {
 	}
 	
 	
-	/*¿ßΩ√∏ÆΩ∫∆Æ ∏ÆΩ∫∆Æ*/
 	@RequestMapping(value="wishList.cat")
 	public ModelAndView wishList(HttpSession session, HttpServletRequest request, @ModelAttribute("WishListModel") WishListModel WishListModel){
 		
@@ -84,7 +82,6 @@ public class WishListController {
 		
 	}
 	
-	/*¿ßΩ√∏ÆΩ∫∆Æ ªË¡¶*/
 	@RequestMapping(value="deleteWishList.cat")
 	public ModelAndView deleteWishList(@ModelAttribute("WishListModel") WishListModel WishListModel) {
 		
