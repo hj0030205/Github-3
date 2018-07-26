@@ -716,9 +716,11 @@ public class AdminController {
 			JSONArray jsonArray = new JSONArray();
 			for (int i = 0; i < goodsList.size(); i++) {
 				JSONObject sObject = new JSONObject();
+				String goods_price = String.format("%,d", goodsList.get(i).getGoods_price());
+				
 				sObject.put("goods_img_savname", goodsList.get(i).getGoods_image_savname());
 				sObject.put("goods_name", goodsList.get(i).getGoods_name());
-				sObject.put("goods_price", goodsList.get(i).getGoods_price());
+				sObject.put("goods_price", goods_price);
 				sObject.put("goods_num", goodsList.get(i).getGoods_num());
 				sObject.put("goods_status", goodsList.get(i).getGoods_status());
 				jsonArray.add(i, sObject);
@@ -950,6 +952,7 @@ public class AdminController {
 
 		return mav;
 	}
+	
 
 	/*********************** 관리자 메인 페이지- 주문취소관리 ******************/
 	
