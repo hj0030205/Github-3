@@ -34,7 +34,7 @@
 										<div class="row">
 											<div class="pl-2 col-lg-3">
 												<a href="adGoodsView.cat?goods_num=${list.goods_num}"> 
-												<img src="/feline/upload/${list.goods_image_savname}" height="50px">
+												<img src="/feline/resources/upload/images/${list.goods_image_savname}" height="50px">
 												</a>
 											</div>
 											<div class="col-lg-8">
@@ -57,7 +57,7 @@
 										<div class="row">
 											<div class="col-lg-3">
 												<a href="adGoodsView.cat?goods_num=${list.goods_num}"> 
-												<img src="/feline/upload/${list.goods_image_savname}" height="50px">
+												<img src="/feline/resources/upload/images/${list.goods_image_savname}" height="50px">
 												</a>
 											</div>
 											<div class="col-lg-8">

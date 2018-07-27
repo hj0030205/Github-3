@@ -819,8 +819,6 @@ public class AdminController {
 			GoodsModel goodsModel = new GoodsModel();
 			goodsModel = eventService.selectGoods(goods_num_i[j]);
 			
-			logger.info("goods_image_savname : " + goodsModel.getGoods_image_savname());
-			
 			goodsList.add(j, goodsModel);
 
 		}
