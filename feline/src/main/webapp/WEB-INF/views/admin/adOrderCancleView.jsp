@@ -79,13 +79,13 @@
 		<div class="row" id="info">
 			<div class="col-lg-12">
 				<h4>
-					<b>상품 정보</b>
+					<b>주문 내역</b>
 				</h4>
 				<div class="card">
 					<div class="card-block">
 						<div class="col-md-2">
 							<h4>
-								<b>상품 취소 정보 ▽</b>
+								<b>주문 정보 ▽</b>
 							</h4>
 						</div>
 						

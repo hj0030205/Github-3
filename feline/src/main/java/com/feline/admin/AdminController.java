@@ -1224,7 +1224,7 @@ public class AdminController {
 		GoogleChartDTO goAll = new GoogleChartDTO();
 
 		goAll.addColumn("DAY", "string");
-		goAll.addColumn("전체 회원수", "number");
+		goAll.addColumn("가입 회원수", "number");
 		goAll.createRows(listAll.size());
 
 		for (int i = 0; i < listAll.size(); i++) {
@@ -1499,7 +1499,7 @@ public class AdminController {
 			mYear = Integer.parseInt(chartList.get(i).getKey());
 			yearValue = chartList.get(i).getValue();
 			count=0;
-			if (mYear >= iYear) {
+			if (mYear > iYear) {
 				kYear = ((100 + iYear) - mYear) / 10;
 				if(kYear>90)
 					kYear=10;
@@ -1509,15 +1509,19 @@ public class AdminController {
 				kYear = (iYear - mYear) / 10;
 				if(kYear<10)
 					kYear=1;
-			}
-			count+=yearValue;
+			}		
 			if(map.size()!=0 && map.containsKey(kYear)) {
 				count=map.get(kYear);
+				count+=yearValue;
 				map.put(kYear, count);
+				System.out.println("if:"+kYear+":"+count+":"+mYear);
 			}else if(map.size()==0 && !map.containsKey(kYear) && yearValue>0){
+				count+=yearValue;
 				map.put(kYear, count);
+				System.out.println("elseif:"+kYear+":"+count+":"+mYear);
 			}else {
-				map.put(kYear, ++count);
+				map.put(kYear, yearValue);
+				System.out.println("else:"+kYear+":"+yearValue+":"+mYear);
 			}
 		}
 		return map;
