@@ -243,7 +243,7 @@ public class QnaController {
 		}
 		
 		String content = qnaModel.getContent().replaceAll("\r\n", "<br />");
-		qnaModel.setId((String)session.getAttribute("adminId"));
+		qnaModel.setId((String)session.getAttribute("id"));
 		qnaModel.setPassword("temporary");
 		qnaModel.setContent(content);
 		qnaModel.setRegdate(today.getTime());

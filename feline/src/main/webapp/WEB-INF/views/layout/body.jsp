@@ -56,20 +56,20 @@
 			<div class="col-md-12">
 				<div id="main-slider">
 					<div class="item">
-						<img src="/feline/resources/common/img/mainboard.jpg" alt="noImage"
+						<img src="/feline/resources/common/img/mainboard.jpg" alt="noImage" width="100%"
 							class="img-responsive">
 					</div>
 					<div class="item">
 						<img class="img-responsive"
-							src="/feline/resources/common/img/mainboard2.jpg" alt="noImage">
+							src="/feline/resources/common/img/mainboard2.jpg" alt="noImage" width="100%">
 					</div>
 					<div class="item">
 						<img class="img-responsive"
-							src="/feline/resources/common/img/mainboard3.jpg" alt="noImage">
+							src="/feline/resources/common/img/mainboard3.jpg" alt="noImage" width="100%">
 					</div>
 					<div class="item">
 						<img class="img-responsive"
-							src="/feline/resources/common/img/mainboard4.jpg" alt="noImage">
+							src="/feline/resources/common/img/mainboard4.jpg" alt="noImage" width="100%">
 					</div>
 				</div>
 				<!-- /#main-slider -->
