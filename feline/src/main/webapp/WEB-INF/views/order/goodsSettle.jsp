@@ -145,13 +145,18 @@ function check()
 													<td>
 														<a href="/feline/goods/goodsView.cat?goods_num=${basketList.goods_num}">
 															${basketList.goods_name}
+															<c:if test="${goods_num ne null}">
+																<input type="hidden" name="goods_num" value="${goods_num}" />
+															</c:if>
 														</a>
 													</td>
 													<td>
 														${basketList.basket_goods_size}
+														<input type="hidden" name="basket_goods_size" value="${basket_goods_size}" />
 													</td>
 													<td>
 														${basketList.basket_goods_amount}
+														<input type="hidden" name="basket_goods_amount" value="${basket_goods_amount}" />
 													</td>
 													<td>
 														<fmt:formatNumber value="${basketList.goods_price}" type="number" pattern="#,###"/>&nbsp;원

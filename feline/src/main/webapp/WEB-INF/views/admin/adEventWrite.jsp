@@ -6,6 +6,14 @@
 
 <html>
 <head>
+<style type="text/css">
+
+.my-image {
+    width: 100px;
+    height: auto;
+}
+
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
 function goodsCategorySelect(goods_category) {
@@ -22,7 +30,7 @@ function goodsCategorySelect(goods_category) {
 			$.each(result, function(i){
 					str += '<tr>';
 					str += '<td>' + "<input type='checkbox' id='selected[]' name='selected[]' value='" + result[i].goods_num + "' onclick='checkedValue(this.value)'>" + "</td>";
-					str += '<td>' + "<img src='/feline/resources/upload/images/"+ result[i].goods_image_savname + "'/></td><td>" + result[i].goods_name + '</td><td>' + result[i].goods_price + '</td>';
+					str += '<td>' + "<img class='my-image' src='/feline/resources/upload/images/"+ result[i].goods_image_savname + "'/></td><td>" + result[i].goods_name + '</td><td>' + result[i].goods_price + '</td>';
  					if(result[i].goods_status==0) {
 						str += '<td><font color="red">판매종료</font></td>'
 					} else if(result[i].goods_status==1) {
