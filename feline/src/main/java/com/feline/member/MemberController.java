@@ -492,7 +492,11 @@ public class MemberController {
 		
 		int order_num = Integer.parseInt(request.getParameter("order_num")); //get으로 들어온 order_num받아오기
 
-		cancleModel.setMember_id((String)session.getAttribute("id")); //cancleModel에 session의 id를 담는다
+		if((String)session.getAttribute("id")==null && (String)session.getAttribute("n_id")!=null) {
+			cancleModel.setMember_id((String)session.getAttribute("n_id"));
+		}else {
+			cancleModel.setMember_id((String)session.getAttribute("id")); //cancleModel에 session의 id를 담는다
+		}
 		cancleModel.setOrder_num(order_num); //cancleModel에 order_num을담는다.
 
 		cancleModel = memberService.orderCancleOne(cancleModel); //cancleModel에 orderCancleOne을 넣음
@@ -571,8 +575,12 @@ public class MemberController {
 		
 		RefundModel refundModel= new RefundModel();
 		
-		int order_num = Integer.parseInt(request.getParameter("order_num")); 
-		refundModel.setMember_id((String)session.getAttribute("id"));
+		int order_num = Integer.parseInt(request.getParameter("order_num"));
+		if((String)session.getAttribute("id")==null && (String)session.getAttribute("n_id")!=null) {
+			refundModel.setMember_id((String)session.getAttribute("n_id"));
+		}else {
+			refundModel.setMember_id((String)session.getAttribute("id")); //cancleModel에 session의 id를 담는다
+		}
 		refundModel.setOrder_num(order_num);
 		
 		refundModel = memberService.orderRefundOne(refundModel);
@@ -688,8 +696,11 @@ public class MemberController {
 		ChangeModel changeModel= new ChangeModel();
 		
 		int order_num = Integer.parseInt(request.getParameter("order_num")); 
-		
-		changeModel.setMember_id((String)session.getAttribute("id"));
+		if((String)session.getAttribute("id")==null && (String)session.getAttribute("n_id")!=null) {
+			changeModel.setMember_id((String)session.getAttribute("n_id"));
+		}else {
+			changeModel.setMember_id((String)session.getAttribute("id")); //cancleModel에 session의 id를 담는다
+		}
 		changeModel.setOrder_num(order_num);
 		
 		changeModel = memberService.orderChangeOne(changeModel);

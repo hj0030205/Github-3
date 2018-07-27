@@ -29,11 +29,12 @@ function checkCategory(){
 		return false;
 	}
 	
-	if(p.match("0") || !p){
+	if(p.length==1 && p.match("0") || !p){
+		alert(p);
 		alert("가격입력란에 1이상 입력해주세요.");
 		return false;
 	}
-	if(a.match("0") || !a){
+	if(a.length==1 && a.match("0") || !a){
 		alert("재고입력란에 1이상 입력해주세요.");
 		return false;
 	}
