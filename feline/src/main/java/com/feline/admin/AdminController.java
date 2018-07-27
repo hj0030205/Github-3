@@ -718,7 +718,7 @@ public class AdminController {
 				JSONObject sObject = new JSONObject();
 				String goods_price = String.format("%,d", goodsList.get(i).getGoods_price());
 				
-				sObject.put("goods_img_savname", goodsList.get(i).getGoods_image_savname());
+				sObject.put("goods_image_savname", goodsList.get(i).getGoods_image_savname());
 				sObject.put("goods_name", goodsList.get(i).getGoods_name());
 				sObject.put("goods_price", goods_price);
 				sObject.put("goods_num", goodsList.get(i).getGoods_num());
