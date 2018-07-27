@@ -7,6 +7,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<style type="text/css">
+
+.my-image {
+    width: 100px;
+    height: auto;
+}
+
+</style>
+
 <script>
 
 function updateForm(){
@@ -187,7 +197,7 @@ select{
 										<c:forEach var="goodsList" items="${goodsList}" varStatus="stat">
 											<tr>
 												<td>
-													<img src="/feline/resources/upload/images/${goodsList.goods_image_savname}" />
+													<img class="my-image" src="/feline/resources/upload/images/${goodsList.goods_image_savname}" />
 												</td>
 												<td>${goodsList.goods_name}</td>
 												<td><fmt:formatNumber value="${goodsList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>
