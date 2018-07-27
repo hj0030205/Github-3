@@ -31,6 +31,7 @@ function stopEvent() {
 
 </script>
 <style>
+
 .form-control {
 	color: black;
 	font-size: 19px;
@@ -187,7 +188,7 @@ select{
 										<c:forEach var="goodsList" items="${goodsList}" varStatus="stat">
 											<tr>
 												<td>
-													<img src="/feline/resources/upload/images/${goodsList.goods_image_savname}" />
+													<img src="/feline/resources/upload/images/${goodsList.goods_image_savname}" width="300px" height="200px"/>
 												</td>
 												<td>${goodsList.goods_name}</td>
 												<td><fmt:formatNumber value="${goodsList.goods_price}" type="number" pattern="#,###"/>&nbsp;원</td>

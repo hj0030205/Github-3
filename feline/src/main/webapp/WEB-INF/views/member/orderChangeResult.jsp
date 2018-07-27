@@ -10,10 +10,10 @@
 </head>
 <body>
 
-<script type="text/javascript">
+<script>
 alert("주문교환이 정상적으로 접수 되었습니다. 빠른시일내에 관리자가 확인하겠습니다. 감사합니다!");
-if(${sessionScope.id ne null} == true) {
-	location.href='orderList.cat';
+if(${sessionScope.id != null}) {
+	location.href='/feline/member/mypage.cat';
 } else {
 	location.href='b_orderList.cat?order_trade_num=${order_trade_num}';
 }

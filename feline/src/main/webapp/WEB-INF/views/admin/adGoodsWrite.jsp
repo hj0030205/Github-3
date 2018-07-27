@@ -30,7 +30,6 @@ function checkCategory(){
 	}
 	
 	if(p.length==1 && p.match("0") || !p){
-		alert(p);
 		alert("가격입력란에 1이상 입력해주세요.");
 		return false;
 	}

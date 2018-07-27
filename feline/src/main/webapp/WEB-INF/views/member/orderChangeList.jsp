@@ -132,61 +132,61 @@
 									<td><a href="orderChangeView.cat?order_num=${order.order_num}">${order.order_num }</td></a>
 									<td>
 											<c:choose>
-											<c:when test="${goodsModel[status.index].goods_category == 0 }">
+											<c:when test="${goodsList[status.index].goods_category == 0 }">
 											유기농/홀리스틱
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 1 }">
+											<c:when test="${goodsList[status.index].goods_category == 1 }">
 											피부/피모건강
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 2 }">
+											<c:when test="${goodsList[status.index].goods_category == 2 }">
 											헤어볼케어
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 3 }">
+											<c:when test="${goodsList[status.index].goods_category == 3 }">
 											다이어트/비뇨건강
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 4 }">
+											<c:when test="${goodsList[status.index].goods_category == 4 }">
 											캔/파우치
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 5 }">
+											<c:when test="${goodsList[status.index].goods_category == 5 }">
 											저키/소시지
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 6 }">
+											<c:when test="${goodsList[status.index].goods_category == 6 }">
 											비스켓/트릿
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 7 }">
+											<c:when test="${goodsList[status.index].goods_category == 7 }">
 											캣닢/캣그라스
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 8 }">
+											<c:when test="${goodsList[status.index].goods_category == 8 }">
 											응고형모래
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 9 }">
+											<c:when test="${goodsList[status.index].goods_category == 9 }">
 											흡수형모래
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 10 }">
+											<c:when test="${goodsList[status.index].goods_category == 10 }">
 											화장실/패드
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 11 }">
+											<c:when test="${goodsList[status.index].goods_category == 11 }">
 											기타
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 12 }">
+											<c:when test="${goodsList[status.index].goods_category == 12 }">
 											공/봉제인형
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 13 }">
+											<c:when test="${goodsList[status.index].goods_category == 13 }">
 											레이져/낚시
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 14 }">
+											<c:when test="${goodsList[status.index].goods_category == 14 }">
 											막대
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 15 }">
+											<c:when test="${goodsList[status.index].goods_category == 15 }">
 											갯닢
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 16 }">
+											<c:when test="${goodsList[status.index].goods_category == 16 }">
 											샴푸/린스
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 17 }">
+											<c:when test="${goodsList[status.index].goods_category == 17 }">
 											구강관리
 											</c:when>
-											<c:when test="${goodsModel[status.index].goods_category == 18 }">
+											<c:when test="${goodsList[status.index].goods_category == 18 }">
 											눈/귀/피부&피모건강
 											</c:when>
 											<c:otherwise>
