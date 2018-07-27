@@ -162,7 +162,10 @@ public class OrderController {
 						// 장바구니 정보, 회원 정보를 가지고 goodsSettle 페이지로 이동
 						basketList = orderService.orderBasketModel(basketModel);
 						memberModel = orderService.getMember(member_id);
+						
+						String goods_num = request.getParameter("goods_num");
 		
+						mav.addObject("goods_num", goods_num);
 						mav.addObject("memberModel", memberModel);
 						mav.addObject("basketList", basketList);
 		
@@ -224,6 +227,13 @@ public class OrderController {
 							memberModel.setMember_name(n_id);
 							memberModel.setMember_phone((String)session.getAttribute("n_phone"));
 							
+							String goods_num = request.getParameter("goods_num");
+							String basket_goods_size = request.getParameter("basket_goods_size");
+							String basket_goods_amount = request.getParameter("basket_goods_amount");
+							
+							mav.addObject("goods_num", goods_num);
+							mav.addObject("basket_goods_size", basket_goods_size);
+							mav.addObject("basket_goods_amount", basket_goods_amount);
 							mav.addObject("memberModel", memberModel);
 							mav.addObject("basketList", basketList1);
 							
@@ -256,6 +266,13 @@ public class OrderController {
 						memberModel.setMember_name(n_id);
 						memberModel.setMember_phone((String)session.getAttribute("n_phone"));
 						
+						String goods_num = request.getParameter("goods_num");
+						String basket_goods_size = request.getParameter("basket_goods_size");
+						String basket_goods_amount = request.getParameter("basket_goods_amount");
+						
+						mav.addObject("goods_num", goods_num);
+						mav.addObject("basket_goods_size", basket_goods_size);
+						mav.addObject("basket_goods_amount", basket_goods_amount);
 						mav.addObject("memberModel", memberModel);
 						mav.addObject("basketList", basketList1);
 						
@@ -272,9 +289,10 @@ public class OrderController {
 	
 	/* 주문처리 */
 	@RequestMapping(value = "goodsOrder.cat")
-	public ModelAndView goodsOrder(HttpSession session, HttpServletRequest request, @ModelAttribute("basketModel") BasketModel basketModel,
-			@ModelAttribute("orderModel") OrderModel orderModel) {
+	public ModelAndView goodsOrder(HttpSession session, HttpServletRequest request, @ModelAttribute("orderModel") OrderModel orderModel) {
 
+		BasketModel basketModel = new BasketModel();
+		
 		String member_id = (String) session.getAttribute("id");
 		String n_id = (String) session.getAttribute("n_id");
 		
@@ -439,8 +457,9 @@ public class OrderController {
 	
 	//무통장일때 처리해주는 페이지
 	@RequestMapping(value="/noBank.cat",method=RequestMethod.POST)
-	public ModelAndView noBack(OrderModel orderModel,BasketModel basketModel,HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView noBack(HttpSession session, HttpServletRequest request, @ModelAttribute("orderModel") OrderModel orderModel) {
+		
+		BasketModel basketModel = new BasketModel();
 		
 		String member_id = (String) session.getAttribute("id");
 		String n_id = (String) session.getAttribute("n_id");
@@ -492,7 +511,7 @@ public class OrderController {
 				//쌓임 방지
 				basketList.clear();
 					
-				//basketList에 basketModel 담기
+				//basketList에 basketModel 삽입
 				for(int j = 0; j < size; j++) {
 					GoodsModel goodsModel = new GoodsModel();
 					goodsModel = orderService.selectGoods(goods_num_i[j]);
@@ -597,7 +616,7 @@ public class OrderController {
 		}
 		
 		mav.addObject("orderModel", orderModel2);
-		mav.setViewName("noBank");
+		mav.setViewName("goodsOrderResult");
 		
 		return mav;
 	}
