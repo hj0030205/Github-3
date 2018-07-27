@@ -157,13 +157,13 @@
 												</c:url>
 
 												<a href="${viewURL}"> <img
-													src="/feline/upload/${newGoodsList.goods_image_savname}"
+													src="/feline/resources/upload/images/${newGoodsList.goods_image_savname}"
 													width="100%" height="100%" />
 												</a>
 											</div>
 											<div class="back">
 												<a href="${viewURL}"> <img
-													src="/feline/upload/${newGoodsList.goods_image_savname}"
+													src="/feline/resources/upload/images/${newGoodsList.goods_image_savname}"
 													width="100%" height="100%" />
 												</a>
 											</div>
